@@ -8,9 +8,11 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/register",{
 		templateUrl: "static/pages/register.html"
 
+
 	})
 	.when("/home",{
 		templateUrl: "static/pages/calendar.html",
 		controller: "CalendarController"
+
 	}).otherwise({redirectTo: '/'})
 });

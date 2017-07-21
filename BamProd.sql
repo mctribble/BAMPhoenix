@@ -154,4 +154,12 @@ INSERT INTO Subtopic_Type (Type_ID, Type_Name) VALUES (3, 'Assignments');
 INSERT INTO Subtopic_Type (Type_ID, Type_Name) VALUES (4, 'Meeting');
 INSERT INTO Subtopic_Type (Type_ID, Type_Name) VALUES (5, 'Misc');
 
+<<<<<<< HEAD
 commit;
+=======
+ALTER TABLE Users
+    ADD CONSTRAINT Batch_Assign CHECK
+    ((Batch_ID IS NULL) OR (Role = 1));
+
+commit;
+>>>>>>> master
