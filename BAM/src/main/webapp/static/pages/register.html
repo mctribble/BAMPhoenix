@@ -1,22 +1,23 @@
 <div class="vertical-center">
 	<div class="row">
 		<div class="login col-xs-6">
+		<div class="alert alert-danger" ng-show="controller.error">
+			There was a problem trying to register.
+		</div>
+		<form role="form" ng-submit="controller.register">
 			<div class="input-group">
-				<span class="input-group-addon"> Email: </span> <input type="text"
-					class="form-control" ng-model="user.email" placeholder="email"
-					required>
+				<span class="input-group-addon"> Email: </span> 
+				<input type="text" class="form-control" ng-model="user.email" placeholder="email" required>
 
 			</div>
 			<div class="input-group">
-				<span class="input-group-addon"> Password: </span> <input
-					class="form-control" type="password" ng-model="user.password"
-					placeholder="Password" required>
+				<span class="input-group-addon"> Password: </span> 
+				<input class="form-control" type="password" ng-model="user.password" placeholder="Password" required>
 
 			</div>
 			<div class="input-group">
-				<span class="input-group-addon"> Password: </span> <input
-					class="form-control" type="password"
-					ng-model="user.confirm_password" placeholder="Confirm Password"
+				<span class="input-group-addon"> Password: </span> 
+				<input class="form-control" type="password"	ng-model="user.confirm_password" placeholder="Confirm Password"
 					required>
 
 			</div>
@@ -45,8 +46,9 @@
 				<input class="form-control" type="text" ng-model="user.skype" placeholder="Skype" required />
 			</div>
 			<div class="input-group">
-				<input type="submit" class="btn btn-primary" value="LOGIN">
+				<input type="submit" class="btn btn-primary" value="REGISTER">
 			</div>
+		</form>
 
 		</div>
 
