@@ -10,6 +10,12 @@
 	font-family: 'Arial', sans-serif;
 }
 
+.main
+{
+	margin-top: 50px;
+	background-color: #f16925;		
+}
+
 
 .vertical-center
 {
