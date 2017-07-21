@@ -11,19 +11,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.beans.Batch;
+import com.revature.beans.Curriculum;
+import com.revature.beans.Topic;
 import com.revature.service.Service;
 
 @RestController
 @RequestMapping(value="/Topic/")
-public class CirriculumController {
+public class CurriculumController {
 	
 	@Autowired
 	Service s;
 	
-	@RequestMapping(value="Cirriculum", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="Curriculum", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
-	public List<Batch> getAllBatches(HttpServletRequest request){
-		return null;
-		//return s.getTopicsByCurriculum(request.getParameter("id"));
+	public Curriculum getAllTopics(HttpServletRequest request){
+		
+		return  s.getCurriculumById(Integer.parseInt(request.getParameter("id")));
+		// s.getTopicsByCurriculum(c);
+		
 	}
 }

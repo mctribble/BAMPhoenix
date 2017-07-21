@@ -8,6 +8,7 @@ import com.revature.beans.Batch;
 import com.revature.beans.Curriculum;
 import com.revature.beans.Topic;
 import com.revature.dao.BatchRepository;
+import com.revature.dao.CurriculumRepository;
 import com.revature.dao.TopicRepository;
 
 public class Service {
@@ -17,6 +18,9 @@ public class Service {
 	
 	@Autowired
 	TopicRepository daot;
+	
+	@Autowired
+	CurriculumRepository daoc;
 	
 	public Batch getBatchById(int id){
 		return daob.findByBatchId(id);
@@ -29,5 +33,9 @@ public class Service {
 	
 	public List<Topic> getTopicsByCurriculum(Curriculum cu){
 		return daot.findByCurriculum(cu);
+	}
+	
+	public Curriculum getCurriculumById(int id){
+		return daoc.findByCurriculum_id(id);
 	}
 }
