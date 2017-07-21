@@ -1,12 +1,31 @@
-
-<div class = "container-fluid">
-	<div class = "row align-self-center">
-		<div class = "col-xs-6">
-			<h1>Username</h1>
-			<h1>Password</h1>
-		</div>
+<div class = "vertical-center">
+	<div class = "row">
 		<div class = "login col-xs-6">
-			<img src="static/img/rev_timeline.png" width="100%">
+			
+			<h3>Email</h3>
+			<input type="text" class="form-control" ng-model="email" placeholder="" required>
+			<br>
+			
+			<h3>Password</h3>
+			<input type="password" class="form-control" ng-model="password" placeholder="" required>
+			<br>
+			<br>
+			
+			<button type = "button" class="btn btn-primary btn-lg" ng-click = "logIn()">LOGIN</button>
+		</div>
+		<div class = "col-xs-6">
+			<img src="static/img/revature_logo.png" width="90%">
+			<img src="static/img/rev_timeline.png" width="90%">
 		</div>
 	</div>
 </div>
+
+
+<!-- 
+<form name="myForm" ng-submit="register()">		
+		 			<h3>Name:  <input type="text" ng-model="user.username" placeholder="ryan_face" required>		
+		 			<!-- Email: <input type="email" ng-model="PlayController.user.email"> 	
+					<input type="submit" class="btn btn-primary" value="Register">		
+					</h3>
+				</form>		
+ -->
