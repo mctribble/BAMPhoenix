@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,9 +23,11 @@ public class TopicWeek {
 	private Integer id;
 	
 	@Column(name="Topic_Name_ID")
+	@Autowired
 	private TopicName topicId;
 	
 	@Column(name="Topic_Batch_ID")
+	@Autowired
 	private Batches batchId;
 
 	@Column(name="Topic_Week_Number")
@@ -57,6 +60,7 @@ public class TopicWeek {
 		this.id = id;
 	}
 
+	@Autowired
 	public TopicName getTopicId() {
 		return topicId;
 	}
@@ -65,6 +69,7 @@ public class TopicWeek {
 		this.topicId = topicId;
 	}
 
+	@Autowired
 	public Batches getBatchId() {
 		return batchId;
 	}

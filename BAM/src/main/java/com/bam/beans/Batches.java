@@ -11,6 +11,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -38,10 +39,12 @@ public class Batches {
 	
 	@Column(name="Trainer_ID")
 	@NotEmpty(message="Trainer ID cannot be empty")
+	@Autowired
 	private Users trainer;
 	
 	@Column(name="Batch_Type_ID")
 	@NotEmpty(message="Batch type cannot be empty")
+	@Autowired
 	private BatchType type;
 
 	public Batches() {
