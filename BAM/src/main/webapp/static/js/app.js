@@ -1,4 +1,4 @@
-var app = angular.module('bam', ['ngRoute']);
+var app = angular.module('bam', ['ngRoute','ui.calendar']);
 app.config(function($routeProvider, $locationProvider){
 	
 	$locationProvider.html5Mode(false).hashPrefix('');
