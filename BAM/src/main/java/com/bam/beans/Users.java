@@ -1,13 +1,20 @@
 package com.bam.beans;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Entity
@@ -22,27 +29,35 @@ public class Users {
 	private int userId;
 	
 	@Column(name = "First_Name")
+	@NotEmpty(message="First name cannot be empty")
 	private String fName;
 	
 	@Column(name = "Middle_Name")
 	private String mName;
 	
 	@Column(name = "Last_Name")
+	@NotEmpty(message="Last name cannot be empty")
 	private String lName;
 	
 	@Column(name = "eMail")
+	@NotEmpty(message="e-mail address cannot be empty")
 	private String email;
 	
 	@Column(name = "Password")
+	@NotEmpty(message="Password cannot be empty")
 	private String pwd;
 	
-	@Column(name = "Role")		// Role 1 is for associates
-	private int role;			// Role 2 is for trainers & QC
-								// Role 3 is for admins
-	@Column(name = "Batch_ID")
+	@Column(name = "Role")						// Role 1 is for associates
+	@NotEmpty(message="Role cannot be empty")	// Role 2 is for trainers & QC
+	private int role;							// Role 3 is for admins
+								
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="BATCH_ID", referencedColumnName = "BATCH_ID")
+	@Autowired
 	private Batches batch;
 	
 	@Column(name = "Main_Phone")
+	@NotEmpty(message="Primary phone cannot be empty")
 	private String phone;
 	
 	@Column(name = "Second_Phone")
