@@ -1,13 +1,8 @@
-.login1
+.login
 {
-	text-align: center;
+	text-align: left;
 	font-family: 'Arial', sans-serif;
-}
-
-.login1
-{
-	text-align: center;
-	font-family: 'Arial', sans-serif;
+	background-color: #ffffff;	
 }
 
 .main
@@ -23,5 +18,5 @@
   	min-height: 100vh; /* These two lines are counted as one :-)       */
   	display: flex;
   	align-items: center;
-  	font-family: 'Arial', sans-serif;
+  	text-align: center;
 }
