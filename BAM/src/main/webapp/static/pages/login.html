@@ -1,16 +1,18 @@
 <div class = "vertical-center">
 	<div class = "row">
 		<div class = "login col-xs-6">
-			<h3>Email</h3>
-			<input type="text" ng-model="user.email" placeholder="email" required>
-			<br>
-			
-			<h3>Password</h3>
-			<input type="password" ng-model="user.password" placeholder="" required>
-			<br>
-			<br>
-			
-			<input type="submit" class="btn btn-primary" value="LOGIN">
+			<form name = "loginForm" action="login()">
+				<h3>Email</h3>
+				<input type="text" class="form-control" ng-model="user.email" placeholder="" required>
+				<br>
+				
+				<h3>Password</h3>
+				<input type="password" class="form-control" ng-model="user.password" placeholder="" required>
+				<br>
+				<br>
+				
+				<input type="submit" class="btn btn-primary btn-lg"value="LOGIN">
+			</form>
 		</div>
 		<div class = "col-xs-6">
 			<img src="static/img/revature_logo.png" width="90%">
