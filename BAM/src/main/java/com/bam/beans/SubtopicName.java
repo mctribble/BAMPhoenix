@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -25,9 +26,11 @@ public class SubtopicName {
 	private String name;
 	
 	@Column(name="Subtopic_Topic")
+	@Autowired
 	private TopicName topic;
 	
 	@Column(name="Subtopic_Type")
+	@Autowired
 	private SubtopicType type;
 
 	public SubtopicName() {
