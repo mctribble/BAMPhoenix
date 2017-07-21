@@ -4,6 +4,8 @@ app.config(function($routeProvider, $locationProvider){
 	$routeProvider.when("/",{
 		templateUrl: "static/pages/login.html",
 		controller: 'loginCtl'
+	}).when("/allbatches",{
+		templateUrl:"static/pages/allbatches.html"
 	}).when("/register",{
 		templateUrl: "static/pages/register.html"
 	}).otherwise({redirectTo: '/'})
