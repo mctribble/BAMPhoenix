@@ -2,11 +2,15 @@ package com.bam.beans;
 
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -37,13 +41,13 @@ public class Batches {
 	@NotEmpty(message="End date cannot be empty")
 	private Timestamp endDate;
 	
-	@Column(name="Trainer_ID")
-	@NotEmpty(message="Trainer ID cannot be empty")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="Trainer_ID", referencedColumnName = "User_Id")
 	@Autowired
 	private Users trainer;
 	
-	@Column(name="Batch_Type_ID")
-	@NotEmpty(message="Batch type cannot be empty")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="Batch_Type_ID", referencedColumnName = "Batch_Type_ID")
 	@Autowired
 	private BatchType type;
 
