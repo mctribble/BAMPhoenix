@@ -17,12 +17,12 @@ app.controller('CalendarController',function($scope, $http) {
      
     //This will call onLoad and you can assign the values the way you want to the calendar
     //here DataRetriever.jsp will give me array of JSON data generated from the database data
-    $http.get('DataRetriever.jsp').success(function(data) {
-        for(var i = 0; i < data.length; i++)
-        {
-            $scope.events[i] = {id:data[i].id, title: data[i].task,start: new Date(data[i].start), end: new Date(data[i].end),allDay: false};
-        }
-    });
+//    $http.get('DataRetriever.jsp').success(function(data) {
+//        for(var i = 0; i < data.length; i++)
+//        {
+//            $scope.events[i] = {id:data[i].id, title: data[i].task,start: new Date(data[i].start), end: new Date(data[i].end),allDay: false};
+//        }
+//    });
      
     /*
     //to explicitly add events to the calendar
