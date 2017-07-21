@@ -19,6 +19,7 @@
 *.rar
 *.mf
 STUB/target
+BAM/target
 
 pom.properties
 MANIFEST.MF
