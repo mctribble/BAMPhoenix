@@ -1,9 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: ValFirpo
-=======
-Built-By: David
->>>>>>> 976f380d8019674cbc628e4418313dc321b4daf2
+Built-By: younm
 Build-Jdk: 1.8.0_131
 Created-By: Maven Integration for Eclipse
 
