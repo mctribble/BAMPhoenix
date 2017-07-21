@@ -46,6 +46,13 @@ public class Batches {
 	@Autowired
 	private Users trainer;
 	
+		/*
+		 * The trainer of a batch is stored in the trainer field.  It is vitally
+		 * important that if a user is a trainer, that the batch ID of the user's
+		 * table is empty.  All information about a trainer's batch is stored in
+		 * this table.
+		 */
+	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="Batch_Type_ID", referencedColumnName = "Batch_Type_ID")
 	@Autowired

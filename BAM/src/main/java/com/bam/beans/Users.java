@@ -52,9 +52,9 @@ public class Users {
 								
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="BATCH_ID", referencedColumnName = "BATCH_ID")
-	@Autowired
-	private Batches batch;
-	
+	@Autowired					// Batch ID should only be used for associates.  DO NOT use this
+	private Batches batch;		// field to assign a batch to a trainer.  It should be null for
+								// trainers and admins.  A trainer is assigned in the Batches table.
 	@Column(name = "Main_Phone")
 	@NotEmpty(message="Primary phone cannot be empty")
 	private String phone;
@@ -65,8 +65,8 @@ public class Users {
 	@Column(name = "Skype_ID")
 	private String skype;
 	
-	@Column(name = "Password_Bak")
-	private String pwd2;
+	@Column(name = "Password_Bak")		// This is a backup password that will be used when
+	private String pwd2;				// the user needs to reset their password.
 
 	public Users() {
 		super();
