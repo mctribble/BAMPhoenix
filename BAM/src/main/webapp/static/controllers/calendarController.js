@@ -1,5 +1,4 @@
-angular.module('myCalendarApp', ['ui.calendar']);
-function CalendarCtrl($scope, $http) {
+app.controller('CalendarController',function($scope, $http) {
      
     var date = new Date();
     var d = date.getDate();
@@ -123,4 +122,4 @@ function CalendarCtrl($scope, $http) {
      
     /* event sources array*/
     $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
-}
+});
