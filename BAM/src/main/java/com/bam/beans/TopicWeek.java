@@ -1,10 +1,14 @@
 package com.bam.beans;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -22,11 +26,13 @@ public class TopicWeek {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Week_ID_SEQ")
 	private Integer id;
 	
-	@Column(name="Topic_Name_ID")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="Topic_Name_ID", referencedColumnName = "Topic_ID")
 	@Autowired
 	private TopicName topicId;
 	
-	@Column(name="Topic_Batch_ID")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="Topic_Batch_ID", referencedColumnName = "Batch_ID")
 	@Autowired
 	private Batches batchId;
 
