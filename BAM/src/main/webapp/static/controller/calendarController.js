@@ -8,12 +8,12 @@
 *
 */
 
-angular.module('myCalendarApp', ['ngRoute'])
+//angular.module('myCalendarApp', ['ngRoute'])
 
-    .constant('uiCalendarConfig', {
+  var app =  app.constant('uiCalendarConfig', {
         calendars : {}
     })
-    .controller('uiCalendarCtrl', ['$scope', '$locale',
+  app.controller('uiCalendarCtrl', ['$scope', '$locale',
         function ($scope, $locale) {
 
             var sources = $scope.eventSources;
