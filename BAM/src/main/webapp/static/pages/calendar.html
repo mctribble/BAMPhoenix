@@ -7,10 +7,19 @@
     <h4>{{alertMessage}}</h4>
 </div>
 <ul class="unstyled">
+                            <li ng-repeat="e in events">
+                                <div class="alert alert-info">
+                                    <a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>
+                                    <b> <input ng-model="e.title"></b> 
+                                    {{e.start | date:"MMM dd"}} - {{e.end | date:"MMM dd"}}
+                                </div>
+                            </li>
+                        </ul>
+<!-- <ul class="unstyled">
     <li ng-repeat="e in events | filter:currentDate">
         <div class="alert alert-info">
             <a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>
             <b> {{e.title}}</b> - {{e.start | date:"MMM dd"}}
         </div>
     </li>
-</ul>
+</ul> -->
