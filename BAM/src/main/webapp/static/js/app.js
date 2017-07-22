@@ -7,14 +7,11 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/register",{
 		templateUrl: "static/pages/register.html"
 
+
 	})
 	.when("/home",{
 		templateUrl: "static/pages/calendar.html",
-<<<<<<< HEAD
-		controller: "CalendarController"
-=======
 		controller: 'uiCalendarCtrl'
 
->>>>>>> master
 	}).otherwise({redirectTo: '/'})
 });
