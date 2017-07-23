@@ -24,10 +24,10 @@ public class CurriculumController {
 	
 	@RequestMapping(value="Curriculum", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
-	public List<Curriculum> getAllTopics(HttpServletRequest request){
+	public List<Topic> getAllTopics(HttpServletRequest request){
 		
-		return  s.getCurriculumById(Integer.parseInt(request.getParameter("id")));
-		// s.getTopicsByCurriculum(c);
+		 Curriculum c = (s.getCurriculumById(Integer.parseInt(request.getParameter("id")))).get(0);
+		  return s.getTopicsByCurriculum(c);
 		
 	}
 }
