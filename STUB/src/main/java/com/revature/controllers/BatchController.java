@@ -15,24 +15,16 @@ import com.revature.beans.Curriculum;
 import com.revature.service.Service;
 
 @RestController
-@RequestMapping(value="/batch/")
+@RequestMapping(value="/Batch/")
 public class BatchController {
 	
 	@Autowired
 	Service s;
 	
-	@RequestMapping(value="trainer", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="Trainer", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Batch> getAllBatches(HttpServletRequest request){
 		return s.getBatchByTrainer(request.getParameter("email"));
 	}
-	
-	/*@RequestMapping(value="cur", method=RequestMethod.GET, produces="application/json")
-	@ResponseBody
-	public Curriculum getCurriculum(HttpServletRequest request){
-		System.out.println("hello");
-		Integer id = Integer.parseInt(request.getParameter("id"));
-		return s.getCurriculumById(id);
-	}*/
 	
 }
