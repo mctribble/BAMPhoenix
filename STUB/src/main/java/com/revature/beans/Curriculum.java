@@ -11,7 +11,7 @@ public class Curriculum {
 
 	@Id
 	@Column(name="CURRICULUM_ID")
-	private Integer curriculum_id;
+	private Integer curriculumId;
 	
 	@Column(name="C_NAME")
 	private String name;
@@ -21,11 +21,11 @@ public class Curriculum {
 	}
 
 	public Integer getCurriculum_id() {
-		return curriculum_id;
+		return curriculumId;
 	}
 
 	public void setCurriculum_id(Integer curriculum_id) {
-		this.curriculum_id = curriculum_id;
+		this.curriculumId = curriculum_id;
 	}
 
 	public String getName() {
@@ -38,6 +38,6 @@ public class Curriculum {
 
 	@Override
 	public String toString() {
-		return "Curriculum [curriculum_id=" + curriculum_id + ", name=" + name + "]";
+		return "Curriculum [curriculum_id=" + curriculumId + ", name=" + name + "]";
 	}
 }

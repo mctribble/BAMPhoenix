@@ -35,7 +35,7 @@ public class Service {
 		return daot.findByCurriculum(cu);
 	}
 	
-	public Curriculum getCurriculumById(int id){
-		return daoc.findByCurriculum_id(id);
+	public List<Curriculum> getCurriculumById(int id){
+		return daoc.findByCurriculumId(id);
 	}
 }
