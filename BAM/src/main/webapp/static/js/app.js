@@ -8,5 +8,7 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl:"static/pages/allbatches.html"
 	}).when("/register",{
 		templateUrl: "static/pages/register.html"
+	}).when("/update",{
+		templateUrl: "static/pages/update.html"
 	}).otherwise({redirectTo: '/'})
 });
