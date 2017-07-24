@@ -14,5 +14,7 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/associates",{
 		templateUrl: "static/pages/ViewAssociates.html",
 		controller: "associatesController"
+	}).when("/update",{
+		templateUrl: "static/pages/update.html"
 	}).otherwise({redirectTo: '/'});
 });
