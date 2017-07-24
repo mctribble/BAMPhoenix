@@ -8,12 +8,11 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl:"static/pages/allbatches.html"
 	}).when("/register",{
 		templateUrl: "static/pages/register.html"
-
-
-	})
-	.when("/home",{
+	}).when("/home",{
 		templateUrl: "static/pages/calendar.html",
 		controller: 'uiCalendarCtrl'
-
-	}).otherwise({redirectTo: '/'})
+	}).when("/associates",{
+		templateUrl: "static/pages/ViewAssociates.html",
+		controller: "associatesController"
+	}).otherwise({redirectTo: '/'});
 });
