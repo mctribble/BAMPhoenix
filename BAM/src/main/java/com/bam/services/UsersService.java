@@ -16,5 +16,12 @@ public class UsersService {
 	
 	public List<Users> findAllUsers(){
 		return dao.findAll();
+		
 	}
+	
+	public Users findUserByEmail(String email){
+		return dao.findByEmail(email);
+	}
+	
+	
 }
