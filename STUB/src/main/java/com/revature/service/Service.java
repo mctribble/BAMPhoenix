@@ -13,6 +13,7 @@ import com.revature.dao.TopicRepository;
 
 public class Service {
 	
+	//Repositorys used to abstract dao calls
 	@Autowired
 	BatchRepository daob;
 	
@@ -22,6 +23,7 @@ public class Service {
 	@Autowired
 	CurriculumRepository daoc;
 	
+	//Abstraction of the dao calls
 	public Batch getBatchById(int id){
 		return daob.findByBatchId(id);
 	}
