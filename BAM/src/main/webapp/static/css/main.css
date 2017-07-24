@@ -9,7 +9,8 @@
 .main
 {
 	margin-top: 50px;
-	background-color: #f16925;		
+	/*background-color: #f16925;*/
+	background-image: url("../img/backGround.jpg");		
 }
 
 
