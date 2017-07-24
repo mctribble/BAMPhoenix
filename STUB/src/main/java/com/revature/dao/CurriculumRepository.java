@@ -8,7 +8,11 @@ import org.springframework.stereotype.Repository;
 import com.revature.beans.Curriculum;
 import java.lang.Integer;
 
+//DAO that interacts with an RDS
+//Used for batch queries
 @Repository
 public interface CurriculumRepository extends JpaRepository<Curriculum, Integer>{
+	
+	//gets curriculums by id (should only be one but it needs to return a list)
 	public List<Curriculum> findByCurriculumId(Integer curriculumId);
 }
