@@ -8,5 +8,12 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl:"static/pages/allbatches.html"
 	}).when("/register",{
 		templateUrl: "static/pages/register.html"
+
+
+	})
+	.when("/home",{
+		templateUrl: "static/pages/calendar.html",
+		controller: 'uiCalendarCtrl'
+
 	}).otherwise({redirectTo: '/'})
 });
