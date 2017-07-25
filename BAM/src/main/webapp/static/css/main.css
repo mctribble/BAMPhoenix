@@ -82,6 +82,31 @@
 }
 
 /***** 2.0 NAVBAR STYLING *****/
+.full-navbar {
+	width: 100%;
+	background-color: #3379b7;
+	height: 40px;
+	border-radius: 5px;
+}
+
+.full-navbar ul {
+	list-style: none;
+	display: inline-block;
+}
+
+.full-navbar ul li {
+	display: inline;
+	padding-right: 20px;
+	font-family: "Audimat";
+	font-size: 26px;
+}
+
+.full-navbar ul li a {
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+}
+
 #myNavbar
 {
 	color: #000000;
