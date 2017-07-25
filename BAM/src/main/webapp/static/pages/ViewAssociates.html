@@ -2,7 +2,29 @@
 	<div class="searchbox-container">
 		<input type="text" ng-model="searchBox" />
 	</div>
-	<div class="header">
+	<table class="associates">
+		<tr class="header">
+			<td ng-click="order = fname" class="head">First Name</td>
+			<td ng-click="order = mname" class="head">Middle Name</td>
+			<td ng-click="order = lname" class="head">Last Name</td>
+			<td ng-click="order = email" class="head">Email</td>
+			<td ng-click="order = batchId" class="head">Batch Id</td>
+			<td ng-click="order = mPhone" class="head">Main Phone</td>
+			<td ng-click="order = sPhone" class="head">Secondary Phone</td>
+			<td ng-click="order = skype" class="head">Skype</td>
+		</tr>
+		<tr class="associate" ng-repeat="a in associateList | filter:searchBox | orderBy:order">
+			<td class="value fname">{{a.fname}}</td>
+			<td class="value mname">{{a.mname}}</td>
+			<td class="value lname">{{a.lname}}</td>
+			<td class="value email">{{a.email}}</td>
+			<td class="value batchId">{{a.batchId}}</td>
+			<td class="value mPhone">{{a.mPhone}}</td>
+			<td class="value sPhone">{{a.sPhone}}</td>
+			<td class="value skype">{{a.skype}}</td>
+		</tr>
+	</table>
+	<!-- <div class="header">
 		<span ng-click="order = fname" class="head">First Name</span>
 		<span ng-click="order = mname" class="head">Middle Name</span>
 		<span ng-click="order = lname" class="head">Last Name</span>
@@ -21,5 +43,5 @@
 		<span id="mPhone" class="value">{{a.mPhone}}</span>
 		<span id="sPhone" class="value">{{a.sPhone}}</span>
 		<span id="skype" class="value">{{a.skype}}</span>
-	</div>
+	</div> -->
 </div>
