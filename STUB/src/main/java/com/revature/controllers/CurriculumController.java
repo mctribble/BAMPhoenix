@@ -15,19 +15,23 @@ import com.revature.beans.Curriculum;
 import com.revature.beans.Topic;
 import com.revature.service.Service;
 
+//Set up REST controller mapping
 @RestController
 @RequestMapping(value="/Topic/")
 public class CurriculumController {
 	
+	//Autowire in service class to make DAO calls
 	@Autowired
 	Service s;
 	
+	//Mapping for the call to get a set of topics for the curriculum id passed in through GET
 	@RequestMapping(value="Curriculum", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
-	public List<Curriculum> getAllTopics(HttpServletRequest request){
+	public List<Topic> getAllTopics(HttpServletRequest request){
+		//Gets Curriculum from the id passed in through the GET request
+		Curriculum c = (s.getCurriculumById(Integer.parseInt(request.getParameter("id")))).get(0);
 		
-		return  s.getCurriculumById(Integer.parseInt(request.getParameter("id")));
-		// s.getTopicsByCurriculum(c);
-		
+		//Returns the set of topics that the curriculum uses
+		return s.getTopicsByCurriculum(c);
 	}
 }

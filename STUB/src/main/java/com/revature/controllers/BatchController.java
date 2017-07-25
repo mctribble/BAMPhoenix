@@ -11,18 +11,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.beans.Batch;
+import com.revature.beans.Curriculum;
 import com.revature.service.Service;
 
+//Set up REST Controller mapping
 @RestController
 @RequestMapping(value="/Batch/")
 public class BatchController {
-
+	
+	//Autowired service class
 	@Autowired
 	Service s;
 	
+	//Mapping for GET Requests to return JSON to the client
 	@RequestMapping(value="Trainer", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Batch> getAllBatches(HttpServletRequest request){
+		//returns a list of batches that takes in the email of the trainer from GET
 		return s.getBatchByTrainer(request.getParameter("email"));
 	}
 	

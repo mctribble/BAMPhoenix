@@ -29,9 +29,11 @@ public class Batch {
 	@JoinColumn(name="CURRICULUM", referencedColumnName = "CURRICULUM_ID")
 	private Curriculum curriculum;
 	
+	//Batch Start Date
 	@Column(name="START_DATE")
 	private Timestamp startDate;
 	
+	//Batch End Date
 	@Column(name="END_DATE")
 	private Timestamp endDate;
 	
