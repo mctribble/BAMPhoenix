@@ -1,14 +1,25 @@
 <div class="associates-container" >
-	<div class="associate" ng-repeat="a in associateList">
+	<div class="searchbox-container">
+		<input type="text" ng-model="searchBox" />
+	</div>
+	<div class="header">
+		<span ng-click="order = fname" class="head">First Name</span>
+		<span ng-click="order = mname" class="head">Middle Name</span>
+		<span ng-click="order = lname" class="head">Last Name</span>
+		<span ng-click="order = email" class="head">Email</span>
+		<span ng-click="order = batchId" class="head">Batch Id</span>
+		<span ng-click="order = mPhone" class="head">Main Phone</span>
+		<span ng-click="order = sPhone" class="head">Secondary Phone</span>
+		<span ng-click="order = skype" class="head">Skype</span>
+	</div>
+	<div class="associate" ng-repeat="a in associateList | filter:searchBox | orderBy:order">
 		<span id="fname" class="value">{{a.fname}}</span>
-		<span id="fname" class="value">{{a.mname}}</span>
-		<span id="fname" class="value">{{a.lname}}</span>
-		<span id="fname" class="value">{{a.email}}</span>
-		<span id="fname" class="value">{{a.batchId}}</span>
-		<span id="fname" class="value">{{a.mPhone}}</span>
-		<span id="fname" class="value">{{a.sPhone}}</span>
-		<span id="fname" class="value">{{a.skype}}</span>
-		
-		
+		<span id="mname" class="value">{{a.mname}}</span>
+		<span id="lname" class="value">{{a.lname}}</span>
+		<span id="email" class="value">{{a.email}}</span>
+		<span id="batchId" class="value">{{a.batchId}}</span>
+		<span id="mPhone" class="value">{{a.mPhone}}</span>
+		<span id="sPhone" class="value">{{a.sPhone}}</span>
+		<span id="skype" class="value">{{a.skype}}</span>
 	</div>
 </div>
