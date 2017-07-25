@@ -36,7 +36,7 @@ public class Subtopic {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="SUBTOPIC_BATCH_ID", referencedColumnName = "BATCH_ID")
 	@Autowired
-	private Batches batch;
+	private Batch batch;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="SUBTOPIC_STATUS_ID", referencedColumnName = "STATUS_ID")
@@ -50,7 +50,7 @@ public class Subtopic {
 		super();
 	}
 
-	public Subtopic(SubtopicName subtopicName, Batches batch, SubtopicStatus status, Timestamp subtopicDate) {
+	public Subtopic(SubtopicName subtopicName, Batch batch, SubtopicStatus status, Timestamp subtopicDate) {
 		super();
 		this.subtopicName = subtopicName;
 		this.batch = batch;
@@ -58,7 +58,7 @@ public class Subtopic {
 		this.subtopicDate = subtopicDate;
 	}
 
-	public Subtopic(int subtopicId, SubtopicName subtopicName, Batches batch, SubtopicStatus status,
+	public Subtopic(int subtopicId, SubtopicName subtopicName, Batch batch, SubtopicStatus status,
 			Timestamp subtopicDate) {
 		super();
 		this.subtopicId = subtopicId;
@@ -84,11 +84,11 @@ public class Subtopic {
 		this.subtopicName = subtopicName;
 	}
 
-	public Batches getBatch() {
+	public Batch getBatch() {
 		return batch;
 	}
 
-	public void setBatch(Batches batch) {
+	public void setBatch(Batch batch) {
 		this.batch = batch;
 	}
 

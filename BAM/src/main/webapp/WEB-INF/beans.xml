@@ -52,6 +52,6 @@
 	
 	
 	<bean name="usersService" class="com.bam.services.UsersService"></bean>
-	<bean name="batchesService" class="com.bam.services.BatchesService"></bean>
+	<bean name="batchesService" class="com.bam.services.BatchService"></bean>
 	
 </beans>

@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Entity
 @Table(name = "batches")
-public class Batches {
+public class Batch {
 	
 	@Id
 	@Column(name="Batch_ID")
@@ -58,11 +58,11 @@ public class Batches {
 	@Autowired
 	private BatchType type;
 
-	public Batches() {
+	public Batch() {
 		super();
 	}
 
-	public Batches(Integer id, String name, Timestamp startDate, Timestamp endDate, Users trainer, BatchType type) {
+	public Batch(Integer id, String name, Timestamp startDate, Timestamp endDate, Users trainer, BatchType type) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -72,7 +72,7 @@ public class Batches {
 		this.type = type;
 	}
 
-	public Batches(String name, Timestamp startDate, Timestamp endDate, Users trainer, BatchType type) {
+	public Batch(String name, Timestamp startDate, Timestamp endDate, Users trainer, BatchType type) {
 		super();
 		this.name = name;
 		this.startDate = startDate;
