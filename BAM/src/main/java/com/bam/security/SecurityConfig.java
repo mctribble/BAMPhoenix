@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,18 +27,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 	
 	@Override
-    protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/static/**").permitAll();
-        http
-          .authorizeRequests()
-          	.antMatchers("/login*").anonymous()
-          	.anyRequest().authenticated()
-          	.and()
-          .formLogin()
-          	.permitAll()
-          	.failureUrl("/login.html?error=true")
-          	.and()
-          	.csrf().disable();
-        
-    }
+	 public void configure(WebSecurity web) throws Exception {
+	  web.ignoring().antMatchers("/index.html", "/static/**", "/");
+	 }
+	 
+	@Override
+	 protected void configure(HttpSecurity http) throws Exception {
+	  http
+	   .headers().disable()
+	   .csrf().disable()
+	   .authorizeRequests()
+	    .anyRequest().authenticated()
+	    .and()
+	   .formLogin()
+	    .loginProcessingUrl("/authenticate")
+	    .usernameParameter("username")
+	    .passwordParameter("password")
+	    .permitAll()
+	    .and()
+	   .logout()
+	    .logoutUrl("/logout")
+	    .deleteCookies("JSESSIONID")
+	    .permitAll()
+	    .and();
+		
+	 }
 }

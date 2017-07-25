@@ -28,7 +28,9 @@ public class UsersDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		Users user = dao.findUserByEmail(username);
-
+		System.out.println(username);
+		System.out.println(user);
+		
 		return buildUserForAuthentication(user, buildUserAuthority(user));
 	}
 
