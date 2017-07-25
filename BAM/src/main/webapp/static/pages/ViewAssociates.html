@@ -4,14 +4,14 @@
 	</div>
 	<table class="associates">
 		<tr class="header">
-			<td ng-click="order = fname" class="head">First Name</td>
-			<td ng-click="order = mname" class="head">Middle Name</td>
-			<td ng-click="order = lname" class="head">Last Name</td>
-			<td ng-click="order = email" class="head">Email</td>
-			<td ng-click="order = batchId" class="head">Batch Id</td>
-			<td ng-click="order = mPhone" class="head">Main Phone</td>
-			<td ng-click="order = sPhone" class="head">Secondary Phone</td>
-			<td ng-click="order = skype" class="head">Skype</td>
+			<td ng-click="order = 'fname'" class="head">First Name</td>
+			<td ng-click="order = 'mname'" class="head">Middle Name</td>
+			<td ng-click="order = 'lname'" class="head">Last Name</td>
+			<td ng-click="order = 'email'" class="head">Email</td>
+			<td ng-click="order = 'batchId'" class="head">Batch Id</td>
+			<td ng-click="order = 'mPhone'" class="head">Main Phone</td>
+			<td ng-click="order = 'sPhone'" class="head">Secondary Phone</td>
+			<td ng-click="order = 'skype'" class="head">Skype</td>
 		</tr>
 		<tr class="associate" ng-repeat="a in associateList | filter:searchBox | orderBy:order">
 			<td class="value fname">{{a.fname}}</td>
