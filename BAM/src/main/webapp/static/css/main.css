@@ -71,8 +71,8 @@
 }
 
 .login-btn {
-    border: 2px outset #5b93c5 ;
-    background-color: #3379b7 ;
+    border: 2px outset #5b93c5;
+    background-color: #3379b7;
     border-radius: 5px;
     padding: 5px 10px;
     color: white;
@@ -82,11 +82,55 @@
 }
 
 /***** 2.0 NAVBAR STYLING *****/
+.full-navbar {
+	width: 100%;
+	background-color: #3379b7;
+	height: 40px;
+	border-radius: 5px;
+}
+
+.full-navbar ul {
+	list-style: none;
+	display: inline-block;
+}
+
+.full-navbar ul li {
+	display: inline;
+	padding-right: 20px;
+	font-family: "Audimat";
+	font-size: 26px;
+}
+
+.full-navbar ul li a {
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.full-navbar ul li a:hover {
+	color: #c1d6e9;
+	text-shadow: 2px 2px #1e486d;
+}
+
+.full-navbar ul li a:active {
+	position: relative;
+	top: 2px;
+}
+
 #myNavbar
 {
 	color: #000000;
 	background-color: #3379b7;
 	border: solid 1px #3379b7;
+}
+
+.navbar-button {
+	font-family: "Audimat";
+	background-color: #3379b7;
+	border: 2px outset #5b93c5; 
+	border-radius: 5px;
+	font-size: 1.3em;
+	color: white;
 }
 
 /***** 3.0 FONTS *****/
