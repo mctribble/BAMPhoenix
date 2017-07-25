@@ -1,8 +1,18 @@
 package com.bam.main;
 
+import java.util.List;
+
+import com.bam.beans.Batches;
+import com.bam.services.BatchesService;
+
 public class Driver {
 	public static void main(String [] args){
-		System.out.println("Hello World!");
+		
+		
+		BatchesService bs = new BatchesService();
+		
+		
+		System.out.println("end");
 	}
 	
 }
