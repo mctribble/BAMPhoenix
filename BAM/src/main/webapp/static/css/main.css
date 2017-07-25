@@ -121,15 +121,26 @@
 {
 	color: #000000;
 	background-color: #3379b7;
-	border: solid 1px #3379b7;
+}
+
+#myNavbar ul li {
+	font-family: "Audimat";
+	border-top: 1px solid #5b93c5;
+	font-size: 1.4em;
+	padding: 0 10px;
+}
+
+#myNavbar ul li a {
+	color: white;
 }
 
 .navbar-button {
-	font-family: "Audimat";
+	font-family: "Audimat" !important;
 	background-color: #3379b7;
-	border: 2px outset #5b93c5; 
+	border: 2px outset #5b93c5;
 	border-radius: 5px;
-	font-size: 1.3em;
+	font-size: 1.4em;
+	font-family: bold;
 	color: white;
 }
 
