@@ -5,10 +5,12 @@
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
 	<context:component-scan base-package="com.revature" />
@@ -56,4 +58,13 @@
     <jpa:repositories base-package="com.revature.dao"/>
     
     <bean name="service" class="com.revature.service.Service"/>
+    
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+ 
+    <bean id="BatchRepository" class="com.revature.dao.BatchRepository"></bean>
+    <bean id="CurriculumRepository" class="com.revature.dao.CurriculumRepository"></bean>
+    <bean id="TopicRepository" class="com.revature.dao.TopicRepository"></bean>
+	<bean class="com.revature.logger.LoggerClass"></bean>
+    
+    
 </beans>
