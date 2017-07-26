@@ -22,7 +22,7 @@
 
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
-        <url-pattern>/service</url-pattern>
+        <url-pattern>*.do</url-pattern>
     </servlet-mapping>
 
     <context-param>

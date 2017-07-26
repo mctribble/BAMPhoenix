@@ -1,1 +1,1 @@
-test java folder
+test resource folder
