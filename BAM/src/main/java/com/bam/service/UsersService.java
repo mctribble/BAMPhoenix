@@ -1,4 +1,4 @@
-package com.bam.services;
+package com.bam.service;
 
 import java.util.List;
 
