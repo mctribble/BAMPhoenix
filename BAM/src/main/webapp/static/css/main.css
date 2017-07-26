@@ -18,9 +18,9 @@
 
 .main
 {
-    margin-top: 50px;
+    /*margin-top: 50px;*/
     /*background-color: #f16925 ;*/
-    background-image: url("../img/backGround.jpg");        
+    /*background-image: url("../img/backGround.jpg");*/    
 }
 
 .well {
@@ -118,7 +118,7 @@
 
 .full-navbar ul li a:hover {
 	color: #c1d6e9;
-	text-shadow: 2px 2px #1e486d;
+	/*text-shadow: 2px 2px #1e486d;*/
 }
 
 .full-navbar ul li a:active {
@@ -154,7 +154,7 @@
 }
 
 /***** 3.0 FONTS *****/
-
+/*
 @font-face {
    font-family: "Audimat";
    src: url("audimat-regular.otf");
@@ -175,7 +175,7 @@
    src: url('audimat-italic.otf');
    font-style: italic;
 }
-
+*/
 /***** 4.0 TABLES *****/
 .searchbox-container {
 	font-family: "Audimat";
