@@ -24,6 +24,7 @@ app.controller('loginCtl', function($scope, $location, $http) {
 			$location.path('/home');
 			$scope.message = true;
 			$scope.msg = 'you logged in';
+			console.log(response.data);
 		}, function error(response){
 			$location.path('/');
 			$scope.message = true;
