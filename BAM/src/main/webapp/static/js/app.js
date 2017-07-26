@@ -5,7 +5,8 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl: "static/pages/login.html",
 		controller: 'loginCtl'
 	}).when("/batchesAll",{
-		templateUrl:"static/pages/batchesAll.html"
+		templateUrl:"static/pages/batchesAll.html",
+		controller: "batchesAllCtr"
 	}).when("/register",{
 		templateUrl: "static/pages/register.html"
 	}).when("/home",{
