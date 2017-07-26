@@ -49,7 +49,9 @@
 	</bean>    
 	<!-- Find JPA Repositories -->
 	<jpa:repositories base-package="com.bam.dao" />
-
+	
+	
 	<bean name="usersService" class="com.bam.services.UsersService"></bean>
+	<bean name="batchesService" class="com.bam.services.BatchService"></bean>
 	
 </beans>

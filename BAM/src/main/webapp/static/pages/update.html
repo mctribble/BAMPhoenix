@@ -1,0 +1,75 @@
+<div class="vertical-center">
+	<div class="row login-container">
+		<div class="login col-md-8 col-lg-6">
+			<div class="login-vertical-align">
+				<div class="alert alert-danger" ng-show="controller.error">
+					There was a problem trying to update.
+				</div>
+				<form role="form" ng-submit="controller.update">
+				
+					<div class="input-group">
+						<span class="input-group-addon"> Old Password: </span> 
+						<input class="form-control" type="password" ng-model="user.old_password" placeholder="Old Password" required>
+					</div>
+					
+					<div class="input-group">
+						<span class="input-group-addon"> New Password: </span> 
+						<input class="form-control" type="password" ng-model="user.password" placeholder="New Password" required>
+					</div>
+					
+					<div class="input-group">
+						<span class="input-group-addon"> Confirm New: </span> 
+						<input class="form-control" type="password"	ng-model="user.confirm_password" placeholder="Confirm New Password"
+							required>
+					</div>
+					
+					<div class="input-group">
+						<span class="input-group-addon"> First name: </span> 
+						<input class="form-control" type="text" ng-model="user.fname" placeholder="First Name" required />
+					</div>
+					
+					<div class="input-group">
+						<span class="input-group-addon">Middle name:</span>
+						<input class="form-control" type="text" ng-model="user.mname" placeholder="Middle name" required />
+					</div>
+					
+					<div class="input-group">
+						<span class="input-group-addon">Last name:</span>
+						<input class="form-control" type="text" ng-model="user.lname" placeholder="Last name" required />
+					</div>
+					
+					<div class="input-group">
+						<span class="input-group-addon">Phone:</span>
+						<input class="form-control" type="text" ng-model="user.phone" placeholder="Phone" required />
+					</div>
+					
+					<div class="input-group">
+						<span class="input-group-addon">Alt Phone:</span>
+						<input class="form-control" type="text" ng-model="user.altPhone" placeholder="Alt Phone" required />
+					</div>
+					
+					<div class="input-group">
+						<span class="input-group-addon">Skype:</span>
+						<input class="form-control" type="text" ng-model="user.skype" placeholder="Skype" required />
+					</div>
+					
+					<div class="input-group">
+						<div class="login-btn-container">
+							<input type="submit" class="login-btn" value="UPDATE">
+						</div>
+					</div>
+					
+				</form>
+			
+			</div>
+
+		</div>
+
+ 		<div class="col-md-4 col-lg-6 revature-logo">
+ 			<div class="login-vertical-align">
+				<img src="static/img/revature_logo.png" width="90%">
+				<img src="static/img/rev_timeline.png" width="90%">
+			</div>
+		</div> 
+	</div>
+</div>

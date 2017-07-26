@@ -53,7 +53,7 @@ public class Users {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="BATCH_ID", referencedColumnName = "BATCH_ID")
 	@Autowired					// Batch ID should only be used for associates.  DO NOT use this
-	private Batches batch;		// field to assign a batch to a trainer.  It should be null for
+	private Batch batch;		// field to assign a batch to a trainer.  It should be null for
 								// trainers and admins.  A trainer is assigned in the Batches table.
 	@Column(name = "Main_Phone")
 	@NotEmpty(message="Primary phone cannot be empty")
@@ -72,7 +72,7 @@ public class Users {
 		super();
 	}
 
-	public Users(String fName, String mName, String lName, String email, String pwd, int role, Batches batch,
+	public Users(String fName, String mName, String lName, String email, String pwd, int role, Batch batch,
 			String phone, String phone2, String skype, String pwd2) {
 		super();
 		this.fName = fName;
@@ -89,7 +89,7 @@ public class Users {
 	}
 
 	public Users(int userId, String fName, String mName, String lName, String email, String pwd, int role,
-			Batches batch, String phone, String phone2, String skype, String pwd2) {
+			Batch batch, String phone, String phone2, String skype, String pwd2) {
 		super();
 		this.userId = userId;
 		this.fName = fName;
@@ -161,11 +161,11 @@ public class Users {
 		this.role = role;
 	}
 
-	public Batches getBatch() {
+	public Batch getBatch() {
 		return batch;
 	}
 
-	public void setBatch(Batches batch) {
+	public void setBatch(Batch batch) {
 		this.batch = batch;
 	}
 
