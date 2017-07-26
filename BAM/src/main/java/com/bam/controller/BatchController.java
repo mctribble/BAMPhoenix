@@ -12,17 +12,18 @@ import com.bam.beans.Batch;
 import com.bam.service.BatchService;
 
 @RestController
-@RequestMapping(value = "/AllBatches/")
+@RequestMapping(value = "/Batches/")
 public class BatchController 
 {
 	@Autowired
 	BatchService batchService;
 	
 	//@RequestMapping(value = "All", method = RequestMethod.GET, headers = "Accept=application/json")
-	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "All.do", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<Batch> getBatchAll()
 	{
+		System.out.println("in batches controller");
 		return batchService.getBatchAll();
 	}
 }
