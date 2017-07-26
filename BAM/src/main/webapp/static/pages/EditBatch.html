@@ -1,0 +1,37 @@
+<div class="header">
+	<h3>Edit A Batch</h3>
+</div>
+
+<div class="editBatch-container">
+	<div class="input-group">
+		<span class="input-group-addon">Batch Name</span>
+		<input type="text" class="form-control" ng-model="batch.name" placeholder="Batch Name" required />
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">Start Date</span>
+		<input type="date" class="form-control" ng-model="batch.startDate" required />
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">End Date</span>
+		<input type="date" class="form-control" ng-model="batch.endDate" required />
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">Trainer</span>
+		<input type="text" class="form-control" ng-model="batch.trainer.firstName" placeholder="First Name" required />
+		<input type="text" class="form-control" ng-model="batch.trainer.lastName" placeholder="Last Name" required />
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">Batch Type</span>
+		<input type="text" class="form-control" ng-model="batch.type" placeholder="Batch Type" required />
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">Add/Remove Associate</span>
+		<button class="form-control" ng-click="addRemAssociate()">Add/Remove</button>
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">Subtopics?</span>
+		<button class="form-control" ng-click="addRemSubtopic()">Add/Remove</button>
+	</div>
+	
+	
+</div>
