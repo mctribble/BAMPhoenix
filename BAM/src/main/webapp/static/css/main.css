@@ -1,9 +1,10 @@
 /*
     TABLE OF CONTENTS
     ---------------------------------------
-    1.0        LOGIN STYLING
-    2.0        NAVBAR STYLING
-    3.0        FONTS
+    1.0		LOGIN STYLING
+    2.0		NAVBAR STYLING
+    3.0		FONTS
+    4.0		TABLES
 */
 
 /***** 1.0 LOGIN STYLING *****/
@@ -83,6 +84,10 @@
     font-family: "Audimat";
     font-size: 1.4em;
     font-weight: bold;
+}
+
+.full-width {
+	width: 100%;
 }
 
 /***** 2.0 NAVBAR STYLING *****/
@@ -169,4 +174,36 @@
    font-family: 'Audimat';
    src: url('audimat-italic.otf');
    font-style: italic;
+}
+
+/***** 4.0 TABLES *****/
+.searchbox-container {
+	font-family: "Audimat";
+	font-size: 1.2em;
+}
+
+.searchbox-container input {
+	background-color: #ddd;
+	font-family: "Audimat";
+	font-size: 1.2em;
+}
+
+.associates {
+	width: 100%;
+	border: 2px solid #333;
+	margin-top: 10px;
+	font-family: "Audimat";
+	font-size: 1.2em;
+}
+
+.associates-header {
+	font-weight: bold;
+}
+
+.associates tr:nth-child(odd) {
+	background-color: #ddd;
+}
+
+.associates td {
+	padding: 0 4px;
 }

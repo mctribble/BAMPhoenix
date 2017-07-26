@@ -3,7 +3,7 @@ package com.bam.main;
 import java.util.List;
 
 import com.bam.beans.Batch;
-import com.bam.services.BatchService;
+import com.bam.service.BatchService;
 
 public class Driver {
 	public static void main(String [] args){
