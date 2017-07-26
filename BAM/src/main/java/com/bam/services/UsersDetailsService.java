@@ -26,9 +26,9 @@ public class UsersDetailsService implements UserDetailsService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-		Users user = dao.findUserByEmail(username);
-		System.out.println(username);
+	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
+		Users user = dao.findUserByEmail(email);
+		System.out.println(email);
 		System.out.println(user);
 		
 		return buildUserForAuthentication(user, buildUserAuthority(user));
