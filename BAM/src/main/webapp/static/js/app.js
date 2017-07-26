@@ -20,5 +20,8 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl: "static/pages/batchesPast.html"
 	}).when("/batchesFuture",{
 		templateUrl: "static/pages/batchesFuture.html"
+	}).when("/editBatch", {
+		templateUrl: "static/pages/EditBatch.html",
+		controller: "editBatchController"
 	}).otherwise({redirectTo: '/'});
 });
