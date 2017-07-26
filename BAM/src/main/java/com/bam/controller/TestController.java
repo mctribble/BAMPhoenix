@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.beans.Users;
-import com.bam.services.UsersService;
+import com.bam.service.UsersService;
 
 @RestController
-@RequestMapping(value="/Users/")
+@RequestMapping(value="/users/")
 public class TestController {
 
 	
 	@Autowired
 	UsersService ts;
 	
-	@RequestMapping(value="all", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="all.do", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Users> getAllUsers(){
 		return ts.findAllUsers();
