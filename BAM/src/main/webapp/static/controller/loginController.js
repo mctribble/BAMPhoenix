@@ -1,6 +1,5 @@
 app.controller('loginCtl', function($scope, $location, $http) {
 	
-	console.log("here");
 	$scope.msg;
 	$scope.logIn = function() {
 		var user = {
@@ -24,6 +23,7 @@ app.controller('loginCtl', function($scope, $location, $http) {
 			$location.path('/home');
 			$scope.message = true;
 			$scope.msg = 'you logged in';
+			//alert(response);
 		}, function error(response){
 			$location.path('/');
 			$scope.message = true;
