@@ -17,6 +17,12 @@
 							<th>Start Date</th>
 							<th>End Date</th>
 						</tr>
+						<tr ng-repeat = "batch in batchesAll">
+							<td>{{batch.name}}</td>
+							<td>{{batch.type.name}}</td>
+							<td>{{batch.startDate}}</td>
+							<td>{{batch.endDate}}</td>
+						</tr>
 					</table>
 				</div>
 			</div>
