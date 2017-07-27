@@ -11,7 +11,7 @@
 .login
 {
     text-align: left;
-    font-family: 'Arial', sans-serif;
+    /*font-family: 'Arial', sans-serif;*/
     background-color: #ffffff ;
     
 }
@@ -61,7 +61,7 @@
 .login-vertical-align {
     display: table-cell;
     vertical-align: middle;
-    font-family: "Audimat";
+    /*font-family: "Audimat";*/
     font-size: 1.4em;
 }
 
@@ -81,7 +81,7 @@
     border-radius: 5px;
     padding: 2px 15px;
     color: white;
-    font-family: "Audimat";
+    /*font-family: "Audimat";*/
     font-size: 1.4em;
     font-weight: bold;
 }
@@ -106,7 +106,7 @@
 .full-navbar ul li {
 	display: inline;
 	padding-right: 20px;
-	font-family: "Audimat";
+/* 	font-family: "Audimat"; */
 	font-size: 26px;
 }
 
@@ -133,7 +133,7 @@
 }
 
 #myNavbar ul li {
-	font-family: "Audimat";
+/* 	font-family: "Audimat"; */
 	border-top: 1px solid #5b93c5;
 	font-size: 1.4em;
 	padding: 0 10px;
@@ -178,13 +178,13 @@
 */
 /***** 4.0 TABLES *****/
 .searchbox-container {
-	font-family: "Audimat";
+/* 	font-family: "Audimat"; */
 	font-size: 1.2em;
 }
 
 .searchbox-container input {
 	background-color: #ddd;
-	font-family: "Audimat";
+/* 	font-family: "Audimat"; */
 	font-size: 1.2em;
 }
 
@@ -192,7 +192,7 @@
 	width: 100%;
 	border: 2px solid #333;
 	margin-top: 10px;
-	font-family: "Audimat";
+/* 	font-family: "Audimat"; */
 	font-size: 1.2em;
 }
 
