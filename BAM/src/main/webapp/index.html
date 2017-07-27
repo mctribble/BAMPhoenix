@@ -27,6 +27,8 @@
 <script src="static/controller/loginController.js"></script>
 <script src="static/controller/ViewAssociatesController.js"></script>
 <script src="static/controller/BatchEditController.js"></script>
+<script src="static/controller/batchesAllCtr.js"></script>
+<script src="static/controller/batchesOtherController.js"></script>
 
 <link rel="stylesheet" type="text/css"
     href="static/css/fullcalendar.css"/>
@@ -49,11 +51,11 @@
 <title>BAM</title>
 </head>
 <body class= "main">
+
+			<div ng-include="'static/pages/navbar.html'"></div>
 	<div id="page-wrap">
 		
-		<div class="container"> 
-			<div ng-include="'static/pages/navbar.html'"></div>
-		</div>
+		
 		
 		<div id="content" class="container">
 			<div class="well contentwell" ng-view></div>

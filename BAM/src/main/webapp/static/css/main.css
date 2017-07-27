@@ -11,16 +11,16 @@
 .login
 {
     text-align: left;
-    font-family: 'Arial', sans-serif;
+    /*font-family: 'Arial', sans-serif;*/
     background-color: #ffffff ;
     
 }
 
 .main
 {
-    margin-top: 50px;
+    /*margin-top: 50px;*/
     /*background-color: #f16925 ;*/
-    background-image: url("../img/backGround.jpg");        
+    /*background-image: url("../img/backGround.jpg");*/    
 }
 
 .well {
@@ -61,7 +61,7 @@
 .login-vertical-align {
     display: table-cell;
     vertical-align: middle;
-    font-family: "Audimat";
+    /*font-family: "Audimat";*/
     font-size: 1.4em;
 }
 
@@ -81,7 +81,7 @@
     border-radius: 5px;
     padding: 2px 15px;
     color: white;
-    font-family: "Audimat";
+    /*font-family: "Audimat";*/
     font-size: 1.4em;
     font-weight: bold;
 }
@@ -106,7 +106,7 @@
 .full-navbar ul li {
 	display: inline;
 	padding-right: 20px;
-	font-family: "Audimat";
+/* 	font-family: "Audimat"; */
 	font-size: 26px;
 }
 
@@ -118,7 +118,7 @@
 
 .full-navbar ul li a:hover {
 	color: #c1d6e9;
-	text-shadow: 2px 2px #1e486d;
+	/*text-shadow: 2px 2px #1e486d;*/
 }
 
 .full-navbar ul li a:active {
@@ -133,7 +133,7 @@
 }
 
 #myNavbar ul li {
-	font-family: "Audimat";
+/* 	font-family: "Audimat"; */
 	border-top: 1px solid #5b93c5;
 	font-size: 1.4em;
 	padding: 0 10px;
@@ -154,7 +154,7 @@
 }
 
 /***** 3.0 FONTS *****/
-
+/*
 @font-face {
    font-family: "Audimat";
    src: url("audimat-regular.otf");
@@ -175,16 +175,16 @@
    src: url('audimat-italic.otf');
    font-style: italic;
 }
-
+*/
 /***** 4.0 TABLES *****/
 .searchbox-container {
-	font-family: "Audimat";
+/* 	font-family: "Audimat"; */
 	font-size: 1.2em;
 }
 
 .searchbox-container input {
 	background-color: #ddd;
-	font-family: "Audimat";
+/* 	font-family: "Audimat"; */
 	font-size: 1.2em;
 }
 
@@ -192,7 +192,7 @@
 	width: 100%;
 	border: 2px solid #333;
 	margin-top: 10px;
-	font-family: "Audimat";
+/* 	font-family: "Audimat"; */
 	font-size: 1.2em;
 }
 

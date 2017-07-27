@@ -2,6 +2,8 @@ package com.bam.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,17 +14,18 @@ import com.bam.beans.Batch;
 import com.bam.service.BatchService;
 
 @RestController
-@RequestMapping(value = "/AllBatches/")
+@RequestMapping(value = "/Batches/")
 public class BatchController 
 {
 	@Autowired
 	BatchService batchService;
 	
 	//@RequestMapping(value = "All", method = RequestMethod.GET, headers = "Accept=application/json")
-	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "All.do", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public List<Batch> getBatchAll()
+	public List<Batch> getBatchAll(HttpServletRequest request)
 	{
+		System.out.println("in batches controller");
 		return batchService.getBatchAll();
 	}
 }
