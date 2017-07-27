@@ -41,7 +41,7 @@ public class Batch {
 	@NotEmpty(message="End date cannot be empty")
 	private Timestamp endDate;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="Trainer_ID", referencedColumnName = "User_Id")
 	@Autowired
 	private Users trainer;
@@ -53,7 +53,7 @@ public class Batch {
 		 * this table.
 		 */
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="Batch_Type_ID", referencedColumnName = "Batch_Type_ID")
 	@Autowired
 	private BatchType type;
