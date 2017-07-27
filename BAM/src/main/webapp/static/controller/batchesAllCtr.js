@@ -1,7 +1,5 @@
 app.controller('batchesAllCtr', function($scope, $location, $http)
-{
-	console.log("in all controller");
-	
+{	
 	$scope.batches;
 	
 	$scope.getBatchesAll = function(){
@@ -11,10 +9,8 @@ app.controller('batchesAllCtr', function($scope, $location, $http)
 			method: 'GET'
 		})
 		.then(function success(response){
-			console.log("in success all controller");
 			$location.path('/batchesAll');
 		}, function error(response){
-			console.log("in err all controller");
 			$location.path('/batchesAll');
 		});
 	}
