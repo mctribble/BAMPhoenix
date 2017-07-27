@@ -26,12 +26,25 @@
 	</div>
 	<div class="input-group">
 		<span class="input-group-addon">Add/Remove Associate</span>
-		<button class="form-control" ng-click="addRemAssociate()">Add/Remove</button>
+		<button  ng-click="addRemAssociate()">Add/Remove</button>
 	</div>
 	<div class="input-group">
 		<span class="input-group-addon">Subtopics?</span>
-		<button class="form-control" ng-click="addRemSubtopic()">Add/Remove</button>
+		<button  ng-click="addRemSubtopic()">Add/Remove</button>
 	</div>
 	
 	
+</div>
+
+<div id="users" class="hide">
+	<div class="header">
+		<span class="tab" ng-class="{active: isSet(1) }"><a ng-click="setTab(1)">Remove</a></span>
+		<span class="tab" ng-class="{active: isSet(2) }"><a ng-click="setTab(2)">Add</a></span>
+	</div>
+	<div id="inBatch" ng-show="isSet(1)">
+		<h3>inbatch</h3>
+	</div>
+	<div id="outBatch" ng-show="isSet(2)">
+		<h3>outbatch</h3>
+	</div>
 </div>
