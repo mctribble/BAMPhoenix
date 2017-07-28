@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	 public void configure(WebSecurity web) throws Exception {
-	  web.ignoring().antMatchers("/index.html", "/static/**", "/", "/users/all");
+	  web.ignoring().antMatchers("/index.html", "/static/**", "/");
 	 }
 
 	
@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	   .headers().disable()
 	   .csrf().disable()
 	   .authorizeRequests()
+	   	//.antMatchers("/Batches/**").hasRole("2")
 	    .anyRequest().authenticated()
 	    .and()
 	   .formLogin()

@@ -15,6 +15,10 @@ public class BatchService
 	@Autowired
 	BatchRepository bRep;
 	
+	public void addOrUpdateBatch(Batch b){
+		bRep.save(b);
+	}
+	
 	public Batch getBatchById(Integer id)
 	{
 		return bRep.findById(id);

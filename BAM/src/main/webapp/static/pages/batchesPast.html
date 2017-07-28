@@ -24,6 +24,13 @@
 							<th>Start Date</th>
 							<th>End Date</th>
 						</tr>
+						<tr
+							ng-repeat="batch in batchesPast | orderBy:order |filter:searchBox">
+							<td>{{batch.name}}</td>
+							<td>{{batch.type.name}}</td>
+							<td>{{batch.startDate | date:"MM/dd/yyyy"}}</td>
+							<td>{{batch.endDate | date:"MM/dd/yyyy"}}</td>
+						</tr>
 					</table>
 				</div>
 			</div>
