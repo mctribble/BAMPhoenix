@@ -3,16 +3,17 @@
 		<div class="login full-width">
 			<ul class="nav nav-tabs">
 				<li class="nav-link active"><a href="#/batchesAll">All</a></li>
-				<li class="nav-link" ><a href="#/batchesPast">Past</a></li>
+				<li class="nav-link"><a href="#/batchesPast">Past</a></li>
 				<li class="nav-link"><a href="#/batchesFuture">Future</a></li>
 			</ul>
-			
+
 			<div class="row">
 				<div class="col-12 batches">
-					<h3>All Batches</h3>
-					<div class = "input-group">
-						<span class="input-group-addon"> Search: </span>
-						<input type = "text" class="form-control" ng-model = "searchBox">
+					<br>
+					<h3 style="text-align:center">All Batches</h3>
+					<div class="input-group">
+						<span class="input-group-addon"> Search: </span> <input
+							type="text" class="form-control" ng-model="searchBox">
 					</div>
 					<table class="table">
 						<tr>
@@ -21,7 +22,8 @@
 							<th>Start Date</th>
 							<th>End Date</th>
 						</tr>
-						<tr ng-repeat = "batch in batchesAll | orderBy:order |filter:searchBox">
+						<tr
+							ng-repeat="batch in batchesAll | orderBy:order |filter:searchBox">
 							<td>{{batch.name}}</td>
 							<td>{{batch.type.name}}</td>
 							<td>{{batch.startDate | date:"MM/dd/yyyy"}}</td>
