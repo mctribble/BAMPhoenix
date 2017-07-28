@@ -23,20 +23,7 @@
 	</div>
 </div>
 
-<!-- <p ng-hide="message">{{msg}}</p> -->
-<div class="calendar" ng-model="eventSources" calendar="myCalendar" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
-<div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
-    <h4>{{alertMessage}}</h4>
-</div>
-<ul class="unstyled">
-                            <li ng-repeat="e in events">
-                                <div class="alert alert-info">
-                                    <a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>
-                                    <b> <input ng-model="e.title"></b> 
-                                    {{e.start | date:"MMM dd"}} - {{e.end | date:"MMM dd"}}
-                                </div>
-                            </li>
-                        </ul>
+
                         
 <!-- <ul class="unstyled">
     <li ng-repeat="e in events | filter:currentDate">
