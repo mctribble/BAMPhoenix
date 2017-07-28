@@ -3,13 +3,20 @@
 		<div class="login full-width">
 			<ul class="nav nav-tabs">
 				<li class="nav-link"><a href="#/batchesAll">All</a></li>
-				<li class="nav-link active" ><a href="#/batchesPast">Past</a></li>
+				<li class="nav-link active"><a href="#/batchesPast">Past</a></li>
 				<li class="nav-link"><a href="#/batchesFuture">Future</a></li>
 			</ul>
-			
+
 			<div class="row">
 				<div class="col-12 batches">
-					<h3>Past Batches</h3>
+					<br>
+					<h3 style="text-align:center">Past Batches</h3>
+					<div class="input-group">
+						<span class="input-group-addon"> Search: </span> <input
+							type="text" class="form-control" ng-model="searchBox">
+					</div>
+					
+					
 					<table class="table">
 						<tr>
 							<th>Name</th>
