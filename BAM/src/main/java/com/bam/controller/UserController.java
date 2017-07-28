@@ -35,16 +35,20 @@ public class UserController {
 		return userService.findUsersInBatch(batchId);
 	}
 	
+	@RequestMapping(value="Drop.do", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
 	public List<Users> dropUserFromBatch(HttpServletRequest request) {
 		//Get the user id from the request
 		int userId = Integer.parseInt( request.getParameter("userId") );
+		Users user = userService.findUserById( userId );
+		int batchId = user.getBatch().getId();
 		
+		//Drop user from the batch
+		user.setBatch(null);
+		userService.addOrUpdateUser(user);
 		
-		Users u = userService.findUserById( userId );
-		u.setBatch(null);
-		userService.addOrUpdateUser(u);
-		
-		return null;
+		//Return users from batch without the user
+		return userService.findUsersInBatch(batchId);
 	}
 	
 }
