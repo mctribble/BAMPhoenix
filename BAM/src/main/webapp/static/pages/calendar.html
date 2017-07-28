@@ -1,7 +1,29 @@
 
 
+<div class="row">
+	<div class="col-md-10">
+		<div class="calendar" ng-model="eventSources" calendar="myCalendar" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+		<div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
+		    <h4>{{alertMessage}}</h4>
+		</div>
+		<div class="alert-success calAlert" ng-show="resourceMessage != undefined && resourceMessage != ''">
+		    <h4>{{resourceMessage}}</h4>
+		</div>
+	</div>
+	<div class="col-md-2 container">
+		<div class="well contentwell">
+			<h3>Colors</h3>
+			<ul class="list-unstyled">
+				<li>Java</li>
+				<li>SQL</li>
+				<li>Web</li>
+				<li>JQuery</li>
+			</ul>
+		</div>
+	</div>
+</div>
 
-
+<!-- <p ng-hide="message">{{msg}}</p> -->
 <div class="calendar" ng-model="eventSources" calendar="myCalendar" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
 <div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
     <h4>{{alertMessage}}</h4>
