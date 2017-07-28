@@ -12,7 +12,7 @@ app.controller("editBatchController",function($scope){
 	$scope.batch.startDate = new Date($scope.batch.startDate);
 	$scope.batch.endDate = new Date($scope.batch.endDate);
 	//split the users into two different arrays (in batch and not in batch)
-	$scope.users = response.usersArr;
+	
 	
 	//https://codepen.io/jasoncluck/pen/iDcbh
 	$scope.tab = 1;
