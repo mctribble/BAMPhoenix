@@ -1,3 +1,4 @@
+
 package com.bam.service;
 
 import java.util.List;
@@ -28,6 +29,9 @@ public class UsersService {
 		
 	}
 	
+	public List<Users> findByRole(int role){
+		return dao.findByRole(role);
+	}
 	public Users findUserById(int userId){
 		return dao.findByUserId(userId);
 	}
@@ -47,9 +51,5 @@ public class UsersService {
 		//Return users in the batch with a null
 		return dao.findByBatch(null);
 	}
-	
-	
-	
-	
 	
 }

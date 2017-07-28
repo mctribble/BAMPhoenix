@@ -33,6 +33,18 @@ public class UserController {
 		return userService.findAllUsers();
 	}
 	
+	@RequestMapping(value="AllTrainers.do", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public List<Users> getAllTrainers(){
+		return userService.findByRole(2);
+	}
+	
+	@RequestMapping(value="AllAssociates.do", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public List<Users> getAllAssociates(){
+		return userService.findByRole(1);
+	}
+	
 	@RequestMapping(value="InBatch.do", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Users> getUsersInBatch(HttpServletRequest request) {
@@ -59,22 +71,6 @@ public class UserController {
 		return userService.findUsersInBatch(batchId);
 	}
 	
-	@RequestMapping(value="Remove.do", method=RequestMethod.POST, produces="application/json")
-	@ResponseBody
-	public List<Users> removeUser(HttpServletRequest request) {
-		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter("userId") );
-		Users user = userService.findUserById( userId );
-		int batchId = user.getBatch().getId();
-		
-		//Set the user as inactive
-		user.setRole(0);
-		userService.addOrUpdateUser(user);
-		
-		//Return users from batch without the user
-		return userService.findUsersInBatch(batchId);
-	}
-	
 	@RequestMapping(value="Update.do", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public void updateUser(@RequestBody String jsonObject, HttpSession session) {
@@ -91,6 +87,24 @@ public class UserController {
 		}
 		
 		userService.addOrUpdateUser(currentUser);
+		
+		//Retrieve and return users in a batch from the database
+	}
+	
+	@RequestMapping(value="Remove.do", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public List<Users> removeUser(HttpServletRequest request) {
+		//Get the user id from the request
+		int userId = Integer.parseInt( request.getParameter("userId") );
+		Users user = userService.findUserById( userId );
+		int batchId = user.getBatch().getId();
+		
+		//Set the user as inactive
+		user.setRole(0);
+		userService.addOrUpdateUser(user);
+		
+		//Return users from batch without the user
+		return userService.findUsersInBatch(batchId);
 	}
 	
 	@RequestMapping(value="Add.do", method=RequestMethod.POST, produces="application/json")
@@ -117,4 +131,5 @@ public class UserController {
 	public List<Users> getUsersNotInBatch(HttpServletRequest request) {
 		return userService.findUsersNotInBatch();
 	}
+	
 }
