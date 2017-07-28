@@ -25,7 +25,7 @@ app.controller('batchesAllCtr', function($scope, $rootScope, $location, $http)
 		
 		$http({
 			
-			url: 'Calendar/Weeks.do',
+			url: 'Calendar/Topics.do',
 			method: 'GET'
 			
 		})
