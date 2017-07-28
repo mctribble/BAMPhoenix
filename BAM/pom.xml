@@ -183,6 +183,11 @@
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>javax.mail</artifactId>
+		    <version>1.6.0-rc1</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.github.noraui/ojdbc7 -->
 		<dependency>
