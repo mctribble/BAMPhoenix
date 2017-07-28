@@ -10,18 +10,21 @@
 
 //angular.module('myCalendarApp', ['ngRoute'])
 
-  var app =  app.constant('uiCalendarConfig', {
+  var app =  app.constant('uiCalendarConfig', {	//Angular ui-Calendar API used to create 
+	  //AngularJS calendar.
         calendars : {}
     })
   app.controller('uiCalendarCtrl', ['$scope', '$locale','$compile','uiCalendarConfig',
         function ($scope, $locale,$compile,$uiCalendarConfig) {
-	  
+	  	
+	  	//Varibles set for the use of adding day,month,year,to the Date attribute of a calendar. 
 		    var date = new Date();
 		    var d = date.getDate();
 		    var m = date.getMonth();
 		    var y = date.getFullYear();
 		    
-            var sources = $scope.eventSources;
+            var sources = $scope.eventSources;	//variable sources to hold different 
+            //events taking place on the calendar at any given time
             var extraEventSignature = $scope.calendarWatchEvent ? $scope.calendarWatchEvent : angular.noop;
 
             var wrapFunctionWithScopeApply = function (functionToWrap) {
