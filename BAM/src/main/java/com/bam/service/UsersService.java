@@ -14,6 +14,10 @@ public class UsersService {
 	@Autowired
 	UsersRepository dao;
 	
+	public void addUser(Users user){
+		dao.save(user);
+	}
+	
 	public List<Users> findAllUsers(){
 		return dao.findAll();
 		
