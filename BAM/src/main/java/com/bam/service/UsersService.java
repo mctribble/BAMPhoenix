@@ -43,6 +43,13 @@ public class UsersService {
 		return dao.findByBatch(batch);
 	}
 	
+	public List<Users> findUsersNotInBatch(){
+		//Return users in the batch with a null
+		return dao.findByBatch(null);
+	}
+	
+	
+	
 	
 	
 }

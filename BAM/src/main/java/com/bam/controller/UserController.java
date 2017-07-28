@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.beans.Users;
+import com.bam.service.BatchService;
 import com.bam.service.UsersService;
 
 
@@ -58,6 +59,22 @@ public class UserController {
 		return userService.findUsersInBatch(batchId);
 	}
 	
+	@RequestMapping(value="Remove.do", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public List<Users> removeUser(HttpServletRequest request) {
+		//Get the user id from the request
+		int userId = Integer.parseInt( request.getParameter("userId") );
+		Users user = userService.findUserById( userId );
+		int batchId = user.getBatch().getId();
+		
+		//Set the user as inactive
+		user.setRole(0);
+		userService.addOrUpdateUser(user);
+		
+		//Return users from batch without the user
+		return userService.findUsersInBatch(batchId);
+	}
+	
 	@RequestMapping(value="Update.do", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public void updateUser(@RequestBody String jsonObject, HttpSession session) {
@@ -74,7 +91,30 @@ public class UserController {
 		}
 		
 		userService.addOrUpdateUser(currentUser);
+	}
+	
+	@RequestMapping(value="Add.do", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public List<Users> addUserToBatch(HttpServletRequest request) {
+		//Get the user id from the request
+		int userId = Integer.parseInt( request.getParameter("userId") );
+		//Get the batch to add the user to from the request
+		int batchId = Integer.parseInt( request.getParameter("batchId") );
 		
-		//Retrieve and return users in a batch from the database
+		BatchService batchService = new BatchService();
+		
+		Users user = userService.findUserById( userId );
+		
+		user.setBatch(batchService.getBatchById(batchId));
+		
+		userService.addOrUpdateUser(user);
+		
+		return userService.findUsersNotInBatch();
+	}
+	
+	@RequestMapping(value="NotInABatch.do", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public List<Users> getUsersNotInBatch(HttpServletRequest request) {
+		return userService.findUsersNotInBatch();
 	}
 }
