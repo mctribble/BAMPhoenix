@@ -26,5 +26,28 @@ app.controller('batchesPast', function($scope, $rootScope, $location, $http)
 		});
 	}
 	
+	$scope.goToBatch = function(id){
+		console.log("going to batch" + id);
+		
+		var batchId = id;
+		
+		$http({
+			
+			url: 'Calendar/Topics.do',
+			method: 'GET'
+			
+		})
+		.then(function success(response){
+			$location.path('/home');
+			$scope.message = true;
+			$scope.msg = 'batch retreived';
+			
+		}, function error(response){
+			$location.path('/home');
+			$scope.message = true;
+			$scope.msg = 'batch not retreived';
+		});
+	}
+	
 	$scope.getBatchesPast();
 });

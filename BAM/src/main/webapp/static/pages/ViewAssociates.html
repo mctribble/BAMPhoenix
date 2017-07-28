@@ -12,20 +12,20 @@
 
 			<table class="table">
 				<tr class="associates-header">
-					<td ng-click="order = 'fname'" class="head">Name</td>
+					<td ng-click="order = 'fName'" class="head">Name</td>
 					<td ng-click="order = 'email'" class="head">Email</td>
-					<td ng-click="order = 'batchId'" class="head">Batch Id</td>
-					<td ng-click="order = 'mPhone'" class="head">Main Phone</td>
-					<td ng-click="order = 'sPhone'" class="head">Secondary Phone</td>
+					<td ng-click="order = 'batch'" class="head">Batch Id</td>
+					<td ng-click="order = 'phone'" class="head">Main Phone</td>
+					<td ng-click="order = 'phone2'" class="head">Secondary Phone</td>
 					<td ng-click="order = 'skype'" class="head">Skype</td>
 				</tr>
 				<tr class="associates-row"
 					ng-repeat="a in associateList | filter:searchBox | orderBy:order">
-					<td class="value lname">{{a.lname}}, {{a.fname}}</td>
+					<td class="value lname">{{a.lName}}, {{a.fName}}</td>
 					<td class="value email">{{a.email}}</td>
-					<td class="value batchId">{{a.batchId}}</td>
-					<td class="value mPhone">{{a.mPhone}}</td>
-					<td class="value sPhone">{{a.sPhone}}</td>
+					<td class="value batchId">{{a.batch}}</td>
+					<td class="value mPhone">{{a.phone}}</td>
+					<td class="value sPhone">{{a.phone2}}</td>
 					<td class="value skype">{{a.skype}}</td>
 				</tr>
 			</table>
