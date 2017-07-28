@@ -9,13 +9,13 @@ app.controller('batchesAllCtr', function($scope, $rootScope, $location, $http)
 			method: 'GET'
 		})
 		.then(function success(response){
-			$location.path('/batchesAll');
+			//$location.path('/batchesAll');
 			$scope.message = true;
 			$scope.msg = 'all batches retreived';
 			$rootScope.batchesAll = response.data;
 			console.log(response.data);
 		}, function error(response){
-			$location.path('/batchesAll');
+			//$location.path('/batchesAll');
 			$scope.message = true;
 			$scope.msg = 'all batches not retreived';
 		});
