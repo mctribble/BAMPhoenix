@@ -73,7 +73,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 		
-		userService.addUser(currentUser);
+		userService.addOrUpdateUser(currentUser);
 		
 		//Retrieve and return users in a batch from the database
 	}
