@@ -19,19 +19,22 @@ public class UsersService {
 	@Autowired
 	BatchRepository bdao;
 	
+	public void addUser(Users user){
+		dao.save(user);
+	}
+	
 	public List<Users> findAllUsers(){
 		return dao.findAll();
 		
 	}
 	
+	public Users findUserByEmail(String email){
+		return dao.findByEmail(email);
+	}
+	
 	public List<Users> findUsersInBatch(int batchId){
 		Batch batch = bdao.findById(batchId);
 		return dao.findByBatch(batch);
-	}
-
-	
-	public Users findUserByEmail(String email){
-		return dao.findByEmail(email);
 	}
 	
 	
