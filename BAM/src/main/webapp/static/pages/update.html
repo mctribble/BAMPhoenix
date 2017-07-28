@@ -5,59 +5,60 @@
 				<div class="alert alert-danger" ng-show="controller.error">
 					There was a problem trying to update.
 				</div>
-				<form role="form" ng-submit="controller.update">
+				<!-- <form role="form" ng-submit="controller.update"> -->
+				<form>
 					{{testMsg}}
-					<div class="input-group">
+					<!-- <div class="input-group">
 						<span class="input-group-addon"> Old Password: </span> 
-						<input class="form-control" type="password" ng-model="associate.oldPassword"
+						<input class="form-control" type="password" ng-model="oldPassword"
 						 placeholder="Old Password" required>
-					</div>
+					</div> -->
 
 					<div class="input-group">
 						<span class="input-group-addon"> New Password: </span> 
-						<input class="form-control" type="password" ng-model="associate.newPassword" 
+						<input class="form-control" type="password" ng-model="user.pwd" 
 						placeholder="New Password" required>
-					</div>
+					</div> 
 					
-					<div class="input-group">
+					<!-- <div class="input-group">
 						<span class="input-group-addon"> Confirm New: </span> 
-						<input class="form-control" type="password"	ng-model="associate.confirmPasswordd"
+						<input class="form-control" type="password"	ng-model="confirmPassword"
 						 placeholder="Confirm New Password" required>
-					</div>
+					</div> -->
 					
 					<div class="input-group">
 						<span class="input-group-addon"> First name: </span> 
-						<input class="form-control" type="text" ng-model="associate.fname" 
+						<input class="form-control" type="text" ng-model="user.fName" 
 						placeholder="First Name" required />
 					</div>
 					
 					<div class="input-group">
 						<span class="input-group-addon">Middle name:</span>
-						<input class="form-control" type="text" ng-model="associate.mname" 
+						<input class="form-control" type="text" ng-model="user.mName" 
 						placeholder="Middle name" required />
 					</div>
 					
 					<div class="input-group">
 						<span class="input-group-addon">Last name:</span>
-						<input class="form-control" type="text" ng-model="associate.lname"
+						<input class="form-control" type="text" ng-model="user.lName"
 						 placeholder="Last name" required />
 					</div>
 					
 					<div class="input-group">
 						<span class="input-group-addon">Phone:</span>
-						<input class="form-control" type="text" ng-model="associate.phone" 
+						<input class="form-control" type="text" ng-model="user.phone" 
 						placeholder="Phone" required />
 					</div>
 					
 					<div class="input-group">
 						<span class="input-group-addon">Alt Phone:</span>
-						<input class="form-control" type="text" ng-model="associate.altPhone" 
+						<input class="form-control" type="text" ng-model="user.phone2" 
 						placeholder="Alt Phone" required />
 					</div>
 					
 					<div class="input-group">
 						<span class="input-group-addon">Skype:</span>
-						<input class="form-control" type="text" ng-model="associate.skype" 
+						<input class="form-control" type="text" ng-model="user.skype" 
 						placeholder="Skype" required />
 					</div>
 					
@@ -67,7 +68,8 @@
 					
 					<div class="input-group">
 						<div class="login-btn-container">
-							<input type="submit" class="btn btn-primary" value="UPDATE" ng-click="updateAssociate()">
+							<input type="submit" class="btn btn-primary" value="UPDATE" 
+							ng-click="updateAssociate()">
 						</div>
 					</div>
 					
