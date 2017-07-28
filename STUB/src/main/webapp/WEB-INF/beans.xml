@@ -36,6 +36,8 @@
     <!-- Because Spring Data doesn't natively support Hibernate (But it does support JPA) -->
     <bean id="entityManagerFactory" name="entityManagerFactory"
         class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        
+
 
         <property name="dataSource" ref="myDataSource" />
         <property name="packagesToScan" value="com.revature.beans" />
@@ -59,12 +61,6 @@
     
     <bean name="service" class="com.revature.service.Service"/>
     
-    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
- 
-    <bean id="BatchRepository" class="com.revature.dao.BatchRepository"></bean>
-    <bean id="CurriculumRepository" class="com.revature.dao.CurriculumRepository"></bean>
-    <bean id="TopicRepository" class="com.revature.dao.TopicRepository"></bean>
-	<bean class="com.revature.logger.LoggerClass"></bean>
     
     
 </beans>
