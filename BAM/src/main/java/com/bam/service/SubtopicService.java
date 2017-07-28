@@ -15,7 +15,7 @@ public class SubtopicService {
 	@Autowired
 	SubtopicRepository subTopRep;
 	
-	public List<Subtopic> getSubtopicByBatch(Batch batch) {
+	public List<Subtopic> getSubtopicsByBatch(Batch batch) {
 		return subTopRep.findByBatch(batch);
 	}
 	
