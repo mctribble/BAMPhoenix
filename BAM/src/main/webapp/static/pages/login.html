@@ -1,31 +1,30 @@
 <div class = "vertical-center">
-	<div class = "row">
-		<div class = "login col-xs-6">
-			
-			<h3>Email</h3>
-			<input type="text" class="form-control" ng-model="email" placeholder="" required>
-			<br>
-			
-			<h3>Password</h3>
-			<input type="password" class="form-control" ng-model="password" placeholder="" required>
-			<br>
-			<br>
-			
-			<button type = "button" class="btn btn-primary btn-lg" ng-click = "logIn()">LOGIN</button>
-		</div>
-		<div class = "col-xs-6">
-			<img src="static/img/revature_logo.png" width="90%">
-			<img src="static/img/rev_timeline.png" width="90%">
-		</div>
-	</div>
+    <div class = "row login-container">
+        <div class="login col-md-8 col-lg-6">
+            
+            <div class="login-vertical-align">
+                <h3>Email</h3>
+                <input type="text" class="form-control revature-form" ng-model="email" placeholder="" required>
+                <br>
+                
+                <h3>Password</h3>
+                <input type="password" class="form-control revature-form" ng-model="password" placeholder="" required>
+                <br>
+                <br>
+                
+                <div class="login-btn-container">
+                    <button type="button" class="login-btn" ng-click="logIn()">LOGIN</button>
+                </div>
+            </div>
+        </div>
+        <p ng-hide="message">{{msg}}</p>
+        <div class="col-md-4 col-lg-6 revature-logo">
+            <div class="login-vertical-align">
+                <img src="static/img/revature_logo.png" width="90%">
+                <img src="static/img/rev_timeline.png" width="90%">
+            </div>
+        </div>
+        
+    </div>
+
 </div>
-
-
-<!-- 
-<form name="myForm" ng-submit="register()">		
-		 			<h3>Name:  <input type="text" ng-model="user.username" placeholder="ryan_face" required>		
-		 			<!-- Email: <input type="email" ng-model="PlayController.user.email"> 	
-					<input type="submit" class="btn btn-primary" value="Register">		
-					</h3>
-				</form>		
- -->

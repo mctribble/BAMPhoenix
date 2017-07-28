@@ -2,18 +2,22 @@
 <html ng-app="bam">
 <head>
 	
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<!-- Latest compiled JavaScript -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script
-    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Download Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+        integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 <!-- Import our angular! -->
 <script
     src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-
+    
 <link rel="stylesheet" type="text/css" href="static/css/main.css" />
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
 
 <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
 
@@ -23,6 +27,7 @@
 <script src="static/js/app.js"></script>
 <script src="static/controller/calendarController.js"></script>
 <script src="static/controller/loginController.js"></script>
+<script src="static/controller/ViewAssociatesController.js"></script>
 
 <link rel="stylesheet" type="text/css"
     href="static/css/fullcalendar.css"/>
@@ -47,8 +52,8 @@
 <body class= "main">
 	<div id="page-wrap">
 		
-		<div id="navbar" class="container"> 
-			<div class="well contentwell" ng-include="'static/pages/navbar.html'"></div>
+		<div class="container"> 
+			<div ng-include="'static/pages/navbar.html'"></div>
 		</div>
 		
 		<div id="content" class="container">
