@@ -19,10 +19,10 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl: "static/pages/update.html"
 	}).when("/batchesPast",{
 		templateUrl: "static/pages/batchesPast.html",
-		controller: "batchesPastCtr"
+		controller: "batchesPast"
 	}).when("/batchesFuture",{
 		templateUrl: "static/pages/batchesFuture.html",
-		//controller: "batchesFutureCtr"
+		controller: "batchesFuture"
 	}).when("/editBatch", {
 		templateUrl: "static/pages/EditBatch.html",
 		controller: "editBatchController"
