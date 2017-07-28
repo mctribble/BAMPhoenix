@@ -28,6 +28,9 @@ public class UsersService {
 		
 	}
 	
+	public List<Users> findByRole(int role){
+		return dao.findByRole(role);
+	}
 	public Users findUserById(int userId){
 		return dao.findByUserId(userId);
 	}

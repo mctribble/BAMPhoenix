@@ -32,6 +32,18 @@ public class UserController {
 		return userService.findAllUsers();
 	}
 	
+	@RequestMapping(value="AllTrainers.do", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public List<Users> getAllTrainers(){
+		return userService.findByRole(2);
+	}
+	
+	@RequestMapping(value="AllAssociates.do", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public List<Users> getAllAssociates(){
+		return userService.findByRole(1);
+	}
+	
 	@RequestMapping(value="InBatch.do", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Users> getUsersInBatch(HttpServletRequest request) {
@@ -77,4 +89,6 @@ public class UserController {
 		
 		//Retrieve and return users in a batch from the database
 	}
+	
+	
 }

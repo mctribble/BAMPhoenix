@@ -14,7 +14,7 @@ public interface UsersRepository extends JpaRepository<Users, Integer>{
 	public Users findByUserId(Integer id);
 	public Users findByEmail(String email);
 	public List<Users> findByBatch(Batch batch);
-
+	public List<Users> findByRole(int role);
 }
 
 
