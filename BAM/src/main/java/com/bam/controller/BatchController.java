@@ -104,7 +104,12 @@ public class BatchController
 		}
 		
 		batchService.addOrUpdateBatch(currentBatch);
-		
-		
+	}
+	
+	@RequestMapping(value = "ById.do", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public Batch getBatchById(HttpServletRequest request){
+		return batchService.getBatchById( Integer.parseInt(request.getParameter("batchId")) );
+
 	}
 }
