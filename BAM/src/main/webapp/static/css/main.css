@@ -65,7 +65,7 @@
 }
 
 .revature-form {
-	font-family: "Audimat";
+/* 	font-family: "Audimat"; */
 	font-size: 1.5em;
 }
 
@@ -142,12 +142,12 @@
 }
 
 .navbar-button {
-	font-family: "Audimat" !important;
+/* 	font-family: "Audimat" !important; */
 	background-color: #3379b7;
 	border: 2px outset #5b93c5;
 	border-radius: 5px;
 	font-size: 1.4em;
-	font-family: bold;
+/* 	font-family: bold; */
 	color: white;
 }
 
@@ -210,7 +210,7 @@ html {
 }
 
 body {
-
+font-family: 'Roboto', sans-serif;
 	/* IE10+ */
 	background-image: -ms-radial-gradient(right bottom, ellipse farthest-corner, #FFE8FC 0%,
 		#142863 100vh);
