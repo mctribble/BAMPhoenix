@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	    .anyRequest().authenticated()
 	    .and()
 	   .formLogin()
+	   	.loginPage("/")
 	    .loginProcessingUrl("/authenticate")
 	    .successHandler(restAuthenticationSuccessHandler)
 	    .failureHandler(restAuthenticationFailureHandler)
@@ -58,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	    .and()
 	   .logout()
 	    .logoutUrl("/logout")
-	    .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
+	    //.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
 	    .deleteCookies("JSESSIONID")
 	    .permitAll()
 	    .and();
