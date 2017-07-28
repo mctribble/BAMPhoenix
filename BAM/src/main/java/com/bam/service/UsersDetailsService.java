@@ -44,8 +44,8 @@ public class UsersDetailsService implements UserDetailsService {
 		Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
 
 		// Build user's authorities
-		setAuths.add(new SimpleGrantedAuthority(String.valueOf(u.getRole())));
-
+		setAuths.add(new SimpleGrantedAuthority("ROLE_"+String.valueOf(u.getRole())));
+		
 		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
 
 		return Result;
