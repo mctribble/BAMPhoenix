@@ -1,0 +1,61 @@
+<div class="header">
+	<h3>Edit A Batch</h3>
+</div>
+
+<div class="editBatch-container">
+	<div class="input-group">
+		<span class="input-group-addon">Batch Name</span>
+		<input type="text" class="form-control" ng-model="batch.name" placeholder="Batch Name" required />
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">Start Date</span>
+		<input type="date" class="form-control" ng-model="batch.startDate" required />
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">End Date</span>
+		<input type="date" class="form-control" ng-model="batch.endDate" required />
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">Trainer</span>
+		<input type="text" class="form-control" ng-model="batch.trainer.firstName" placeholder="First Name" required />
+		<input type="text" class="form-control" ng-model="batch.trainer.lastName" placeholder="Last Name" required />
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">Batch Type</span>
+		<input type="text" class="form-control" ng-model="batch.type" placeholder="Batch Type" required />
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">Add/Remove Associate</span>
+		<button  ng-click="addRemAssociate()">Add/Remove</button>
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">Subtopics?</span>
+		<button  ng-click="addRemSubtopic()">Add/Remove</button>
+	</div>
+	
+	
+</div>
+
+<div id="users" class="hide">
+	<div class="header">
+		<span class="tab" ng-class="{active: isSet(1) }"><a ng-click="setTab(1)">Remove</a></span>
+		<span class="tab" ng-class="{active: isSet(2) }"><a ng-click="setTab(2)">Add</a></span>
+	</div>
+	<div id="inBatch" ng-show="isSet(1)">
+		<h3>inbatch</h3>
+		<table class="associate-rm">
+			<tr class="rm-header">
+			
+			</tr>
+			<!-- ng repeat here to loop through associates in batch -->
+		</table>
+	</div>
+	<div id="outBatch" ng-show="isSet(2)">
+		<h3>outbatch</h3>
+		<<table class="associate-add">
+			<tr class="add-header">
+			</tr>
+			<!--  ng repeat here to loop through associates who can be added -->
+		</table>
+	</div>
+</div>

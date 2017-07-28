@@ -50,7 +50,7 @@ public class Users {
 	@NotEmpty(message="Role cannot be empty")	// Role 2 is for trainers & QC
 	private int role;							// Role 3 is for admins
 								
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="BATCH_ID", referencedColumnName = "BATCH_ID")
 	@Autowired					// Batch ID should only be used for associates.  DO NOT use this
 	private Batch batch;		// field to assign a batch to a trainer.  It should be null for

@@ -1,30 +1,31 @@
-<div class = "vertical-center">
-    <div class = "row login-container">
-        <div class="login col-md-8 col-lg-6">
-            
-            <div class="login-vertical-align">
-                <h3>Email</h3>
-                <input type="text" class="form-control revature-form" ng-model="email" placeholder="" required>
-                <br>
-                
-                <h3>Password</h3>
-                <input type="password" class="form-control revature-form" ng-model="password" placeholder="" required>
-                <br>
-                <br>
-                
-                <div class="login-btn-container">
-                    <button type="button" class="login-btn" ng-click="logIn()">LOGIN</button>
-                </div>
-            </div>
-        </div>
-        <p ng-hide="message">{{msg}}</p>
-        <div class="col-md-4 col-lg-6 revature-logo">
-            <div class="login-vertical-align">
-                <img src="static/img/revature_logo.png" width="90%">
-                <img src="static/img/rev_timeline.png" width="90%">
-            </div>
-        </div>
-        
-    </div>
+<!-- <div class="vertical-center">
+	<div class="row login-container" >-->
+		<div class="login col-md-6">
 
-</div>
+			<div class="login-vertical-align">
+				<form>
+					<h3>Email</h3>
+					<input type="text" class="form-control revature-form"
+						ng-model="email" placeholder="" required> <br>
+
+					<h3>Password</h3>
+					<input type="password" class="form-control revature-form"
+						ng-model="password" placeholder="" required> <br> <br>
+
+					<div class="login-btn-container">
+						<button type="submit" class="btn btn-primary" ng-click="logIn()">LOGIN</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="login col-md-4">
+			<div class="login-vertical-align">
+				<img src="static/img/revature_logo.png" width="90%"> <img
+					src="static/img/rev_timeline.png" width="90%">
+			</div>
+		</div>
+
+		<p ng-hide="message">{{msg}}</p>
+<!-- 	</div>
+
+</div>_-->

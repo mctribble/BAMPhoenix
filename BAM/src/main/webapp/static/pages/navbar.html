@@ -1,4 +1,4 @@
-<nav class="navbar revature-navbar">
+<!-- <nav class="navbar revature-navbar">
 
 	<div class="full-navbar hidden-sm-down">
 		<ul>
@@ -6,6 +6,7 @@
 			<li><a href="#/associates">View Associates</a></li>
 			<li><a href="#/batchesAll">Batches</a></li>
 			<li><a href="#/update">Update</a></li>
+			<li><a href="#/editBatch">Edit Batch</a></li>
 		</ul>
 	</div>
 	
@@ -20,13 +21,12 @@
 				<li><a href="#/associates">View Associates</a></li>
 				<li><a href="#/batchesAll">All Batches</a></li>
 				<li><a href="#/update">Update</a></li>
+				
 			</ul>
 		</div>
 	</div>
 
 </nav>
-
-<!-- 
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -34,9 +34,8 @@
 
 			<a class="navbar-brand" href="#/home">Home</a>
 
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-				Click me
-			</button>
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">Click me</button>
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
@@ -45,9 +44,33 @@
 				<li><a href="#/batchesAll">All Batches</a></li>
 				<li><a href="#/update">Update</a></li>
 			</ul>
-
 		</div>
-
-			
 	</div>
-</nav>-->
+</nav>
+
+-->
+
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded"
+	style="margin-bottom: 50px;" ng-show="user">
+	<button class="navbar-toggler navbar-toggler-right" type="button"
+		data-toggle="collapse" data-target="#navbarNavAltMarkup"
+		aria-controls="navbarNavAltMarkup" aria-expanded="false"
+		aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<a class="navbar-brand" href="#/home">Home</a>
+	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		<div class="navbar-nav">
+			<a class="nav-item nav-link" href="#/register">Register</a> 
+			<a class="nav-item nav-link" href="#/associates">Associates</a> 
+				<a class="nav-item nav-link" href="#/batchesAll">All Batches</a> 
+				<a class="nav-item nav-link" href="#/update">Update</a>
+				<a class="nav-item nav-link" href="#/editBatch">Edit Batch</a>
+		</div>
+	</div>
+
+	<ul class="nav navbar-nav navbar-right">
+		<li><span class="navbar-text"> {{user.fName}}
+				{{user.lName}} </span></li>
+	</ul>
+</nav>

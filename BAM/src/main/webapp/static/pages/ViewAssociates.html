@@ -1,47 +1,34 @@
-<div class="associates-container" >
-	<div class="searchbox-container">
-		<input type="text" ng-model="searchBox" />
+<!-- <div class="vertical-center">
+	<div class="login-container full-width">
+		<div class="login full-width"> -->
+			<div class="searchbox-container">
+
+				<div class="input-group">
+					<span class="input-group-addon">Search</span> <input
+						class="form-control" type="text" ng-model="searchBox"
+						placeholder="Search" required />
+				</div>
+			</div>
+
+			<table class="table">
+				<tr class="associates-header">
+					<td ng-click="order = 'fname'" class="head">Name</td>
+					<td ng-click="order = 'email'" class="head">Email</td>
+					<td ng-click="order = 'batchId'" class="head">Batch Id</td>
+					<td ng-click="order = 'mPhone'" class="head">Main Phone</td>
+					<td ng-click="order = 'sPhone'" class="head">Secondary Phone</td>
+					<td ng-click="order = 'skype'" class="head">Skype</td>
+				</tr>
+				<tr class="associates-row"
+					ng-repeat="a in associateList | filter:searchBox | orderBy:order">
+					<td class="value lname">{{a.lname}}, {{a.fname}}</td>
+					<td class="value email">{{a.email}}</td>
+					<td class="value batchId">{{a.batchId}}</td>
+					<td class="value mPhone">{{a.mPhone}}</td>
+					<td class="value sPhone">{{a.sPhone}}</td>
+					<td class="value skype">{{a.skype}}</td>
+				</tr>
+			</table>
+<!--  	</div>
 	</div>
-	<table class="associates">
-		<tr class="header">
-			<td ng-click="order = 'fname'" class="head">First Name</td>
-			<td ng-click="order = 'mname'" class="head">Middle Name</td>
-			<td ng-click="order = 'lname'" class="head">Last Name</td>
-			<td ng-click="order = 'email'" class="head">Email</td>
-			<td ng-click="order = 'batchId'" class="head">Batch Id</td>
-			<td ng-click="order = 'mPhone'" class="head">Main Phone</td>
-			<td ng-click="order = 'sPhone'" class="head">Secondary Phone</td>
-			<td ng-click="order = 'skype'" class="head">Skype</td>
-		</tr>
-		<tr class="associate" ng-repeat="a in associateList | filter:searchBox | orderBy:order">
-			<td class="value fname">{{a.fname}}</td>
-			<td class="value mname">{{a.mname}}</td>
-			<td class="value lname">{{a.lname}}</td>
-			<td class="value email">{{a.email}}</td>
-			<td class="value batchId">{{a.batchId}}</td>
-			<td class="value mPhone">{{a.mPhone}}</td>
-			<td class="value sPhone">{{a.sPhone}}</td>
-			<td class="value skype">{{a.skype}}</td>
-		</tr>
-	</table>
-	<!-- <div class="header">
-		<span ng-click="order = fname" class="head">First Name</span>
-		<span ng-click="order = mname" class="head">Middle Name</span>
-		<span ng-click="order = lname" class="head">Last Name</span>
-		<span ng-click="order = email" class="head">Email</span>
-		<span ng-click="order = batchId" class="head">Batch Id</span>
-		<span ng-click="order = mPhone" class="head">Main Phone</span>
-		<span ng-click="order = sPhone" class="head">Secondary Phone</span>
-		<span ng-click="order = skype" class="head">Skype</span>
-	</div>
-	<div class="associate" ng-repeat="a in associateList | filter:searchBox | orderBy:order">
-		<span id="fname" class="value">{{a.fname}}</span>
-		<span id="mname" class="value">{{a.mname}}</span>
-		<span id="lname" class="value">{{a.lname}}</span>
-		<span id="email" class="value">{{a.email}}</span>
-		<span id="batchId" class="value">{{a.batchId}}</span>
-		<span id="mPhone" class="value">{{a.mPhone}}</span>
-		<span id="sPhone" class="value">{{a.sPhone}}</span>
-		<span id="skype" class="value">{{a.skype}}</span>
-	</div> -->
-</div>
+</div> -->
