@@ -9,11 +9,14 @@ import com.bam.beans.Batch;
 import java.lang.Integer;
 import java.util.List;
 import java.lang.String;
+import com.bam.beans.Users;
 
 @Repository
 public interface BatchRepository extends JpaRepository<Batch, Integer>
 {
 	public Batch findById(Integer id);
 	
+	public List<Batch> findAll();
 	
+	public List<Batch> findByTrainer(Users trainer);
 }

@@ -50,8 +50,8 @@
 	<!-- Find JPA Repositories -->
 	<jpa:repositories base-package="com.bam.dao" />
 	
-	
 	<bean name="usersService" class="com.bam.service.UsersService"></bean>
+
 	<bean name="batchesService" class="com.bam.service.BatchService"></bean>
 	
 </beans>
