@@ -8,82 +8,81 @@
 */
 
 /***** 1.0 LOGIN STYLING *****/
-.login
-{
-    text-align: left;
-    /*font-family: 'Arial', sans-serif;*/
-    background-color: #ffffff ;
-    
+.login {
+	text-align: left;
+	/*font-family: 'Arial', sans-serif;*/
+	background-color: #ffffff;
 }
 
-.main
-{
-    /*margin-top: 50px;*/
-    /*background-color: #f16925 ;*/
-    /*background-image: url("../img/backGround.jpg");*/    
+.main {
+	/*margin-top: 50px;*/
+	/*background-color: #f16925 ;*/
+	/*background-image: url("../img/backGround.jpg");*/
+	
 }
 
 .well {
 	border-radius: 15px;
 }
 
-.vertical-center
-{
-    min-height: 100%;   /*Fallback for browsers do NOT support vh unit */
-	min-height: 100vh; /* These two lines are counted as one :slightly_smiling_face:       */
+.vertical-center {
+/* 	min-height: 100%; Fallback for browsers do NOT support vh unit */
+/* 	min-height: 100vh; */
+	/* These two lines are counted as one :slightly_smiling_face:       */
 	padding: 15px 30px;
-    background-color: #ccc;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    border-radius: 15px;
+	background-color: #ccc;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	border-radius: 15px;
 }
 
 .login-container {
-    min-height: 100%;
-    min-height: 100vh;
+/* 	min-height: 100%; */
+/* 	min-height: 100vh; */
 }
 
 .revature-logo {
-    background-color: #ccc;
-    min-height: 100%;
-    display: table;
-    min-height: 100vh;
+
+	/* 	background-color: #ccc; */
+	/* 	min-height: 100%; */
+	display: table;
+/* 	min-height: 100vh; */
 }
 
 .login {
-    padding: 15px;
-    border-radius: 15px;
-    display: table;
-    min-height: 100vh;
+	padding: 15px;
+	border-radius: 15px;
+	display: table;
+/* 	min-height: 100vh; */
 }
 
 .login-vertical-align {
-    display: table-cell;
-    vertical-align: middle;
-    /*font-family: "Audimat";*/
-    font-size: 1.4em;
+	display: table-cell;
+	vertical-align: middle;
+	/*font-family: "Audimat";*/
+	font-size: 1.4em;
 }
 
 .revature-form {
-    font-family: "Audimat";
-    font-size: 1.5em;
+	font-family: "Audimat";
+	font-size: 1.5em;
 }
 
 .login-btn-container {
-    text-align: center;
-    margin: auto;
+	text-align: center;
+	margin: auto;
 }
 
 .login-btn {
-    border: 2px outset #5b93c5;
-    background-color: #3379b7;
-    border-radius: 5px;
-    padding: 2px 15px;
-    color: white;
-    /*font-family: "Audimat";*/
-    font-size: 1.4em;
-    font-weight: bold;
+	border: 2px outset #5b93c5;
+	background-color: #3379b7;
+	border-radius: 5px;
+	padding: 2px 15px;
+	color: white;
+	/*font-family: "Audimat";*/
+	font-size: 1.4em;
+	font-weight: bold;
 }
 
 .full-width {
@@ -106,7 +105,7 @@
 .full-navbar ul li {
 	display: inline;
 	padding-right: 20px;
-/* 	font-family: "Audimat"; */
+	/* 	font-family: "Audimat"; */
 	font-size: 26px;
 }
 
@@ -126,14 +125,13 @@
 	top: 2px;
 }
 
-#myNavbar
-{
+#myNavbar {
 	color: #000000;
 	background-color: #3379b7;
 }
 
 #myNavbar ul li {
-/* 	font-family: "Audimat"; */
+	/* 	font-family: "Audimat"; */
 	border-top: 1px solid #5b93c5;
 	font-size: 1.4em;
 	padding: 0 10px;
@@ -178,13 +176,13 @@
 */
 /***** 4.0 TABLES *****/
 .searchbox-container {
-/* 	font-family: "Audimat"; */
+	/* 	font-family: "Audimat"; */
 	font-size: 1.2em;
 }
 
 .searchbox-container input {
 	background-color: #ddd;
-/* 	font-family: "Audimat"; */
+	/* 	font-family: "Audimat"; */
 	font-size: 1.2em;
 }
 
@@ -192,7 +190,7 @@
 	width: 100%;
 	border: 2px solid #333;
 	margin-top: 10px;
-/* 	font-family: "Audimat"; */
+	/* 	font-family: "Audimat"; */
 	font-size: 1.2em;
 }
 
@@ -206,4 +204,36 @@
 
 .associates td {
 	padding: 0 4px;
+}
+html {
+    min-height: 100%;
+}
+
+body {
+
+	/* IE10+ */
+	background-image: -ms-radial-gradient(right bottom, ellipse farthest-corner, #FFE8FC 0%,
+		#142863 100vh);
+	/* Mozilla Firefox */
+	background-image: -moz-radial-gradient(right bottom, ellipse farthest-corner, #FFE8FC 0%,
+		#142863 100vh);
+	/* Opera */
+	background-image: -o-radial-gradient(right bottom, ellipse farthest-corner, #FFE8FC 0%,
+		#142863 100vh);
+	/* Webkit (Safari/Chrome 10) */
+	background-image: -webkit-gradient(radial, right bottom, 0, right bottom, 572, color-stop(0
+		, #FFE8FC), color-stop(100, #142863));
+	/* Webkit (Chrome 11+) */
+	background-image: -webkit-radial-gradient(right bottom, ellipse farthest-corner, #FFE8FC
+		0%, #142863 100vh);
+	/* W3C Markup */
+	background-image: radial-gradient(ellipse farthest-corner at right bottom, #FFE8FC 0%,
+		#142863 100vh);
+}
+
+#content{
+	margin-top:50px;
+	background-color:#FFFFFF;
+	padding:20px;
+	border-radius:4px;
 }
