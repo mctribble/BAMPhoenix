@@ -51,20 +51,21 @@
 -->
 
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded"
-	style="margin-bottom: 50px;">
+	style="margin-bottom: 50px;" ng-show="user">
 	<button class="navbar-toggler navbar-toggler-right" type="button"
 		data-toggle="collapse" data-target="#navbarNavAltMarkup"
 		aria-controls="navbarNavAltMarkup" aria-expanded="false"
 		aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-	<a class="navbar-brand" href="#">Navbar</a>
+	<a class="navbar-brand" href="#/home">Home</a>
 	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		<div class="navbar-nav">
-			<a class="nav-item nav-link" href="#/register">Register</a> <a
-				class="nav-item nav-link" href="#/associates">Associates</a> <a
-				class="nav-item nav-link" href="#/batchesAll">All Batches</a> <a
-				class="nav-item nav-link" href="#/update">Update</a>
+			<a class="nav-item nav-link" href="#/register">Register</a> 
+			<a class="nav-item nav-link" href="#/associates">Associates</a> 
+				<a class="nav-item nav-link" href="#/batchesAll">All Batches</a> 
+				<a class="nav-item nav-link" href="#/update">Update</a>
+				<a class="nav-item nav-link" href="#/editBatch">Edit Batch</a>
 		</div>
 	</div>
 

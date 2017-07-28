@@ -7,9 +7,9 @@ app.controller('batchesPastCtr', function($scope, $location, $http) {
 			url : 'Batches/All.do',
 			method : 'GET'
 		}).then(function success(response) {
-			$location.path('/batchesPast');
+			//$location.path('/batchesPast');
 		}, function error(response) {
-			$location.path('/batchesPast');
+			//$location.path('/batchesPast');
 		});
 	}
 
@@ -25,9 +25,9 @@ app.controller('batchesFutureCtr', function($scope, $location, $http) {
 			url : 'Batches/All.do',
 			method : 'GET'
 		}).then(function success(response) {
-			$location.path('/batchesFuture');
+			//$location.path('/batchesFuture');
 		}, function error(response) {
-			$location.path('/batchesFuture');
+			//$location.path('/batchesFuture');
 		});
 	}
 
