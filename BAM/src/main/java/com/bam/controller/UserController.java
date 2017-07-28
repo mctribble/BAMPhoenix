@@ -2,6 +2,8 @@ package com.bam.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,14 +14,24 @@ import com.bam.beans.Users;
 import com.bam.service.UsersService;
 
 @RestController
-@RequestMapping(value="/users/")
+@RequestMapping(value="/Users/")
 public class UserController {
 	@Autowired
-	UsersService ts;
+	UsersService userService;
 	
-	@RequestMapping(value="all.do", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="All.do", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Users> getAllUsers(){
-		return ts.findAllUsers();
+		return userService.findAllUsers();
+	}
+	
+	@RequestMapping(value="InBatch.do", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public List<Users> getUsersInBatch(HttpServletRequest request) {
+		//Get the batch id from the request
+		int batchId = Integer.parseInt( request.getParameter("batchId") );
+		
+		//Retrieve and return users in a batch from the database
+		return userService.findUsersInBatch(batchId);
 	}
 }
