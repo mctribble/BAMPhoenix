@@ -34,4 +34,17 @@ public class UserController {
 		//Retrieve and return users in a batch from the database
 		return userService.findUsersInBatch(batchId);
 	}
+	
+	public List<Users> dropUserFromBatch(HttpServletRequest request) {
+		//Get the user id from the request
+		int userId = Integer.parseInt( request.getParameter("userId") );
+		
+		
+		Users u = userService.findUserById( userId );
+		u.setBatch(null);
+		userService.addOrUpdateUser(u);
+		
+		return null;
+	}
+	
 }
