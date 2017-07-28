@@ -1,12 +1,16 @@
-<div class="vertical-center">
+<!-- <div class="vertical-center">
 	<div class="login-container full-width">
-		<div class="login full-width">
+		<div class="login full-width"> -->
 			<div class="searchbox-container">
-				Search:
-				<input type="text" ng-model="searchBox" />
+
+				<div class="input-group">
+					<span class="input-group-addon">Search</span> <input
+						class="form-control" type="text" ng-model="searchBox"
+						placeholder="Search" required />
+				</div>
 			</div>
-			
-			<table class="associates">
+
+			<table class="table">
 				<tr class="associates-header">
 					<td ng-click="order = 'fname'" class="head">Name</td>
 					<td ng-click="order = 'email'" class="head">Email</td>
@@ -15,7 +19,8 @@
 					<td ng-click="order = 'sPhone'" class="head">Secondary Phone</td>
 					<td ng-click="order = 'skype'" class="head">Skype</td>
 				</tr>
-				<tr class="associates-row" ng-repeat="a in associateList | filter:searchBox | orderBy:order">
+				<tr class="associates-row"
+					ng-repeat="a in associateList | filter:searchBox | orderBy:order">
 					<td class="value lname">{{a.lname}}, {{a.fname}}</td>
 					<td class="value email">{{a.email}}</td>
 					<td class="value batchId">{{a.batchId}}</td>
@@ -24,6 +29,6 @@
 					<td class="value skype">{{a.skype}}</td>
 				</tr>
 			</table>
-		</div>
+<!--  	</div>
 	</div>
-</div>
+</div> -->
