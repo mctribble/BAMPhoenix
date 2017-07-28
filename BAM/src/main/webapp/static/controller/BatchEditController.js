@@ -7,7 +7,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 	$scope.availUsers = responseObj.availUsers;
 	//get the batch
 	$http({
-		url: "Batch/ById",
+		url: "Batches/ById",
 		method: "GET",
 		params:{
 			/*
@@ -26,7 +26,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 	});
 	//get users in batch
 	$http({
-		url: "User/InBatch.do",
+		url: "Users/InBatch.do",
 		method: 'GET',
 		params: {
 			batchId: $rootScope.selectedBatchId
@@ -41,7 +41,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 	});
 	//get users without a batch
 	$http({
-		url: "User/NotInABatch",
+		url: "Users/NotInABatch.do",
 		method: 'GET'
 	}).then(function (reponse) {
 		//for now assume that the response is the array of users
