@@ -23,7 +23,8 @@ app.controller('batchesFuture', function($scope, $rootScope, $location, $http)
 	}
 	
 	$scope.goToBatch = function(id){
-		console.log("going to batch" + id);
+		
+		$rootScope.currentBatch = id;
 		
 		var batchId = id;
 		
