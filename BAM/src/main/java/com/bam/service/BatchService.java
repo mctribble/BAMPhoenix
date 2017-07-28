@@ -15,7 +15,7 @@ public class BatchService
 	@Autowired
 	BatchRepository bRep;
 	
-	public void addBatch(Batch b){
+	public void addOrUpdateBatch(Batch b){
 		bRep.save(b);
 	}
 	
