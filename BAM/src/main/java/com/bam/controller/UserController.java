@@ -42,6 +42,22 @@ public class UserController {
 		return userService.findUsersInBatch(batchId);
 	}
 	
+	@RequestMapping(value="Drop.do", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public List<Users> dropUserFromBatch(HttpServletRequest request) {
+		//Get the user id from the request
+		int userId = Integer.parseInt( request.getParameter("userId") );
+		Users user = userService.findUserById( userId );
+		int batchId = user.getBatch().getId();
+		
+		//Drop user from the batch
+		user.setBatch(null);
+		userService.addOrUpdateUser(user);
+		
+		//Return users from batch without the user
+		return userService.findUsersInBatch(batchId);
+	}
+	
 	@RequestMapping(value="Update.do", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public void updateUser(@RequestBody String jsonObject, HttpSession session) {
@@ -57,7 +73,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 		
-		userService.addUser(currentUser);
+		userService.addOrUpdateUser(currentUser);
 		
 		//Retrieve and return users in a batch from the database
 	}
