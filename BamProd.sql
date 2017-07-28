@@ -84,6 +84,14 @@ CREATE TABLE Users (
     CONSTRAINT Users_pk PRIMARY KEY (User_ID)
 ) ;
 
+-- Table: References
+CREATE TABLE References (
+    Reference_ID number(9, 0) NOT NULL,
+    Reference_URL varchar2(100) NOT NULL,
+    Subtopic_ID number(9, 0) NOT NULL,
+    CONSTRAINT Reference_pk PRIMARY KEY (Reference_ID)
+);
+
 -- foreign keys
 -- Reference: Batch_Trainer_ID (table: Batches)
 ALTER TABLE Batches ADD CONSTRAINT Batch_Trainer_ID
@@ -136,6 +144,11 @@ ALTER TABLE Users ADD CONSTRAINT Users_Batch_FK
     REFERENCES Batches (Batch_ID);
 ALTER TABLE Users ADD CONSTRAINT Users_Email_Unq
     UNIQUE (eMail);
+    
+-- Reference: Reference_FK (table: References)
+ALTER TABLE References ADD CONSTRAINT References_FK
+    FOREIGN KEY (Subtopic_ID)
+    REFERENCES Subtopic (Subtopic_ID);
 
 -- End of file.
 
@@ -154,12 +167,6 @@ INSERT INTO Subtopic_Type (Type_ID, Type_Name) VALUES (3, 'Assignments');
 INSERT INTO Subtopic_Type (Type_ID, Type_Name) VALUES (4, 'Meeting');
 INSERT INTO Subtopic_Type (Type_ID, Type_Name) VALUES (5, 'Misc');
 
-<<<<<<< HEAD
-commit;
-=======
 ALTER TABLE Users
     ADD CONSTRAINT Batch_Assign CHECK
     ((Batch_ID IS NULL) OR (Role = 1));
-
-commit;
->>>>>>> master
