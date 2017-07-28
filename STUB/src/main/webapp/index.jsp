@@ -20,27 +20,120 @@
 	</nav>
 	
 	<div class="container">
-		<div class="well">
-			These are the URI's that are available in this Stub REST server. Every URI is prepended with the server domain/ip (at this time we don't have it). 
-			Please keep this document up to date with new URI's that get added so that documentation for future batches won't be in the dark.
-		</div>
-		<table class="table">
-			<tr>
-				<th>URI
-				<th>Method
-				<th>Returns
-				<th>Description
-			<tr>
-				<td>/Batch/Trainer?email={TrainerEmail}
-				<td>GET
-				<td>JSON
-				<td>Returns all batches that the trainer is in control of, past, present, and future.
-			<tr>
-				<td>/Topic/Curriculum?id={CurriculumId}
-				<td>GET
-				<td>JSON
-				<td>Returns all top-level topics for a specific curriculum
-		</table>
-	</div>
+        <div class="well">
+            These are the URI's that are available in this Stub REST server. Every URI is prepended with the server domain/ip (at this time we don't have it). 
+            Please keep this document up to date with new URI's that get added so that documentation for future batches won't be in the dark.
+        </div>
+        <table class="table">
+            <tr>
+                <th>URI
+                <th>Method
+                <th>Returns
+                <th>Input
+                <th>Description
+            <tr>
+                <td>/Batch/Trainer
+                <td>GET
+                <td>JSON
+                <td>email : {TrainerEmail}
+                <td>Returns all batches that the trainer is in control of, past, present, and future.
+            <tr>
+                <td>/Topic/Curriculum
+                <td>GET
+                <td>JSON
+                <td>id : {CurriculumId}
+                <td>Returns all top-level topics for a specific curriculum
+        </table>
+        
+        <div class="well">
+            These are the REST calls for BAM's spring controllers
+        </div>
+        <table class="table">
+            <tr>
+                <th>URI
+                <th>Method
+                <th>Returns
+                <th>Input
+                <th>Description
+            <tr>
+                <td>/Batches/All.do
+                <td>GET
+                <td>JSON
+                <td>N/A
+                <td>Returns all batches
+            <tr>
+                <td>/Batches/Past.do
+                <td>GET
+                <td>JSON
+                <td>email : {TrainerEmail}
+                <td>Returns all past batches for a specific trainer
+            <tr>
+                <td>/Batches/Future.do
+                <td>GET
+                <td>JSON
+                <td>email : {TrainerEmail}
+                <td>Returns all future batches for a specific trainer
+            <tr>
+                <td>/Batches/InProgress.do
+                <td>GET
+                <td>JSON
+                <td>email : {TrainerEmail}
+                <td>Returns batch in progress for the specific trainer
+            <tr>
+                <td>/Batches/Edit.do
+                <td>GET
+                <td>JSON
+                <td>batch : {Batch}
+                <td>Returns Batch Details
+            <tr>
+                <td>/User/InBatch.do
+                <td>GET
+                <td>JSON
+                <td>id : {BatchId}
+                <td>Returns all users in a batch
+            <tr>
+                <td>/User/Drop.do
+                <td>POST
+                <td>JSON
+                <td>id : {UserId}
+                <td>Returns all users in a batch
+            <tr>
+                <td>/User/Remove.do
+                <td>POST
+                <td>JSON
+                <td>id : {UserId}
+                <td>Returns all users in a batch
+            <tr>
+                <td>/User/Update.do
+                <td>POST
+                <td>JSON
+                <td>user : {User}
+                <td>Returns User Details
+            <tr>
+                <td>/User/Add.do
+                <td>POST
+                <td>JSON
+                <td>userId : {UserId}<br>batchId : {batchId}
+                <td>Returns all user with a null batch
+            <tr>
+                <td>/User/NotInABatch.do
+                <td>GET
+                <td>JSON
+                <td>N/A
+                <td>Returns all associates with a null batch
+            <tr>
+                <td>/User/AllAssociates.do
+                <td>GET
+                <td>JSON
+                <td>N/A
+                <td>Returns all associates
+            <tr>
+                <td>/User/AllTrainers.do
+                <td>GET
+                <td>JSON
+                <td>N/A
+                <td>Returns all trainers
+        </table>
+    </div>
 </body>
 </html>
