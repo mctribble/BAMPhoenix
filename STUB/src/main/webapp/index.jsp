@@ -12,11 +12,11 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<title>Stub Documentation</title>
+<title>BAM Documentation</title>
 </head>
 <body>
 	<nav class="navbar navbar-inverse bg-inverse">
-  		<a class="navbar-brand" href="#">Stub Documentation</a>
+  		<a class="navbar-brand" href="#">BAM Documentation</a>
 	</nav>
 	
 	<div class="container">
@@ -86,6 +86,12 @@
                 <td>batch : {Batch}
                 <td>Returns Batch Details
             <tr>
+                <td>/Batches/ById
+                <td>GET
+                <td>JSON
+                <td>batchId : {BatchId}
+                <td>Returns Batch Details
+            <tr>
                 <td>/User/InBatch.do
                 <td>GET
                 <td>JSON
@@ -133,6 +139,18 @@
                 <td>JSON
                 <td>N/A
                 <td>Returns all trainers
+            <tr>
+                <td>/Calendar/Topics.do
+                <td>GET
+                <td>JSON
+                <td>batchId : {BatchId}
+                <td>Returns all Week Topics for a batch
+            <tr>
+                <td>/Calendar/Subtopics.do
+                <td>GET
+                <td>JSON
+                <td>batchId : {BatchId}
+                <td>Returns all subtopics and tasks for a batch
         </table>
     </div>
 </body>
