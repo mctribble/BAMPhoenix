@@ -24,7 +24,7 @@ public class SubtopicService {
 	@Autowired
 	SubtopicRepository subTopRep;
 	
-<<<<<<< HEAD
+
 	@Autowired
 	BatchRepository batchRep;
 	
