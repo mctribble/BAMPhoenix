@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Users {
 	
+	
 	@Id
 	@Column(name = "User_Id")
 	@SequenceGenerator(name = "USERID_SEQ", sequenceName = "USERID_SEQ")

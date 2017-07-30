@@ -8,479 +8,1022 @@
 *
 */
 
-//angular.module('myCalendarApp', ['ngRoute'])
 
   var app =  app.constant('uiCalendarConfig', {	//Angular ui-Calendar API used to create 
 	  //AngularJS calendar.
         calendars : {}
     })
-  app.controller('uiCalendarCtrl', ['$scope', '$locale','$compile','uiCalendarConfig',
-        function ($scope, $locale,$compile,$uiCalendarConfig) {
-	  	
-	  	//Varibles set for the use of adding day,month,year,to the Date attribute of a calendar. 
-		    var date = new Date();
-		    var d = date.getDate();
-		    var m = date.getMonth();
-		    var y = date.getFullYear();
-		    
-            var sources = $scope.eventSources;	//variable sources to hold different 
-            //events taking place on the calendar at any given time
-            var extraEventSignature = $scope.calendarWatchEvent ? $scope.calendarWatchEvent : angular.noop;
+ 
+app.controller('uiCalendarCtrl',
+   function($scope, $compile, $timeout, uiCalendarConfig, $http) {
+    
+	$scope.eventsF = function (start, end, timezone, callback) {
+		var s = new Date(start).getTime() / 1000;
+		var e = new Date(end).getTime() / 1000;
+		var m = new Date(start).getMonth();
+		var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
+		callback(events);
+		};
 
-            var wrapFunctionWithScopeApply = function (functionToWrap) {
-                return function () {
-                    // This may happen outside of angular context, so create one if outside.
-                    if ($scope.$root.$$phase) {
-                        return functionToWrap.apply(this, arguments);
-                    }
+		var date = new Date();
 
-                    var args = arguments;
-                    var that = this;
-                    return $scope.$root.$apply(
-                        function () {
-                            return functionToWrap.apply(that, args);
-                        }
-                    );
-                };
-            };
-            
+		/*day ex 16*/
+		var d = date.getDate();
+		console.log("date: " + d);
+
+		/*month ex 11*/
+		var m = date.getMonth();
+		console.log("month: " + m);
+
+		/*year ex 2016*/
+		var y = date.getFullYear();
+		console.log("year: " + y);
+
+		/* events that appear on calendar */
+		/* event source that contains custom events on the scope */
+		$scope.events = [];
+
+		$http({
+		method : "GET",
+		url : "Calendar/Subtopics.do" //"getBatchTemplate.do"
+		}).then(function successCallback(response) {
+		console.log("getBatchTemplate2.do called successfully: " + response.data);
+
+
+		/*  $http.post("getsubjectlist.do")
+		.success(function(data, status, headers, config) {
+		alert("start: data - topic - coverage - start - end");
+			alert(data[0])
+				alert(data[0].topic);
+				alert(data[0].coverage);
+				alert(data[0].start);
+				alert(data[0].end);
+			alert("end");
+		}).error(function(data, status, headers, config) {
+			$scope.status = status;	
+		}); */
+
+		var newEvents = response.data;
+
+		////////////////////////////////////////////get subject coverages///////////in progress
+		/* var data = $.param({});
+
+		var config = {
+		headers : {
+			'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+		}
+		} */
+		/*  $http.post("getSubjectCoverage.do", data, config)
+		.success(function(data, status, headers, config) {
+				$scope.coverages = data; */
+				
+					
+//			}).error(function(data, status, headers, config) {
+//				$scope.status = status;	
+		//});
+		/////////////////////////////////////////////////////////////////////////////
+		for(var i = 0; i < newEvents.length ; i++) {
+		console.log("adding new data: " + newEvents[i]);  
+		var newSubj;
+		//for(var j = 0; j < newEvents[i].length; j++){
+			
+			var sub = newEvents[i];//.subjects[j];
+			//for(var x=0; x < sub.length; x++){
+				var baseStart = newEvents[i].start;
+				var baseEnd = newEvents[i].end;
+				baseStart = new Date(baseStart);
+				baseStart.setDate(baseStart.getDate());//+j);
+				baseStart.setHours(5);
+				baseEnd = new Date(baseStart);
+				baseEnd.setHours(23);
+				newSubj = {"title":sub.topic/* newEvents[i].title +" - "+sub[x]*/,"length":"1","start":baseStart,"end":baseEnd,"stick":"true"/* , "subject":sub[x] */};
+				
+				var newSubjCoverage = false;
+				
+				//for(var xx = 0; xx < $scope.coverages.length; xx++){
+				//	if(newSubj.topic/* .subject */ == $scope.coverages[xx].topic){
+				//		newSubjCoverage = $scope.coverages[xx].coverage;
+				//	}
+				//}
+				newSubjCoverage = sub.coverage;
+				
+				/* if(newSubj.subject == "subject 3"){ 
+					newSubjCoverage = true;
+				} */
+				if(newSubjCoverage == false){
+					newSubj.className = "uncovered";
+					if(newSubj.end.getTime() < Date.now()){
+						newSubj.className = "late";
+					}
+				} else if(newSubjCoverage == true){
+					newSubj.className = "covered";
+				}	
+			
+				
+				$scope.events.push(newSubj);/////////////////////////////////////////////////////
+				//$('#calandar').fullCalendar('refetchEvents');
+				
+				////////////////////////////////////////////////////////////////////////////////////////////////
+			
+				
+			//}
+		//}	
+		}
+		uiConfig.calendar['myCalendar'].fullcalendar('removeEventSources');
+		uiConfig.calendar['myCalendar'].fullcalendar('addEventSource',$scope.events);
+
+		/* }).error(function(data, status, headers, config) {
+			$scope.status = status;	
+		}); */
+		//$scope.renderCalendar('myCalendar1');
+		});
+		$scope.initElement = function(newSubj){
+		var data = $.param({
+					topic: newSubj.subject
+				});
+
+				var config = {
+		    		headers : {
+		        		'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+		    		}
+				}
+				$http.post("SubTopic.do", data, config)
+					.success(function(data, status, headers, config) {
+							$scope.data = data;
+							//alert("data");
+							//alert($scope.data == false);
+							if(newSubj.subject == "subtopic 3"){
+							$scope.data = true;
+						}
+							if(newSubjCoverage == false){
+								newSubj.className = "uncovered";
+								if(newSubj.end.getTime() < Date.now()){
+									newSubj.className = "late";
+								}
+							} else if(newSubjCoverage == true){
+								newSubj.className = "covered";
+							}	
+			
+				
+						$scope.events.push(newSubj);
+						$('#calandar').fullCalendar('refetchEvents')
+					}).error(function(data, status, headers, config) {
+						$scope.status = status;
+						$scope.status = false;
+						
+				});
+		};
+
+		/* alert on eventClick */
+		$scope.alertOnEventClick = function(event, date, jsEvent, view){
+		$scope.alertMessage = (date.title + ' was clicked ');
+		if(event.className == "covered"){
+		event.className = "uncovered";
+		var endDay = new Date(event.end).getTime();
+		if(endDay < Date.now()){
+			event.className = "late";
+		}
+		}else{
+		event.className = "covered";
+		}
+
+		var endDay = new Date(event.end).getTime();
+		var data = $.param({
+		    topic: event.title/* subject */,
+		    enddate: endDay
+		});
+
+		var config = {
+		    headers : {
+		        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+		    }
+		}
+		$http.post("subjectcoverage.do", data, config)
+			.success(function(data, status, headers, config) {
+					$scope.data = data;
+			}).error(function(data, status, headers, config) {
+				$scope.status = status;
+		});
+		$('#calandar').fullCalendar('refetchEvents')
+		};
+		/* alert on Drop */
+		$scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
+		$scope.alertMessage = (event.title + ' Event Dropped to make dayDelta ' + delta);/*=========================================*/
+		for(var i = 0; i<$scope.events.length; i++){
+		var e = $scope.events[i];
+
+		if(e.title === event.title){
+
+			if(event.className != "covered"){
+				event.className = "uncovered";
+				var endDay = new Date(event.end).getTime();
+				if(endDay < Date.now()){
+					event.className = "late";
+				}
+			}else{
+				event.className = "covered";
+			}
+
+			   	e.className = event.className;
+		   var newDate = new Date(e.start)
+		   newDate.setSeconds(newDate.getSeconds() + delta/1000);
+		   e.start = newDate;
+		   
+		   var newDate = new Date(e.end)
+		   newDate.setSeconds(newDate.getSeconds() + delta/1000);
+		   e.end = newDate;
+		   var newDate = new Date(e.start).getTime();
+		    var data = $.param({
+		    	topic: event.title,
+		    	startdate: newDate
+			});
+			var config = {
+		    	headers : {
+		        	'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+		    	}
+			}
+			$http.post("subjectdrag.do", data, config)
+				.success(function(data, status, headers, config) {
+						$scope.data = data;
+				}).error(function(data, status, headers, config) {
+					$scope.status = status;
+			});
+		}
+		}
+		};
+		/* alert on Resize */
+		$scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
+		$scope.alertMessage = (event.title + 'Event Resized to make dayDelta ' + delta);
+		for(i = 0; i<$scope.events.length; i++){
+		var e = $scope.events[i];
+		if(e.title === event.title){   
+		var newDate = new Date(e.end)
+		newDate.setSeconds(newDate.getSeconds() + delta/1000);
+		e.end = newDate;
+		}
+		}
+		};
+		/* remove event */
+		$scope.remove = function(index) {
+		$scope.events.splice(index,1);
+		};
+		/* Change View */
+		$scope.changeView = function(view,calendar) {
+		uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
+		};
+		/* Change View */
+		$scope.renderCalendar = function(calendar) {
+		$timeout(function() {
+		if(uiCalendarConfig.calendars[calendar]){
+		uiCalendarConfig.calendars[calendar].fullCalendar('render');
+		}
+		});
+		console.log(calendar + " rendered");
+		};
+		/* Render Tooltip */
+		$scope.eventRender = function( event, element, view ) {
+		element.attr({'tooltip': event.title,
+		          'tooltip-append-to-body': true});
+		$compile(element)($scope);
+
+		};
+		/* config object */
+		$scope.uiConfig = {
+		calendar:{
+		height: 450,
+		editable: true,
+
+		header:{
+		left: 'title',
+		center: '',
+		right: 'today prev,next'
+		},
+
+		eventClick: $scope.alertOnEventClick,
+		eventDrop: $scope.alertOnDrop,
+		eventResize: $scope.alertOnResize,
+		eventRender: $scope.eventRender
+		}
+		};
+
+		/* event sources array*/
+		$scope.eventSources = [$scope.events, $scope.eventsF];
+		});
+  
+  //========================controller for associates=================================
+//Controller for associate views
+app.controller("associateController",function($rootScope, $scope, $compile, $timeout, uiCalendarConfig, $http){
+  	$http({
+  		method:"GET",
+  		url:"getUserData.do"
+  	}).then(function successCallback(response){
+  		$scope.user = response.data;
+  		$scope.daysCompleted = daysBetween($scope.user.batchId.startDate);
+  		$scope.totalDays = $scope.user.batchId.typeId.batchDuration * 7;
+  		$scope.completion = function (){
+  			if($scope.daysCompleted > $scope.totalDays){
+  				return 100;
+  			}else{
+  				return Math.round((daysBetween($scope.user.batchId.startDate)/($scope.user.batchId.typeId.batchDuration * 7))*100);
+  			}
+  		}
+  		if($scope.users.userType == "ROLE_1"){
+  			$rootScope.isAssociate=true;
+  			console.log("associate")
+  		}else{
+  			$rootScope.isAssociate=false;
+  		}
+  	}, function failureCallback(response){
+  		console.log("failed to fetch user data")
+  	});
+  	
+  	$http({
+  		method:"GET",
+  		url:"fetchAssociateEvals.do"
+  	}).then(function successCallback(response){
+  		$scope.evaluations = response.data;
+  		var evals = $scope.evaluations;
+  		$scope.getAverage = function(){
+  			var average = 0;
+  			var count = 0;
+  			var evals = $scope.evaluations;
+  			for(var week in evals){
+  				if(evals.hasOwnProperty(week)){
+  					for(i=0;i<evals[week].length;i++){
+  						if(evals[week][i].evalState == "Completed"){
+  							average = average + Math.round((evals[week][i].score/evals[week][i].taskId.maxScore)*100);
+  							count = count + 1;
+  						}
+  					}
+  				}
+  			}
+  			if(average == 0){
+  				return 0;
+  			}else{
+  				average = average/count;
+  				return average;
+  			}
+  		};
+  	},function failureCallback(response){
+  		
+  	});
+  	
+  	$scope.setEvalId = function(evalId){
+  		$scope.evalId = evalId;
+  	};
+  	
+  	$scope.completeTask = function(){
+  		$http({
+  			method:"POST",
+  			url:"submitTask.do",
+  			params:{evalId:$scope.evalId,password:$scope.pass}
+  		}).then(function successCallback(response){
+  			if(response.data.status == "failed"){
+  				alert("Validation failed. Please check your password and try again.");
+  			}else{
+  				var evals = $scope.evaluations;
+  				for(var week in evals){
+  					if(evals.hasOwnProperty(week)){
+  						for(i=0;i<evals[week].length;i++){
+  							if(evals[week][i].evaluationId == $scope.evalId){
+  								evals[week][i].evalState = response.data.status;
+  								$scope.evalId = "";
+  								$scope.pass = "";
+  							}
+  						}
+  					}
+  				}
+  			}
+  		},function failureCallback(response){
+  			console.log("Failed");
+  		})
+  	};
+  	
+  	$scope.getWeeksAverage = function(evals){
+  		var average = 0;
+  		var count = 0;
+  		for(i = 0; i<evals.length;i++){
+  			if(evals[i].evalState == "Completed"){
+  				average = average + Math.round((evals[i].score/evals[i].taskId.maxScore)*100);
+  				count = count + 1;
+  			}
+  		}
+  		if(average == 0){
+  			return 0;
+  		}else{
+  			average = average/count;
+  			return average;
+  		}
+  	};
+  	
+  	
+  	
+  	$scope.eventsF = function (start, end, timezone, callback) {
+          var s = new Date(start).getTime() / 1000;
+          var e = new Date(end).getTime() / 1000;
+          var m = new Date(start).getMonth();
+          var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
+          callback(events);
+        };
+        
+      var date = new Date();
+      
+   /*day ex 16*/
+      var d = date.getDate();
+      console.log("date: " + d);
+      
+   /*month ex 11*/
+      var m = date.getMonth();
+      console.log("month: " + m);
+      
+   /*year ex 2016*/
+      var y = date.getFullYear();
+      console.log("year: " + y);
+      
+  /* events that appear on calendar */
+      /* event source that contains custom events on the scope */
+      $scope.events = [];
+      
+      $http({
+  		method : "POST",
+  		url : "getSchedule.do"
+  	}).then(function successCallback(response) {
+  		console.log("getSchedule.do called successfully: " + response.data);
+  		uiCalendarConfig.calendars['myCalendar1'].fullCalendar('removeEventSources');
+  		/* Reason for doing this:
+  		 * This will update the current events array instead of creating a new reference, 
+  		 * can cause problems */
+  		//$scope.events.splice(0, $scope.events.length);
+  		
+  		var newEvents = response.data;
+  		
+  		for(var i = 0; i < newEvents.length ; ++i) {
+  			console.log("adding new data: " + newEvents[i]);  
+  			
+  			$scope.events.push(newEvents[i]);
+  		}
+  		uiCalendarConfig.calendars['myCalendar1'].fullCalendar('addEventSource',$scope.events);
+  		//$scope.renderCalendar('myCalendar1');
+  	});
+      
+      /* alert on eventClick */
+      $scope.alertOnEventClick = function( date, jsEvent, view){
+          $scope.alertMessage = (date.title + ' was clicked ');
+      };
+      /* alert on Drop */
+       $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
+         $scope.alertMessage = (event.title + ' Event Dropped to make dayDelta ' + delta);
+         for(var i = 0; i<$scope.events.length; i++){
+      	   var e = $scope.events[i];
+      	   
+      	   if(e.title === event.title){
+      		   var newDate = new Date(e.start)
+      		   newDate.setSeconds(newDate.getSeconds() + delta/1000);
+      		   e.start = newDate;
+      		   
+      		   var newDate = new Date(e.end)
+      		   newDate.setSeconds(newDate.getSeconds() + delta/1000);
+      		   e.end = newDate;
+      	   }
+         }
+       };
+      /* alert on Resize */
+      $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
+         $scope.alertMessage = (event.title + 'Event Resized to make dayDelta ' + delta);
+         for(i = 0; i<$scope.events.length; i++){
+      	   var e = $scope.events[i];
+         if(e.title === event.title){   
+      	   var newDate = new Date(e.end)
+  		   newDate.setSeconds(newDate.getSeconds() + delta/1000);
+  		   e.end = newDate;
+         }
+         }
+      };
+      /* remove event */
+      $scope.remove = function(index) {
+        $scope.events.splice(index,1);
+      };
+      /* Change View */
+      $scope.changeView = function(view,calendar) {
+        uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
+      };
+      /* Change View */
+      $scope.renderCalendar = function(calendar) {
+        $timeout(function() {
+          if(uiCalendarConfig.calendars[calendar]){
+            uiCalendarConfig.calendars[calendar].fullCalendar('render');
+          }
+        });
+        console.log(calendar + " rendered");
+      };
+       /* Render Tooltip */
+      $scope.eventRender = function( event, element, view ) {
+          element.attr({'tooltip': event.title,
+                        'tooltip-append-to-body': true});
+          $compile(element)($scope);
+      };
+      /* config object - non-interactive monthly view */
+      $scope.uiConfig = {
+        calendar:{
+          height: 450,
+          editable: false,
+
+          header:{
+            left: 'title',
+            center: '',
+            right: 'today prev,next'
+          },
+
+          eventClick: $scope.alertOnEventClick,
+          eventDrop: $scope.alertOnDrop,
+          eventResize: $scope.alertOnResize,
+          eventRender: $scope.eventRender
+        }
+      
+      };
+      
+      /* config object - non-interactive weekly view */
+      $scope.uiConfig2 = {
+      	      calendar:{
+      	        height: 150,
+      	        editable: false,
+      	        defaultView: 'basicWeek',
+
+      	        header:{
+      	          left: 'title',
+      	          center: '',
+      	          right: 'today prev,next'
+      	        },
+
+      	        eventClick: $scope.alertOnEventClick,
+      	        eventDrop: $scope.alertOnDrop,
+      	        eventResize: $scope.alertOnResize,
+      	        eventRender: $scope.eventRender
+      	      }
+      };
+      /* event sources array*/
+      $scope.eventSources = [$scope.events, $scope.eventsF];
+  });
+  
+  
+  //===========================controller to handle scope of user(Associate or Trainer)=======================
+ app.controller('mainController', function($window,$scope, $http) {
+	    // create a message to display in our view
+	    $scope.message = 'Everyone come and see how good I look!';
+	    $http({
+	    	method:"GET",
+	    	url:"getLoggedInType.do"
+	    }).then(function successCallback(response){
+	    	$scope.type = response.data.authority;
+	    	/*if($scope.type == "Associate"){
+	    		$window.location.href = "#associate-home";
+	    		$scope.title = 'Associate Home';
+	    		return;
+	    	}
+	    	if($scope.type == "Trainer"){
+	    		$window.location.href = "#trainer-home";
+	    		$scope.title = 'Trainer Home';
+	    		return;
+	    	}*/
+	    	$scope.goHome();
+	    },function failureCallback(response){
+	    	console.log("could not retrieve user data")
+	    });
+	    $scope.goHome = function(){
+	    	if($scope.type == "Associate"){
+	    		$window.location.href = "#associate-home";
+	    		$scope.title = 'Associate Home';
+	    		console.log("associate")
+	    		return;
+	    	}
+	    	if($scope.type == "Trainer"){
+	    		$window.location.href = "#trainer-home";
+	    		$scope.title = 'Trainer Home';
+	    		console.log("trainer")
+	    		return;
+	    	}
+	    }
+	    $scope.logOut = function(){
+	    	$scope.type = "";
+	    }
+	});
+  
+  
+  
+//================================================= controller for trainer home page calendar =============================
+app.controller("trainerController",function($rootScope, $scope, $compile, $timeout, uiCalendarConfig, $http){
+  	/* events that appear on calendar */
+      /* event source that contains custom events on the scope */
+  	$scope.events = [];
+  	$http({
+  		method:"GET",
+  		url:"getUserData.do"
+  	}).then(function successCallback(response){
+  		console.log(response.data.batchId.batchId);
+  		//$scope.activeBatchId = response.data.batchId.batchId;
+  		 $http({
+  				method : "GET",
+  				url : "getActiveBatch.do",
+  				params : {batchId : response.data.batchId.batchId}
+  			}).then(function successCallback(response) {
+  				console.log("getActiveBatch returned normally");
+  				
+  				/* Reason for doing this:
+  				 * This will update the current events array instead of creating a new reference, 
+  				 * can cause problems */
+  				//$scope.events.splice(0, $scope.events.length);
+  				
+  				var newEvents = response.data;
+  				
+  				for(var i = 0; i < newEvents.length ; ++i) {
+  					console.log("adding new data: " + newEvents[i]);  
+  					
+  					$scope.events.push(newEvents[i]);
+  				}
+  				
+  				uiCalendarConfig.calendars['myCalendar'].fullCalendar('removeEventSources'); 
+  				uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
+  			}, function failureCallback(response){
+  				console.log("getActiveBatch unsuccessful " + response.data);
+  			});
+  	}, function failureCallback(response){
+  		console.log("failed to fetch user data")
+  	});
+  	
+  	$scope.eventsF = function (start, end, timezone, callback) {
+          var s = new Date(start).getTime() / 1000;
+          var e = new Date(end).getTime() / 1000;
+          var m = new Date(start).getMonth();
+          var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
+          callback(events);
+        };
+        
+      var date = new Date();
+      
+   /*day ex 16*/
+      var d = date.getDate();
+      console.log("date: " + d);
+      
+   /*month ex 11*/
+      var m = date.getMonth();
+      console.log("month: " + m);
+      
+   /*year ex 2016*/
+      var y = date.getFullYear();
+      console.log("year: " + y);
+      
+         
+      /* alert on eventClick */
+      $scope.alertOnEventClick = function( date, jsEvent, view){
+          $scope.alertMessage = (date.title + ' was clicked ');
+      };
+      /* alert on Drop */
+       $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
+         $scope.alertMessage = (event.title + ' Event Dropped to make dayDelta ' + delta);
+         for(var i = 0; i<$scope.events.length; i++){
+      	   var e = $scope.events[i];
+      	   
+      	   if(e.title === event.title){
+      		   var newDate = new Date(e.start)
+      		   newDate.setSeconds(newDate.getSeconds() + delta/1000);
+      		   e.start = newDate;
+      		   
+      		   var newDate = new Date(e.end)
+      		   newDate.setSeconds(newDate.getSeconds() + delta/1000);
+      		   e.end = newDate;
+      	   }
+         }
+       };
+      /* alert on Resize */
+      $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
+         $scope.alertMessage = (event.title + 'Event Resized to make dayDelta ' + delta);
+         for(i = 0; i<$scope.events.length; i++){
+      	   var e = $scope.events[i];
+         if(e.title === event.title){   
+      	   var newDate = new Date(e.end)
+  		   newDate.setSeconds(newDate.getSeconds() + delta/1000);
+  		   e.end = newDate;
+         }
+         }
+      };
+      /* remove event */
+      $scope.remove = function(index) {
+        $scope.events.splice(index,1);
+      };
+      /* Change View */
+      $scope.changeView = function(view,calendar) {
+        uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
+      };
+      /* Change View */
+      $scope.renderCalendar = function(calendar) {
+        $timeout(function() {
+          if(uiCalendarConfig.calendars[calendar]){
+            uiCalendarConfig.calendars[calendar].fullCalendar('render');
+          }
+        });
+        console.log(calendar + " rendered");
+      };
+       /* Render Tooltip */
+      $scope.eventRender = function( event, element, view ) {
+          element.attr({'tooltip': event.title,
+                        'tooltip-append-to-body': true});
+          $compile(element)($scope);
+      };
+      /* config object */
+      $scope.uiConfig = {
+        calendar:{
+          height: 450,
+          editable: false,
+          draggable: false,
           
+          header:{
+            left: 'title',
+            center: '',
+            right: 'today prev,next'
+          },
 
-            var eventSerialId = 1;
-            // @return {String} fingerprint of the event object and its properties
-            this.eventFingerprint = function (e) {
-                if (!e._id) {
-                    e._id = eventSerialId++;
-                }
-
-                var extraSignature = extraEventSignature({
-                    event : e
-                }) || '';
-                var start = moment.isMoment(e.start) ? e.start.unix() : (e.start ? moment(e.start).unix() : '');
-                var end = moment.isMoment(e.end) ? e.end.unix() : (e.end ? moment(e.end).unix() : '');
-
-                // This extracts all the information we need from the event. http://jsperf.com/angular-calendar-events-fingerprint/3
-                return [e._id, e.id || '', e.title || '', e.url || '', start, end, e.allDay || '', e.className || '', extraSignature].join('');
-            };
-
-            var sourceSerialId = 1;
-            var sourceEventsSerialId = 1;
-            // @return {String} fingerprint of the source object and its events array
-            this.sourceFingerprint = function (source) {
-                var fp = '' + (source.__id || (source.__id = sourceSerialId++));
-                var events = angular.isObject(source) && source.events;
-
-                if (events) {
-                    fp = fp + '-' + (events.__id || (events.__id = sourceEventsSerialId++));
-                }
-                return fp;
-            };
-
-            // @return {Array} all events from all sources
-            this.allEvents = function () {
-                return Array.prototype.concat.apply(
-                    [],
-                    (sources || []).reduce(
-                        function (previous, source) {
-                            if (angular.isArray(source)) {
-                                previous.push(source);
-                            } else if (angular.isObject(source) && angular.isArray(source.events)) {
-                                var extEvent = Object.keys(source).filter(
-                                    function (key) {
-                                        return (key !== '_id' && key !== 'events');
-                                    }
-                                );
-
-                                source.events.forEach(
-                                    function (event) {
-                                        angular.extend(event, extEvent);
-                                    }
-                                );
-
-                                previous.push(source.events);
-                            }
-                            return previous;
-                        },
-                        []
-                    )
-                );
-            };
-
-            // Track changes in array of objects by assigning id tokens to each element and watching the scope for changes in the tokens
-            // @param {Array|Function} arraySource array of objects to watch
-            // @param tokenFn {Function} that returns the token for a given object
-            // @return {Object}
-            //  subscribe: function(scope, function(newTokens, oldTokens))
-            //    called when source has changed. return false to prevent individual callbacks from firing
-            //  onAdded/Removed/Changed:
-            //    when set to a callback, called each item where a respective change is detected
-            this.changeWatcher = function (arraySource, tokenFn) {
-                var self;
-
-                var getTokens = function () {
-                    return ((angular.isFunction(arraySource) ? arraySource() : arraySource) || []).reduce(
-                        function (rslt, el) {
-                            var token = tokenFn(el);
-                            map[token] = el;
-                            rslt.push(token);
-                            return rslt;
-                        },
-                        []
-                    );
-                };
-
-                // @param {Array} a
-                // @param {Array} b
-                // @return {Array} elements in that are in a but not in b
-                // @example
-                //  subtractAsSets([6, 100, 4, 5], [4, 5, 7]) // [6, 100]
-                var subtractAsSets = function (a, b) {
-                    var obj = (b || []).reduce(
-                        function (rslt, val) {
-                            rslt[val] = true;
-                            return rslt;
-                        },
-                        Object.create(null)
-                    );
-                    return (a || []).filter(
-                        function (val) {
-                            return !obj[val];
-                        }
-                    );
-                };
-
-                // Map objects to tokens and vice-versa
-                var map = {};
-
-                // Compare newTokens to oldTokens and call onAdded, onRemoved, and onChanged handlers for each affected event respectively.
-                var applyChanges = function (newTokens, oldTokens) {
-                    var i;
-                    var token;
-                    var replacedTokens = {};
-                    var removedTokens = subtractAsSets(oldTokens, newTokens);
-                    for (i = 0; i < removedTokens.length; i++) {
-                        var removedToken = removedTokens[i];
-                        var el = map[removedToken];
-                        delete map[removedToken];
-                        var newToken = tokenFn(el);
-                        // if the element wasn't removed but simply got a new token, its old token will be different from the current one
-                        if (newToken === removedToken) {
-                            self.onRemoved(el);
-                        } else {
-                            replacedTokens[newToken] = removedToken;
-                            self.onChanged(el);
-                        }
-                    }
-
-                    var addedTokens = subtractAsSets(newTokens, oldTokens);
-                    for (i = 0; i < addedTokens.length; i++) {
-                        token = addedTokens[i];
-                        if (!replacedTokens[token]) {
-                            self.onAdded(map[token]);
-                        }
-                    }
-                };
-
-                self = {
-                    subscribe : function (scope, onArrayChanged) {
-                        scope.$watch(getTokens, function (newTokens, oldTokens) {
-                            var notify = !(onArrayChanged && onArrayChanged(newTokens, oldTokens) === false);
-                            if (notify) {
-                                applyChanges(newTokens, oldTokens);
-                            }
-                        }, true);
-                    },
-                    onAdded : angular.noop,
-                    onChanged : angular.noop,
-                    onRemoved : angular.noop
-                };
-                return self;
-            };
-
-            this.getFullCalendarConfig = function (calendarSettings, uiCalendarConfig) {
-                var config = {};
-
-                angular.extend(config, uiCalendarConfig);
-                angular.extend(config, calendarSettings);
-
-                angular.forEach(config, function (value, key) {
-                    if (typeof value === 'function') {
-                        config[key] = wrapFunctionWithScopeApply(config[key]);
-                    }
-                });
-
-                return config;
-            };
-
-            this.getLocaleConfig = function (fullCalendarConfig) {
-                if (!fullCalendarConfig.lang && !fullCalendarConfig.locale || fullCalendarConfig.useNgLocale) {
-                    // Configure to use locale names by default
-                    var tValues = function (data) {
-                        // convert {0: "Jan", 1: "Feb", ...} to ["Jan", "Feb", ...]
-                        return (Object.keys(data) || []).reduce(
-                            function (rslt, el) {
-                                rslt.push(data[el]);
-                                return rslt;
-                            },
-                            []
-                        );
-                    };
-
-                    var dtf = $locale.DATETIME_FORMATS;
-                    return {
-                        monthNames : tValues(dtf.MONTH),
-                        monthNamesShort : tValues(dtf.SHORTMONTH),
-                        dayNames : tValues(dtf.DAY),
-                        dayNamesShort : tValues(dtf.SHORTDAY)
-                    };
-                }
-
-                return {};
-            };
-            
-            
-            /* event source that contains custom events on the scope */
-            $scope.events = [
-              {title: '' ,start: new Date()},
-              {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-            ];
-            
-            /* event source that calls a function on every view switch */
-            $scope.eventsF = function (start, end, timezone, callback) {
-              var s = new Date(start).getTime() / 1000;
-              var e = new Date(end).getTime() / 1000;
-              var m = new Date(start).getMonth();
-              var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
-              callback(events);
-            };
-            
-            $scope.calEventsExt = {
-            	       color: '#f00',
-            	       textColor: 'yellow',
-            	       events: [ 
-            	          {type:'party',title: 'Lunch',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
-            	          {type:'party',title: 'Lunch 2',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
-            	          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-            	        ]
-            	    };
-            
-            /* alert on eventClick */
-            $scope.alertOnEventClick = function( date, jsEvent, view){
-                $scope.alertMessage = (date.title + ' was clicked ');
-            };
-            /* alert on Drop */
-             $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
-               $scope.alertMessage = ('Event Dropped to make dayDelta ' + delta);
-            };
-            /* alert on Resize */
-            $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
-               $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
-            };
-       
-            /* add and removes an event source of choice */
-            $scope.addRemoveEventSource = function(sources,source) {
-              var canAdd = 0;
-              angular.forEach(sources,function(value, key){
-                if(sources[key] === source){
-                  sources.splice(key,1);
-                  canAdd = 1;
-                }
-              });
-              if(canAdd === 0){
-                sources.push(source);
-              }
-            };
-            
-            /* add custom event*/
-            $scope.addEvent = function() {
-              $scope.events.push({
-                title: 'Open Sesame',
-                start: new Date(y, m, 28),
-                end: new Date(y, m, 29),
-                className: ['openSesame']
-              });
-            };
-            
-            /* remove event */
-            $scope.remove = function(index) {
-              $scope.events.splice(index,1);
-            };
-            
-            /* Render Tooltip */
-            $scope.eventRender = function( event, element, view ) { 
-                element.attr({'tooltip': event.title,
-                             'tooltip-append-to-body': true});
-                $compile(element)($scope);
-            };
-            
-            /* Change View */
-            $scope.changeView = function(view,calendar) {
-              uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
-            };
-            /* Change View */
-            $scope.renderCalender = function(calendar) {
-              if(uiCalendarConfig.calendars[calendar]){
-                uiCalendarConfig.calendars[calendar].fullCalendar('render');
-              }
-            };
-            
-            /* config object */
-            $scope.uiConfig = {
-              calendar:{
-                height: 450,
-                editable: true,
-                header:{
-                  left: 'title',
-                  center: '',
-                  right: 'today prev,next'
-                },
-                eventClick: $scope.alertOnEventClick,
-                eventDrop: $scope.alertOnDrop,
-                eventResize: $scope.alertOnResize,
-                eventRender: $scope.eventRender
-              }
-            };
-
-            
-            /* event sources array*/
-            $scope.eventSources = [$scope.events];
-            $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
-            $scope.sources 			= "";
-   			$scope.source 			= "";
-            
+          eventClick: $scope.alertOnEventClick,
+          eventDrop: $scope.alertOnDrop,
+          eventResize: $scope.alertOnResize,
+          eventRender: $scope.eventRender
         }
-    ])
-    .directive('uiCalendar', ['uiCalendarConfig',
-        function (uiCalendarConfig) {
+      };
+      
+      /* event sources array*/
+      $scope.eventSources = [$scope.events, $scope.eventsF];
+  });
 
-            return {
-                restrict : 'A',
-                scope : {
-                    eventSources : '=ngModel',
-                    calendarWatchEvent : '&'
-                },
-                controller : 'uiCalendarCtrl',
-                link : function (scope, elm, attrs, controller) {
-                    var sources = scope.eventSources;
-                    var sourcesChanged = false;
-                    var calendar;
-                    var eventSourcesWatcher = controller.changeWatcher(sources, controller.sourceFingerprint);
-                    var eventsWatcher = controller.changeWatcher(controller.allEvents, controller.eventFingerprint);
-                    var options = null;
+//===============================trainer confirm controller========================================
+//controller for trainer confirming a batch 
+	app.controller('confirmBatchCtrl',
+		function($scope, $compile, $timeout,uiCalendarConfig, $http,$location) {
+		$scope.showCalendar = true;
+		$scope.reshowCalenadar=false;
+		$scope.ShowLoadingIcon = false;
+		$scope.events=[];
+		
+		//put window title into scope
+		$scope.windowTitle = "Confirm Batch";
+	
+		console.log("calling retreiveCalendar.do");
+		$http({
+			method : "GET",
+			url : "retreiveCalendar.do"
+		}).then(function successCallback(response) {
+			console.log("retreiveCalendar.do called successfully: "+ response.data);
+			$scope.bName = response.data[0];
+			$scope.topic = response.data[1];
+			$scope.sDate = new Date(response.data[2]);
+			
+			console.log("New Date: " + $scope.sDate.toString());
+			
+			$http({
+				method : "GET",
+				//For testing
+				/* url : "getBatchTemplate.do" */
+				// From REST service
+				//url: "http://35.163.234.219:8080/BAM-REST/Java",
+				url:"generateTemplate.do",
+				params : { startDate : $scope.sDate }
+			}).then(function successCallback(response) {
+				console.log("getBatchTemplate2.do called successfully: "+ response.data[0]);
+				/* Reason for doing this:
+				* This will update the current events array instead of creating a new reference, 
+				* can cause problems */
+				//$scope.events.splice(0, $scope.events.length);
+				var newEvents = response.data;
+				for (var i = 0; i < newEvents.length; ++i) {
+					//add 5 hours to time(To account for timezone difference)
+					newEvents[i].start = newEvents[i].start.substr(0, 12) + '5' + newEvents[i].start.substr(12 + 1);
+					
+					console.log("adding new data: "+ newEvents[i].start);
+					
+					$scope.events.push(newEvents[i]);
+				}
+			});
+	
+		});
+			$scope.eventsF = function(start, end,timezone, callback) {
+			var s = new Date(start).getTime() / 1000;
+			var e = new Date(end).getTime() / 1000;
+			var m = new Date(start).getMonth();
+			var events = [ {
+				title : 'Feed Me ' + m,
+				start : s + (50000),
+				end : s + (100000),
+				allDay : false,
+				className : [ 'customFeed' ]
+			} ];
+				callback(events);
+			};
+			/* alert on eventClick */
+			$scope.alertOnEventClick = function(date,jsEvent, view) {
+				$scope.alertMessage = (date.title + ' was clicked ');
+			};
+			/* alert on Drop */
+			$scope.alertOnDrop = function(event, delta,revertFunc, jsEvent, ui, view) {
+				$scope.alertMessage = (event.title + ' Event Dropped to make dayDelta ' + delta);/*=========================================*/
+				for (var i = 0; i < $scope.events.length; i++) {
+					var e = $scope.events[i];
+					if (e.title === event.title) {
+						var newDate = new Date(e.start);
+						newDate.setSeconds(newDate.getSeconds()+ delta / 1000);
+						e.start = newDate;
+	
+						var newDate = new Date(e.end);
+						newDate.setSeconds(newDate.getSeconds()+ delta / 1000);
+						e.end = newDate;
+					}
+				}
+			};
+			/* alert on Resize */
+			$scope.alertOnResize = function(event,delta, revertFunc, jsEvent, ui,view) {
+				$scope.alertMessage = (event.title+ 'Event Resized to make dayDelta ' + delta);
+				for (i = 0; i < $scope.events.length; i++) {
+					var e = $scope.events[i];
+					if (e.title === event.title) {
+						var newDate = new Date(e.end);
+						newDate.setSeconds(newDate.getSeconds()+ delta / 1000);
+						e.end = newDate;
+					}
+				}
+			};
+			/* remove event */
+			$scope.remove = function(index) {
+				$scope.events.splice(index, 1);
+			};
+			/* Change View */
+			$scope.changeView = function(view, calendar) {
+				uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
+			};
+			/* Change View */
+			$scope.renderCalendar = function(calendar) {
+				$timeout(function() {
+					if (uiCalendarConfig.calendars[calendar]) {
+						uiCalendarConfig.calendars[calendar].fullCalendar('render');
+					}
+				});
+				console.log(calendar + " rendered");
+			};
+			/* Render Tooltip */
+			$scope.eventRender = function(event,element, view) {
+				element.attr({
+					'tooltip' : event.title,
+					'tooltip-append-to-body' : true
+				});
+				$compile(element)($scope);
+			};
+			/* config object */
+			$scope.uiConfig = {
+				calendar : {
+					height : 450,
+					editable : true,
+					header : {
+							left : 'title',
+							center : '',
+							right : 'today prev,next'
+					},
+					eventClick : $scope.alertOnEventClick,
+					eventDrop : $scope.alertOnDrop,
+					eventResize : $scope.alertOnResize,
+					eventRender : $scope.eventRender
+				}	
+			};
+			/* event sources array*/
+			$scope.eventSources = [ $scope.events,$scope.eventsF ];
+			
+			/* on submit button clicked */
+			$scope.submit = function() {
+				$scope.showCalendar = false;
+				$scope.ShowLoadingIcon = true;
+				$http({
+						method : "POST",
+						data : {
+							batch : $scope.events
+						},
+						url : "createBatch.do"
+				}).then(function successCallback(response) {
+					var result = response.data.result;
+					console.log("Create Batch Validation response: "+ result);
+					if (result == "VALID") {
+						$scope.addDataMessage = "Submission successful";
+						$scope.ShowLoadingIcon = false;
+					} else {
+						$scope.addDataMessage = "Batch Creation failed";
+						$scope.reshowCalenadar=true;
+						$scope.ShowLoadingIcon = false;
+					}
+				});
+			};
+			
+			$scope.cancelBatch = function() {
+				$location.path("/trainer-home");
+			}
+			
+			$scope.showCalendarBtn = function(){
+				$scope.showCalendar = true;
+				$scope.reshowCalenadar=false;
+			}
+		});
 
-                    function getOptions () {
-                        var calendarSettings = attrs.uiCalendar ? scope.$parent.$eval(attrs.uiCalendar) : {};
-                        var fullCalendarConfig = controller.getFullCalendarConfig(calendarSettings, uiCalendarConfig);
-                        var localeFullCalendarConfig = controller.getLocaleConfig(fullCalendarConfig);
-                        angular.extend(localeFullCalendarConfig, fullCalendarConfig);
-                        options = {
-                            eventSources : sources
-                        };
-                        angular.extend(options, localeFullCalendarConfig);
-                        //remove calendars from options
-                        options.calendars = null;
+function daysBetween(dateSt) {
+	  var date1 = new Date(dateSt);
+	  var date2 = new Date();
+	  
+	  //Get 1 day in milliseconds
+	  var one_day=1000*60*60*24;
 
-                        var options2 = {};
-                        for (var o in options) {
-                            if (o !== 'eventSources') {
-                                options2[o] = options[o];
-                            }
-                        }
-                        return JSON.stringify(options2);
-                    }
+	  // Convert both dates to milliseconds
+	  var date1_ms = date1.getTime();
+	  var date2_ms = date2.getTime();
 
-                    scope.destroyCalendar = function () {
-                        if (calendar && calendar.fullCalendar) {
-                            calendar.fullCalendar('destroy');
-                        }
-                        if (attrs.calendar) {
-                            calendar = uiCalendarConfig.calendars[attrs.calendar] = angular.element(elm).html('');
-                        } else {
-                            calendar = angular.element(elm).html('');
-                        }
-                    };
+	  // Calculate the difference in milliseconds
+	  var difference_ms = date2_ms - date1_ms;
+	    
+	  // Convert back to days and return
+	  return Math.round(difference_ms/one_day); 
+};
 
-                    scope.initCalendar = function () {
-                        if (!calendar) {
-                            calendar = $(elm).html('');
-                        }
-                        calendar.fullCalendar(options);
-                        if (attrs.calendar) {
-                            uiCalendarConfig.calendars[attrs.calendar] = calendar;
-                        }
-                    };
 
-                    scope.$on('$destroy', function () {
-                        scope.destroyCalendar();
-                    });
+//Login page javascript
+var loginApp = angular.module("loginApp", [ "ngRoute" ]);
+loginApp.config(function($routeProvider) {
+	$routeProvider.when("/login", {
+		templateUrl : "loginBody.html",
+		controller : "loginCTRL"
+	}).when("/register", {
+		templateUrl : "register.html",
+		controller : "registerCTRL"
+	}).otherwise({
+		redirectTo : "/login"
+	});
 
-                    eventSourcesWatcher.onAdded = function (source) {
-                        if (calendar && calendar.fullCalendar) {
-                            calendar.fullCalendar(options);
-                            if (attrs.calendar) {
-                                uiCalendarConfig.calendars[attrs.calendar] = calendar;
-                            }
-                            calendar.fullCalendar('addEventSource', source);
-                            sourcesChanged = true;
-                        }
-                    };
+});
+loginApp.controller("navCTRL", function($scope, $location) {
+	$scope.registerSelected = false;
+	$scope.loginSelected = true;
+	$scope.clearButton = function() {
+		$scope.registerSelected = false;
+		$scope.loginSelected = false;
 
-                    eventSourcesWatcher.onRemoved = function (source) {
-                        if (calendar && calendar.fullCalendar) {
-                            calendar.fullCalendar('removeEventSource', source);
-                            sourcesChanged = true;
-                        }
-                    };
+	}
+});
 
-                    eventSourcesWatcher.onChanged = function () {
-                        if (calendar && calendar.fullCalendar) {
-                            calendar.fullCalendar('refetchEvents');
-                            sourcesChanged = true;
-                        }
-                    };
+loginApp.controller("loginCTRL", function($scope, $location){
+		var url = $location.absUrl();
+		$scope.loginResult = url.includes("?error");
+	});
 
-                    eventsWatcher.onAdded = function (event) {
-                        if (calendar && calendar.fullCalendar) {
-                            calendar.fullCalendar('renderEvent', event, !!event.stick);
-                        }
-                    };
+loginApp.controller("registerCTRL",
+				function($scope, $http, $location,
+						$httpParamSerializerJQLike) {
+					$scope.userType = "Associate";
+					$scope.email = "";
+					$scope.firstname = "";
+					$scope.lastname = "";
+					$scope.middlename = "";
+					$scope.passwd = "";
+					$scope.outcome = "";
+					$scope.registerSubmitted = false;
+					$scope.regSuccess = false;
 
-                    eventsWatcher.onRemoved = function (event) {
-                        if (calendar && calendar.fullCalendar) {
-                            calendar.fullCalendar('removeEvents', event._id);
-                        }
-                    };
+					$scope.submit = function() {
+						//event.preventDefault();
+						var data = $httpParamSerializerJQLike({
+							'email' : $scope.email,
+							'firstname' : $scope.firstname,
+							'lastname' : $scope.lastname,
+							'middlename' : $scope.middlename,
+							'passwd' : $scope.passwd,
+							'userType' : $scope.userType
+						});
+						
+						var config = {
+							headers : {
+								'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8;'
+							}
+						}
 
-                    eventsWatcher.onChanged = function (event) {
-                        if (calendar && calendar.fullCalendar) {
-                            var clientEvents = calendar.fullCalendar('clientEvents', event._id);
-                            for (var i = 0; i < clientEvents.length; i++) {
-                                var clientEvent = clientEvents[i];
-                                clientEvent = angular.extend(clientEvent, event);
-                                calendar.fullCalendar('updateEvent', clientEvent);
-                            }
-                        }
-                    };
+						$http.post('register.do', data, config)
+							.then(function(response) {
+								$scope.outcome = response.data;
+								if ($scope.outcome == "Registration Succeeded!"){
+									$scope.regSuccess = true;
+								}
+								else{
+									$scope.regSuccess = false;
+								}
+								$scope.registerSubmitted = true;
+								$scope.userType = "Associate";
+								$scope.email = "";
+								$scope.firstname = "";
+								$scope.lastname = "";
+								$scope.middlename = "";
+								$scope.passwd = "";
+								
+							});
+					}
+				});
 
-                    eventSourcesWatcher.subscribe(scope);
-                    eventsWatcher.subscribe(scope, function () {
-                        if (sourcesChanged === true) {
-                            sourcesChanged = false;
-                            // return false to prevent onAdded/Removed/Changed handlers from firing in this case
-                            return false;
-                        }
-                    });
 
-                    scope.$watch(getOptions, function (newValue, oldValue) {
-                        if (newValue !== oldValue) {
-                            scope.destroyCalendar();
-                            scope.initCalendar();
-                        } else if ((newValue && angular.isUndefined(calendar))) {
-                            scope.initCalendar();
-                        }
-                    });
-                }
-            };
-        }
-    ]
-);
+
