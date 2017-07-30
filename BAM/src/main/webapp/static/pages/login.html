@@ -1,36 +1,39 @@
-<!-- <div class="vertical-center">
-	<div class="row login-container" >-->
-<div class="login col-md-6">
+<div class="vertical-center">
+	<div class="row">
+		<div class="login col-md-6">
 
-	<div class="login-vertical-align">
-		<form>
-			<h3>Email</h3>
-			<input type="text" class="form-control revature-form"
-				ng-model="email" placeholder="" required> <br>
+			<div class="login-vertical-align">
+				<form>
+					<h3>Email</h3>
+					<input type="text" class="form-control revature-form"
+						ng-model="email" placeholder="" required> <br>
 
-			<h3>Password</h3>
-			<input type="password" class="form-control revature-form"
-				ng-model="password" placeholder="" required> <br> <br>
+					<h3>Password</h3>
+					<input type="password" class="form-control revature-form"
+						ng-model="password" placeholder="" required> <br> <br>
 
-			<div class="login-btn-container">
-				<button type="submit" class="btn btn-primary" ng-click="logIn()">LOGIN</button>
+					<div class="login-btn-container">
+						<button type="submit" class="btn threeqtr-width" id=login-btn ng-click="logIn()">LOGIN</button>
+					</div>
+
+				</form>
+				
+				<div class="login-btn-container">
+				<button type="submit" class="btn threeqtr-width" id="create-acc-btn">SIGN UP</button>
+				</div>
+
+				<p style="text-align: center; margin-top: 1em;">
+					<a href="#/forgot.html">Forgot password?</a>
+				</p>
+
 			</div>
-
-		</form>
-		<br>
-		<button type="submit" class="btn btn-warning">SignUp</button>
-
-
-		<p style="text-align: center; margin-top: 1em;">
-			<a href="#/forgot.html">Forgot password?</a>
-		</p>
-
-	</div>
-</div>
-<div class="login col-md-4">
-	<div class="login-vertical-align">
-		<img src="static/img/revature_logo.png" width="90%"> <img
-			src="static/img/rev_timeline.png" width="90%">
+		</div>
+		<div class="login col-md-4">
+			<div class="login-vertical-align">
+				<img src="static/img/revature_logo.png" width="90%"> <img
+					src="static/img/rev_timeline.png" width="90%">
+			</div>
+		</div>
 	</div>
 </div>
 
