@@ -7,7 +7,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 	$scope.availUsers = responseObj.availUsers;
 	//get the batch
 	$http({
-		url: "Batches/ById",
+		url: "Batches/ById.do",
 		method: "GET",
 		params:{
 			/*
@@ -18,7 +18,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		}
 	}).then(function(response){
 		 //for now assume that resposneObj is the batch object
-		 $scope.batch = JSON.parse(response.responseText);
+		 $scope.batch = response.data
 	},function(response) {
 		$scope.message = true;
 		$scope.msg = 'Failed to retrieve batch';
@@ -33,7 +33,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		}
 	}).then(function(response) {
 		//for now assume that the response is the array of users
-		$scope.batch.usersInBatch = JSON.parse(response.responseText);
+		$scope.batch.usersInBatch = response.data
 	},function (response) {
 		$scope.message = true;
 		$scope.msg = 'Failed to retrieve users in batch';
@@ -43,9 +43,9 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 	$http({
 		url: "Users/NotInABatch.do",
 		method: 'GET'
-	}).then(function (reponse) {
+	}).then(function (response) {
 		//for now assume that the response is the array of users
-		$scope.availUsers = JSON.parse(response.responseText);
+		$scope.availUsers = response.data
 	},function (response) {
 		$scope.message = true;
 		$scope.msg = 'Failed to retrieve users without a batch';
