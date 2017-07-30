@@ -42,6 +42,12 @@
 	font-size: 1.5em;
 }
 
+#wrong-credentials
+{
+	text-align: center;
+	
+}
+
 /*Buttons*/
 .login-btn-container {
 	text-align: center;
