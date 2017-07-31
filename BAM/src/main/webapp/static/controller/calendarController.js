@@ -238,9 +238,17 @@
                 return {};
             };
             
+            //function color(){
+            	//backgroundColor: 'red';
+            	
+           // }
             /* event source that contains custom events on the scope */
             $scope.events = [
-              {title: 'All Day Event',start: new Date(y, m, 1)},
+            	
+              {title: 'All Day Event',
+               start: new Date(y, m, 1),
+               },
+              
               {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
               {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
               {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
@@ -268,9 +276,44 @@
             	    };
             
             /* alert on eventClick */
-            $scope.alertOnEventClick = function( date, jsEvent, view){
+            $scope.alertOnEventClick = function(date, jsEvent, view) {
+            	
+            	// change from default color to red
+            	$(jsEvent.target).toggleClass("full-calendar-highlight-red");
+            	$(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-red");
+            	
+            	
+            	
+            	console.log(jsEvent.target);
+
+            	//$(jsEvent.target).toggleClass("full-calendar-highlight-green");
+            	//$(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green");
+            	
+                //	$(jsEvent.target).addClass("full-calendar-highlight-red");
+                //	$(jsEvent.target).addClass("full-calendar-highlight-red");
+                
+                
+              
+
+/*            	$(jsEvent.target).click(function() {
+            		  $( this ).toggleClass("full-calendar-highlight-red");
+            		  $( this.parentNode ).toggleClass("full-calendar-highlight-red");
+            		},
+            		function() {
+              		  $( this ).toggleClass("full-calendar-highlight-green");
+              		  $( this.parentNode ).toggleClass("full-calendar-highlight-green");
+              		}
+            		
+            	);*/
+
+            		   
                 $scope.alertMessage = (date.title + ' was clicked ');
+                
+     
             };
+            
+            $scope.toggle = true;
+            
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
                $scope.alertMessage = ('Event Dropped to make dayDelta ' + delta);
@@ -370,7 +413,7 @@
                     var eventSourcesWatcher = controller.changeWatcher(sources, controller.sourceFingerprint);
                     var eventsWatcher = controller.changeWatcher(controller.allEvents, controller.eventFingerprint);
                     var options = null;
-
+                    
                     function getOptions () {
                         var calendarSettings = attrs.uiCalendar ? scope.$parent.$eval(attrs.uiCalendar) : {};
                         var fullCalendarConfig = controller.getFullCalendarConfig(calendarSettings, uiCalendarConfig);
@@ -391,7 +434,7 @@
                         }
                         return JSON.stringify(options2);
                     }
-
+                    scope.toggle = false;
                     scope.destroyCalendar = function () {
                         if (calendar && calendar.fullCalendar) {
                             calendar.fullCalendar('destroy');
