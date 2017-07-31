@@ -19,6 +19,8 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 	}).then(function(response){
 		 //for now assume that resposneObj is the batch object
 		 $scope.batch = response.data
+		 $scope.batch.startDate = new Date($scope.batch.startDate);
+		 $scope.batch.endDate = new Date($scope.batch.endDate);
 	},function(response) {
 		$scope.message = true;
 		$scope.msg = 'Failed to retrieve batch';
@@ -58,8 +60,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 	//	All users (to add existing users)
 	
 	
-	$scope.batch.startDate = new Date($scope.batch.startDate);
-	$scope.batch.endDate = new Date($scope.batch.endDate);
+	
 	
 	
 	
