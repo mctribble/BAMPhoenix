@@ -18,6 +18,17 @@ body .fc { /* extra precedence to overcome jqui */
 	font-size: 1em;
 }
 
+.topic {
+	font-style: italic;
+}
+
+.interview {
+	font-weight: bold;
+}
+
+.quiz {
+	font-style: normal;
+}
 
 /* Colors
 --------------------------------------------------------------------------------------------------*/

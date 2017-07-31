@@ -1,0 +1,87 @@
+
+<div class="container">
+<div ng-controller="trainerTaskController">
+
+<!-- 	
+	<button class="btn" type="button" id="newTaskBtn" data-toggle="modal" data-target="angular.element('#taskModal')">Add New Task</button>
+<div id="taskModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    Modal content
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body" id="taskModalBody">
+		<table class="table table-responsive table-condensed">
+			<tbody>
+			<tr><td>Task Title:</td><td><input type="text" id="newTaskTitle" ng-model="newTaskTitle" required/></td></tr>
+			<tr><td>Task Type:</td><td><input type="text" id="newTaskType" ng-model="newTaskType" required/></td></tr>
+			<tr><td>Start Date:</td><td><input type="date" id="newTaskStartDate" ng-model="newTaskStartDate" required/></td></tr>
+			<tr><td>End Date:</td><td><input type="date" id="newTaskEndDate" ng-model="newTaskEndDate" required/></td></tr>
+			</tbody>
+		</table>
+      </div>
+	<div class="modal-footer">
+		<button class="btn btn-success" type="button" id="addTaskConfirm" ng-click="trainerAddTask()">Add</button>
+		<button class="btn btn-warning" type="button" id="addTaskCancel" data-dismiss="modal">Cancel</button>
+	</div>
+    </div>
+
+  </div>
+  
+</div>
+
+	 -->	
+	 <p style="color:red" ng-show="showDateError">{{errorMessage}}</p>
+	 <table class="table table-responsive table-condensed">
+			<tbody>
+			<tr><td>Task Title:</td><td><input type="text" id="newTaskTitle" ng-model="newTask.title" required/></td></tr>
+			<tr><td>Task Type:</td><td><input type="text" id="newTaskType" ng-model="newTask.type" required/></td></tr>
+			<tr><td>Max Score:</td><td><input type="number" id="newTaskMaxRaw" ng-model="newTask.maxRaw" required/></td></tr>
+			<tr><td>Max Weighted Score:</td><td><input type="number" id="newTaskMaxWeighted" ng-model="newTask.maxWeighted" required/></td></tr>
+			<tr><td>Start Date:</td><td><input type="date" id="newTaskStartDate" ng-model="newTask.start" style="background-color:{{errorBg}}" required/></td></tr>
+			<tr><td>End Date:</td><td><input type="date" id="newTaskEndDate" ng-model="newTask.end" style="background-color:{{errorBg}}" required/></td></tr>
+			</tbody>
+	</table>
+
+	<button class="btn" type="button" ng-click="trainerAddTask()">Add Task</button>
+
+</div>
+</div>
+
+<!-- <script>
+scotchApp.controller('trainerTaskController', function($scope, $http){
+
+	var testJsonObj = {'title':$scope.newTaskTitle, 'type':$scope.newTaskType,'start':$scope.newTaskStartDate,'end':$scope.newTaskEndDate};
+	var newTitle = $scope.newTaskTitle;
+	var newType = $scope.newTaskType;
+	var newStart = new Date($scope.newTaskStartDate);
+	var newEnd = new Date($scope.newTaskEndDate);
+	var newMax = $scope.newTaskMaxRaw;
+	var newWeighted = $scope.newTaskMaxWeighted;
+	var newTaskJson = $.param({title:newTitle,type:newType,start:newStart,end:newEnd,maxRaw:newMax,maxWeighted:newWeighted});
+
+	$scope.trainerAddTask = function(){
+		if(start > end){
+			$scope.showDateError = true;
+			$scope.errorMessage = "End date must be after start date";
+			$scope.errorBg = "red";
+		}
+		else{
+			$scope.showDateError = !$scope.showDateError;
+			$scope.errorMessage = "Hurray it's valid";
+			$scope.errorBg = "green";
+			$http.post('new-assignment.do',newTaskJson)
+			.success(function(data){
+				console.log(data);
+			})
+			.error(function(data){
+				console.log(data);
+			});
+		}
+	};
+	
+});
+</script> -->
