@@ -1,45 +1,45 @@
 <div class="vertical-center">
 	<div class="row login-container">
-		<div class="login col-md-8 col-lg-6">
+		<div class="login col-md-6">
 			<div class="login-vertical-align">
-				<div class="alert alert-danger" ng-show="controller.error">
-					There was a problem trying to reset password.
-				</div>
 				<form role="form" ng-submit="controller.reset">
-				
- 					<div class="input-group">
-						<span class="input-group-addon"> Old Password:&nbsp;&#160;</span> 
-						<input class="form-control" type="password" ng-model="user.old_password" placeholder="Old Password" required>
-					</div>
-					
+					<h3>Reset Password</h3>
 					<div class="input-group">
-						<span class="input-group-addon"> New Password:</span> 
-						<input class="form-control" type="password" ng-model="user.password" placeholder="New Password" required>
+						<span class="input-group-addon input-tag"> Old
+							Password:&nbsp;&#160;</span> <input class="form-control" type="password"
+							ng-model="user.old_password" placeholder="Old Password" required>
 					</div>
-					
+
 					<div class="input-group">
-						<span class="input-group-addon"> Confirm New:&nbsp;&nbsp;</span> 
-						<input class="form-control" type="password"	ng-model="user.confirm_password" placeholder="Confirm New Password"
-							required>
+						<span class="input-group-addon input-tag"> New Password:</span> <input
+							class="form-control" type="password" ng-model="user.password"
+							placeholder="New Password" required>
 					</div>
-					
+
+					<div class="input-group">
+						<span class="input-group-addon input-tag"> Confirm
+							New:&nbsp;&nbsp;</span> <input class="form-control" type="password"
+							ng-model="user.confirm_password"
+							placeholder="Confirm New Password" required>
+					</div>
+					<br>
+					<div class="alert alert-danger" ng-show="controller.error">
+						There was a problem trying to reset password.</div>
 					<div class="input-group">
 						<div class="login-btn-container">
-							<input type="submit" class="btn btn-primary" value="Reset Password">
+							<input type="submit" class="btn threeqtr-width" id="login-btn"
+								value="Reset Password">
 						</div>
 					</div>
-					
 				</form>
-			
 			</div>
-
 		</div>
 
- 		<div class="col-md-4 col-lg-6 revature-logo">
- 			<div class="login-vertical-align">
-				<img src="static/img/revature_logo.png" width="90%">
-				<img src="static/img/rev_timeline.png" width="90%">
+		<div class="login col-md-4">
+			<div class="login-vertical-align">
+				<img src="static/img/revature_logo.png" width="90%"> <img
+					src="static/img/rev_timeline.png" width="90%">
 			</div>
-		</div> 
+		</div>
 	</div>
 </div>

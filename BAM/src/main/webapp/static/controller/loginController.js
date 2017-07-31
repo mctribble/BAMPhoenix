@@ -19,14 +19,12 @@ app.controller('loginCtl', function($rootScope, $scope, $location, $http) {
 		})
 		.then(function success(response){
 			$location.path('/home');
-			$scope.message = true;
-			$scope.msg = 'Login successful';
 			$rootScope.user = response.data;
 			console.log(response.data);
 		}, function error(response){
 			$location.path('/');
 			$scope.message = true;
-			$scope.msg = 'Login failed';
+			$scope.msg = 'Wrong Credentials';
 		});
 	}
 	
