@@ -65,4 +65,8 @@ public class SubtopicService {
 		return subTopRep.findByBatch(batch);
 	}
 	
+	public List<Subtopic> getSubtopicByBatchId(int batchId) {
+		return subTopRep.findByBatch(batchRep.findById(batchId));
+	}
+	
 }

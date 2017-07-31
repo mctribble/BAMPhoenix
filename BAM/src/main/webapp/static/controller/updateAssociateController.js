@@ -3,8 +3,7 @@ app.controller("updateAssociateCtrl", ['$rootScope', '$http', '$scope', function
 	$scope.updateDisplay = false;	
 	
 	$scope.testMsg = 'test message from updateAssociateController.js';
-	
-	
+
 	$scope.updateAssociate = function(){
 		$http({
 			url: 'Users/Update.do',
