@@ -89,7 +89,7 @@ public class UserController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println(currentUser);
 		userService.addOrUpdateUser(currentUser);
 		
 		//Retrieve and return users in a batch from the database
