@@ -1,26 +1,30 @@
 app.controller("associatesController", function($scope, $rootScope, $http){
 	
 	console.log("Associates Controller");
-	var batchId;
+	var bId;
 	$scope.currentBatchName;
 	
 	if($rootScope.currentBatch != null)
 	{
 		$scope.currentBatchName= true;
 		$scope.currentBatchName = $rootScope.currentBatch.name;
-		batchId = $rootScope.currentBatch.id;
+		bId = $rootScope.currentBatch.id;
 	}
 	else
 	{
 		$scope.currentBatchName= true;
 		$scope.currentBatchName = $rootScope.trainerBatch.name;
-		batchId = $rootScope.trainerBatch.id;
+		bId = $rootScope.trainerBatch.id;
 	}
 	
+	console.log("batch id" + bId);
+	
 	$http({
-		url: "Users/ById.do",
-		method: "GET"
+		url: "Users/InBatch.do",
+		method: "GET",
+		params: {batchId: bId}
 	}).then(function(response){
+		console.log("users:" + response.data);
 		$scope.associateList = response.data;
 	}, function(response){
 		$scope.message = true;
