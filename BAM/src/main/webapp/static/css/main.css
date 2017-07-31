@@ -225,3 +225,8 @@ font-family: 'Roboto', sans-serif;
 .nav-link{
 	cursor:pointer;
 }
+
+.input-tag
+{
+	width: 120px;
+}
