@@ -71,11 +71,11 @@
 				<td class="value fname">{{a.fName}}</td>
 				<td class="value lname">{{a.lName}}</td>
 				<td class="value email">{{a.email}}</td>
-				<td class="value batchId">{{a.batch}}</td>
+				<td class="value batchId">{{a.batch.id}}</td>
 				<td class="value mPhone">{{a.phone}}</td>
 				<td class="value sPhone">{{a.phone2}}</td>
 				<td class="value skype">{{a.skype}}</td>
-				<td class="value"><button ng-click="dropAssociate(a.id)" class="drop">Drop</button><button ng-click="remAssociate(a.id)" class="remove">Remove</button></td>
+				<td class="value"><button ng-click="dropAssociate(a.userId)" class="drop">Drop</button><button ng-click="remAssociate(a.userId)" class="remove">Remove</button></td>
 				
 			</tr>
 			
@@ -100,11 +100,11 @@
 				<td class="value fname">{{a.fName}}</td>
 				<td class="value lname">{{a.lName}}</td>
 				<td class="value email">{{a.email}}</td>
-				<td class="value batchId">{{a.batch}}</td>
+				<td class="value batchId">{{a.batch.id}}</td>
 				<td class="value mPhone">{{a.phone}}</td>
 				<td class="value sPhone">{{a.phone2}}</td>
 				<td class="value skype">{{a.skype}}</td>
-				<td class="value"><button ng-click="addAssociate(a.id)" class="add">Add</button>
+				<td class="value"><button ng-click="addAssociate(a.userId)" class="add">Add</button>
 			</tr>
 		</table>
 	</div>

@@ -14,7 +14,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 			 * Not yet sure how we pass the batchId to this page
 			 * Putting it in the rootScope is an easy option.
 			 */
-			batchId: $rootScope.selectedBatchId
+			batchId: $rootScope.currentBatch
 		}
 	}).then(function(response){
 		 //for now assume that resposneObj is the batch object
@@ -29,7 +29,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		url: "Users/InBatch.do",
 		method: 'GET',
 		params: {
-			batchId: $rootScope.selectedBatchId
+			batchId: $rootScope.currentBatch
 		}
 	}).then(function(response) {
 		//for now assume that the response is the array of users
@@ -84,17 +84,20 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		//add associate to a batch
 		console.log("id : " + id);
 		//tell the server
-		/*$http({
-			url: "User/Add.do",
+		$http({
+			url: "Users/Add.do",
 			method: "POST",
-			data: {}
+			params: {
+				userId: id,
+				batchId: $rootScope.currentBatch
+			}
 		}).then(function success(){
 			//remove associate from out of batch
 			//add associate to in batch
 			var recIndex;
 			jQuery.each($scope.availUsers, function(index, value){
 				
-				if(value.id == id){
+				if(value.userId == id){
 					recIndex = index;
 					return false; //breaks form the jQuery each method
 				}
@@ -108,7 +111,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		},function error(){
 			$scope.message = true;
 			$scope.msg = "Failed to Add associate";
-		});*/
+		});
 		
 		
 		
@@ -118,16 +121,19 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		//remove associate from a batch
 		console.log(id);
 		//tell the server
-		
-		//On success message
-		success();
-		function success(){
+		$http({
+			url: "Users/Remove.do",
+			method: "POST",
+			params: {
+				userId: id
+			}
+		}).then(function success(){
 			//remove associate from in batch
 			//add associate from out batch
 			var recIndex;
 			jQuery.each($scope.batch.usersInBatch, function(index,value)
 			{
-				if(value.id == id)
+				if(value.userId == id)
 				{
 					recIndex = index;
 					return false;
@@ -136,27 +142,39 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 			$scope.availUsers.push($scope.batch.usersInBatch[recIndex]);
 			$scope.batch.usersInBatch.splice(recIndex, 1);
 			
-		}
+		}, function error(){
+			$scope.message = true;
+			$scope.msg = "Failed to Remove Associate";
+		})
+		//On success message
+		
+		
 	}
 	$scope.dropAssociate = function(id){
 		//drop associate
 		console.log(id);
 		//tell the server
-		
-		//On success message
-		success();
-		function success(){
+		$http({
+			url: "Users/Drop.do",
+			userId: id
+		}).then(function success(){
 			//remove user from usersInBatch
 			var recIndex;
 			jQuery.each($scope.batch.usersInBatch, function(index,value){
-				if(value.id == id)
+				if(value.userId == id)
 				{
 					recIndex = index;
 					return false;
 				}
 			});
 			$scope.batch.usersInBatch.splice(recIndex,1);
-		}
+		}, function error(){
+			$scope.message = true;
+			$scope.msg = "Faild to Drop Associate";
+		})
+		//On success message
+		success();
+		
 	}
 	
 	$scope.addRemSubtopic = function(){
