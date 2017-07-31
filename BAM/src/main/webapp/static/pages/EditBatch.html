@@ -23,22 +23,17 @@
 		<input type="date" class="form-control" ng-model="batch.endDate" required />
 	</div>
 	<div class="input-group">
-		<span class="input-group-addon">Trainer</span>
-		<input type="text" class="form-control" ng-model="batch.trainer.firstName" placeholder="First Name" required />
-		<input type="text" class="form-control" ng-model="batch.trainer.lastName" placeholder="Last Name" required />
-	</div>
-	<div class="input-group">
 		<span class="input-group-addon">Batch Type</span>
-		<input type="text" class="form-control" ng-model="batch.type" placeholder="Batch Type" required />
+		<input type="text" class="form-control" ng-model="batch.type.name" placeholder="Batch Type" required />
 	</div>
 	<div class="input-group">
 		<span class="input-group-addon">Add/Remove Associate</span>
 		<button  ng-click="addRemAssociate()">Add/Remove</button>
 	</div>
-	<div class="input-group">
+	<!-- <div class="input-group">
 		<span class="input-group-addon">Subtopics?</span>
 		<button  ng-click="addRemSubtopic()">Add/Remove</button>
-	</div>
+	</div> -->
 	
 	
 </div>
@@ -76,11 +71,11 @@
 				<td class="value fname">{{a.fName}}</td>
 				<td class="value lname">{{a.lName}}</td>
 				<td class="value email">{{a.email}}</td>
-				<td class="value batchId">{{a.batch}}</td>
+				<td class="value batchId">{{a.batch.id}}</td>
 				<td class="value mPhone">{{a.phone}}</td>
 				<td class="value sPhone">{{a.phone2}}</td>
 				<td class="value skype">{{a.skype}}</td>
-				<td class="value"><button ng-click="dropAssociate(a.id)" class="drop">Drop</button><button ng-click="remAssociate(a.id)" class="remove">Remove</button></td>
+				<td class="value"><button ng-click="dropAssociate(a.userId)" class="drop">Drop</button><button ng-click="remAssociate(a.userId)" class="remove">Remove</button></td>
 				
 			</tr>
 			
@@ -105,11 +100,11 @@
 				<td class="value fname">{{a.fName}}</td>
 				<td class="value lname">{{a.lName}}</td>
 				<td class="value email">{{a.email}}</td>
-				<td class="value batchId">{{a.batch}}</td>
+				<td class="value batchId">{{a.batch.id}}</td>
 				<td class="value mPhone">{{a.phone}}</td>
 				<td class="value sPhone">{{a.phone2}}</td>
 				<td class="value skype">{{a.skype}}</td>
-				<td class="value"><button ng-click="addAssociate(a.id)" class="add">Add</button>
+				<td class="value"><button ng-click="addAssociate(a.userId)" class="add">Add</button>
 			</tr>
 		</table>
 	</div>

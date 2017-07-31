@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bam.beans.Batch;
 import com.bam.beans.Users;
 import com.bam.service.BatchService;
 import com.bam.service.UsersService;
@@ -26,6 +27,9 @@ import com.bam.service.UsersService;
 public class UserController {
 	@Autowired
 	UsersService userService;
+	
+	@Autowired
+	BatchService batchService;
 	
 	@RequestMapping(value="All.do", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
@@ -85,7 +89,7 @@ public class UserController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println(currentUser);
 		userService.addOrUpdateUser(currentUser);
 		
 		//Retrieve and return users in a batch from the database
@@ -100,7 +104,8 @@ public class UserController {
 		int batchId = user.getBatch().getId();
 		
 		//Set the user as inactive
-		user.setRole(0);
+		Batch b = null;
+		user.setBatch(b);
 		userService.addOrUpdateUser(user);
 		
 		//Return users from batch without the user
@@ -115,7 +120,7 @@ public class UserController {
 		//Get the batch to add the user to from the request
 		int batchId = Integer.parseInt( request.getParameter("batchId") );
 		
-		BatchService batchService = new BatchService();
+		/*BatchService batchService = new BatchService();*/
 		
 		Users user = userService.findUserById( userId );
 		
