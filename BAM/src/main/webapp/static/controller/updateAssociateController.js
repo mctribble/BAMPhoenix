@@ -3,7 +3,7 @@ app.controller("updateAssociateCtrl", ['$rootScope', '$http', '$scope', function
 	$scope.updateDisplay = false;	
 	
 	$scope.testMsg = 'test message from updateAssociateController.js';
-	
+	$rootScope.currentBatch = null;
 	
 	$scope.updateAssociate = function(){
 		$http({
