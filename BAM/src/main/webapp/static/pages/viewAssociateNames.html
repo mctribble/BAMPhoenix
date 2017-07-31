@@ -1,0 +1,9 @@
+<table class="table">
+	<tr class="associates-header">
+		<td ng-click="order = 'fname'" class="head">Name</td>
+	</tr>
+	<tr class="associates-row"
+		ng-repeat="a in associateList | filter:searchBox | orderBy:order">
+		<td class="value lname">{{a.lname}} {{a.lname[0]}}</td>
+	</tr>
+</table>

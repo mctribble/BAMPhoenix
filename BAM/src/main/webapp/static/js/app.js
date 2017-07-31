@@ -16,8 +16,14 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl: "static/pages/ViewAssociates.html",
 		controller: "associatesController"
 	}).when("/update",{
+<<<<<<< HEAD
 		templateUrl: "static/pages/update.html",
 		controller: "updateAssociateCtrl"
+=======
+		templateUrl: "static/pages/update.html"
+	}).when("/reset",{
+		templateUrl: "static/pages/reset.html"
+>>>>>>> d48f88cbabe20852c33354d1ae7243447fe0d59d
 	}).when("/batchesPast",{
 		templateUrl: "static/pages/batchesPast.html",
 		controller: "batchesPast"
