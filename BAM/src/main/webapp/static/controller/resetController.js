@@ -16,12 +16,12 @@ app.controller("resetCtrl", ['$rootScope', '$http', '$scope', function($rootScop
 			data: $rootScope.user
 		}).then (function success(response){
 			$scope.updateDisplay = true;
-			$scope.updateMsg = 'You reset the password successfully.';
+			$scope.updateMsg = 'Password Reset Successful';
 			$scope.alertClass = 'alert alert-success';
 		
 		}, function error(response){
 			$scope.updateDisplay = true;
-			$scope.updateMsg = 'Password reset did not work.';
+			$scope.updateMsg = 'Password Reset Failed';
 			$scope.alertClass = 'alert alert-danger';
 		});
 	}

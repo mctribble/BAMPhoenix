@@ -21,7 +21,7 @@ app.controller("updateAssociateCtrl", ['$rootScope', '$http', '$scope', function
 		
 		}, function error(response){
 			$scope.updateDisplay = true;
-			$scope.updateMsg = 'Update did not work.';
+			$scope.updateMsg = 'Update Failed';
 			$scope.alertClass = 'alert alert-danger';
 		});
 	}
