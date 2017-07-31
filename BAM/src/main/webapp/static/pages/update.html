@@ -3,7 +3,7 @@
 		<div class="login col-md-6">
 
 			<div class="login-vertical-align">
-				<form role="form" ng-submit="controller.update">
+				<form>
 					<h3>Update Account</h3>
 					<div class="input-group">
 						<span class="input-group-addon input-tag">First Name:&emsp;&nbsp;</span> <input
@@ -14,7 +14,7 @@
 					<div class="input-group">
 						<span class="input-group-addon input-tag">Middle Name:</span> <input
 							class="form-control" type="text" ng-model="user.mName"
-							placeholder="Middle name" required />
+							placeholder="Middle name" />
 					</div>
 
 					<div class="input-group">
@@ -32,7 +32,7 @@
 					<div class="input-group">
 						<span class="input-group-addon input-tag">Alt
 							Phone:&emsp;&nbsp;&nbsp;</span> <input class="form-control" type="text"
-							ng-model="user.altPhone" placeholder="Alt Phone" required />
+							ng-model="user.altPhone" placeholder="Alt Phone"/>
 					</div>	
 					
 					<div class="input-group">
@@ -47,7 +47,7 @@
 					</div>
 					
 					<div class="login-btn-container">
-						<button type="submit" class="btn threeqtr-width" id="login-btn" ng-click="">UPDATE</button>
+						<button type="submit" class="btn threeqtr-width" id="login-btn" ng-click="updateAssociate()">UPDATE</button>
 					</div>
 				</form>
 			</div>
