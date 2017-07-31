@@ -12,21 +12,21 @@ app.controller('batchesFuture', function($scope, $rootScope, $location, $http)
 			params: {email: emailer}
 		})
 		.then(function success(response){
+			console.log("future batches: " + response.data)
 			$scope.message = true;
 			$scope.msg = 'future batches retreived';
 			$scope.batchesFuture = response.data;
-			console.log(response.data);
 		}, function error(response){
 			$scope.message = true;
 			$scope.msg = 'future batches not retreived';
 		});
 	}
 	
-	$scope.goToBatch = function(id){
+	$scope.goToBatch = function(batch){
 		
-		$rootScope.currentBatch = id;
-		
-		var batchId = id;
+		$rootScope.currentBatch = batch;
+		console.log("current batch" + batch.name);
+		//var batchId = id;
 		
 		$http({
 			

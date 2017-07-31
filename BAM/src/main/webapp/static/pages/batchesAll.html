@@ -18,7 +18,7 @@
 	</tr>
 	<tr
 		ng-repeat="batch in batchesAll | orderBy:order |filter:searchBox"
-		ng-click="goToBatch(batch.id)">
+		ng-click="goToBatch(batch)">
 		<td>{{batch.name}}</td>
 		<td>{{batch.type.name}}</td>
 		<td>{{batch.startDate | date:"MM/dd/yyyy"}}</td>

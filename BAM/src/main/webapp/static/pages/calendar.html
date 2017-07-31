@@ -1,5 +1,10 @@
 
-
+<ul class="nav nav-tabs">
+	<li class="nav-link active"><a href="#/home">Calendar</a></li>
+	<li class="nav-link"><a href="#/associates">View Associates</a></li>
+	<li class="nav-link"><a href="#/editBatch">Edit Batch</a></li>
+</ul>
+<br>
 <div class="row">
 	<div class="col-md-9">
 		<div class="calendar" ng-model="eventSources" calendar="myCalendar" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
@@ -13,13 +18,13 @@
 	<div class="col-md-3 container">
 		<div class="well contentwell">
 			<h3>Events</h3>
-			<table class="table table-hover">
+			<table border=2 class="table table-hover">
 				<tr>
-					<td bgcolor="0000FF"><font color="white">Topic</font></td>
+					<td class="topic">Topic</td>
 				<tr>
-					<td color="white" bgcolor="00FF00"><font color="white">QC/Interviews</font></td>
+					<td class="interview">QC/Interviews</td>
 				<tr>
-					<td color="white" bgcolor="FF0000"><font color="white">LMS/Prepanel/Panel</font></td>
+					<td class="quiz">LMS/Prepanel/Panel</td>
 			</table>
 		</div>
 	</div>
