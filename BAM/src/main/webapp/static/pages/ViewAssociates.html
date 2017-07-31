@@ -3,13 +3,13 @@
 		<div class="login full-width"> -->
 		
 <ul class="nav nav-tabs">
-	<li class="nav-link"><a href="#/Home">Calendar</a></li>
+	<li class="nav-link"><a href="#/home">Calendar</a></li>
 	<li class="nav-link active"><a href="#/associates">View Associates</a></li>
 	<li class="nav-link"><a href="#/editBatch">Edit Batch</a></li>
 </ul>
 <br>
+			<h3>{{currentBatchName}} Associates</h3>
 			<div class="searchbox-container">
-
 				<div class="input-group">
 					<span class="input-group-addon">Search</span> <input
 						class="form-control" type="text" ng-model="searchBox"
@@ -30,7 +30,7 @@
 					ng-repeat="a in associateList | filter:searchBox | orderBy:order">
 					<td class="value lname">{{a.lName}}, {{a.fName}}</td>
 					<td class="value email">{{a.email}}</td>
-					<td class="value batchId">{{a.batch}}</td>
+					<td class="value batchId">{{a.batch.id}}</td>
 					<td class="value mPhone">{{a.phone}}</td>
 					<td class="value sPhone">{{a.phone2}}</td>
 					<td class="value skype">{{a.skype}}</td>

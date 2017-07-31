@@ -1,9 +1,24 @@
-app.controller("associatesController", function($scope, $http){
+app.controller("associatesController", function($scope, $rootScope, $http){
 	
 	console.log("Associates Controller");
-	$scope.associateList = JSON.parse(ascContTestJSON);
+	var batchId;
+	$scope.currentBatchName;
+	
+	if($rootScope.currentBatch != null)
+	{
+		$scope.currentBatchName= true;
+		$scope.currentBatchName = $rootScope.currentBatch.name;
+		batchId = $rootScope.currentBatch.id;
+	}
+	else
+	{
+		$scope.currentBatchName= true;
+		$scope.currentBatchName = $rootScope.trainerBatch.name;
+		batchId = $rootScope.trainerBatch.id;
+	}
+	
 	$http({
-		url: "Users/All.do",
+		url: "Users/ById.do",
 		method: "GET"
 	}).then(function(response){
 		$scope.associateList = response.data;
