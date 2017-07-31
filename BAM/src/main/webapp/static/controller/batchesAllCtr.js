@@ -18,11 +18,11 @@ app.controller('batchesAllCtr', function($scope, $rootScope, $location, $http)
 		});
 	}
 	
-	$scope.goToBatch = function(id){
+	$scope.goToBatch = function(batch){
 		
-		$rootScope.currentBatch = id;
-		
-		var batchId = id;
+		$rootScope.currentBatch = batch;
+		console.log("current batch" + batch.name);
+		//var batch = batch;
 		
 		$http({
 			
