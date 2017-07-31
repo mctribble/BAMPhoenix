@@ -3,23 +3,7 @@ app.controller("updateAssociateCtrl", ['$rootScope', '$http', '$scope', function
 	$scope.updateDisplay = false;	
 	
 	$scope.testMsg = 'test message from updateAssociateController.js';
-	$rootScope.user = {
-			/*oldPassword : '',*/
-			/*confirmPassword : '',*/
-			userId : '',
-			fName : '',
-			mName : '',
-			lName : '',
-			email : '',
-			pwd : '',
-			role : '',
-			phone : '',
-			phone2 : '',
-			/*altPhone : '',*/
-			skype : '',
-			pwd2 : ''
-	};
-	
+
 	$scope.updateAssociate = function(){
 		$http({
 			url: 'Users/Update.do',
