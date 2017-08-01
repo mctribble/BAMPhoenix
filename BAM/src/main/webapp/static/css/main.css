@@ -9,13 +9,12 @@
 
 /***** 1.0 LOGIN STYLING *****/
 .vertical-center {
-/* 	min-height: 100%; Fallback for browsers do NOT support vh unit */
-/* 	min-height: 100vh; */
+	/* 	min-height: 100%; Fallback for browsers do NOT support vh unit */
+	/* 	min-height: 100vh; */
 	/* These two lines are counted as one :slightly_smiling_face:       
 	padding: 15px 30px;
 	background-color: #ccc;*/
 	display: flex;
-	
 	border-radius: 15px;
 }
 
@@ -38,14 +37,12 @@
 }
 
 .revature-form {
-/* 	font-family: "Audimat"; */
+	/* 	font-family: "Audimat"; */
 	font-size: 1.5em;
 }
 
-#wrong-credentials
-{
+#wrong-credentials {
 	text-align: center;
-	
 }
 
 /*Buttons*/
@@ -59,14 +56,12 @@
 	letter-spacing: 1.5px;
 }
 
-#login-btn
-{
+#login-btn {
 	color: #ffffff;
 	background-color: #303e74;
 }
 
-#create-acc-btn
-{
+#create-acc-btn {
 	color: #ffffff;
 	background-color: #f26925;
 }
@@ -124,12 +119,12 @@
 }
 
 .navbar-button {
-/* 	font-family: "Audimat" !important; */
+	/* 	font-family: "Audimat" !important; */
 	background-color: #3379b7;
 	border: 2px outset #5b93c5;
 	border-radius: 5px;
 	font-size: 1.4em;
-/* 	font-family: bold; */
+	/* 	font-family: bold; */
 	color: white;
 }
 
@@ -187,12 +182,13 @@
 .associates td {
 	padding: 0 4px;
 }
+
 html {
-    min-height: 100%;
+	min-height: 100%;
 }
 
 body {
-font-family: 'Roboto', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	/* IE10+ */
 	background-image: -ms-radial-gradient(right bottom, ellipse farthest-corner, #FFE8FC 0%,
 		#142863 100vh);
@@ -213,20 +209,27 @@ font-family: 'Roboto', sans-serif;
 		#142863 100vh);
 }
 
-#content{
-	margin-top:50px;
-	background-color:#FFFFFF;
-	padding:20px;
-	border-radius:4px;
+#content {
+	margin-top: 50px;
+	background-color: #FFFFFF;
+	padding: 20px;
+	border-radius: 4px;
+	overflow: auto;
+	max-height: 75vh;
+	
+	
+	position: relative;
+	top: 35vh;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
 }
 
 /***** Edit Batch Page *****/
-
-.nav-link{
-	cursor:pointer;
+.nav-link {
+	cursor: pointer;
 }
 
-.input-tag
-{
+.input-tag {
 	width: 125px;
 }
