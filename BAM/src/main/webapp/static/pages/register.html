@@ -1,8 +1,11 @@
+
 <div class="vertical-center">
 	<div class="row login-container">
 		<div class="login col-md-6">
 			<div class="login-vertical-align">
 				<form>
+				<div ng-class="alertClass" ng-show="updateDisplay">
+					{{updateMsg}}</div>
 					<h3>Register</h3>
 					<div class="login-btn-container">
 						<div class="input-group">
@@ -20,7 +23,7 @@
 						<div class="input-group">
 							<span class="input-group-addon input-tag"> Password: </span> <input
 								class="form-control" type="password"
-								ng-model="user.confirm_password" placeholder="Confirm Password"
+								ng-model="confirm_password" placeholder="Confirm Password"
 								required>
 
 						</div>
