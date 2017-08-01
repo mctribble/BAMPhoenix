@@ -37,13 +37,13 @@
 					<div class="input-group">
 						<span class="input-group-addon input-tag">Skype:&emsp;&emsp;&emsp;&nbsp;</span>
 						<input class="form-control" type="text" ng-model="user.skype"
-							placeholder="Skype" required />
+							placeholder="Skype"/>
 					</div>
 						
 					<br>
-					<div class="alert alert-danger" ng-show="controller.error">
-						There was a problem trying to update.
-					</div>
+					<div ng-class="alertClass" ng-show="updateDisplay">
+                        {{updateMsg}}
+                    </div>
 					
 					<div class="{{alertClass}}">
 						{{updateMsg}}
