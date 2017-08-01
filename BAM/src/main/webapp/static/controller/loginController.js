@@ -31,14 +31,16 @@ app.controller('loginCtl', function($rootScope, $scope, $location, $http) {
 				}, function error(progResponse){
 					$scope.msg = 'Batch Acquisition failed';
 				});
-			} else {
-				if(!$rootScope.user.batch && $rootScope.user.role == 1)
+			} else if($rootScope.user.role == 1) {
+				if(!$rootScope.user.batch)
 				{
 					$location.path('/noBatch');
 				}else{
 					$location.path('/home');
 				}
 				
+			}else{
+				$location.path('/batchesAll');
 			}
 			
 		}, function error(response){
