@@ -30,5 +30,7 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/editBatch", {
 		templateUrl: "static/pages/EditBatch.html",
 		controller: "editBatchController"
+	}).when("/noBatch",{
+		templateUrl: "static/pages/NoBatch.html"
 	}).otherwise({redirectTo: '/'});
 });
