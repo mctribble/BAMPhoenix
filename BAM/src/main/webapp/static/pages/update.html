@@ -42,9 +42,9 @@
 					</div>
 						
 					<br>
-					<div class="alert alert-danger" ng-show="controller.error">
-						There was a problem trying to update.
-					</div>
+					<div ng-class="alertClass" ng-show="updateDisplay">
+                        {{updateMsg}}
+                    </div>
 					
 					<div class="login-btn-container">
 						<button type="submit" class="btn threeqtr-width" id="login-btn" ng-click="updateAssociate()">UPDATE</button>

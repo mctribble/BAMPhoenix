@@ -2,66 +2,74 @@
 	<div class="row login-container">
 		<div class="login col-lg-6 col-md-8">
 			<div class="login-vertical-align">
-			
-				<div class="alert alert-danger" ng-show="controller.error">
-					There was a problem trying to register.
-				</div>
-				
+
+				<div ng-class="alertClass" ng-show="updateDisplay">
+					{{updateMsg}}</div>
+
 				<form>
 					<div class="input-group">
-						<span class="input-group-addon"> Email: </span> 
-						<input type="text" class="form-control" ng-model="user.email" placeholder="email" required>
-		
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon"> Password: </span> 
-						<input class="form-control" type="password" ng-model="user.password" placeholder="Password" required>
-		
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon"> Password: </span> 
-						<input class="form-control" type="password"	ng-model="user.confirm_password" placeholder="Confirm Password"
+						<span class="input-group-addon"> Email: </span> <input type="text"
+							class="form-control" ng-model="user.email" placeholder="email"
 							required>
-		
+
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon"> First name: </span> 
-						<input class="form-control" type="text" ng-model="user.fname" placeholder="First Name" required />
+						<span class="input-group-addon"> Password: </span> <input
+							class="form-control" type="password" ng-model="user.password"
+							placeholder="Password" required>
+
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon">Middle name:</span>
-						<input class="form-control" type="text" ng-model="user.mname" placeholder="Middle name" required />
+						<span class="input-group-addon"> Password: </span> <input
+							class="form-control" type="password" ng-model="confirm_password"
+							placeholder="Confirm Password" required>
+
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon">Last name:</span>
-						<input class="form-control" type="text" ng-model="user.lname" placeholder="Last name" required />
+						<span class="input-group-addon"> First name: </span> <input
+							class="form-control" type="text" ng-model="user.fname"
+							placeholder="First Name" required />
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon">Phone:</span>
-						<input class="form-control" type="text" ng-model="user.phone" placeholder="Phone" required />
+						<span class="input-group-addon">Middle name:</span> <input
+							class="form-control" type="text" ng-model="user.mname"
+							placeholder="Middle name" required />
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon">Alt Phone:</span>
-						<input class="form-control" type="text" ng-model="user.altPhone" placeholder="Alt Phone" required />
+						<span class="input-group-addon">Last name:</span> <input
+							class="form-control" type="text" ng-model="user.lname"
+							placeholder="Last name" required />
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon">Skype:</span>
-						<input class="form-control" type="text" ng-model="user.skype" placeholder="Skype" required />
+						<span class="input-group-addon">Phone:</span> <input
+							class="form-control" type="text" ng-model="user.phone"
+							placeholder="Phone" required />
 					</div>
 					<div class="input-group">
-						<input type="submit" class="btn btn-primary" ng-click="addUser()" value="REGISTER">
+						<span class="input-group-addon">Alt Phone:</span> <input
+							class="form-control" type="text" ng-model="user.altPhone"
+							placeholder="Alt Phone" required />
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Skype:</span> <input
+							class="form-control" type="text" ng-model="user.skype"
+							placeholder="Skype" required />
+					</div>
+					<div class="input-group">
+						<input type="submit" class="btn btn-primary" ng-click="addUser()"
+							value="REGISTER">
 					</div>
 				</form>
-				
-		
+
+
 			</div>
-				
+
 		</div>
 
 		<div class="col-md-4 col-lg-6 revature-logo">
- 			<div class="login-vertical-align">
-				<img src="static/img/revature_logo.png" width="90%">
-				<img src="static/img/rev_timeline.png" width="90%">
+			<div class="login-vertical-align">
+				<img src="static/img/revature_logo.png" width="90%"> <img
+					src="static/img/rev_timeline.png" width="90%">
 			</div>
 		</div>
 	</div>
