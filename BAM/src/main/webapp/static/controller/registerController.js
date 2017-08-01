@@ -1,4 +1,4 @@
-app.controller("registerCtrl", ['$http', '$scope', function($http, $scope){
+app.controller("registerCtrl", ['$http', '$scope', '$location', '$timeout', function($http, $scope, $location, $timeout){
 	
 	$scope.updateDisplay = false;	
 	
@@ -18,9 +18,14 @@ app.controller("registerCtrl", ['$http', '$scope', function($http, $scope){
 			data: $scope.user
 		}).then (function success(response){
 			$scope.updateDisplay = true;
-			$scope.updateMsg = 'You updated the user successfully.';
+			$scope.updateMsg = "You updated the user successfully";
+			$scope.updateMsg1 = "Redirecting to Login Page...";
 			$scope.alertClass = 'alert alert-success';
-			console.log("in success");
+			 $timeout(function() {
+			     $location.path('/');
+			     }, 3000);
+
+			   
 		
 		}, function error(response){
 			$scope.updateDisplay = true;
@@ -36,7 +41,5 @@ app.controller("registerCtrl", ['$http', '$scope', function($http, $scope){
 		}
 		
 	}
-	
-	
 
 }])
