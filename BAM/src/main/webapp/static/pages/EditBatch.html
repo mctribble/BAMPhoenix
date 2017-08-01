@@ -6,29 +6,31 @@
 <br>
 
 <div class="header">
-	<h3>Edit A Batch</h3>
+	<h3 style="text-align: center;">Edit A Batch</h3>
 </div>
 
 <div class="editBatch-container">
 	<div class="input-group">
-		<span class="input-group-addon">Batch Name</span>
+		<span class="input-group-addon input-tag">Batch Name:</span>
 		<input type="text" class="form-control" ng-model="batch.name" placeholder="Batch Name" required />
 	</div>
 	<div class="input-group">
-		<span class="input-group-addon">Start Date</span>
+		<span class="input-group-addon input-tag">Start Date:</span>
 		<input type="date" class="form-control" ng-model="batch.startDate" required />
 	</div>
 	<div class="input-group">
-		<span class="input-group-addon">End Date</span>
+		<span class="input-group-addon input-tag">End Date:</span>
 		<input type="date" class="form-control" ng-model="batch.endDate" required />
 	</div>
 	<div class="input-group">
-		<span class="input-group-addon">Batch Type</span>
+		<span class="input-group-addon input-tag">Batch Type:</span>
 		<input type="text" class="form-control" ng-model="batch.type.name" placeholder="Batch Type" required />
 	</div>
+	
+	<br>
 	<div class="input-group">
-		<span class="input-group-addon">Add/Remove Associate</span>
-		<button  ng-click="addRemAssociate()">Add/Remove</button>
+		<!-- <span class="input-group-addon input-tag">Add/Remove Associate</span>  -->
+		<button class="btn" id="login-btn" ng-click="addRemAssociate()">Add/Remove:</button>
 	</div>
 	<!-- <div class="input-group">
 		<span class="input-group-addon">Subtopics?</span>
@@ -40,7 +42,7 @@
 
 <div id="users" class="hide">
 	<div class="header">
-		<h4>User Management</h4>
+		<h3 style="text-align: center;">User Management</h3>
 		<div class="searchbox-container">
 
 				<div class="input-group">
