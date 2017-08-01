@@ -167,7 +167,10 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		//tell the server
 		$http({
 			url: "Users/Drop.do",
-			userId: id
+			method: "POST",
+			params: {
+				userId: id
+			}
 		}).then(function success(){
 			/*
 			 * Find user matching the id
@@ -186,8 +189,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 			$scope.message = true;
 			$scope.msg = "Faild to Drop Associate";
 		})
-		//On success message
-		success();
+		
 		
 	}
 	
