@@ -7,9 +7,9 @@ app.controller("registerCtrl", ['$http', '$scope', function($http, $scope){
 	$scope.addUser = function(){	
 		console.log("IN the FUNC")
 		console.log($scope.user)
-		if($scope.user.password == $scope.confirm_password){
+		if($scope.user.pwd == $scope.confirm_password){
 		$http({
-			url: 'Users/Update.do',
+			url: 'Users/Register.do',
 			method: 'POST',
 			headers: {
 		        'Content-Type': 'application/json', 
@@ -24,7 +24,7 @@ app.controller("registerCtrl", ['$http', '$scope', function($http, $scope){
 		
 		}, function error(response){
 			$scope.updateDisplay = true;
-			$scope.updateMsg = 'Update did not work.';
+			$scope.updateMsg = 'Email is Already in Use';
 			$scope.alertClass = 'alert alert-danger';
 			console.log("Didnt work");
 		});
