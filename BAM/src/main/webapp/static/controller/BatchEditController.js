@@ -1,40 +1,35 @@
 
 app.controller("editBatchController",function($rootScope, $scope, $location, $http){
 	console.log("Edit Batch Controller");
-	//retrieve batch info from server
-	var batchId; //set the batchId
-	if($rootScope.currentBatch)
+	//set batchId with the id of the currentBatch if it exists else use the trainerBatch
+	var batchId;
+	if($rootScope.currentBatch) //Check if the currentBatch is set
 	{
 		batchId = $rootScope.currentBatch;
 	}else
 	{
-		batchId = $rootScope.trainerBatch.id;
+		batchId = $rootScope.trainerBatch.id; //if currentBatch is not set use the trainerBatch's id
 	}
 	
 	if(batchId) //Check if currentBatch is set before using it.
 	{
-		//get the batch
+		//get the batch from the server by the id.
 		$http({
 			url: "Batches/ById.do",
 			method: "GET",
 			params:{
-				/*
-				 * Not yet sure how we pass the batchId to this page
-				 * Putting it in the rootScope is an easy option.
-				 */
 				batchId: batchId
 			}
 		}).then(function(response){
-			 //for now assume that resposneObj is the batch object
-			 $scope.batch = response.data
-			 $scope.batch.startDate = new Date($scope.batch.startDate);
+			 $scope.batch = response.data //reponse.data is a javascript object (automatically parsed from the JSON from the server)
+			 $scope.batch.startDate = new Date($scope.batch.startDate); //get the JavaScript date object from the data sent from the server
 			 $scope.batch.endDate = new Date($scope.batch.endDate);
 		},function(response) {
 			$scope.message = true;
 			$scope.msg = 'Failed to retrieve batch';
 			console.log($scope.msg);		
 		});
-		//get users in batch
+		//get users in the batch by the batchId
 		$http({
 			url: "Users/InBatch.do",
 			method: 'GET',
@@ -42,20 +37,18 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 				batchId: batchId
 			}
 		}).then(function(response) {
-			//for now assume that the response is the array of users
-			$scope.batch.usersInBatch = response.data
+			$scope.batch.usersInBatch = response.data //the response.data is a javascript array (automatically pasred from the JSON from the server)
 		},function (response) {
 			$scope.message = true;
 			$scope.msg = 'Failed to retrieve users in batch';
 			console.log($scope.msg);
 		});
-		//get users without a batch
+		//get users who are not in a batch
 		$http({
 			url: "Users/NotInABatch.do",
 			method: 'GET'
 		}).then(function (response) {
-			//for now assume that the response is the array of users
-			$scope.availUsers = response.data
+			$scope.availUsers = response.data; //the response.data is a javascript array (automatically parsed from the JSON from the server)
 		},function (response) {
 			$scope.message = true;
 			$scope.msg = 'Failed to retrieve users without a batch';
@@ -64,35 +57,43 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 	}
 	
 	
-	//	batch info
-	//	All users in batch
-	//	Subtopics
-	//	All users (to add existing users)
+
 	
 	
 	
 	
 	
+	/* 
+	 * Tabbing Functionality created from example: https://codepen.io/jasoncluck/pen/iDcbh
+	 */
 	
-	//https://codepen.io/jasoncluck/pen/iDcbh
+	//This sets the default tab to be active.
 	$scope.tab = 1;
 	
+	//Each tab should have an ng-click directive which calls this function with the number of their tab. 
+	//ie ng-click="setTab(2)"
 	$scope.setTab = function(newTab){
 		$scope.tab = newTab;
 	};
+	
+	//This function is used to tell if the specified tab is the active one or not
+	//Use this on the tab header with ng-class="{active:isSet(x)}"
+	//Or for the content of the tab can be hidden or shown with ng-show="isSet(x)"
 	$scope.isSet = function(tabNum){
 		return $scope.tab === tabNum;
 	}
+	//turns off the entire users container by default. It is meant to be enabled by a button click
 	jQuery("#users").toggle();
 	
 	
-	//declare functions
+	//This function is meant to toggle the users container to display and hide it.
 	$scope.addRemAssociate = function(){
 		console.log("toggle users div");
 		jQuery("#users").toggle();
 	}
+	//This function adds a user to the batch
 	$scope.addAssociate = function(id){
-		//add associate to a batch
+		
 		console.log("id : " + id);
 		//tell the server
 		$http({
@@ -103,13 +104,13 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 				batchId: batchId
 			}
 		}).then(function success(){
-			//remove associate from out of batch
-			//add associate to in batch
+			//Find which spot in the array the selected user is in
 			var recIndex;
+			//iterate through the array
 			jQuery.each($scope.availUsers, function(index, value){
 				
-				if(value.userId == id){
-					recIndex = index;
+				if(value.userId == id){ //check if we are on the userId we want
+					recIndex = index; //store the current index
 					return false; //breaks form the jQuery each method
 				}
 			});
@@ -117,6 +118,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 			$scope.batch.usersInBatch.push($scope.availUsers[recIndex]);
 			//remove element from availUsers
 			$scope.availUsers.splice(recIndex,1); 
+			//Set success method
 			$scope.message = true;
 			$scope.msg = "Associate added successfully";
 		},function error(){
@@ -128,9 +130,9 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		
 		
 	}
+	//This function removes a user from a batch
 	$scope.remAssociate = function(id){
-		//remove associate from a batch
-		console.log(id);
+		
 		//tell the server
 		$http({
 			url: "Users/Remove.do",
@@ -139,18 +141,21 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 				userId: id
 			}
 		}).then(function success(){
-			//remove associate from in batch
-			//add associate from out batch
+			//find the spot in the array which has the user we want
 			var recIndex;
+			//iterate through the array of users in the batch
 			jQuery.each($scope.batch.usersInBatch, function(index,value)
 			{
+				// check if we are on the user we want
 				if(value.userId == id)
 				{
-					recIndex = index;
-					return false;
+					recIndex = index; //store the index
+					return false; //break from jQuery each
 				}
 			});
+			//add the user to the not in batch array
 			$scope.availUsers.push($scope.batch.usersInBatch[recIndex]);
+			//remove the user from the in batch array
 			$scope.batch.usersInBatch.splice(recIndex, 1);
 			
 		}, function error(){
@@ -161,15 +166,17 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		
 		
 	}
+	//this function is used to drop an associate
 	$scope.dropAssociate = function(id){
-		//drop associate
-		console.log(id);
 		//tell the server
 		$http({
 			url: "Users/Drop.do",
 			userId: id
 		}).then(function success(){
-			//remove user from usersInBatch
+			/*
+			 * Find user matching the id
+			 * remove the user from the batch array
+			 */
 			var recIndex;
 			jQuery.each($scope.batch.usersInBatch, function(index,value){
 				if(value.userId == id)
@@ -188,7 +195,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		
 	}
 	
-	$scope.addRemSubtopic = function(){
+	/*$scope.addRemSubtopic = function(){
 		//show subtopic list in batch
 	}
 	$scope.addSubtopic = function(){
@@ -198,5 +205,5 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 	$scope.remSubtopic = function(){
 		//remove subtopic
 		//tell the server
-	}
+	}*/
 });
