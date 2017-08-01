@@ -95,7 +95,7 @@ public class UserController {
 	
 	@RequestMapping(value="Register.do", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
-	public void addUser(@RequestBody String jsonObject, HttpSession session) {
+	public void addUser(@RequestBody String jsonObject, HttpSession session) throws Exception {
 		Users currentUser = null;
 		System.out.println("jsonObject: " + jsonObject);
 		try {
@@ -112,7 +112,8 @@ public class UserController {
 		if(userService.findUserByEmail(currentUser.getEmail())==null){
 			userService.addOrUpdateUser(currentUser);
 		} else {
-			System.out.println("Cannot add: Email is already in use");
+			Exception e = null;
+			throw  e;
 		}	
 	}
 	
