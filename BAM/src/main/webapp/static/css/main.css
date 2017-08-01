@@ -217,12 +217,13 @@ body {
 	overflow: auto;
 	max-height: 75vh;
 	
-	
+	/*
 	position: relative;
 	top: 35vh;
 	-webkit-transform: translateY(-50%);
 	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
+	*/
 }
 
 /***** Edit Batch Page *****/
