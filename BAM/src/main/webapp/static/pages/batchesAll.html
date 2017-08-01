@@ -4,7 +4,7 @@
 	<li class="nav-link"><a href="#/batchesFuture">Future</a></li>
 </ul>
 <br>
-<h3 style="text-align: center">All Batches</h3>
+<h3 style="text-align: center;">All Batches</h3>
 <div class="input-group">
 	<span class="input-group-addon"> Search: </span> <input type="text"
 		class="form-control" ng-model="searchBox">
@@ -18,7 +18,7 @@
 	</tr>
 	<tr
 		ng-repeat="batch in batchesAll | orderBy:order |filter:searchBox"
-		ng-click="goToBatch(batch.id)">
+		ng-click="goToBatch(batch)">
 		<td>{{batch.name}}</td>
 		<td>{{batch.type.name}}</td>
 		<td>{{batch.startDate | date:"MM/dd/yyyy"}}</td>

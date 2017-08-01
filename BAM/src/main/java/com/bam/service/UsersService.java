@@ -22,6 +22,7 @@ public class UsersService {
 	
 	public void addOrUpdateUser(Users user){
 		dao.save(user);
+		
 	}
 	
 	public List<Users> findAllUsers(){
@@ -49,7 +50,14 @@ public class UsersService {
 	
 	public List<Users> findUsersNotInBatch(){
 		//Return users in the batch with a null
-		return dao.findByBatch(null);
+		List<Users> users = dao.findByBatch(null);
+		for(int i=0; i<users.size(); i++) {
+			if(users.get(i).getRole() != 1) {
+				users.remove(i);
+				i--;
+			}
+		}
+		return users;
 	}
 	
 }

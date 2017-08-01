@@ -1,15 +1,13 @@
-app.controller("updateAssociateCtrl", ['$rootScope', '$http', '$scope', function($rootScope, $http, $scope){
+app.controller("resetCtrl", ['$rootScope', '$http', '$scope', function($rootScope, $http, $scope){
 	
 	$scope.updateDisplay = false;	
 	
-	$scope.testMsg = 'test message from updateAssociateController.js';
-
+	$scope.testMsg = 'test message from resetController.js';
 	$rootScope.currentBatch = null;
 	
 	$scope.updateAssociate = function(){
-
 		$http({
-			url: 'Users/Update.do',
+			url: 'Users/Reset.do',
 			method: 'POST',
 			headers: {
 		        'Content-Type': 'application/json', 
@@ -18,13 +16,16 @@ app.controller("updateAssociateCtrl", ['$rootScope', '$http', '$scope', function
 			data: $rootScope.user
 		}).then (function success(response){
 			$scope.updateDisplay = true;
-			$scope.updateMsg = 'Update Successful';
+			$scope.updateMsg = 'Password Reset Successful';
 			$scope.alertClass = 'alert alert-success';
 		
 		}, function error(response){
 			$scope.updateDisplay = true;
-			$scope.updateMsg = 'Update Failed';
+			$scope.updateMsg = 'Password Reset Failed';
 			$scope.alertClass = 'alert alert-danger';
 		});
 	}
+	
+	
+
 }])

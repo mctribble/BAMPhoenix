@@ -1,6 +1,5 @@
 app.controller('batchesPast', function($scope, $rootScope, $location, $http)
 {
-	console.log("here");
 	$scope.smg;
 	$scope.batchesPast;
 	
@@ -14,7 +13,7 @@ app.controller('batchesPast', function($scope, $rootScope, $location, $http)
 			params: {email: emailer}
 		})
 		.then(function success(response){
-			console.log(response.data);
+			console.log("past batches: " + response.data);
 			$scope.message = true;
 			$scope.msg = 'past batches retreived';
 			$scope.batchesPast = response.data;
@@ -22,15 +21,14 @@ app.controller('batchesPast', function($scope, $rootScope, $location, $http)
 		}, function error(response){
 			$scope.message = true;
 			$scope.msg = 'past batches not retreived';
-			console.log("past err");
 		});
 	}
 	
-	$scope.goToBatch = function(id){
+	$scope.goToBatch = function(batch){
 		
-		$rootScope.currentBatch = id;
-		
-		var batchId = id;
+		$rootScope.currentBatch = batch;
+		console.log("current batch" + batch.name);
+		//var batchId = id;
 		
 		$http({
 			
