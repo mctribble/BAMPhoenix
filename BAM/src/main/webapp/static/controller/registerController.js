@@ -41,7 +41,5 @@ app.controller("registerCtrl", ['$http', '$scope', '$location', '$timeout', func
 		}
 		
 	}
-	
-	
 
 }])

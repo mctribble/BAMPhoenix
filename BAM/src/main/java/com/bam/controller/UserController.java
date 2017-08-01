@@ -108,8 +108,9 @@ public class UserController {
 			e.printStackTrace();
 		}
 		System.out.println(currentUser);
-		
+	
 		if(userService.findUserByEmail(currentUser.getEmail())==null){
+			currentUser.setRole(1);
 			userService.addOrUpdateUser(currentUser);
 		} else {
 			Exception e = null;

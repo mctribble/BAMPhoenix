@@ -1,3 +1,4 @@
+
 /*
 *  AngularJs Fullcalendar Wrapper for the JQuery FullCalendar
 *  API @ http://arshaw.com/fullcalendar/
@@ -14,8 +15,13 @@
 	  //AngularJS calendar.
         calendars : {}
     })
-  app.controller('uiCalendarCtrl', ['$scope', '$locale','$compile','uiCalendarConfig',
-        function ($scope, $locale,$compile,$uiCalendarConfig) {
+  app.controller('uiCalendarCtrl', ['$rootScope','$scope', '$location', '$http', '$locale','$compile','uiCalendarConfig',
+        function ($rootScope,$scope, $location, $http, $locale,$compile,$uiCalendarConfig) {
+	  		if(!$rootScope.user.batch && $rootScope.user.role == 1)
+	  		{
+	  			$location.path('/noBatch');
+	  		}
+	  		
 	  	
 	  	//Varibles set for the use of adding day,month,year,to the Date attribute of a calendar. 
 		    var date = new Date();
@@ -239,14 +245,43 @@
             };
             
             /* event source that contains custom events on the scope */
-            $scope.events = [
-              {title: 'All Day Event',start: new Date(y, m, 1)},
-              {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-              {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-              {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-              {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-              {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-            ];
+            	$scope.events = [];
+            	console.log($rootScope.trainerBatch);
+           //POST method to show subtopics on the calendar
+//            	if($rootScope.userId != 1){
+            	$http({
+            		method : "GET",
+            		url : "Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id
+            	}).then(function successCallback(response) {
+            		console.log("Subtopics.do called successfully: " + response.data);
+            		uiCalendarConfig.calendars['myCalendar'].fullCalendar('removeEventSources');
+            		/* Reason for doing this:
+            		 * This will update the current events array instead of creating a new reference, 
+            		 * can cause problems */
+            		//$scope.events.splice(0, $scope.events.length);
+            		
+            		var title = response.data.Subtopic().SubTopicName().name;
+            		var start = response.data.Subtopic().subtopicDate;
+            		var end = response.data.Subtopic().subtopicDate;
+            		
+            		for(var i = 0; i < title.length ; ++i) {
+            			console.log("adding new data: " + newEvents[i]);  
+            			
+            			$scope.events.push(title[i]);
+            		}
+            		for(var i = 0; i < start.length ; ++i) {
+            			console.log("adding new data: " + newEvents[i]);  
+            			
+            			$scope.events.push(start[i]);
+            		}
+            		for(var i = 0; i < end.length ; ++i) {
+            			console.log("adding new data: " + newEvents[i]);  
+            			
+            			$scope.events.push(end[i]);
+            		}
+            		uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
+            		//$scope.renderCalendar('myCalendar1');
+            	});
             
             /* event source that calls a function on every view switch */
             $scope.eventsF = function (start, end, timezone, callback) {
@@ -486,4 +521,6 @@
             };
         }
     ]
+
+
 );
