@@ -69,6 +69,7 @@ public class UserController {
 		
 		//Drop user from the batch
 		user.setBatch(null);
+		user.setRole(0);
 		userService.addOrUpdateUser(user);
 		
 		//Return users from batch without the user
