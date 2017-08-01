@@ -7,6 +7,7 @@ app.controller("registerCtrl", ['$http', '$scope', function($http, $scope){
 	$scope.addUser = function(){	
 		console.log("IN the FUNC")
 		console.log($scope.user)
+		if($scope.user.password == $scope.confirm_password){
 		$http({
 			url: 'Users/Update.do',
 			method: 'POST',
@@ -28,6 +29,12 @@ app.controller("registerCtrl", ['$http', '$scope', function($http, $scope){
 			console.log("Didnt work");
 		});
 		console.log("Last")
+		}else{
+			$scope.updateDisplay = true;
+			$scope.updateMsg = 'Passwords do not match';
+			$scope.alertClass = 'alert alert-danger';
+		}
+		
 	}
 	
 	
