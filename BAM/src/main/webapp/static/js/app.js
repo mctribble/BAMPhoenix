@@ -11,8 +11,7 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl: "static/pages/register.html",
 		controller: "registerCtrl"
 	}).when("/home",{
-		templateUrl: "static/pages/calendar.html",
-		controller: 'uiCalendarCtrl'
+		templateUrl: "static/pages/calendar.html"
 	}).when("/associates",{
 		templateUrl: "static/pages/ViewAssociates.html",
 		controller: "associatesController"
