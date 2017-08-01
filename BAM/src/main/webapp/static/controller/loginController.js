@@ -27,14 +27,14 @@ app.controller('loginCtl', function($rootScope, $scope, $location, $http) {
 					params: {email : $rootScope.user.email}
 				}).then(function success (progResponse){
 					$rootScope.trainerBatch = progResponse.data;
-					console.log($rootScope.trainerBatch);
+					$location.path('/home');
 				}, function error(progResponse){
 					$scope.msg = 'Batch Acquisition failed';
 				});
+			} else {
+				$location.path('/home');
 			}
 			
-			console.log(response.data);
-			$location.path('/home');
 		}, function error(response){
 			$location.path('/');
 			$scope.message = true;
