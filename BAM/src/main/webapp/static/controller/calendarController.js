@@ -242,7 +242,7 @@
             
             /* event source that contains custom events on the scope */
             	$scope.events = [];
-            	//console.log($rootScope.trainerBatch);
+            	console.log($rootScope.trainerBatch);
            //POST method to show subtopics on the calendar
 //            	if($rootScope.userId != 1){
             	$http({
