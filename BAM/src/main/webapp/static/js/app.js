@@ -8,7 +8,8 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl:"static/pages/batchesAll.html",
 		controller: "batchesAllCtr"
 	}).when("/register",{
-		templateUrl: "static/pages/register.html"
+		templateUrl: "static/pages/register.html",
+		controller: "registerCtrl"
 	}).when("/home",{
 		templateUrl: "static/pages/calendar.html",
 		controller: 'uiCalendarCtrl'
