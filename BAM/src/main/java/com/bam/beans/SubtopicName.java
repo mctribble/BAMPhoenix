@@ -29,12 +29,12 @@ public class SubtopicName {
 	@Column(name="Subtopic_Name")
 	private String name;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="Subtopic_Topic", referencedColumnName = "Topic_ID")
 	@Autowired
 	private TopicName topic;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="Subtopic_Type", referencedColumnName = "Type_ID")
 	@Autowired
 	private SubtopicType type;
