@@ -3,11 +3,16 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 	console.log("Edit Batch Controller");
 	//retrieve batch info from server
 	var batchId; //set the batchId
+	//$scope.currentBatchName;
 	if($rootScope.currentBatch)
 	{
-		batchId = $rootScope.currentBatch;
+		//$scope.currentBatchName= true;
+		//$scope.currentBatchName = $rootScope.currentBatch.name;
+		batchId = $rootScope.currentBatch.id;
 	}else
 	{
+		//$scope.currentBatchName= true;
+		//$scope.currentBatchName = $rootScope.trainerBatch.name;
 		batchId = $rootScope.trainerBatch.id;
 	}
 	
