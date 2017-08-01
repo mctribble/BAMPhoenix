@@ -1,51 +1,63 @@
 <ul class="nav nav-tabs" ng-show="user.role>=2">
 	<li class="nav-link"><a href="#/home">Calendar</a></li>
 	<li class="nav-link"><a href="#/associates">View Associates</a></li>
-	<li class="nav-link"><a href="#/editBatch" ng-show="user.role==3 || (currentBatch.trainer.fName == user.fName && currentBatch.trainer.mName == user.mName && currentBatch.trainer.lName == user.lName) || (!currentBatch && trainerBatch.trainer.fName == user.fName && trainerBatch.trainer.mName == user.mName && trainerBatch.trainer.lName == user.lName)">Edit Batch</a></li>
+	<li class="nav-link"><a href="#/editBatch"
+		ng-show="user.role==3 || (currentBatch.trainer.fName == user.fName && currentBatch.trainer.mName == user.mName && currentBatch.trainer.lName == user.lName) 
+		|| (!currentBatch && trainerBatch.trainer.fName == user.fName && trainerBatch.trainer.mName == user.mName && trainerBatch.trainer.lName == user.lName)">EditBatch</a></li>
 </ul>
 <br>
 
-<div class="header">
-	<h3 style="text-align: center;">{{currentBatchName}} Edit</h3>
-</div>
+<div class="row login-container">
+	<div class="login col-md-6">
+		<div class="login-vertical-align">
+			<div class="header">
+				<h3 style="text-align: center;">{{currentBatchName}} Edit</h3>
+			</div>
+			<form>
+				<div class="input-group">
+					<span class="input-group-addon input-tag">Batch Name:</span> <input
+						type="text" class="form-control" ng-model="batch.name"
+						placeholder="Batch Name" required />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon input-tag">Batch Type:</span> <input
+						type="text" class="form-control" ng-model="batch.type.name"
+						placeholder="Batch Type" required />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon input-tag">Start Date:</span> <input
+						type="date" class="form-control" width="30%"
+						ng-model="batch.startDate" required />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon input-tag">End Date:</span> <input
+						type="date" class="form-control" ng-model="batch.endDate" required />
+				</div>
 
-<div class="editBatch-container">
-	<div class="input-group">
-		<span class="input-group-addon input-tag">Batch Name:</span> <input
-			type="text" class="form-control" ng-model="batch.name"
-			placeholder="Batch Name" required />
-	</div>
-	<div class="input-group">
-		<span class="input-group-addon input-tag">Start Date:</span> <input
-			type="date" class="form-control" ng-model="batch.startDate" required />
-	</div>
-	<div class="input-group">
-		<span class="input-group-addon input-tag">End Date:</span> <input
-			type="date" class="form-control" ng-model="batch.endDate" required />
-	</div>
-	<div class="input-group">
-		<span class="input-group-addon input-tag">Batch Type:</span> <input
-			type="text" class="form-control" ng-model="batch.type.name"
-			placeholder="Batch Type" required />
-	</div>
+				<br>
+				<div class="login-btn-container">
+					<button class="btn threeqtr-width" id="login-btn" ng-click="">SUBMIT</button>
+				</div>
+				
+				<div class="login-btn-container">
+					<button class="btn threeqtr-width" id="create-acc-btn" ng-click="addRemAssociate()">EDIT ASSOCIATES</button>
+				</div>
+			</form>
 
-	<br>
-	<div class="input-group">
-		<!-- <span class="input-group-addon input-tag">Add/Remove Associate</span>  -->
-		<button class="btn" id="login-btn" ng-click="addRemAssociate()">Add/Remove:</button>
+		</div>
 	</div>
-	<!-- <div class="input-group">
-		<span class="input-group-addon">Subtopics?</span>
-		<button  ng-click="addRemSubtopic()">Add/Remove</button>
-	</div> -->
-
-
+	<div class="login col-md-4">
+		<div class="login-vertical-align">
+			<img src="static/img/revature_logo.png" width="90%"> <img
+				src="static/img/rev_timeline.png" width="90%">
+		</div>
+	</div>
 </div>
 
 <div id="users" class="hide">
 	<div class="header">
 		<h3 style="text-align: center;">User Management</h3>
-		
+
 		<div class="searchbox-container">
 			<div class="input-group">
 				<span class="input-group-addon">Search</span> <input
@@ -53,7 +65,7 @@
 					placeholder="Search" required />
 			</div>
 		</div>
-	<br>
+		<br>
 	</div>
 	<div class="nav nav-tabs">
 		<span class="nav-item tab" ng-class="{active: isSet(1) }"><a
@@ -62,7 +74,7 @@
 			class="nav-link" ng-class="{active: isSet(2) }" ng-click="setTab(2)">Add</a></span>
 	</div>
 	<div id="inBatch" ng-show="isSet(1)">
-		<table class="associate-rm">
+		<table class="table">
 			<tr class="rm-header">
 				<td ng-click="order = 'fName'" class="head">First Name</td>
 				<td ng-click="order = 'lName'" class="head">Last Name</td>
@@ -93,7 +105,7 @@
 	</div>
 
 	<div id="outBatch" ng-show="isSet(2)">
-		<table class="associate-add">
+		<table class="table">
 			<tr class="add-header">
 			<tr class="rm-header">
 				<td ng-click="order = 'fName'" class="head">First Name</td>
