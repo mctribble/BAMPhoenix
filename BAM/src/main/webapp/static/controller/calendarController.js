@@ -15,7 +15,7 @@
 	  //AngularJS calendar.
         calendars : {}
     })
-  app.controller('uiCalendarCtrl', ['$scope','$http', '$locale','$compile','uiCalendarConfig',
+  app.controller('uiCalendarCtrl', ['$rootScope','$scope','$http', '$locale','$compile','uiCalendarConfig',
         function ($rootScope,$scope,$http, $locale,$compile,$uiCalendarConfig) {
 	  
 	  	
@@ -242,14 +242,14 @@
             
             /* event source that contains custom events on the scope */
             	$scope.events = [];
-            	console.log($rootScope.TrainerBatch);
+            	//console.log($rootScope.trainerBatch);
            //POST method to show subtopics on the calendar
-            	
+//            	if($rootScope.userId != 1){
             	$http({
             		method : "GET",
-            		url : "Subtopic.do?batchId="+$rootScope.TrainerBatch.batchId
+            		url : "Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id
             	}).then(function successCallback(response) {
-            		console.log("Subtopic.do called successfully: " + response.data);
+            		console.log("Subtopics.do called successfully: " + response.data);
             		uiCalendarConfig.calendars['myCalendar'].fullCalendar('removeEventSources');
             		/* Reason for doing this:
             		 * This will update the current events array instead of creating a new reference, 
