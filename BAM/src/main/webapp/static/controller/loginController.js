@@ -32,7 +32,13 @@ app.controller('loginCtl', function($rootScope, $scope, $location, $http) {
 					$scope.msg = 'Batch Acquisition failed';
 				});
 			} else {
-				$location.path('/home');
+				if(!$rootScope.user.batch && $rootScope.user.role == 1)
+				{
+					$location.path('/noBatch');
+				}else{
+					$location.path('/home');
+				}
+				
 			}
 			
 		}, function error(response){
