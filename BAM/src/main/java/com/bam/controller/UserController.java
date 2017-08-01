@@ -87,8 +87,29 @@ public class UserController {
 		}
 		System.out.println(currentUser);
 		userService.addOrUpdateUser(currentUser);
+	}
+	
+	@RequestMapping(value="Register.do", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public void addUser(@RequestBody String jsonObject, HttpSession session) {
+		Users currentUser = null;
+		System.out.println("jsonObject: " + jsonObject);
+		try {
+			currentUser = new ObjectMapper().readValue(jsonObject, Users.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println(currentUser);
 		
-		//Retrieve and return users in a batch from the database
+		if(userService.findUserByEmail(currentUser.getEmail())==null){
+			userService.addOrUpdateUser(currentUser);
+		} else {
+			System.out.println("Cannot add: Email is already in use");
+		}	
 	}
 	
 	@RequestMapping(value="Remove.do", method=RequestMethod.POST, produces="application/json")
