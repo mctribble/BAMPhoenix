@@ -2,6 +2,7 @@ package com.bam.service;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,11 +22,14 @@ public class BatchService
 	
 	public Batch getBatchById(Integer id)
 	{
+		Logger.getLogger(BatchService.class).fatal(bRep);
+		System.out.println(bRep);
 		return bRep.findById(id);
 	}
 	
 	public List<Batch> getBatchAll()
 	{
+		
 		return bRep.findAll();
 	}
 	

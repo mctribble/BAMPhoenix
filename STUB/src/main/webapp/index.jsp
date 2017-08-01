@@ -92,49 +92,49 @@
                 <td>batchId : {BatchId}
                 <td>Returns Batch Details
             <tr>
-                <td>/User/InBatch.do
+                <td>/Users/InBatch.do
                 <td>GET
                 <td>JSON
                 <td>id : {BatchId}
                 <td>Returns all users in a batch
             <tr>
-                <td>/User/Drop.do
+                <td>/Users/Drop.do
                 <td>POST
                 <td>JSON
                 <td>id : {UserId}
                 <td>Returns all users in a batch
             <tr>
-                <td>/User/Remove.do
+                <td>/Users/Remove.do
                 <td>POST
                 <td>JSON
                 <td>id : {UserId}
                 <td>Returns all users in a batch
             <tr>
-                <td>/User/Update.do
+                <td>/Users/Update.do
                 <td>POST
                 <td>JSON
                 <td>user : {User}
                 <td>Returns User Details
             <tr>
-                <td>/User/Add.do
+                <td>/Users/Add.do
                 <td>POST
                 <td>JSON
                 <td>userId : {UserId}<br>batchId : {batchId}
                 <td>Returns all user with a null batch
             <tr>
-                <td>/User/NotInABatch.do
+                <td>/Users/NotInABatch.do
                 <td>GET
                 <td>JSON
                 <td>N/A
                 <td>Returns all associates with a null batch
             <tr>
-                <td>/User/AllAssociates.do
+                <td>/Users/AllAssociates.do
                 <td>GET
                 <td>JSON
                 <td>N/A
                 <td>Returns all associates
             <tr>
-                <td>/User/AllTrainers.do
+                <td>/Users/AllTrainers.do
                 <td>GET
                 <td>JSON
                 <td>N/A

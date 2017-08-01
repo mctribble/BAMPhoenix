@@ -7,7 +7,7 @@
 					There was a problem trying to register.
 				</div>
 				
-				<form role="form" ng-submit="controller.register">
+				<form>
 					<div class="input-group">
 						<span class="input-group-addon"> Email: </span> 
 						<input type="text" class="form-control" ng-model="user.email" placeholder="email" required>
@@ -49,9 +49,10 @@
 						<input class="form-control" type="text" ng-model="user.skype" placeholder="Skype" required />
 					</div>
 					<div class="input-group">
-						<input type="submit" class="btn btn-primary" value="REGISTER">
+						<input type="submit" class="btn btn-primary" ng-click="addUser()" value="REGISTER">
 					</div>
 				</form>
+				
 		
 			</div>
 				
