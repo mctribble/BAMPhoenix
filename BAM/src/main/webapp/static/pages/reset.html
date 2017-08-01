@@ -5,9 +5,9 @@
 				<form role="form" ng-submit="controller.reset">
 					<h3>Reset Password</h3>
 					<div class="input-group">
-						<span class="input-group-addon input-tag"> Old
-							Password:&nbsp;&#160;</span> <input class="form-control" type="password"
-							ng-model="user.old_password" placeholder="Old Password" required>
+						<span class="input-group-addon input-tag"> Old Password:</span> <input
+							class="form-control" type="password" ng-model="user.old_password"
+							placeholder="Old Password" required>
 					</div>
 
 					<div class="input-group">
@@ -17,19 +17,18 @@
 					</div>
 
 					<div class="input-group">
-						<span class="input-group-addon input-tag"> Confirm
-							New:&nbsp;&nbsp;</span> <input class="form-control" type="password"
+						<span class="input-group-addon input-tag"> Confirm New:</span> <input
+							class="form-control" type="password"
 							ng-model="user.confirm_password"
 							placeholder="Confirm New Password" required>
 					</div>
 					<br>
 					<div class="alert alert-danger" ng-show="controller.error">
 						There was a problem trying to reset password.</div>
-					<div class="input-group">
-						<div class="login-btn-container">
-							<input type="submit" class="btn threeqtr-width" id="login-btn"
-								value="Reset Password">
-						</div>
+
+					<div class="login-btn-container">
+						<input type="submit" class="btn threeqtr-width" id="login-btn"
+							value="RESET PASSWORD">
 					</div>
 				</form>
 			</div>
