@@ -32,6 +32,17 @@ body .fc { /* extra precedence to overcome jqui */
 
 /* Colors
 --------------------------------------------------------------------------------------------------*/
+.full-calendar-highlight-red {
+	background-color: red;
+}
+
+.full-calendar-highlight-default {
+	background-color: #3a87ad;
+}
+
+.full-calendar-highlight-green {
+	background-color: green;
+}
 
 .fc-unthemed th,
 .fc-unthemed td,
