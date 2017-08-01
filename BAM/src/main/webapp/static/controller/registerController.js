@@ -9,7 +9,7 @@ app.controller("registerCtrl", ['$http', '$scope', function($http, $scope){
 		console.log($scope.user)
 		if($scope.user.password == $scope.confirm_password){
 		$http({
-			url: 'Users/Update.do',
+			url: 'Users/Register.do',
 			method: 'POST',
 			headers: {
 		        'Content-Type': 'application/json', 
