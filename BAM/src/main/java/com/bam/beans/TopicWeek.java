@@ -29,12 +29,12 @@ public class TopicWeek {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="Topic_Name_ID", referencedColumnName = "Topic_ID")
 	@Autowired
-	private TopicName topicId;
+	private TopicName topic;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="Topic_Batch_ID", referencedColumnName = "Batch_ID")
 	@Autowired
-	private Batch batchId;
+	private Batch batch;
 
 	@Column(name="Topic_Week_Number")
 	private Integer weekNumber;
@@ -43,18 +43,18 @@ public class TopicWeek {
 		super();
 	}
 
-	public TopicWeek(Integer id, TopicName topicId, Batch batchId, Integer weekNumber) {
+	public TopicWeek(Integer id, TopicName topic, Batch batch, Integer weekNumber) {
 		super();
 		this.id = id;
-		this.topicId = topicId;
-		this.batchId = batchId;
+		this.topic = topic;
+		this.batch = batch;
 		this.weekNumber = weekNumber;
 	}
 
-	public TopicWeek(TopicName topicId, Batch batchId, Integer weekNumber) {
+	public TopicWeek(TopicName topic, Batch batch, Integer weekNumber) {
 		super();
-		this.topicId = topicId;
-		this.batchId = batchId;
+		this.topic = topic;
+		this.batch = batch;
 		this.weekNumber = weekNumber;
 	}
 
@@ -67,21 +67,21 @@ public class TopicWeek {
 	}
 
 	@Autowired
-	public TopicName getTopicId() {
-		return topicId;
+	public TopicName getTopic() {
+		return topic;
 	}
 
-	public void setTopicId(TopicName topicId) {
-		this.topicId = topicId;
+	public void setTopic(TopicName topic) {
+		this.topic = topic;
 	}
 
 	@Autowired
-	public Batch getBatchId() {
-		return batchId;
+	public Batch getBatch() {
+		return batch;
 	}
 
-	public void setBatchId(Batch batchId) {
-		this.batchId = batchId;
+	public void setBatch(Batch batch) {
+		this.batch = batch;
 	}
 
 	public Integer getWeekNumber() {
@@ -94,7 +94,7 @@ public class TopicWeek {
 
 	@Override
 	public String toString() {
-		return "TopicWeek [id=" + id + ", topicId=" + topicId + ", batchId=" + batchId + ", weekNumber=" + weekNumber
+		return "TopicWeek [id=" + id + ", topic=" + topic + ", batch=" + batch + ", weekNumber=" + weekNumber
 				+ "]";
 	}
 	
