@@ -28,17 +28,17 @@ public class Subtopic {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUBTOPICID_SEQ")
 	private int subtopicId;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="SUBTOPIC_NAME_ID", referencedColumnName = "SUBTOPIC_NAME_ID")
 	@Autowired
 	private SubtopicName subtopicName;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="SUBTOPIC_BATCH_ID", referencedColumnName = "BATCH_ID")
 	@Autowired
 	private Batch batch;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="SUBTOPIC_STATUS_ID", referencedColumnName = "STATUS_ID")
 	@Autowired
 	private SubtopicStatus status;

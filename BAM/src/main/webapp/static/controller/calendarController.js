@@ -16,7 +16,7 @@
         calendars : {}
     })
   app.controller('uiCalendarCtrl', ['$rootScope','$scope','$http', '$locale','$compile','uiCalendarConfig',
-        function ($rootScope,$scope,$http, $locale,$compile,$uiCalendarConfig) {
+        function ($rootScope,$scope,$http, $locale,$compile,uiCalendarConfig) {
 	  
 	  	
 	  	//Varibles set for the use of adding day,month,year,to the Date attribute of a calendar. 
@@ -249,34 +249,30 @@
             		method : "GET",
             		url : "Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id
             	}).then(function successCallback(response) {
-            		console.log("Subtopics.do called successfully: " + response.data);
-            		uiCalendarConfig.calendars['myCalendar'].fullCalendar('removeEventSources');
-            		/* Reason for doing this:
-            		 * This will update the current events array instead of creating a new reference, 
-            		 * can cause problems */
-            		//$scope.events.splice(0, $scope.events.length);
+            		console.log(response.data[0]);
             		
-            		var title = response.data.Subtopic().SubTopicName().name;
-            		var start = response.data.Subtopic().subtopicDate;
-            		var end = response.data.Subtopic().subtopicDate;
-            		
-            		for(var i = 0; i < title.length ; ++i) {
-            			console.log("adding new data: " + newEvents[i]);  
+            		for(var i = 0; i < response.data.length ; i++) {
             			
-            			$scope.events.push(title[i]);
-            		}
-            		for(var i = 0; i < start.length ; ++i) {
-            			console.log("adding new data: " + newEvents[i]);  
             			
-            			$scope.events.push(start[i]);
-            		}
-            		for(var i = 0; i < end.length ; ++i) {
-            			console.log("adding new data: " + newEvents[i]);  
             			
-            			$scope.events.push(end[i]);
+            			var title = response.data[i].subtopicName.name;
+                		var dates = response.data[i].subtopicDate;
+                		
+                		var a = new Date(dates);            
+//            			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+//            			var days = ['Mon','Tues','Wed','Thur','Fri','Sat','Sun'];
+                        var year = a.getUTCFullYear();
+                        var month = a.getMonth();
+                        var day = a.getDay();
+                        var formattedTime = new Date(year, month, day);
+                        
+                		var temp = {title: title, start: formattedTime, end: formattedTime};
+                		//console.log(formattedTime +" " + day+" "+year+" "+month+" "+a);
+            			$scope.events.push(temp);
             		}
+
             		uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
-            		//$scope.renderCalendar('myCalendar1');
+            		//$scope.renderCalendar('myCalendar');
             	});
             
             /* event source that calls a function on every view switch */
