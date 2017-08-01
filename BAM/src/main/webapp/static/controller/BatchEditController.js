@@ -54,14 +54,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 			$scope.msg = 'Failed to retrieve users without a batch';
 			console.log($scope.msg);
 		});
-	}
-	
-	
-
-	
-	
-	
-	
+	}	
 	
 	/* 
 	 * Tabbing Functionality created from example: https://codepen.io/jasoncluck/pen/iDcbh
