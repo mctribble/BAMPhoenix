@@ -114,4 +114,35 @@ public class BatchController
 		return batchService.getBatchById( Integer.parseInt(request.getParameter("batchId")) );
 
 	}
+	
+	
+	@RequestMapping(value="AddBatches.do", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public void addBatches(@RequestBody String jsonObject, HttpSession session) {
+		List<Batch> batchesFromStub = null;
+		System.out.println("jsonObject: " + jsonObject);
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			batchesFromStub = mapper.readValue(jsonObject, mapper.getTypeFactory().constructCollectionType(List.class, Batch.class));
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		List<Batch> allBatchesInBAM = batchService.getBatchByTrainer(batchesFromStub.get(0).getTrainer());
+		for(int i=0; i<batchesFromStub.size(); i++) {
+			boolean found = false;
+			for(int j=0; j<allBatchesInBAM.size(); j++) {
+				if(batchesFromStub.get(i).getName().equals(allBatchesInBAM.get(j).getName())) {
+					found = true;
+					break;
+				}
+			}
+			if(!found) {
+				batchService.addOrUpdateBatch(batchesFromStub.get(i));
+			}
+		}
+	}
 }
