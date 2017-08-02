@@ -568,7 +568,7 @@ temporary rendered events).
 	text-decoration: none; /* if <a> has an href */
 }
 
-.fc-event[href],
+.fc-event-container,
 .fc-event.fc-draggable {
 	cursor: pointer; /* give events with links and draggable events a hand mouse pointer */
 }
