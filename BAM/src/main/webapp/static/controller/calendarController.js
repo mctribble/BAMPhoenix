@@ -263,7 +263,7 @@
                         		var a = new Date(dates);  
                                 var year = a.getUTCFullYear();
                                 var month = a.getMonth();
-                                var day = a.getDay();
+                                var day = a.getDate();
                                 var formattedTime = new Date(year, month, day);
                         		var temp = {title: title, start: formattedTime, end: formattedTime};
                     			$scope.events.push(temp);
