@@ -55,6 +55,11 @@ public class CalendarController {
 		//Get the batch id from the request
 		int batchId = Integer.parseInt( request.getParameter("batchId") );
 		List<Subtopic> topic = subtopicService.getSubtopicByBatchId(batchId);
+		int index = 0;
+		for(int i=0; i<topic.size(); i++) {
+			if (topic.get(i).getSubtopicName().equals(request.getParameter("name")))
+					index = i;
+		}
 		Long newDate = Long.valueOf(request.getParameter("date"));
 		Subtopic sub = topic.get(0);
 		sub.setSubtopicDate(new Timestamp(newDate));
