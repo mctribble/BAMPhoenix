@@ -47,4 +47,12 @@ public class TopicService {
 		return topicRep.findByBatch(batchRep.findById(batchId));
 	}
 	
+	public List<TopicName> getTopics() {
+		return tNameRep.findAll();
+	}
+	
+	public void addOrUpdateTopicName(TopicName topic){
+		tNameRep.save(topic);
+	}
+	
 }
