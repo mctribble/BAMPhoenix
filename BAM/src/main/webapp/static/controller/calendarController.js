@@ -11,7 +11,7 @@
 
 //angular.module('myCalendarApp', ['ngRoute'])
 
-  var app =  app.constant('uiCalendarConfig', {	//Angular ui-Calendar API used to create 
+  app.constant('uiCalendarConfig', {	//Angular ui-Calendar API used to create 
 	  //AngularJS calendar.
         calendars : {}
     })
@@ -250,30 +250,33 @@
             	$scope.events = [];
            //POST method to show subtopics on the calendar
             	$scope.loading = true;		// For showing and hiding the loading gif.
+            	if(!$rootScope.gotSubtopics) {
+            		$rootScope.gotSubtopics = true;
+            		$http({
+                		method : "GET",
+                		url : "Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id
+                	}).then(function successCallback(response) {
+                		for(var i = 0; i < response.data.length ; i++) {
+                    			var title = response.data[i].subtopicName.name;
+                        		var dates = response.data[i].subtopicDate;
+                        	
+                        		var a = new Date(dates);  
+                                var year = a.getUTCFullYear();
+                                var month = a.getMonth();
+                                var day = a.getDate();
+                                var formattedTime = new Date(year, month, day);
+                        		var temp = {title: title, start: formattedTime, end: formattedTime};
+                    			$scope.events.push(temp);
+                		}
+                			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
+                		
+                		//$scope.renderCalendar('myCalendar');
+                	}).finally(function() {
+                		// Turn off loading indicator whether success or failure.
+                		$scope.loading = false;
+                	});
+            	}
             	
-            	$http({
-            		method : "GET",
-            		url : "Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id
-            	}).then(function successCallback(response) {
-            		for(var i = 0; i < response.data.length ; i++) {
-                			var title = response.data[i].subtopicName.name;
-                    		var dates = response.data[i].subtopicDate;
-                    	
-                    		var a = new Date(dates);  
-                            var year = a.getUTCFullYear();
-                            var month = a.getMonth();
-                            var day = a.getDay();
-                            var formattedTime = new Date(year, month, day);
-                    		var temp = {title: title, start: formattedTime, end: formattedTime};
-                			$scope.events.push(temp);
-            		}
-            			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
-            		
-            		//$scope.renderCalendar('myCalendar');
-            	}).finally(function() {
-            		// Turn off loading indicator whether success or failure.
-            		$scope.loading = false;
-            	});
             
             /* event source that calls a function on every view switch */
             $scope.eventsF = function (start, end, timezone, callback) {
@@ -320,6 +323,7 @@
              		url : "Calendar/DateUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&date="+event.start
              	}).then(function successCallback(response) {
              		//console.log("SUCCESS");
+             		console.log(event);
              	});
             };
             

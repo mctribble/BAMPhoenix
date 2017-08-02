@@ -58,11 +58,11 @@ public class CalendarController {
 		List<Subtopic> topics = subtopicService.getSubtopicByBatchId(batchId);
 		Subtopic sub = new Subtopic();
 		for (int i = 0; i < topics.size(); i++) {
-			if (topics.get(i).getSubtopicName().equals(subtopicName)){
+			if (topics.get(i).getSubtopicName().getName().equals(subtopicName)){
 				sub = topics.get(i);
 				Long newDate = Long.valueOf(request.getParameter("date"));
 				sub.setSubtopicDate(new Timestamp(newDate));
-				
+				System.out.println(sub);
 				//Update topic in the database
 				subtopicService.updateSubtopicDate(sub);
 				break;
