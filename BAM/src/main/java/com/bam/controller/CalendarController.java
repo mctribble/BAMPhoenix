@@ -58,7 +58,6 @@ public class CalendarController {
 		Long newDate = Long.valueOf(request.getParameter("date"));
 		Subtopic sub = topic.get(0);
 		sub.setSubtopicDate(new Timestamp(newDate));
-		System.out.println(newDate);
 		
 		//Update topic in the database
 		subtopicService.updateSubtopicDate(sub);

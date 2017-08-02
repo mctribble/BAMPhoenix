@@ -20,10 +20,10 @@
 	  		
   app.controller('uiCalendarCtrl', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig',
         function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig) {
-	  if(!$rootScope.user.batch && $rootScope.user.role == 1)
-		{
-			$location.path('/noBatch');
-		}
+		  if(!$rootScope.user.batch && $rootScope.user.role == 1)
+			{
+				$location.path('/noBatch');
+			}
 	  	
 	  	//Varibles set for the use of adding day,month,year,to the Date attribute of a calendar. 
 		    var date = new Date();
@@ -313,7 +313,7 @@
              		method : "GET",
              		url : "Calendar/DateUpdate.do?batchId="+$rootScope.trainerBatch.id+"&date="+event.start
              	}).then(function successCallback(response) {
-             		console.log("SUCCESS");
+             		//console.log("SUCCESS");
              	});
             };
             /* alert on Resize */
