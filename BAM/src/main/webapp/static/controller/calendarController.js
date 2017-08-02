@@ -299,32 +299,45 @@
             
             /* alert on eventClick */
             $scope.alertOnEventClick = function( date, jsEvent, view){
-                $scope.alertMessage = (date.title + ' was clicked ');
-                
-                var defaultColor = document.querySelector(".full-calendar-highlight-default");
-                if(defaultColor){
-                    $(jsEvent.target).toggleClass("full-calendar-highlight-green");
-                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green");
-                }
-                $(jsEvent.target).toggleClass("full-calendar-highlight-red");
-                $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-red");
-                
-                var red = document.querySelector(".full-calendar-highlight-red");
-                if(red){
-                    $(jsEvent.target).toggleClass("full-calendar-highlight-green");
-                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green");
+            	var name = jsEvent.target.parentNode.getAttribute("class");
+                if (name == "fc-content full-calendar-highlight-green") {
+                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green"); // remove green
+                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-red"); // add red
+                    // http for green to red
+                    $http({
+                 		method : "GET",
+                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&status=Canceled"
+                 	 }).then(function successCallback(response) {
+                 		//console.log("SUCCESS");
+                 	 });
+                } else if(name == "fc-content full-calendar-highlight-red"){
+                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-red"); // remove red
+                    // http for red to blue
+                    $http({
+                 		method : "GET",
+                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&status=Pending/Missed"
+                 	 }).then(function successCallback(response) {
+                 		//console.log("SUCCESS");
+                 	 });
+                } else if(name == "fc-content") {
+                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green"); //add green
+                    // http for blue to green
+                    $http({
+                 		method : "GET",
+                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&status=Completed"
+                 	 }).then(function successCallback(response) {
+                 		//console.log("SUCCESS");
+                 	 });
                 }
             };
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
-            	 console.log(event);
             	 $http({
              		method : "GET",
              		url : "Calendar/DateUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&date="+event.start
-             	}).then(function successCallback(response) {
+             	 }).then(function successCallback(response) {
              		//console.log("SUCCESS");
-             		console.log(event);
-             	});
+             	 });
             };
             
             /* alert on Resize */

@@ -38,7 +38,7 @@ public class BatchController
 	@ResponseBody
 	public List<Batch> getBatchAll(HttpServletRequest request)
 	{
-		System.out.println("in batches controller");
+		
 		return batchService.getBatchAll();
 	}
 	
@@ -53,7 +53,6 @@ public class BatchController
 				pastBatches.add(b);
 			}
 		}
-		System.out.println("past*****");
 		return pastBatches;
 	}
 	
@@ -68,7 +67,6 @@ public class BatchController
 				futureBatches.add(b);
 			}
 		}
-		System.out.println("future*****");
 		return futureBatches;
 	}
 	
