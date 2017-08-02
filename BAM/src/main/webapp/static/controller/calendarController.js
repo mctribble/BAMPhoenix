@@ -249,6 +249,8 @@
             /* event source that contains custom events on the scope */
             	$scope.events = [];
            //POST method to show subtopics on the calendar
+            	$scope.loading = true;		// For showing and hiding the loading gif.
+            	
             	$http({
             		method : "GET",
             		url : "Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id
@@ -267,6 +269,9 @@
             			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
             		
             		//$scope.renderCalendar('myCalendar');
+            	}).finally(function() {
+            		// Turn off loading indicator whether success or failure.
+            		$scope.loading = false;
             	});
             
             /* event source that calls a function on every view switch */
