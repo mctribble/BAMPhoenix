@@ -16,20 +16,29 @@
 		<!-- Alert that is filled currently based on clicks and drags.
 		<div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
 		    <h4>{{alertMessage}}</h4>
-		</div>
+		</div>-->
 	</div>
 	
 	<!-- Side column to list Events -->
 	<div class="col-md-3 container">
 		<div class="well">
 			<h3>Events</h3>
-			<table border=2 class="table table-hover">
+			<table border="2" class="table table-hover">
 				<tr>
 					<td class="topic">Topic</td>
 				<tr>
 					<td class="interview">QC/Interviews</td>
 				<tr>
 					<td class="quiz">LMS/Prepanel/Panel</td>
+			</table>
+			<h3>Click Events To Change Status</h3>
+			<table border="2" class="table">
+				<tr>
+					<td bgcolor="green" style="border: 3px"><font color="white">Covered</font></td>
+				<tr>
+					<td bgcolor="#3a87ad" style="border: 3px"><font color="white">Planned</font></td>
+				<tr>
+					<td bgcolor="red" style="border: 3px"><font color="white">Missed</font></td>
 			</table>
 		</div>
 	</div>
