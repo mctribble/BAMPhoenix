@@ -92,6 +92,12 @@
                 <td>batchId : {BatchId}
                 <td>Returns Batch Details
             <tr>
+                <td>/Batches/AddBatch.do
+                <td>POST
+                <td>JSON
+                <td>batch : {Batch}
+                <td>Returns Batch Details
+            <tr>
                 <td>/Users/InBatch.do
                 <td>GET
                 <td>JSON
@@ -151,6 +157,12 @@
                 <td>JSON
                 <td>batchId : {BatchId}
                 <td>Returns all subtopics and tasks for a batch
+            <tr>
+                <td>/Calendar/AddTopics.do
+                <td>POST
+                <td>JSON
+                <td>Topics : {SetOfTopics}
+                <td>N/A
         </table>
     </div>
 </body>
