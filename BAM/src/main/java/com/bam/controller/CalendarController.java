@@ -60,7 +60,7 @@ public class CalendarController {
 		for (int i = 0; i < topics.size(); i++) {
 			if (topics.get(i).getSubtopicName().getName().equals(subtopicName)){
 				sub = topics.get(i);
-				Long newDate = Long.valueOf(request.getParameter("date"));
+				Long newDate = Long.valueOf(request.getParameter("date")) + 46800000;
 				sub.setSubtopicDate(new Timestamp(newDate));
 				System.out.println(sub);
 				//Update topic in the database
