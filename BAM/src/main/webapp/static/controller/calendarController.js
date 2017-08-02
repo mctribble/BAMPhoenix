@@ -248,36 +248,24 @@
             
             /* event source that contains custom events on the scope */
             	$scope.events = [];
-            	console.log($rootScope.trainerBatch);
            //POST method to show subtopics on the calendar
-//            	if($rootScope.userId != 1){
             	$http({
             		method : "GET",
             		url : "Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id
             	}).then(function successCallback(response) {
-            		console.log(response.data[0]);
-            		
             		for(var i = 0; i < response.data.length ; i++) {
-            			
-            			
-            			
-            			var title = response.data[i].subtopicName.name;
-                		var dates = response.data[i].subtopicDate;
-                		
-                		var a = new Date(dates);            
-//            			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-//            			var days = ['Mon','Tues','Wed','Thur','Fri','Sat','Sun'];
-                        var year = a.getUTCFullYear();
-                        var month = a.getMonth();
-                        var day = a.getDay();
-                        var formattedTime = new Date(year, month, day);
-                        
-                		var temp = {title: title, start: formattedTime, end: formattedTime};
-                		//console.log(formattedTime +" " + day+" "+year+" "+month+" "+a);
-            			$scope.events.push(temp);
+                			var title = response.data[i].subtopicName.name;
+                    		var dates = response.data[i].subtopicDate;
+                    		var a = new Date(dates);            
+                            var year = a.getUTCFullYear();
+                            var month = a.getMonth();
+                            var day = a.getDay();
+                            var formattedTime = new Date(year, month, day);
+                    		var temp = {title: title, start: formattedTime, end: formattedTime};
+                			$scope.events.push(temp);
             		}
-
-            		uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
+            			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
+            		
             		//$scope.renderCalendar('myCalendar');
             	});
             
@@ -306,7 +294,13 @@
             };
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
-               $scope.alertMessage = ('Event Dropped to make dayDelta ' + delta);
+            	 console.log(event);
+            	 $http({
+             		method : "GET",
+             		url : "Calendar/DateUpdate.do?batchId="+$rootScope.trainerBatch.id+"&date="+event.start
+             	}).then(function successCallback(response) {
+             		console.log("SUCCESS");
+             	});
             };
             /* alert on Resize */
             $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
