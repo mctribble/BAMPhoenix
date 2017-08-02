@@ -256,7 +256,8 @@
             		for(var i = 0; i < response.data.length ; i++) {
                 			var title = response.data[i].subtopicName.name;
                     		var dates = response.data[i].subtopicDate;
-                    		var a = new Date(dates);            
+                    	
+                    		var a = new Date(dates);  
                             var year = a.getUTCFullYear();
                             var month = a.getMonth();
                             var day = a.getDay();
@@ -311,11 +312,12 @@
             	 console.log(event);
             	 $http({
              		method : "GET",
-             		url : "Calendar/DateUpdate.do?batchId="+$rootScope.trainerBatch.id+"&date="+event.start
+             		url : "Calendar/DateUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&date="+event.start
              	}).then(function successCallback(response) {
              		//console.log("SUCCESS");
              	});
             };
+            
             /* alert on Resize */
             $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
                $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
@@ -432,7 +434,7 @@
                         }
                         return JSON.stringify(options2);
                     }
-
+                    
                     scope.destroyCalendar = function () {
                         if (calendar && calendar.fullCalendar) {
                             calendar.fullCalendar('destroy');
