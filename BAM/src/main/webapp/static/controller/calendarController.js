@@ -291,6 +291,20 @@
             /* alert on eventClick */
             $scope.alertOnEventClick = function( date, jsEvent, view){
                 $scope.alertMessage = (date.title + ' was clicked ');
+                
+                var defaultColor = document.querySelector(".full-calendar-highlight-default");
+                if(defaultColor){
+                    $(jsEvent.target).toggleClass("full-calendar-highlight-green");
+                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green");
+                }
+                $(jsEvent.target).toggleClass("full-calendar-highlight-red");
+                $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-red");
+                
+                var red = document.querySelector(".full-calendar-highlight-red");
+                if(red){
+                    $(jsEvent.target).toggleClass("full-calendar-highlight-green");
+                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green");
+                }
             };
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
