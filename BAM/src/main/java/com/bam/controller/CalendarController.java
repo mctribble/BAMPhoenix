@@ -53,13 +53,20 @@ public class CalendarController {
 	@ResponseBody
 	public void changeTopicDate(HttpServletRequest request) throws ParseException {
 		//Get the batch id from the request
+		String subtopicName = request.getParameter("subtopicId");
 		int batchId = Integer.parseInt( request.getParameter("batchId") );
-		List<Subtopic> topic = subtopicService.getSubtopicByBatchId(batchId);
-		Long newDate = Long.valueOf(request.getParameter("date"));
-		Subtopic sub = topic.get(0);
-		sub.setSubtopicDate(new Timestamp(newDate));
-		
-		//Update topic in the database
-		subtopicService.updateSubtopicDate(sub);
+		List<Subtopic> topics = subtopicService.getSubtopicByBatchId(batchId);
+		Subtopic sub = new Subtopic();
+		for (int i = 0; i < topics.size(); i++) {
+			if (topics.get(i).getSubtopicName().getName().equals(subtopicName)){
+				sub = topics.get(i);
+				Long newDate = Long.valueOf(request.getParameter("date"));
+				sub.setSubtopicDate(new Timestamp(newDate));
+				System.out.println(sub);
+				//Update topic in the database
+				subtopicService.updateSubtopicDate(sub);
+				break;
+			}
+		}
 	}
 }

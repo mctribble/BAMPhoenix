@@ -20,6 +20,7 @@ app.controller('loginCtl', function($rootScope, $scope, $location, $http) {
 		})
 		.then(function success(response){
 			$rootScope.user = response.data;
+			$rootScope.gotSubtopics = false;
 			if($rootScope.user.role == 2){
 				$http({
 					url: 'Batches/InProgress.do',
