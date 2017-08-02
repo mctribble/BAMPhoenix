@@ -5,18 +5,23 @@
 	<li class="nav-link"><a href="#/editBatch" ng-show="user.role==3 || (currentBatch.trainer.fName == user.fName && currentBatch.trainer.mName == user.mName && currentBatch.trainer.lName == user.lName) || (!currentBatch && trainerBatch.trainer.fName == user.fName && trainerBatch.trainer.mName == user.mName && trainerBatch.trainer.lName == user.lName)">Edit Batch</a></li>
 </ul>
 <br>
+
+<!-- Loading gif -->
+<img src="static/img/ajax-loader-logo.ec18efd7.gif" ng-show="loading" width="300" height="192" style="display: block; margin: 0 auto;"></img>
+
 <div class="row">
 	<div class="col-md-9">
-		<div class="calendar" ng-model="eventSources" calendar="myCalendar" ui-calendar="uiConfig.calendar"></div>
+		<!-- Display calendar -->
+		<div class="calendar" ng-model="eventSources" calendar="myCalendar" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+		<!-- Alert that is filled currently based on clicks and drags.
 		<div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
 		    <h4>{{alertMessage}}</h4>
 		</div>
-		<div class="alert-success calAlert" ng-show="resourceMessage != undefined && resourceMessage != ''">
-		    <h4>{{resourceMessage}}</h4>
-		</div>
 	</div>
+	
+	<!-- Side column to list Events -->
 	<div class="col-md-3 container">
-		<div class="well contentwell">
+		<div class="well">
 			<h3>Events</h3>
 			<table border=2 class="table table-hover">
 				<tr>
@@ -29,12 +34,3 @@
 		</div>
 	</div>
 </div>
-
-<!-- <ul class="unstyled">
-    <li ng-repeat="e in events | filter:currentDate">
-        <div class="alert alert-info">
-            <a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>
-            <b> {{e.title}}</b> - {{e.start | date:"MMM dd"}}
-        </div>
-    </li>
-</ul> -->

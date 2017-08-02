@@ -69,4 +69,8 @@ public class SubtopicService {
 		return subTopRep.findByBatch(batchRep.findById(batchId));
 	}
 	
+	public void updateSubtopicDate(Subtopic topic) {
+		subTopRep.save(topic);
+	}
+	
 }

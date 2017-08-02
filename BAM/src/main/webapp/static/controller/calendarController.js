@@ -20,10 +20,10 @@
 	  		
   app.controller('uiCalendarCtrl', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig',
         function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig) {
-	  if(!$rootScope.user.batch && $rootScope.user.role == 1)
-		{
-			$location.path('/noBatch');
-		}
+		  if(!$rootScope.user.batch && $rootScope.user.role == 1)
+			{
+				$location.path('/noBatch');
+			}
 	  	
 	  	//Varibles set for the use of adding day,month,year,to the Date attribute of a calendar. 
 		    var date = new Date();
@@ -248,37 +248,30 @@
             
             /* event source that contains custom events on the scope */
             	$scope.events = [];
-            	console.log($rootScope.trainerBatch);
            //POST method to show subtopics on the calendar
-//            	if($rootScope.userId != 1){
+            	$scope.loading = true;		// For showing and hiding the loading gif.
+            	
             	$http({
             		method : "GET",
             		url : "Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id
             	}).then(function successCallback(response) {
-            		console.log(response.data[0]);
-            		
             		for(var i = 0; i < response.data.length ; i++) {
-            			
-            			
-            			
-            			var title = response.data[i].subtopicName.name;
-                		var dates = response.data[i].subtopicDate;
-                		
-                		var a = new Date(dates);            
-//            			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-//            			var days = ['Mon','Tues','Wed','Thur','Fri','Sat','Sun'];
-                        var year = a.getUTCFullYear();
-                        var month = a.getMonth();
-                        var day = a.getDay();
-                        var formattedTime = new Date(year, month, day);
-                        
-                		var temp = {title: title, start: formattedTime, end: formattedTime};
-                		//console.log(formattedTime +" " + day+" "+year+" "+month+" "+a);
-            			$scope.events.push(temp);
+                			var title = response.data[i].subtopicName.name;
+                    		var dates = response.data[i].subtopicDate;
+                    		var a = new Date(dates);            
+                            var year = a.getUTCFullYear();
+                            var month = a.getMonth();
+                            var day = a.getDay();
+                            var formattedTime = new Date(year, month, day);
+                    		var temp = {title: title, start: formattedTime, end: formattedTime};
+                			$scope.events.push(temp);
             		}
-
-            		uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
+            			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
+            		
             		//$scope.renderCalendar('myCalendar');
+            	}).finally(function() {
+            		// Turn off loading indicator whether success or failure.
+            		$scope.loading = false;
             	});
             
             /* event source that calls a function on every view switch */
@@ -303,10 +296,30 @@
             /* alert on eventClick */
             $scope.alertOnEventClick = function( date, jsEvent, view){
                 $scope.alertMessage = (date.title + ' was clicked ');
+                
+                var defaultColor = document.querySelector(".full-calendar-highlight-default");
+                if(defaultColor){
+                    $(jsEvent.target).toggleClass("full-calendar-highlight-green");
+                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green");
+                }
+                $(jsEvent.target).toggleClass("full-calendar-highlight-red");
+                $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-red");
+                
+                var red = document.querySelector(".full-calendar-highlight-red");
+                if(red){
+                    $(jsEvent.target).toggleClass("full-calendar-highlight-green");
+                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green");
+                }
             };
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
-               $scope.alertMessage = ('Event Dropped to make dayDelta ' + delta);
+            	 console.log(event);
+            	 $http({
+             		method : "GET",
+             		url : "Calendar/DateUpdate.do?batchId="+$rootScope.trainerBatch.id+"&date="+event.start
+             	}).then(function successCallback(response) {
+             		//console.log("SUCCESS");
+             	});
             };
             /* alert on Resize */
             $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
