@@ -249,15 +249,14 @@
            
             if($rootScope != null){
             	 var url;
-            if($rootScope.user.role ==1){
-            var url1 ="Calendar/Subtopics.do?batchId="+$rootScope.user.batch.id;
-            console.log($rootScope.user.role)
-             url = url1;
-            }else {
-             var url2 ="Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id;
-            console.log($rootScope.user.role)
-             url = url2;
-            }
+            	 console.log($rootScope.currentBatch);
+	            if($rootScope.user.role ==1){
+	            	url ="Calendar/Subtopics.do?batchId="+$rootScope.user.batch.id;
+	            }else if ($rootScope.user.role == 2 && $rootScope.currentBatch != null) {
+	            	url ="Calendar/Subtopics.do?batchId="+$rootScope.currentBatch.id;
+	            }else {
+	             	url ="Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id;
+	            }
             console.log(url);
             /* event source that contains custom events on the scope */
             	$scope.events = [];
@@ -309,7 +308,7 @@
             	          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
             	        ]
             	    };
-            
+            if($rootScope.user.role == 2){
             /* alert on eventClick */
             $scope.alertOnEventClick = function( date, jsEvent, view){
             	var name = jsEvent.target.parentNode.getAttribute("class");
@@ -343,6 +342,7 @@
                  	 });
                 }
             };
+            }
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
             	 $http({
@@ -389,8 +389,9 @@
             
             /* Render Tooltip */
             $scope.eventRender = function( event, element, view ) { 
-                element.attr({'tooltip': event.title,
-                             'tooltip-append-to-body': true});
+            	
+            	     $(element).tooltip({title: event.title});
+            	 
                 $compile(element)($scope);
             };
             
@@ -405,10 +406,7 @@
               }
             };
             
-            console.log($rootScope.currentBatch);
-            console.log($);
-            
-            if($rootScope.user.role == 1){
+            if($rootScope.user.role == 1 || $rootScope.currentBatch != null){
             	console.log("role =" +$rootScope.user.role )
             /* config object */
             $scope.uiConfig = {

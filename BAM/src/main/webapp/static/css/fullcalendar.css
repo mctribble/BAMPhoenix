@@ -753,6 +753,11 @@ tr:first-child > td > .fc-day-grid-event {
 	opacity: .25;
 }
 
+.tooltip-inner {
+    color: #fff;
+    background: #FF9900;
+}
+
 .fc-day-grid-event .fc-content { /* force events to be one-line tall */
 	white-space: nowrap;
 	overflow: hidden;
