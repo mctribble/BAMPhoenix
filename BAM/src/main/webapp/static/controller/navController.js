@@ -7,6 +7,7 @@ app.controller('navCtl', function($rootScope, $scope, $location, $http) {
 			if (somePath == "/batchesAll" || somePath == "/batchesFuture"
 					|| somePath == "/batchesPast" || somePath == "/register"
 					|| somePath == "/associates" || somePath == "/editBatch") {
+				$rootScope.gotSubtopics = false;
 				$location.path('/home');
 			}
 		}

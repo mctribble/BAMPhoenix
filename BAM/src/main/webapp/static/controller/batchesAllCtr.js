@@ -31,11 +31,13 @@ app.controller('batchesAllCtr', function($scope, $rootScope, $location, $http)
 			
 		})
 		.then(function success(response){
+			$rootScope.gotSubtopics = false;
 			$location.path('/home');
 			$scope.message = true;
 			$scope.msg = 'batch retreived';
 			
 		}, function error(response){
+			$rootScope.gotSubtopics = false;
 			$location.path('/home');
 			$scope.message = true;
 			$scope.msg = 'batch not retreived';
