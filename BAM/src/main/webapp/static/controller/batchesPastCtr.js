@@ -4,7 +4,7 @@ app.controller('batchesPast', function($scope, $rootScope, $location, $http)
 	$scope.batchesPast;
 	
 	$scope.getBatchesPast = function(){
-		
+		$rootScope.currentBatch = batch;
 		var emailer = $rootScope.user.email;
 		
 		$http({
@@ -25,14 +25,10 @@ app.controller('batchesPast', function($scope, $rootScope, $location, $http)
 	}
 	
 	$scope.goToBatch = function(batch){
-		
-		$rootScope.currentBatch = batch;
-		console.log("current batch" + batch.name);
-		//var batchId = id;
-		
+				console.log(batch.id);
 		$http({
 			
-			url: 'Calendar/Topics.do',
+			url: "Calendar/Topics.do?batchId=" + batch.id,
 			method: 'GET'
 			
 		})

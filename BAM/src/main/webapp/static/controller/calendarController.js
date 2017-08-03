@@ -249,7 +249,6 @@
            
             if($rootScope != null){
             	 var url;
-            	 console.log($rootScope.currentBatch);
 	            if($rootScope.user.role ==1){
 	            	url ="Calendar/Subtopics.do?batchId="+$rootScope.user.batch.id;
 	            }else if ($rootScope.user.role == 2 && $rootScope.currentBatch != null) {
@@ -257,7 +256,6 @@
 	            }else {
 	             	url ="Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id;
 	            }
-            console.log(url);
             /* event source that contains custom events on the scope */
             	$scope.events = [];
            //POST method to show subtopics on the calendar

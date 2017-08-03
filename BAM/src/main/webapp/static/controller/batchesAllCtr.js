@@ -19,16 +19,12 @@ app.controller('batchesAllCtr', function($scope, $rootScope, $location, $http)
 	}
 	
 	$scope.goToBatch = function(batch){
-		
 		$rootScope.currentBatch = batch;
-		console.log("current batch" + batch.name);
-		//var batch = batch;
-		
 		$http({
 			
 			url: 'Calendar/Topics.do',
-			method: 'GET'
-			
+			method: 'GET',
+			params: {batchId: batch.id}
 		})
 		.then(function success(response){
 			$location.path('/home');

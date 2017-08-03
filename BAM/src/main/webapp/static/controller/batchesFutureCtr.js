@@ -23,14 +23,10 @@ app.controller('batchesFuture', function($scope, $rootScope, $location, $http)
 	}
 	
 	$scope.goToBatch = function(batch){
-		
 		$rootScope.currentBatch = batch;
-		console.log("current batch" + batch.name);
-		//var batchId = id;
-		
 		$http({
 			
-			url: 'Calendar/Topics.do',
+			url: "Calendar/Topics.do?batchId=" + batch.id,
 			method: 'GET'
 			
 		})
