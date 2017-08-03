@@ -309,7 +309,7 @@
             	          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
             	        ]
             	    };
-            
+            if($rootScope.user.role == 2){
             /* alert on eventClick */
             $scope.alertOnEventClick = function( date, jsEvent, view){
             	var name = jsEvent.target.parentNode.getAttribute("class");
@@ -343,6 +343,7 @@
                  	 });
                 }
             };
+            }
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
             	 $http({

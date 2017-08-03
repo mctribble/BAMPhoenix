@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bam.beans.Batch;
 import com.bam.beans.Subtopic;
 import com.bam.beans.SubtopicStatus;
+import com.bam.beans.TopicName;
 import com.bam.beans.TopicWeek;
 import com.bam.service.SubtopicService;
 import com.bam.service.TopicService;
