@@ -18,7 +18,7 @@
 		    <h4>{{alertMessage}}</h4>
 		</div>-->
 	</div>
-	
+	<!-- <c:if test="${rootScope.user.role==2 || $rootScope.user.role ==3}">  -->
 	<!-- Side column to list Events -->
 	<div class="col-md-3 container">
 		<div class="well">
@@ -31,6 +31,7 @@
 				<tr>
 					<td class="quiz">LMS/Prepanel/Panel</td>
 			</table>
+			<div ng-show="user.role>=2 || user.role>=3">
 			<h3>Click Events To Change Status</h3>
 			<table border="2" class="table">
 				<tr>
@@ -40,6 +41,8 @@
 				<tr>
 					<td bgcolor="red" style="border: 3px"><font color="white">Missed</font></td>
 			</table>
+			</div>
 		</div>
 	</div>
+	
 </div>
