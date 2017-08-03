@@ -249,15 +249,14 @@
            
             if($rootScope != null){
             	 var url;
-            if($rootScope.user.role ==1){
-            var url1 ="Calendar/Subtopics.do?batchId="+$rootScope.user.batch.id;
-            console.log($rootScope.user.role)
-             url = url1;
-            }else {
-             var url2 ="Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id;
-            console.log($rootScope.user.role)
-             url = url2;
-            }
+            	 console.log($rootScope.currentBatch);
+	            if($rootScope.user.role ==1){
+	            	url ="Calendar/Subtopics.do?batchId="+$rootScope.user.batch.id;
+	            }else if ($rootScope.user.role == 2 && $rootScope.currentBatch != null) {
+	            	url ="Calendar/Subtopics.do?batchId="+$rootScope.currentBatch.id;
+	            }else {
+	             	url ="Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id;
+	            }
             console.log(url);
             /* event source that contains custom events on the scope */
             	$scope.events = [];
@@ -319,7 +318,7 @@
                     // http for green to red
                     $http({
                  		method : "GET",
-                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&status=Canceled"
+                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
                  	 }).then(function successCallback(response) {
                  		//console.log("SUCCESS");
                  	 });
@@ -328,7 +327,7 @@
                     // http for red to blue
                     $http({
                  		method : "GET",
-                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&status=Pending/Missed"
+                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
                  	 }).then(function successCallback(response) {
                  		//console.log("SUCCESS");
                  	 });
@@ -337,7 +336,7 @@
                     // http for blue to green
                     $http({
                  		method : "GET",
-                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&status=Completed"
+                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Completed"
                  	 }).then(function successCallback(response) {
                  		//console.log("SUCCESS");
                  	 });
@@ -407,7 +406,7 @@
               }
             };
             
-            if($rootScope.user.role == 1){
+            if($rootScope.user.role == 1 || $rootScope.currentBatch != null){
             	console.log("role =" +$rootScope.user.role )
             /* config object */
             $scope.uiConfig = {
