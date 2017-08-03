@@ -319,7 +319,7 @@
                     // http for green to red
                     $http({
                  		method : "GET",
-                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&status=Canceled"
+                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
                  	 }).then(function successCallback(response) {
                  		//console.log("SUCCESS");
                  	 });
@@ -328,7 +328,7 @@
                     // http for red to blue
                     $http({
                  		method : "GET",
-                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&status=Pending/Missed"
+                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
                  	 }).then(function successCallback(response) {
                  		//console.log("SUCCESS");
                  	 });
@@ -337,7 +337,7 @@
                     // http for blue to green
                     $http({
                  		method : "GET",
-                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&status=Completed"
+                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Completed"
                  	 }).then(function successCallback(response) {
                  		//console.log("SUCCESS");
                  	 });
@@ -404,6 +404,9 @@
                 uiCalendarConfig.calendars[calendar].fullCalendar('render');
               }
             };
+            
+            console.log($rootScope.currentBatch);
+            console.log($);
             
             if($rootScope.user.role == 1){
             	console.log("role =" +$rootScope.user.role )
