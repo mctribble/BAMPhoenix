@@ -306,7 +306,7 @@
             	          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
             	        ]
             	    };
-            if($rootScope.user.role == 2){
+            if($rootScope.user.role == 2 && $rootScope.currentBatch == null){
             /* alert on eventClick */
             $scope.alertOnEventClick = function( date, jsEvent, view){
             	var name = jsEvent.target.parentNode.getAttribute("class");
