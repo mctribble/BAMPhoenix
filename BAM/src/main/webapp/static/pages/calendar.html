@@ -31,8 +31,19 @@
 				<tr>
 					<td class="quiz">LMS/Prepanel/Panel</td>
 			</table>
-			<div ng-show="user.role>=2 || user.role>=3">
-			<h3>Click Events To Change Status</h3>
+			<div ng-show="user.role>=2">
+			<h3 >Click Events To Change Status</h3>
+			<table border="2" class="table">
+				<tr>
+					<td bgcolor="green" style="border: 3px"><font color="white">Covered</font></td>
+				<tr>
+					<td bgcolor="#3a87ad" style="border: 3px"><font color="white">Planned</font></td>
+				<tr>
+					<td bgcolor="red" style="border: 3px"><font color="white">Missed</font></td>
+			</table>
+			</div>
+			<div ng-show="user.role>=3">
+			<h3 >Events Status</h3>
 			<table border="2" class="table">
 				<tr>
 					<td bgcolor="green" style="border: 3px"><font color="white">Covered</font></td>
