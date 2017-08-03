@@ -3,7 +3,6 @@ app.controller('loginCtl', function($rootScope, $scope, $location, $http) {
 	$scope.msg;
 	$rootScope.user;
 	$rootScope.trainerBatch;
-	$rootScope.status = null;
 	$scope.logIn = function() {
 		var user = {
 			email : $scope.email,
