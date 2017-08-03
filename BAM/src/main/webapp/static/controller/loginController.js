@@ -21,7 +21,6 @@ app.controller('loginCtl', function($rootScope, $scope, $location, $http) {
 		.then(function success(response){
 			$rootScope.user = response.data;
 			console.log($rootScope.user)
-			$rootScope.gotSubtopics = false;
 			if($rootScope.user.role == 2){
 				$http({
 					url: 'Batches/InProgress.do',
@@ -29,6 +28,7 @@ app.controller('loginCtl', function($rootScope, $scope, $location, $http) {
 					params: {email : $rootScope.user.email}
 				}).then(function success (progResponse){
 					$rootScope.trainerBatch = progResponse.data;
+					$rootScope.gotSubtopics = false;
 					$location.path('/home');
 				}, function error(progResponse){
 					$scope.msg = 'Batch Acquisition failed';
@@ -38,6 +38,7 @@ app.controller('loginCtl', function($rootScope, $scope, $location, $http) {
 				{
 					$location.path('/noBatch');
 				}else{
+					$rootScope.gotSubtopics = false;
 					$location.path('/home');
 				}
 				
