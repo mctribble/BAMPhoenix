@@ -3,8 +3,6 @@ package com.bam.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.beans.Batch;
 import com.bam.beans.Subtopic;
-import com.bam.beans.TopicName;
+import com.bam.beans.SubtopicStatus;
 import com.bam.beans.TopicWeek;
-import com.bam.beans.Users;
 import com.bam.service.SubtopicService;
 import com.bam.service.TopicService;
 
@@ -70,9 +67,30 @@ public class CalendarController {
 				sub = topics.get(i);
 				Long newDate = Long.valueOf(request.getParameter("date")) + 46800000;
 				sub.setSubtopicDate(new Timestamp(newDate));
-				System.out.println(sub);
+				
 				//Update topic in the database
-				subtopicService.updateSubtopicDate(sub);
+				subtopicService.updateSubtopic(sub);
+				break;
+			}
+		}
+	}
+	
+	@RequestMapping(value="StatusUpdate.do", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public void updateTopicStatus(HttpServletRequest request) throws ParseException {
+		//Get the batch id from the request
+		String subtopicName = request.getParameter("subtopicId");
+		int batchId = Integer.parseInt( request.getParameter("batchId") );
+		List<Subtopic> topics = subtopicService.getSubtopicByBatchId(batchId);
+		Subtopic sub = new Subtopic();
+		SubtopicStatus status = subtopicService.getStatus(request.getParameter("status"));
+		for (int i = 0; i < topics.size(); i++) {
+			if (topics.get(i).getSubtopicName().getName().equals(subtopicName)){
+				sub = topics.get(i);
+				sub.setStatus(status);
+				
+				//Update topic in the database
+				subtopicService.updateSubtopic(sub);
 				break;
 			}
 		}

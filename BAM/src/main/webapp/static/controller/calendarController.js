@@ -246,15 +246,28 @@
                 return {};
             };
             
+           
+            if($rootScope != null){
+            	 var url;
+            if($rootScope.user.role ==1){
+            var url1 ="Calendar/Subtopics.do?batchId="+$rootScope.user.batch.id;
+            console.log($rootScope.user.role)
+             url = url1;
+            }else {
+             var url2 ="Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id;
+            console.log($rootScope.user.role)
+             url = url2;
+            }
+            console.log(url);
             /* event source that contains custom events on the scope */
             	$scope.events = [];
            //POST method to show subtopics on the calendar
             	$scope.loading = true;		// For showing and hiding the loading gif.
             	if(!$rootScope.gotSubtopics) {
-            		$rootScope.gotSubtopics = true;
+            		$rootScope.gotSubtopics = true; 
             		$http({
                 		method : "GET",
-                		url : "Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id
+                		url : url
                 	}).then(function successCallback(response) {
                 		for(var i = 0; i < response.data.length ; i++) {
                     			var title = response.data[i].subtopicName.name;
@@ -276,7 +289,7 @@
                 		$scope.loading = false;
                 	});
             	}
-            	
+            }
             
             /* event source that calls a function on every view switch */
             $scope.eventsF = function (start, end, timezone, callback) {
@@ -299,32 +312,45 @@
             
             /* alert on eventClick */
             $scope.alertOnEventClick = function( date, jsEvent, view){
-                $scope.alertMessage = (date.title + ' was clicked ');
-                
-                var defaultColor = document.querySelector(".full-calendar-highlight-default");
-                if(defaultColor){
-                    $(jsEvent.target).toggleClass("full-calendar-highlight-green");
-                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green");
-                }
-                $(jsEvent.target).toggleClass("full-calendar-highlight-red");
-                $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-red");
-                
-                var red = document.querySelector(".full-calendar-highlight-red");
-                if(red){
-                    $(jsEvent.target).toggleClass("full-calendar-highlight-green");
-                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green");
+            	var name = jsEvent.target.parentNode.getAttribute("class");
+                if (name == "fc-content full-calendar-highlight-green") {
+                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green"); // remove green
+                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-red"); // add red
+                    // http for green to red
+                    $http({
+                 		method : "GET",
+                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&status=Canceled"
+                 	 }).then(function successCallback(response) {
+                 		//console.log("SUCCESS");
+                 	 });
+                } else if(name == "fc-content full-calendar-highlight-red"){
+                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-red"); // remove red
+                    // http for red to blue
+                    $http({
+                 		method : "GET",
+                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&status=Pending/Missed"
+                 	 }).then(function successCallback(response) {
+                 		//console.log("SUCCESS");
+                 	 });
+                } else if(name == "fc-content") {
+                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green"); //add green
+                    // http for blue to green
+                    $http({
+                 		method : "GET",
+                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&status=Completed"
+                 	 }).then(function successCallback(response) {
+                 		//console.log("SUCCESS");
+                 	 });
                 }
             };
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
-            	 console.log(event);
             	 $http({
              		method : "GET",
              		url : "Calendar/DateUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&date="+event.start
-             	}).then(function successCallback(response) {
+             	 }).then(function successCallback(response) {
              		//console.log("SUCCESS");
-             		console.log(event);
-             	});
+             	 });
             };
             
             /* alert on Resize */
@@ -379,6 +405,26 @@
               }
             };
             
+            if($rootScope.user.role == 1){
+            	console.log("role =" +$rootScope.user.role )
+            /* config object */
+            $scope.uiConfig = {
+              calendar:{
+                height: 450,
+                editable: false,
+                header:{
+                  left: 'title',
+                  center: '',
+                  right: 'today prev,next'
+                },
+                eventClick: $scope.alertOnEventClick,
+                eventDrop: $scope.alertOnDrop,
+                eventResize: $scope.alertOnResize,
+                eventRender: $scope.eventRender
+              }
+            };
+            }else {
+            	console.log("role =" +$rootScope.user.role )
             /* config object */
             $scope.uiConfig = {
               calendar:{
@@ -393,9 +439,9 @@
                 eventDrop: $scope.alertOnDrop,
                 eventResize: $scope.alertOnResize,
                 eventRender: $scope.eventRender
-              }
-            };
-
+              		}
+            	};
+            }
             
             /* event sources array*/
             $scope.eventSources = [$scope.events];
