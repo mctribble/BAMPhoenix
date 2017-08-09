@@ -19,7 +19,8 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
-
+	
+//Get user from the database, via Hibernate
 	@Autowired
 	@Qualifier("userDetailsService")
 	UserDetailsService userDetailsService;
@@ -39,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	 public void configure(WebSecurity web) throws Exception {
+		//Ignore certain URLs
 	  web.ignoring().antMatchers("/index.html", "/static/**", "/");
 	 }
 
