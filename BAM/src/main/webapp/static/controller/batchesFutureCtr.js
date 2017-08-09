@@ -1,6 +1,6 @@
 app.controller('batchesFuture', function($scope, $rootScope, $location, $http)
 {
-	$scope.smg;
+	$scope.msg;
 	$scope.batchesFuture;
 	$scope.getBatchesFuture = function(){
 		
