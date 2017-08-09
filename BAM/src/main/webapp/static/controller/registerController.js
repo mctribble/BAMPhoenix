@@ -29,7 +29,7 @@ app.controller("registerCtrl", ['$http', '$scope', '$location', '$timeout', func
 		
 		}, function error(response){
 			$scope.updateDisplay = true;
-			$scope.updateMsg = 'Email is Already in Use';
+			$scope.updateMsg = 'Email is Already in use or Invalid Inputs';
 			$scope.alertClass = 'alert alert-danger';
 			console.log("Didnt work");
 		});
