@@ -22,7 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	@Qualifier("userDetailsService")
-	UserDetailsService userDetailsService;
+	
+	UserDetailsService userDetailsService; //Load Username from DB 
 	
 	@Autowired
     private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
@@ -39,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	 public void configure(WebSecurity web) throws Exception {
+		//ignore certain URLS
 	  web.ignoring().antMatchers("/index.html", "/static/**", "/");
 	 }
 

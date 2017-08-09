@@ -28,27 +28,27 @@
 						</div>
 						<div class="input-group">
 							<span class="input-group-addon input-tag"> First name: </span> <input
-								class="form-control" type="text" ng-model="user.fName"
+								class="form-control" type="text" ng-model="user.fName"  pattern="[A-Za-z]+"
 								placeholder="First Name" required />
 						</div>
 						<div class="input-group">
 							<span class="input-group-addon input-tag">Middle name:</span> <input
-								class="form-control" type="text" ng-model="user.mName"
+								class="form-control" type="text" ng-model="user.mName"  pattern="[A-Za-z]+"
 								placeholder="Middle name" />
 						</div>
 						<div class="input-group">
 							<span class="input-group-addon input-tag">Last name:</span> <input
-								class="form-control" type="text" ng-model="user.lName"
+								class="form-control" type="text" ng-model="user.lName"  pattern="[A-Za-z]+"
 								placeholder="Last name" required />
 						</div>
 						<div class="input-group">
 							<span class="input-group-addon input-tag">Phone:</span> <input
-								class="form-control" type="text" ng-model="user.phone"
+								class="form-control" type="text" ng-model="user.phone" pattern="\d+"
 								placeholder="Phone" required />
 						</div>
 						<div class="input-group">
 							<span class="input-group-addon input-tag">Alt Phone:</span> <input
-								class="form-control" type="text" ng-model="user.phone2"
+								class="form-control" type="text" ng-model="user.phone2" pattern="\d+"
 								placeholder="Alt Phone" />
 						</div>
 						<div class="input-group">
