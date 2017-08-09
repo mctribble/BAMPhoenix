@@ -7,7 +7,7 @@ app.controller("resetCtrl", ['$rootScope', '$http', '$scope', function($rootScop
 	
 	$scope.updateAssociate = function(){
 		$http({
-			url: 'Users/Reset.do',
+			url: 'rest/api/v1/Users/Reset',
 			method: 'POST',
 			headers: {
 		        'Content-Type': 'application/json', 
