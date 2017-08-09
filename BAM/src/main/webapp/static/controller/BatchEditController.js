@@ -192,5 +192,5 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		
 		
 	}
-	
+
 });
