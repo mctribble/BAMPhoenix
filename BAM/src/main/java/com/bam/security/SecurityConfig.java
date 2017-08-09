@@ -22,7 +22,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	@Qualifier("userDetailsService")
-	UserDetailsService userDetailsService;
+	// LoadUsername() will load the User Record from DB.
+	// Passes back a SpringSecurityUser Object, NOT a BAM User. 
+	UserDetailsService userDetailsService; 
 	
 	@Autowired
     private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
@@ -39,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	 public void configure(WebSecurity web) throws Exception {
+		// Ignore certain URLs.
 	  web.ignoring().antMatchers("/index.html", "/static/**", "/");
 	 }
 
@@ -53,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	   	.antMatchers("/Users/Register.do").permitAll()
 	    .anyRequest().authenticated()
 	    .and()
-	   .formLogin()
+	    .formLogin()
 	   	.loginPage("/")
 	    .loginProcessingUrl("/authenticate")
 	    .successHandler(restAuthenticationSuccessHandler)
@@ -62,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	    .passwordParameter("password")
 	    .permitAll()
 	    .and()
-	   .logout()
+	    .logout()
 	    .logoutUrl("/logout")
 	    //.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
 	    .deleteCookies("JSESSIONID")
