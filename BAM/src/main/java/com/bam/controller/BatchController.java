@@ -33,7 +33,6 @@ public class BatchController
 	@Autowired
 	UsersService usersService;
 	
-	//@RequestMapping(value = "All", method = RequestMethod.GET, headers = "Accept=application/json")
 	@RequestMapping(value = "All.do", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<Batch> getBatchAll(HttpServletRequest request)

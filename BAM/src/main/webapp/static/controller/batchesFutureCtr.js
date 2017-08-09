@@ -7,7 +7,7 @@ app.controller('batchesFuture', function($scope, $rootScope, $location, $http)
 		var emailer = $rootScope.user.email;
 		console.log(emailer);
 		$http({
-			url: 'Batches/Future.do',
+			url: 'rest/api/v1/Batches/Future',
 			method: 'GET',	
 			params: {email: emailer}
 		})
@@ -26,7 +26,7 @@ app.controller('batchesFuture', function($scope, $rootScope, $location, $http)
 		$rootScope.currentBatch = batch;
 		$http({
 			
-			url: "Calendar/Topics.do?batchId=" + batch.id,
+			url: "rest/api/v1/Calendar/Topics?batchId=" + batch.id,
 			method: 'GET'
 			
 		})
