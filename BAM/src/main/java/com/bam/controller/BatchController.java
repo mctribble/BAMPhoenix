@@ -19,12 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.beans.Batch;
-import com.bam.beans.Users;
 import com.bam.service.BatchService;
 import com.bam.service.UsersService;
 
 @RestController
-@RequestMapping(value = "/Batches/")
+@RequestMapping(value = "/api/v1/Batches/")
 public class BatchController 
 {
 	@Autowired
@@ -32,8 +31,8 @@ public class BatchController
 	
 	@Autowired
 	UsersService usersService;
-	
-	@RequestMapping(value = "All.do", method = RequestMethod.GET, produces = "application/json")
+
+	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<Batch> getBatchAll(HttpServletRequest request)
 	{
@@ -41,7 +40,7 @@ public class BatchController
 		return batchService.getBatchAll();
 	}
 	
-	@RequestMapping(value = "Past.do", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "Past", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<Batch> getPastBatches(HttpServletRequest request)
 	{
@@ -55,7 +54,7 @@ public class BatchController
 		return pastBatches;
 	}
 	
-	@RequestMapping(value = "Future.do", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "Future", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<Batch> getFutureBatches(HttpServletRequest request)
 	{
@@ -69,7 +68,7 @@ public class BatchController
 		return futureBatches;
 	}
 	
-	@RequestMapping(value = "InProgress.do", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "InProgress", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public Batch getBatchInProgress(HttpServletRequest request)
 	{
@@ -87,7 +86,7 @@ public class BatchController
 	}
 	
 	
-	@RequestMapping(value="Edit.do", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="Edit", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public void updateUser(@RequestBody String jsonObject, HttpSession session) {
 		Batch currentBatch = null;
@@ -105,7 +104,7 @@ public class BatchController
 		batchService.addOrUpdateBatch(currentBatch);
 	}
 	
-	@RequestMapping(value = "ById.do", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "ById", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public Batch getBatchById(HttpServletRequest request){
 		return batchService.getBatchById( Integer.parseInt(request.getParameter("batchId")) );
