@@ -1,6 +1,6 @@
 app.controller('batchesAllCtr', function($scope, $rootScope, $location, $http)
 {	
-	$scope.smg;
+	$scope.msg;
 	$rootScope.batchesAll;
 	$scope.getBatchesAll = function(){
 		

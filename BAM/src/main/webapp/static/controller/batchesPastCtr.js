@@ -1,6 +1,6 @@
 app.controller('batchesPast', function($scope, $rootScope, $location, $http)
 {
-	$scope.smg;
+	$scope.msg;
 	$scope.batchesPast;
 	
 	$scope.getBatchesPast = function(){
