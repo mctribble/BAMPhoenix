@@ -79,6 +79,7 @@ public class UserController {
 	@RequestMapping(value="Update", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public void updateUser(@RequestBody String jsonObject, HttpSession session) {
+		System.out.println("Enter update controller");
 		Users currentUser = null;
 		System.out.println("jsonObject: " + jsonObject);
 		try {
@@ -98,20 +99,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="Register", method=RequestMethod.POST, produces="application/json")
-	@ResponseBody
-	public void addUser(@RequestBody String jsonObject, HttpSession session) throws Exception {
-		Users currentUser = null;
-		System.out.println("jsonObject: " + jsonObject);
-		try {
-			currentUser = new ObjectMapper().readValue(jsonObject, Users.class);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println(currentUser);
+	public void addUser(@RequestBody Users currentUser, HttpSession session) throws Exception {
 	
 		System.out.println("Hit the Register endpoint");
 		//added
@@ -121,8 +109,7 @@ public class UserController {
 			currentUser.setRole(1);
 			userService.addOrUpdateUser(currentUser);
 		} else {
-			Exception e = null;
-			throw  e;
+			throw new Exception("Email exists in database");
 		}	
 	}
 
