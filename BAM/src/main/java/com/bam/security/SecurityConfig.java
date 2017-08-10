@@ -22,14 +22,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	@Qualifier("userDetailsService")
-<<<<<<< HEAD
-	
-	UserDetailsService userDetailsService; //Load Username from DB 
-=======
+
 	UserDetailsService userDetailsService; 
 	// LoadUsername() will load the User record from the DB
 	// Pass back a Spring Security User Object NOT BAMUser object
->>>>>>> 32b3458a7c2cd31690f341345c70d55064d1faee
 	
 	@Autowired
     private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
@@ -46,11 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	 public void configure(WebSecurity web) throws Exception {
-<<<<<<< HEAD
-		//ignore certain URLS
-=======
-		//Ignore certain URLS
->>>>>>> 32b3458a7c2cd31690f341345c70d55064d1faee
+
 	  web.ignoring().antMatchers("/index.html", "/static/**", "/");
 	 }
 
