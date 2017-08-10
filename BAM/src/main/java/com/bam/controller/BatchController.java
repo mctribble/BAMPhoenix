@@ -93,10 +93,6 @@ public class BatchController
 		System.out.println("jsonObject: " + jsonObject);
 		try {
 			currentBatch = new ObjectMapper().readValue(jsonObject, Batch.class);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
