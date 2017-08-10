@@ -118,6 +118,36 @@ public class UserController {
 			throw  e;
 		}	
 	}
+
+	/**
+	 * @author Tom Scheffer
+	 * @param jsonObject - object being passed in
+	 * @param session - current session
+	 * @throws Exception - for when previous password is wrong
+	 * 
+	 * 	Updates the user's password from the update view. Updates password to pwd2 when pwd equals their old pwd
+	 */
+	@RequestMapping(value="Reset", method=RequestMethod.POST, produces="application/java")
+	@ResponseBody
+	public void resetPassword(@RequestBody String jsonObject, HttpSession session) throws Exception{
+		Users userNewPass = null;
+		try {
+			userNewPass = new ObjectMapper().readValue(jsonObject, Users.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Users currentUser = userService.findUserByEmail(userNewPass.getEmail());
+		if(currentUser.getPwd().equals(userNewPass.getPwd())){
+			currentUser.setPwd(userNewPass.getPwd2());
+			userService.addOrUpdateUser(currentUser);
+		}else{
+			throw new Exception("Wrong password, password not changed");
+		}
+	}
 	
 	@RequestMapping(value="Remove", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
