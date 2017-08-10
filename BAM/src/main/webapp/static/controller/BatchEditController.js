@@ -18,7 +18,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 	{
 		//get the batch from the server by the id.
 		$http({
-			url: "Batches/ById.do",
+			url: "rest/api/v1/Batches/ById",
 			method: "GET",
 			params:{
 				batchId: batchId
@@ -34,7 +34,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		});
 		//get users in the batch by the batchId
 		$http({
-			url: "Users/InBatch.do",
+			url: "rest/api/v1/Users/InBatch",
 			method: 'GET',
 			params: {
 				batchId: batchId
@@ -48,7 +48,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		});
 		//get users who are not in a batch
 		$http({
-			url: "Users/NotInABatch.do",
+			url: "rest/api/v1/Users/NotInABatch",
 			method: 'GET'
 		}).then(function (response) {
 			$scope.availUsers = response.data; //the response.data is a javascript array (automatically parsed from the JSON from the server)
@@ -93,7 +93,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		console.log("id : " + id);
 		//tell the server
 		$http({
-			url: "Users/Add.do",
+			url: "rest/api/v1/Users/Add",
 			method: "POST",
 			params: {
 				userId: id,
@@ -131,7 +131,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		
 		//tell the server
 		$http({
-			url: "Users/Remove.do",
+			url: "rest/api/v1/Users/Remove",
 			method: "POST",
 			params: {
 				userId: id
@@ -166,7 +166,7 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 	$scope.dropAssociate = function(id){
 		//tell the server
 		$http({
-			url: "Users/Drop.do",
+			url: "rest/api/v1/Users/Drop",
 			method: "POST",
 			params: {
 				userId: id
@@ -192,16 +192,5 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		
 		
 	}
-	
-	/*$scope.addRemSubtopic = function(){
-		//show subtopic list in batch
-	}
-	$scope.addSubtopic = function(){
-		//add subtopic
-		//tell the server
-	}
-	$scope.remSubtopic = function(){
-		//remove subtopic
-		//tell the server
-	}*/
+
 });

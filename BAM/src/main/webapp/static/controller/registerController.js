@@ -9,11 +9,11 @@ app.controller("registerCtrl", ['$http', '$scope', '$location', '$timeout', func
 		console.log($scope.user)
 		if($scope.user.pwd == $scope.confirm_password){
 		$http({
-			url: 'Users/Register.do',
+			url: 'rest/api/v1/Users/Register',
 			method: 'POST',
 			headers: {
-		        'Content-Type': 'application/json', 
-		        'Accept': 'application/json' 
+		        'Content-Type': 'application/json',
+		        'Accept': 'application/json'
 		    },
 			data: $scope.user
 		}).then (function success(response){

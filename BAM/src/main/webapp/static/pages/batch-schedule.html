@@ -1,25 +1,6 @@
 
-<!-- <table class="table table-bordered calendar">
-  <thead>
-    <tr><th></th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thur</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="topic in user.batchId.subjects | orderBy : 'originalStartDate'">
-      <td>Week {{$index + 1}}</td><td colspan="5">{{topic.topic}}</td><td></td><td></td>
-    </tr>
-  </tbody>
-</table> -->
 <div id="calendarApp">
-	<!-- <a href="trainer-create-batch.html">back</a> <br> {{ events }}
-	Shows list of all events beside the calendar
-	<ul class="unstyled">
-		<li ng-repeat="e in events">
-			<div class="alert alert-info">
-				<a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>
-				<b> <input ng-model="e.title"></b> {{e.start | date:"MMM dd"}} - {{e.end | date:"MMM dd"}}
-			</div>
-		</li>
-	</ul> -->
+
 
 	<div class="calendar" calendar="myCalendar1"
 		ui-calendar="uiConfig.calendar"></div>

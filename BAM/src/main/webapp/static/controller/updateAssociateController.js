@@ -9,7 +9,7 @@ app.controller("updateAssociateCtrl", ['$rootScope', '$http', '$scope', function
 	$scope.updateAssociate = function(){
 
 		$http({
-			url: 'Users/Update.do',
+			url: 'rest/api/v1/Users/Update',
 			method: 'POST',
 			headers: {
 		        'Content-Type': 'application/json', 
