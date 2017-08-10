@@ -38,6 +38,8 @@ public class CalendarController {
 	@RequestMapping(value="Subtopics", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Subtopic> getSubtopicsByBatch(HttpServletRequest request) {
+		System.out.println("hitting subtopics controller");
+		
 		//Get the batch id from the request
 		int batchId = Integer.parseInt( request.getParameter("batchId") );
 		

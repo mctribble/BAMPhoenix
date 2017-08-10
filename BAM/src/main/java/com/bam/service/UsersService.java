@@ -1,8 +1,12 @@
 
 package com.bam.service;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,6 +62,23 @@ public class UsersService {
 			}
 		}
 		return users;
+	}
+
+	public Users parseUserFromJson(String jsonObject) {
+		Users currentUser = null;
+		System.out.println("jsonObject: " + jsonObject);
+		try {
+			currentUser = new ObjectMapper().readValue(jsonObject, Users.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println(currentUser);
+		
+		return currentUser;
 	}
 	
 }

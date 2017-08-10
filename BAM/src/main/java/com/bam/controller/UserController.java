@@ -91,6 +91,9 @@ public class UserController {
 			e.printStackTrace();
 		}
 		System.out.println(currentUser);
+		
+		//added
+//		Users currentUser = userService.parseUserFromJson(jsonObject);
 		userService.addOrUpdateUser(currentUser);
 	}
 	
@@ -110,6 +113,10 @@ public class UserController {
 		}
 		System.out.println(currentUser);
 	
+		System.out.println("Hit the Register endpoint");
+		//added
+//		Users currentUser = userService.parseUserFromJson(jsonObject);
+		
 		if(userService.findUserByEmail(currentUser.getEmail())==null){
 			currentUser.setRole(1);
 			userService.addOrUpdateUser(currentUser);
