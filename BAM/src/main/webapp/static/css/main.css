@@ -188,12 +188,18 @@ body {
 }
 
 #content {
-	margin-top: 50px;
 	background-color: #FFFFFF;
-	padding: 20px;
 	border-radius: 4px;
 	overflow: auto;
-	max-height: 75vh;
+	position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+	height:470px; 
+	width: 1090px;
+	padding-top: 20px; 
 	
 	/*
 	position: relative;
