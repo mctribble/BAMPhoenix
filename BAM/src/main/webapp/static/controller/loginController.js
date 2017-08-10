@@ -27,7 +27,7 @@ app.controller('loginCtl', function($rootScope, $scope, $location, $http) {
 			} else if($rootScope.user.role == 2){
 				$rootScope.userRole = '(Trainer)';
 				$http({
-					url: 'Batches/InProgress.do',
+					url: 'rest/api/v1/Batches/InProgress',
 					method: 'GET',
 					params: {email : $rootScope.user.email}
 				}).then(function success (progResponse){
