@@ -20,7 +20,8 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl: "static/pages/update.html",
 		controller: "updateAssociateCtrl"
 	}).when("/reset",{
-		templateUrl: "static/pages/reset.html"
+		templateUrl: "static/pages/reset.html",
+		controller: "resetCtrl"
 	}).when("/batchesPast",{
 		templateUrl: "static/pages/batchesPast.html",
 		controller: "batchesPast"

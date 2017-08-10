@@ -74,7 +74,9 @@
             var sourceSerialId = 1;
             var sourceEventsSerialId = 1;
             // @return {String} fingerprint of the source object and its events array
+            
             this.sourceFingerprint = function (source) {
+            	console.log(source);
                 var fp = '' + (source.__id || (source.__id = sourceSerialId++));
                 var events = angular.isObject(source) && source.events;
 
@@ -247,14 +249,16 @@
             };
             
            
-            if($rootScope != null){
+            if($rootScope){
+            	console.log($rootScope);
             	 var url;
-	            if($rootScope.user.role ==1){
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.user.batch.id;
-	            }else if ($rootScope.user.role == 2 && $rootScope.currentBatch != null) {
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
-	            }else {
-	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.trainerBatch.id;
+	            if($rootScope.user.role == 1){
+	            	url ="Calendar/Subtopics.do?batchId="+$rootScope.user.batch.id;
+	            }else if (($rootScope.user.role == 2 ||  $rootScope.user.role == 3) && $rootScope.currentBatch) {
+	            	url ="Calendar/Subtopics.do?batchId="+$rootScope.currentBatch.id;
+	            	console.log(url);
+	            }else if($rootScope.user.role == 3 && $rootScope.trainerBatch){
+	             	url ="Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id;
 	            }
             /* event source that contains custom events on the scope */
             	$scope.events = [];
@@ -405,7 +409,7 @@
             };
             
             if($rootScope.user.role == 1 || $rootScope.currentBatch != null){
-            	console.log("role =" +$rootScope.user.role )
+            	console.log("role =" + $rootScope.user.role )
             /* config object */
             $scope.uiConfig = {
               calendar:{
@@ -421,7 +425,9 @@
                 eventResize: $scope.alertOnResize,
                 eventRender: $scope.eventRender
               }
+            
             };
+            	console.log("config: " + $scope.uiConfig);
             }else {
             	console.log("role =" +$rootScope.user.role )
             /* config object */
