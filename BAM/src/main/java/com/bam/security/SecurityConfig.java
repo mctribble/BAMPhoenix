@@ -22,7 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	@Qualifier("userDetailsService")
-	UserDetailsService userDetailsService; 
+	UserDetailsService userDetailsService;//LoadUsername() will load the User Record from DB 
+										  //Past back a Spring Security 
 	// LoadUsername() will load the User record from the DB
 	// Pass back a Spring Security User Object NOT BAMUser object
 	
@@ -50,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	 protected void configure(HttpSecurity http) throws Exception {
 	  http
 	   .headers().disable()
-	   .csrf().disable()
+	   .csrf().disable()//not suppose to disable this in production
 	   .authorizeRequests()
 	   	//.antMatchers("/Batches/**").hasRole("2")
 	   	.antMatchers("/Users/Register.do").permitAll()
