@@ -322,11 +322,6 @@ angular.module('ui.calendar', [])
                         if (calendar && calendar.fullCalendar) {
                             calendar.fullCalendar('renderEvent', event, !!event.stick);
                         }
-                        
-/*                        scope.calendar.fullCalendar('renderEvent', event);
-                        scope.destroy();
-                        getOptions(); //Probl. you need to take the options again.
-                        scope.init();*/
                     };
 
                     eventsWatcher.onRemoved = function (event) {
