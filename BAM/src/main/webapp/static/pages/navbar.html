@@ -1,55 +1,3 @@
-<!-- <nav class="navbar revature-navbar">
-
-	<div class="full-navbar hidden-sm-down">
-		<ul>
-			<li><a href="#/register">Register</a></li>
-			<li><a href="#/associates">View Associates</a></li>
-			<li><a href="#/batchesAll">Batches</a></li>
-			<li><a href="#/update">Update</a></li>
-			<li><a href="#/editBatch">Edit Batch</a></li>
-		</ul>
-	</div>
-	
-	<div class="mobile-navbar hidden-md-up">
-		<button type="button" class="navbar-toggle navbar-button" data-toggle="collapse" data-target="#myNavbar">
-			Menu
-		</button>
-		
-		<div class="collapse navbar-collapse" id="myNavbar">
-			<ul class="nav navbar-nav">
-				<li><a href="#/register">Register</a></li>
-				<li><a href="#/associates">View Associates</a></li>
-				<li><a href="#/batchesAll">All Batches</a></li>
-				<li><a href="#/update">Update</a></li>
-				
-			</ul>
-		</div>
-	</div>
-
-</nav>
-<nav class="navbar navbar-inverse">
-	<div class="container-fluid">
-		<div class="navbar-header">
-
-
-			<a class="navbar-brand" href="#/home">Home</a>
-
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#myNavbar">Click me</button>
-		</div>
-		<div class="collapse navbar-collapse" id="myNavbar">
-			<ul class="nav navbar-nav">
-				<li><a href="#/register">Register</a></li>
-				<li><a href="#/associates">View Associates</a></li>
-				<li><a href="#/batchesAll">All Batches</a></li>
-				<li><a href="#/update">Update</a></li>
-			</ul>
-		</div>
-	</div>
-</nav>
-
--->
-
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded"
 	style="margin-bottom: 50px;" ng-show="user" ng-controller="navCtl">
 	<button class="navbar-toggler navbar-toggler-right" type="button"
@@ -64,13 +12,13 @@
 			<!-- <a class="nav-item nav-link" href="#/associates" ng-show="user.role>=2">Associates</a>  -->
 			<a class="nav-item nav-link" href="#/batchesAll" ng-show="user.role>=2">All Batches</a>
 			<a class="nav-item nav-link" href="#/update">Update</a>
-			<a class="nav-item nav-link" href="#/reset">Reset</a>			
+			<a class="nav-item nav-link" href="#/reset">Reset</a>
 			<!-- <a class="nav-item nav-link" href="#/editBatch" ng-show="user.role>=2">Edit Batch</a>  -->
 		</div>
 	</div>
 
 	<ul class="nav navbar-nav navbar-right">
-		<li><span class="navbar-text"> {{user.fName}} {{user.lName}} </span></li>
+		<li><span class="navbar-text navbar-right"> {{user.fName}} {{user.lName}} {{userRole}} </span></li>
 				<li><button class="btn btn-default" style="margin-top:10px;" onclick="window.open('/BAM/logout', '_self');">Log Out</button>
 	</ul>
 </nav>
