@@ -128,6 +128,20 @@
 	color: white;
 }
 
+a.nodec {
+	text-decoration: none;
+	color: black;
+}
+
+.lihover:hover{
+	background-color: #bdbfc7;
+}
+
+
+li.dropdown{
+	margin-right: 6%;
+}
+
 /***** 3.0 FONTS *****/
 /*
 @font-face {
