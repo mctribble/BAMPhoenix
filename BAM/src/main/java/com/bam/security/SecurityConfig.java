@@ -22,8 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	@Qualifier("userDetailsService")
-	UserDetailsService userDetailsService;
-	
+	UserDetailsService userDetailsService;//LoadUsername() will load the User Record from DB 
+										  //Past back a Spring Security 
 	@Autowired
     private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
 
@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	 public void configure(WebSecurity web) throws Exception {
+		//Ignore certain URLS
 	  web.ignoring().antMatchers("/index.html", "/static/**", "/");
 	 }
 
@@ -47,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	 protected void configure(HttpSecurity http) throws Exception {
 	  http
 	   .headers().disable()
-	   .csrf().disable()
+	   .csrf().disable()//not suppose to disable this in production
 	   .authorizeRequests()
 	   	//.antMatchers("/Batches/**").hasRole("2")
 	   	.antMatchers("/Users/Register.do").permitAll()
