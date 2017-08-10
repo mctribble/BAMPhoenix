@@ -1,11 +1,11 @@
 app.controller('batchesAllCtr', function($scope, $rootScope, $location, $http)
 {	
-	$scope.smg;
+	$scope.msg;
 	$rootScope.batchesAll;
 	$scope.getBatchesAll = function(){
 		
 		$http({
-			url: 'Batches/All.do',
+			url: 'rest/api/v1/Batches/All',
 			method: 'GET'
 		})
 		.then(function success(response){
@@ -22,7 +22,7 @@ app.controller('batchesAllCtr', function($scope, $rootScope, $location, $http)
 		$rootScope.currentBatch = batch;
 		$http({
 			
-			url: 'Calendar/Topics.do',
+			url: 'rest/api/v1/Calendar/Topics',
 			method: 'GET',
 			params: {batchId: batch.id}
 		})

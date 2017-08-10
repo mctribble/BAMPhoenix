@@ -128,29 +128,7 @@
 	color: white;
 }
 
-/***** 3.0 FONTS *****/
-/*
-@font-face {
-   font-family: "Audimat";
-   src: url("audimat-regular.otf");
-}
-@font-face {
-   font-family: 'Audimat';
-   src: url('audimat-bold.otf');
-   font-weight: bold;
-}
-@font-face {
-   font-family: 'Audimat';
-   src: url('audimat-bolditalic.otf');
-   font-weight: bold;
-   font-style: italic;
-}
-@font-face {
-   font-family: 'Audimat';
-   src: url('audimat-italic.otf');
-   font-style: italic;
-}
-*/
+
 /***** 4.0 TABLES *****/
 .searchbox-container {
 	/* 	font-family: "Audimat"; */

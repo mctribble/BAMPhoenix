@@ -74,7 +74,9 @@
             var sourceSerialId = 1;
             var sourceEventsSerialId = 1;
             // @return {String} fingerprint of the source object and its events array
+            
             this.sourceFingerprint = function (source) {
+            	console.log(source);
                 var fp = '' + (source.__id || (source.__id = sourceSerialId++));
                 var events = angular.isObject(source) && source.events;
 
@@ -247,13 +249,15 @@
             };
             
            
-            if($rootScope != null){
+            if($rootScope){
+            	console.log($rootScope);
             	 var url;
-	            if($rootScope.user.role ==1){
+	            if($rootScope.user.role == 1){
 	            	url ="Calendar/Subtopics.do?batchId="+$rootScope.user.batch.id;
-	            }else if ($rootScope.user.role == 2 && $rootScope.currentBatch != null) {
+	            }else if (($rootScope.user.role == 2 ||  $rootScope.user.role == 3) && $rootScope.currentBatch) {
 	            	url ="Calendar/Subtopics.do?batchId="+$rootScope.currentBatch.id;
-	            }else {
+	            	console.log(url);
+	            }else if($rootScope.user.role == 3 && $rootScope.trainerBatch){
 	             	url ="Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id;
 	            }
             /* event source that contains custom events on the scope */
@@ -316,7 +320,7 @@
                     // http for green to red
                     $http({
                  		method : "GET",
-                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
                  	 }).then(function successCallback(response) {
                  		//console.log("SUCCESS");
                  	 });
@@ -325,7 +329,7 @@
                     // http for red to blue
                     $http({
                  		method : "GET",
-                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
                  	 }).then(function successCallback(response) {
                  		//console.log("SUCCESS");
                  	 });
@@ -334,7 +338,7 @@
                     // http for blue to green
                     $http({
                  		method : "GET",
-                 		url : "Calendar/StatusUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Completed"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Completed"
                  	 }).then(function successCallback(response) {
                  		//console.log("SUCCESS");
                  	 });
@@ -345,7 +349,7 @@
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
             	 $http({
              		method : "GET",
-             		url : "Calendar/DateUpdate.do?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&date="+event.start
+             		url : "rest/api/v1/Calendar/DateUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&date="+event.start
              	 }).then(function successCallback(response) {
              		//console.log("SUCCESS");
              	 });
@@ -405,7 +409,7 @@
             };
             
             if($rootScope.user.role == 1 || $rootScope.currentBatch != null){
-            	console.log("role =" +$rootScope.user.role )
+            	console.log("role =" + $rootScope.user.role )
             /* config object */
             $scope.uiConfig = {
               calendar:{
@@ -421,7 +425,9 @@
                 eventResize: $scope.alertOnResize,
                 eventRender: $scope.eventRender
               }
+            
             };
+            	console.log("config: " + $scope.uiConfig);
             }else {
             	console.log("role =" +$rootScope.user.role )
             /* config object */
