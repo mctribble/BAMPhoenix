@@ -24,6 +24,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Qualifier("userDetailsService")
 	UserDetailsService userDetailsService;//LoadUsername() will load the User Record from DB 
 										  //Past back a Spring Security 
+	UserDetailsService userDetailsService; 
+	// LoadUsername() will load the User record from the DB
+	// Pass back a Spring Security User Object NOT BAMUser object
+	
 	@Autowired
     private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
 

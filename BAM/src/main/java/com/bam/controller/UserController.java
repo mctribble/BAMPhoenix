@@ -23,7 +23,7 @@ import com.bam.service.UsersService;
 
 
 @RestController
-@RequestMapping(value="/Users/")
+@RequestMapping(value="/api/v1/Users/")
 public class UserController {
 	@Autowired
 	UsersService userService;
@@ -31,25 +31,25 @@ public class UserController {
 	@Autowired
 	BatchService batchService;
 	
-	@RequestMapping(value="All.do", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="All", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Users> getAllUsers(){
 		return userService.findAllUsers();
 	}
 	
-	@RequestMapping(value="AllTrainers.do", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="AllTrainers", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Users> getAllTrainers(){
 		return userService.findByRole(2);
 	}
 	
-	@RequestMapping(value="AllAssociates.do", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="AllAssociates", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Users> getAllAssociates(){
 		return userService.findByRole(1);
 	}
 	
-	@RequestMapping(value="InBatch.do", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="InBatch", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Users> getUsersInBatch(HttpServletRequest request) {
 		//Get the batch id from the request
@@ -59,7 +59,7 @@ public class UserController {
 		return userService.findUsersInBatch(batchId);
 	}
 	
-	@RequestMapping(value="Drop.do", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="Drop", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public List<Users> dropUserFromBatch(HttpServletRequest request) {
 		//Get the user id from the request
@@ -76,7 +76,7 @@ public class UserController {
 		return userService.findUsersInBatch(batchId);
 	}
 	
-	@RequestMapping(value="Update.do", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="Update", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public void updateUser(@RequestBody String jsonObject, HttpSession session) {
 		Users currentUser = null;
@@ -94,7 +94,7 @@ public class UserController {
 		userService.addOrUpdateUser(currentUser);
 	}
 	
-	@RequestMapping(value="Register.do", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="Register", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public void addUser(@RequestBody String jsonObject, HttpSession session) throws Exception {
 		Users currentUser = null;
@@ -119,7 +119,7 @@ public class UserController {
 		}	
 	}
 	
-	@RequestMapping(value="Remove.do", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="Remove", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public List<Users> removeUser(HttpServletRequest request) {
 		//Get the user id from the request
@@ -136,15 +136,13 @@ public class UserController {
 		return userService.findUsersInBatch(batchId);
 	}
 	
-	@RequestMapping(value="Add.do", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="Add", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public List<Users> addUserToBatch(HttpServletRequest request) {
 		//Get the user id from the request
 		int userId = Integer.parseInt( request.getParameter("userId") );
 		//Get the batch to add the user to from the request
 		int batchId = Integer.parseInt( request.getParameter("batchId") );
-		
-		/*BatchService batchService = new BatchService();*/
 		
 		Users user = userService.findUserById( userId );
 		
@@ -155,7 +153,7 @@ public class UserController {
 		return userService.findUsersNotInBatch();
 	}
 	
-	@RequestMapping(value="NotInABatch.do", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="NotInABatch", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Users> getUsersNotInBatch(HttpServletRequest request) {
 		return userService.findUsersNotInBatch();

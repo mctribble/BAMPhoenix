@@ -27,7 +27,7 @@ import com.bam.service.SubtopicService;
 import com.bam.service.TopicService;
 
 @RestController
-@RequestMapping(value="/Calendar/")
+@RequestMapping(value="/api/v1/Calendar/")
 public class CalendarController {
 	@Autowired
 	SubtopicService subtopicService;
@@ -35,7 +35,7 @@ public class CalendarController {
 	@Autowired
 	TopicService topicService;
 	
-	@RequestMapping(value="Subtopics.do", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="Subtopics", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Subtopic> getSubtopicsByBatch(HttpServletRequest request) {
 		//Get the batch id from the request
@@ -45,7 +45,7 @@ public class CalendarController {
 		return subtopicService.getSubtopicByBatchId(batchId);
 	}
 	
-	@RequestMapping(value="Topics.do", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="Topics", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<TopicWeek> getTopicsByBatch(HttpServletRequest request) {
 		//Get the batch id from the request
@@ -55,7 +55,7 @@ public class CalendarController {
 		return topicService.getTopicByBatchId(batchId);
 	}
 	
-	@RequestMapping(value="DateUpdate.do", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="DateUpdate", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public void changeTopicDate(HttpServletRequest request) throws ParseException {
 		//Get the batch id from the request
@@ -76,7 +76,7 @@ public class CalendarController {
 		}
 	}
 	
-	@RequestMapping(value="StatusUpdate.do", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="StatusUpdate", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public void updateTopicStatus(HttpServletRequest request) throws ParseException {
 		//Get the batch id from the request
@@ -98,7 +98,7 @@ public class CalendarController {
 	}
 	
 	
-	@RequestMapping(value="AddTopics.do", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="AddTopics", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public void addTopics(@RequestBody String jsonObject, HttpSession session) {
 		List<TopicName> topicsFromStub = null;

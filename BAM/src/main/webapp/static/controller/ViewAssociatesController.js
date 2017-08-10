@@ -20,7 +20,7 @@ app.controller("associatesController", function($scope, $rootScope, $http){
 	console.log("batch id" + bId);
 	
 	$http({
-		url: "Users/InBatch.do",
+		url: "rest/api/v1/Users/InBatch",
 		method: "GET",
 		params: {batchId: bId}
 	}).then(function(response){
