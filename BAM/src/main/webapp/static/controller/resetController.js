@@ -1,29 +1,42 @@
 app.controller("resetCtrl", ['$rootScope', '$http', '$scope', function($rootScope, $http, $scope){
 	
-	$scope.updateDisplay = false;	
+	$scope.resetDisplay = false;	
 	
 	$scope.testMsg = 'test message from resetController.js';
 	$rootScope.currentBatch = null;
 	
-	$scope.updateAssociate = function(){
+	$scope.resetPassword = function(){
+		if($scope.pwdNew == $scope.confirmPwd){
 		$http({
 			url: 'rest/api/v1/Users/Reset',
 			method: 'POST',
-			headers: {
-		        'Content-Type': 'application/json', 
-		        'Accept': 'application/json' 
-		    },
-			data: $rootScope.user
+			data: JSON.stringify({email : $rootScope.user.email,
+		        	 pwd : $scope.pwdOld,
+		        	 pwd2 : $scope.pwdNew
+		    })
 		}).then (function success(response){
-			$scope.updateDisplay = true;
-			$scope.updateMsg = 'Password Reset Successful';
+			$scope.resetDisplay = true;
+			$scope.resetMsg = 'Password Reset Successful';
 			$scope.alertClass = 'alert alert-success';
-		
+			$scope.pwdNew = "";
+			$scope.pwdOld = "";
+			$scope.confirmPwd = "";		
 		}, function error(response){
-			$scope.updateDisplay = true;
-			$scope.updateMsg = 'Password Reset Failed';
+			$scope.resetDisplay = true;
+			$scope.resetMsg = 'Password Reset Failed';
 			$scope.alertClass = 'alert alert-danger';
+			$scope.pwdNew = "";
+			$scope.pwdOld = "";
+			$scope.confirmPwd = "";
 		});
+		}else{
+			$scope.resetDisplay = true;
+			$scope.resetMsg = 'Passwords do not match';
+			$scope.alertClass = 'alert alert-danger';
+			$scope.pwdNew = "";
+			$scope.pwdOld = "";
+			$scope.confirmPwd = "";
+		}
 	}
 	
 	
