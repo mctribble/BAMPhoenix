@@ -192,16 +192,4 @@ app.controller("editBatchController",function($rootScope, $scope, $location, $ht
 		
 		
 	}
-	
-	/*$scope.addRemSubtopic = function(){
-		//show subtopic list in batch
-	}
-	$scope.addSubtopic = function(){
-		//add subtopic
-		//tell the server
-	}
-	$scope.remSubtopic = function(){
-		//remove subtopic
-		//tell the server
-	}*/
 });
