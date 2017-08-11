@@ -11,30 +11,26 @@ import com.bam.beans.Users;
 import com.bam.dao.BatchRepository;
 
 @Transactional
-public class BatchService 
-{	
+public class BatchService {
 	@Autowired
 	BatchRepository bRep;
-	
-	public void addOrUpdateBatch(Batch b){
+
+	public void addOrUpdateBatch(Batch b) {
 		bRep.save(b);
 	}
-	
-	public Batch getBatchById(Integer id)
-	{
+
+	public Batch getBatchById(Integer id) {
 		Logger.getLogger(BatchService.class).fatal(bRep);
 		System.out.println(bRep);
 		return bRep.findById(id);
 	}
-	
-	public List<Batch> getBatchAll()
-	{
-		
+
+	public List<Batch> getBatchAll() {
+
 		return bRep.findAll();
 	}
-	
-	public List<Batch> getBatchByTrainer(Users trainer)
-	{
+
+	public List<Batch> getBatchByTrainer(Users trainer) {
 		return bRep.findByTrainer(trainer);
 	}
 }
