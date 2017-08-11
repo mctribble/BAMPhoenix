@@ -24,7 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// Get user from the database, via Hibernate
 	@Autowired
 	@Qualifier("userDetailsService")
-	UserDetailsService userDetailsService;
+
+	UserDetailsService userDetailsService;//LoadUsername() will load the User Record from DB 
+										  //Past back a Spring Security 
 	// LoadUsername() will load the User record from the DB
 	// Pass back a Spring Security User Object NOT BAMUser object
 
@@ -48,16 +50,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.headers().disable().csrf().disable().authorizeRequests()
-				// .antMatchers("/Batches/**").hasRole("2")
-				.antMatchers("/Users/Register.do").permitAll().anyRequest().authenticated().and().formLogin()
-				.loginPage("/").loginProcessingUrl("/authenticate").successHandler(restAuthenticationSuccessHandler)
-				.failureHandler(restAuthenticationFailureHandler).usernameParameter("username")
-				.passwordParameter("password").permitAll().and().logout().logoutUrl("/logout")
-				// .logoutSuccessHandler(new
-				// HttpStatusReturningLogoutSuccessHandler())
-				.deleteCookies("JSESSIONID").permitAll().and();
+
+	 protected void configure(HttpSecurity http) throws Exception {
+	  http
+	   .headers().disable()
+	   .csrf().disable()//not suppose to disable this in production
+	   .authorizeRequests()
+	   	//.antMatchers("/Batches/**").hasRole("2")
+	   	.antMatchers("/Users/Register.do").permitAll()
+	    .anyRequest().authenticated()
+	    .and()
+	    .formLogin()
+	   	.loginPage("/")
+	    .loginProcessingUrl("/authenticate")
+	    .successHandler(restAuthenticationSuccessHandler)
+	    .failureHandler(restAuthenticationFailureHandler)
+	    .usernameParameter("username")
+	    .passwordParameter("password")
+	    .permitAll()
+	    .and()
+	    .logout()
+	    .logoutUrl("/logout")
+	    //.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
+	    .deleteCookies("JSESSIONID")
+	    .permitAll()
+	    .and();
+		
+	 }
+}
 
 	}
 }
