@@ -22,47 +22,56 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "USERS")
 @Component
 public class Users {
-	
+
 	@Id
 	@Column(name = "User_Id")
 	@SequenceGenerator(name = "USERID_SEQ", sequenceName = "USERID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERID_SEQ")
 	private int userId;
-	
+
 	@Column(name = "First_Name")
-	@NotEmpty(message="First name cannot be empty")
+	@NotEmpty(message = "First name cannot be empty")
 	private String fName;
-	
+
 	@Column(name = "Middle_Name")
 	private String mName;
-	
+
 	@Column(name = "Last_Name")
-	@NotEmpty(message="Last name cannot be empty")
+	@NotEmpty(message = "Last name cannot be empty")
 	private String lName;
-	
+
 	@Column(name = "eMail")
-	@NotEmpty(message="e-mail address cannot be empty")
+	@NotEmpty(message = "e-mail address cannot be empty")
 	private String email;
-	
+
 	@Column(name = "Password")
+
 	@NotEmpty(message="Password cannot be empty")
+<<<<<<< HEAD
+=======
+//	@JsonIgnore
+
+>>>>>>> 7ca5951d4dddce48b1e438bf3c9746b8964ab3db
 	private String pwd;
-	
-	@Column(name = "Role")						// Role 1 is for associates	// Role 2 is for trainers & QC
-	private int role;							// Role 3 is for admins
-								
+
+	@Column(name = "Role") // Role 1 is for associates // Role 2 is for trainers
+							// & QC
+	private int role; // Role 3 is for admins
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="BATCH_ID", referencedColumnName = "BATCH_ID")
-	@Autowired					// Batch ID should only be used for associates.  DO NOT use this
-	private Batch batch;		// field to assign a batch to a trainer.  It should be null for
-								// trainers and admins.  A trainer is assigned in the Batches table.
+	@JoinColumn(name = "BATCH_ID", referencedColumnName = "BATCH_ID")
+	@Autowired // Batch ID should only be used for associates. DO NOT use this
+	private Batch batch; // field to assign a batch to a trainer. It should be
+							// null for
+							// trainers and admins. A trainer is assigned in the
+							// Batches table.
 	@Column(name = "Main_Phone")
-	@NotEmpty(message="Primary phone cannot be empty")
+	@NotEmpty(message = "Primary phone cannot be empty")
 	private String phone;
-	
+
 	@Column(name = "Second_Phone")
 	private String phone2;
-	
+
 	@Column(name = "Skype_ID")
 	private String skype;
 	
@@ -89,8 +98,8 @@ public class Users {
 		this.pwd2 = pwd2;
 	}
 
-	public Users(int userId, String fName, String mName, String lName, String email, String pwd, int role,
-			Batch batch, String phone, String phone2, String skype, String pwd2) {
+	public Users(int userId, String fName, String mName, String lName, String email, String pwd, int role, Batch batch,
+			String phone, String phone2, String skype, String pwd2) {
 		super();
 		this.userId = userId;
 		this.fName = fName;
@@ -208,5 +217,5 @@ public class Users {
 				+ email + ", pwd=" + pwd + ", role=" + role + ", phone=" + phone + ", phone2=" + phone2 + ", skype="
 				+ skype + ", pwd2=" + pwd2 + "]";
 	}
-	
+
 }

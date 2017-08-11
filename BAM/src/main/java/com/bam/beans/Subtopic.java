@@ -27,22 +27,22 @@ public class Subtopic {
 	@SequenceGenerator(name = "SUBTOPICID_SEQ", sequenceName = "SUBTOPICID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUBTOPICID_SEQ")
 	private int subtopicId;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="SUBTOPIC_NAME_ID", referencedColumnName = "SUBTOPIC_NAME_ID")
+	@JoinColumn(name = "SUBTOPIC_NAME_ID", referencedColumnName = "SUBTOPIC_NAME_ID")
 	@Autowired
 	private SubtopicName subtopicName;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="SUBTOPIC_BATCH_ID", referencedColumnName = "BATCH_ID")
+	@JoinColumn(name = "SUBTOPIC_BATCH_ID", referencedColumnName = "BATCH_ID")
 	@Autowired
 	private Batch batch;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="SUBTOPIC_STATUS_ID", referencedColumnName = "STATUS_ID")
+	@JoinColumn(name = "SUBTOPIC_STATUS_ID", referencedColumnName = "STATUS_ID")
 	@Autowired
 	private SubtopicStatus status;
-	
+
 	@Column(name = "Subtopic_Date")
 	private Timestamp subtopicDate;
 
@@ -112,5 +112,5 @@ public class Subtopic {
 	public String toString() {
 		return "Subtopic [subtopicId=" + subtopicId + ", batch=" + batch + ", subtopicDate=" + subtopicDate + "]";
 	}
-	
+
 }
