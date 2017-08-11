@@ -10,11 +10,12 @@ import com.bam.beans.Batch;
 import com.bam.beans.Users;
 
 @Repository
-public interface UsersRepository extends JpaRepository<Users, Integer>{
+public interface UsersRepository extends JpaRepository<Users, Integer> {
 	public Users findByUserId(Integer id);
+
 	public Users findByEmail(String email);
+
 	public List<Users> findByBatch(Batch batch);
+
 	public List<Users> findByRole(int role);
 }
-
-

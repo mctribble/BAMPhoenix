@@ -8,11 +8,10 @@ import java.util.List;
 import com.bam.beans.Users;
 
 @Repository
-public interface BatchRepository extends JpaRepository<Batch, Integer>
-{
+public interface BatchRepository extends JpaRepository<Batch, Integer> {
 	public Batch findById(Integer id);
-	
+
 	public List<Batch> findAll();
-	
+
 	public List<Batch> findByTrainer(Users trainer);
 }
