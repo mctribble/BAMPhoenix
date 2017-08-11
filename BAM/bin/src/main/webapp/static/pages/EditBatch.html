@@ -1,0 +1,134 @@
+<ul class="nav nav-tabs" ng-show="user.role>=2">
+	<li class="nav-link"><a href="#/home">Calendar</a></li>
+	<li class="nav-link"><a href="#/associates">View Associates</a></li>
+	<li class="nav-link"><a href="#/editBatch"
+		ng-show="user.role==3 || (currentBatch.trainer.fName == user.fName && currentBatch.trainer.mName == user.mName && currentBatch.trainer.lName == user.lName) 
+		|| (!currentBatch && trainerBatch.trainer.fName == user.fName && trainerBatch.trainer.mName == user.mName && trainerBatch.trainer.lName == user.lName)">Edit Batch</a></li>
+</ul>
+<br>
+
+<div class="row login-container">
+	<div class="login col-md-6">
+		<div class="login-vertical-align">
+			<div class="header">
+				<h3 style="text-align: center;">{{currentBatchName}} Edit</h3>
+			</div>
+			<form>
+				<div class="input-group">
+					<span class="input-group-addon input-tag">Batch Name:</span> <input
+						type="text" class="form-control" ng-model="batch.name"
+						placeholder="Batch Name" required readonly/>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon input-tag">Batch Type:</span> <input
+						type="text" class="form-control" ng-model="batch.type.name"
+						placeholder="Batch Type" required />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon input-tag">Start Date:</span> <input
+						type="date" class="form-control" width="30%"
+						ng-model="batch.startDate" required />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon input-tag">End Date:</span> <input
+						type="date" class="form-control" ng-model="batch.endDate" required />
+				</div>
+
+				<br>
+				<div class="login-btn-container">
+					<button class="btn threeqtr-width" id="login-btn" ng-click="">SUBMIT</button>
+				</div>
+				
+				<div class="login-btn-container">
+					<button class="btn threeqtr-width" id="create-acc-btn" ng-click="addRemAssociate()">EDIT ASSOCIATES</button>
+				</div>
+			</form>
+
+		</div>
+	</div>
+	<div class="login col-md-4">
+		<div class="login-vertical-align">
+			<img src="static/img/revature_logo.png" width="90%"> <img
+				src="static/img/rev_timeline.png" width="90%">
+		</div>
+	</div>
+</div>
+
+<div id="users" class="hide">
+	<div class="header">
+		<h3 style="text-align: center;">User Management</h3>
+
+		<div class="searchbox-container">
+			<div class="input-group">
+				<span class="input-group-addon">Search</span> <input
+					class="form-control" type="text" ng-model="searchBox"
+					placeholder="Search" required />
+			</div>
+		</div>
+		<br>
+	</div>
+	<div class="nav nav-tabs">
+		<span class="nav-item tab" ng-class="{active: isSet(1) }"><a
+			class="nav-link" ng-class="{active: isSet(1) }" ng-click="setTab(1)">Remove</a></span>
+		<span class="nav-item tab" ng-class="{active: isSet(2) }"><a
+			class="nav-link" ng-class="{active: isSet(2) }" ng-click="setTab(2)">Add</a></span>
+	</div>
+	<div id="inBatch" ng-show="isSet(1)">
+		<table class="table">
+			<tr class="rm-header">
+				<td ng-click="order = 'fName'" class="head">First Name</td>
+				<td ng-click="order = 'lName'" class="head">Last Name</td>
+				<td ng-click="order = 'email'" class="head">Email</td>
+				<td ng-click="order = 'batch'" class="head">Batch Id</td>
+				<td ng-click="order = 'phone'" class="head">Main Phone</td>
+				<td ng-click="order = 'phone2'" class="head">Secondary Phone</td>
+				<td ng-click="order = 'skype'" class="head">Skype</td>
+				<td class="head">Drop/Remove</td>
+			</tr>
+			<!-- ng repeat here to loop through associates in batch -->
+			<tr class="associate-row"
+				ng-repeat="a in batch.usersInBatch | filter:searchBox | orderBy:order">
+				<td class="value fname">{{a.fName}}</td>
+				<td class="value lname">{{a.lName}}</td>
+				<td class="value email">{{a.email}}</td>
+				<td class="value batchId">{{a.batch.id}}</td>
+				<td class="value mPhone">{{a.phone}}</td>
+				<td class="value sPhone">{{a.phone2}}</td>
+				<td class="value skype">{{a.skype}}</td>
+				<td class="value"><button ng-click="dropAssociate(a.userId)" class="btn" id="login-btn">Drop</button>
+					<button ng-click="remAssociate(a.userId)" class="btn" id="create-acc-btn">Remove</button></td>
+
+			</tr>
+
+		</table>
+	</div>
+
+	<div id="outBatch" ng-show="isSet(2)">
+		<table class="table">
+			<tr class="add-header">
+			<tr class="rm-header">
+				<td ng-click="order = 'fName'" class="head">First Name</td>
+				<td ng-click="order = 'lName'" class="head">Last Name</td>
+				<td ng-click="order = 'email'" class="head">Email</td>
+				<td ng-click="order = 'batch'" class="head">Batch Id</td>
+				<td ng-click="order = 'phone'" class="head">Main Phone</td>
+				<td ng-click="order = 'phone2'" class="head">Secondary Phone</td>
+				<td ng-click="order = 'skype'" class="head">Skype</td>
+				<td class="head">Add</td>
+			</tr>
+			<!--  ng repeat here to loop through associates who can be added -->
+			<tr class="associate-row"
+				ng-repeat="a in availUsers| filter:searchBox | orderBy:order">
+				<td class="value fname">{{a.fName}}</td>
+				<td class="value lname">{{a.lName}}</td>
+				<td class="value email">{{a.email}}</td>
+				<td class="value batchId">{{a.batch.id}}</td>
+				<td class="value mPhone">{{a.phone}}</td>
+				<td class="value sPhone">{{a.phone2}}</td>
+				<td class="value skype">{{a.skype}}</td>
+				<td class="value"><button ng-click="addAssociate(a.userId)" class="btn threeqtr-width" id="login-btn">Add</button>
+			</tr>
+		</table>
+	</div>
+</div>
+
