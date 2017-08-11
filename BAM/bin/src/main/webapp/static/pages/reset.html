@@ -1,0 +1,44 @@
+<div class="vertical-center">
+	<div class="row login-container">
+		<div class="login col-md-6">
+			<div class="login-vertical-align">
+				<form role="form">
+					<h3>Reset Password</h3>
+					<div class="input-group">
+						<span class="input-group-addon input-tag"> Old Password:</span> <input
+							class="form-control" type="password" ng-model="pwdOld"
+							placeholder="Old Password" required>
+					</div>
+
+					<div class="input-group">
+						<span class="input-group-addon input-tag"> New Password:</span> <input
+							class="form-control" type="password" ng-model="pwdNew"
+							placeholder="New Password" required>
+					</div>
+
+					<div class="input-group">
+						<span class="input-group-addon input-tag"> Confirm New:</span> <input
+							class="form-control" type="password"
+							ng-model="confirmPwd"
+							placeholder="Confirm New Password" required>
+					</div>
+					<br>
+					<div ng-class="alertClass" ng-show="resetDisplay">
+						{{resetMsg}}
+					</div>
+
+					<div class="login-btn-container">
+						<button type="submit" class="btn threeqtr-width" id="login-btn" ng-click="resetPassword()">RESET PASSWORD</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="login col-md-4">
+			<div class="login-vertical-align">
+				<img src="static/img/revature_logo.png" width="90%"> <img
+					src="static/img/rev_timeline.png" width="90%">
+			</div>
+		</div>
+	</div>
+</div>
