@@ -16,6 +16,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "USERS")
@@ -70,9 +72,12 @@ public class BamUser {
 
 	@Column(name = "Skype_ID")
 	private String skype;
-	
-	@Column(name = "Password_Bak")		// This is a backup password that will be used when
-	private String pwd2;				// the user needs to reset their password.
+
+	@Column(name = "Password_Bak") // This is a backup password that will be
+									// used when
+	@JsonIgnore
+	private String pwd2; // the user needs to reset their password.
+
 
 	public BamUser() {
 		super();
