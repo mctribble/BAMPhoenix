@@ -1,14 +1,8 @@
 package com.bam.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +19,10 @@ import com.bam.service.UsersService;
 @RestController
 @RequestMapping(value="/api/v1/Users/")
 public class UserController {
+	
+	private final String USER_ID = "userId";
+	private final String BATCH_ID = "batchId";
+	
 	@Autowired
 	UsersService userService;
 	
@@ -53,7 +51,7 @@ public class UserController {
 	@ResponseBody
 	public List<Users> getUsersInBatch(HttpServletRequest request) {
 		//Get the batch id from the request
-		int batchId = Integer.parseInt( request.getParameter("batchId") );
+		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
 		
 		//Retrieve and return users in a batch from the database
 		return userService.findUsersInBatch(batchId);
@@ -63,7 +61,7 @@ public class UserController {
 	@ResponseBody
 	public List<Users> dropUserFromBatch(HttpServletRequest request) {
 		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter("userId") );
+		int userId = Integer.parseInt( request.getParameter(USER_ID) );
 		Users user = userService.findUserById( userId );
 		int batchId = user.getBatch().getId();
 		
@@ -77,52 +75,37 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="Update", method=RequestMethod.POST, produces="application/json")
-	public void updateUser(@RequestBody Users currentUser, HttpSession session) {
-		String pass = userService.findUserByEmail(currentUser.getEmail()).getPwd();
-		System.out.println("password: "+pass);
-		currentUser.setPwd(pass);
-		System.out.println("user:  "+ currentUser);
+	public void updateUser(@RequestBody Users currentUser) {
+		Users user = userService.findUserByEmail(currentUser.getEmail());
+		currentUser.setPwd(user.getPwd());
 		userService.addOrUpdateUser(currentUser);
 	}
 	
 	@RequestMapping(value="Register", method=RequestMethod.POST, produces="application/json")
-	public void addUser(@RequestBody Users currentUser, HttpSession session) throws Exception {
-		
+	public void addUser(@RequestBody Users currentUser) throws Exception {
 		if(userService.findUserByEmail(currentUser.getEmail())==null){
 			currentUser.setRole(1);
 			userService.addOrUpdateUser(currentUser);
 		} else {
-			throw new Exception("Email exists in database");
+			throw new IllegalArgumentException("Email exists in database");
 		}	
 	}
 
 	/**
 	 * @author Tom Scheffer
 	 * @param jsonObject - object being passed in
-	 * @param session - current session
 	 * @throws Exception - for when previous password is wrong
 	 * 
 	 * 	Updates the user's password from the update view. Updates password to pwd2 when pwd equals their old pwd
 	 */
 	@RequestMapping(value="Reset", method=RequestMethod.POST, produces="application/java")
-	@ResponseBody
-	public void resetPassword(@RequestBody String jsonObject, HttpSession session) throws Exception{
-		Users userNewPass = null;
-		try {
-			userNewPass = new ObjectMapper().readValue(jsonObject, Users.class);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void resetPassword(@RequestBody Users userNewPass) throws Exception{
 		Users currentUser = userService.findUserByEmail(userNewPass.getEmail());
 		if(currentUser.getPwd().equals(userNewPass.getPwd())){
 			currentUser.setPwd(userNewPass.getPwd2());
 			userService.addOrUpdateUser(currentUser);
 		}else{
-			throw new Exception("Wrong password, password not changed");
+			throw new IllegalArgumentException("Wrong password, password not changed");
 		}
 	}
 	
@@ -130,7 +113,7 @@ public class UserController {
 	@ResponseBody
 	public List<Users> removeUser(HttpServletRequest request) {
 		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter("userId") );
+		int userId = Integer.parseInt( request.getParameter(USER_ID) );
 		Users user = userService.findUserById( userId );
 		int batchId = user.getBatch().getId();
 		
@@ -147,9 +130,9 @@ public class UserController {
 	@ResponseBody
 	public List<Users> addUserToBatch(HttpServletRequest request) {
 		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter("userId") );
+		int userId = Integer.parseInt( request.getParameter(USER_ID) );
 		//Get the batch to add the user to from the request
-		int batchId = Integer.parseInt( request.getParameter("batchId") );
+		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
 		
 		Users user = userService.findUserById( userId );
 		

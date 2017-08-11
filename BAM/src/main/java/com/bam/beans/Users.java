@@ -68,7 +68,6 @@ public class Users {
 	private String skype;
 	
 	@Column(name = "Password_Bak")		// This is a backup password that will be used when
-	@JsonIgnore
 	private String pwd2;				// the user needs to reset their password.
 
 	public Users() {

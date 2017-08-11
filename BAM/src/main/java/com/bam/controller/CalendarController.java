@@ -38,8 +38,6 @@ public class CalendarController {
 	@RequestMapping(value="Subtopics", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Subtopic> getSubtopicsByBatch(HttpServletRequest request) {
-		System.out.println("hitting subtopics controller");
-		
 		//Get the batch id from the request
 		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
 		
@@ -58,7 +56,6 @@ public class CalendarController {
 	}
 	
 	@RequestMapping(value="DateUpdate", method=RequestMethod.GET, produces="application/json")
-	@ResponseBody
 	public void changeTopicDate(HttpServletRequest request) throws ParseException {
 		//Get the batch id from the request
 		String subtopicName = request.getParameter("subtopicId");
@@ -79,7 +76,6 @@ public class CalendarController {
 	}
 	
 	@RequestMapping(value="StatusUpdate", method=RequestMethod.GET, produces="application/json")
-	@ResponseBody
 	public void updateTopicStatus(HttpServletRequest request) throws ParseException {
 		//Get the batch id from the request
 		String subtopicName = request.getParameter("subtopicId");
@@ -101,8 +97,7 @@ public class CalendarController {
 	
 	
 	@RequestMapping(value="AddTopics", method=RequestMethod.POST, produces="application/json")
-	@ResponseBody
-	public void addTopics(@RequestBody String jsonObject, HttpSession session) {
+	public void addTopics(@RequestBody String jsonObject, HttpSession session) throws NullPointerException {
 		List<TopicName> topicsFromStub = null;
 
 		ObjectMapper mapper = new ObjectMapper();
