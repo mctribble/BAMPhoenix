@@ -43,19 +43,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-<<<<<<< HEAD
 	 public void configure(WebSecurity web) throws Exception {
 
 		// Ignore certain URLs.
 	  web.ignoring().antMatchers("/index.html", "/static/**", "/");
 	 }
-=======
-	public void configure(WebSecurity web) throws Exception {
-		// Ignore certain URLs
 
-		web.ignoring().antMatchers("/index.html", "/static/**", "/");
-	}
->>>>>>> 7ca5951d4dddce48b1e438bf3c9746b8964ab3db
 
 	@Override
 

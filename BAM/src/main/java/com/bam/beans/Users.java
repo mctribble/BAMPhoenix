@@ -47,11 +47,7 @@ public class Users {
 	@Column(name = "Password")
 
 	@NotEmpty(message="Password cannot be empty")
-<<<<<<< HEAD
-=======
-//	@JsonIgnore
 
->>>>>>> 7ca5951d4dddce48b1e438bf3c9746b8964ab3db
 	private String pwd;
 
 	@Column(name = "Role") // Role 1 is for associates // Role 2 is for trainers
