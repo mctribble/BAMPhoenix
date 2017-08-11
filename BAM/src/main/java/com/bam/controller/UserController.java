@@ -1,14 +1,8 @@
 package com.bam.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +18,10 @@ import com.bam.service.UsersService;
 @RestController
 @RequestMapping(value = "/api/v1/Users/")
 public class UserController {
+	
+	private final String USER_ID = "userId";
+	private final String BATCH_ID = "batchId";
+	
 	@Autowired
 	UsersService userService;
 
@@ -51,19 +49,21 @@ public class UserController {
 	@RequestMapping(value = "InBatch", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<Users> getUsersInBatch(HttpServletRequest request) {
-		// Get the batch id from the request
-		int batchId = Integer.parseInt(request.getParameter("batchId"));
 
-		// Retrieve and return users in a batch from the database
+		//Get the batch id from the request
+		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
+		
+		//Retrieve and return users in a batch from the database
 		return userService.findUsersInBatch(batchId);
 	}
 
 	@RequestMapping(value = "Drop", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public List<Users> dropUserFromBatch(HttpServletRequest request) {
-		// Get the user id from the request
-		int userId = Integer.parseInt(request.getParameter("userId"));
-		Users user = userService.findUserById(userId);
+
+		//Get the user id from the request
+		int userId = Integer.parseInt( request.getParameter(USER_ID) );
+		Users user = userService.findUserById( userId );
 		int batchId = user.getBatch().getId();
 
 		// Drop user from the batch
@@ -75,47 +75,22 @@ public class UserController {
 		return userService.findUsersInBatch(batchId);
 	}
 
-	@RequestMapping(value = "Update", method = RequestMethod.POST, produces = "application/json")
-	@ResponseBody
-	public void updateUser(@RequestBody String jsonObject, HttpSession session) {
-		Users currentUser = null;
-		System.out.println("jsonObject: " + jsonObject);
-		try {
-			currentUser = new ObjectMapper().readValue(jsonObject, Users.class);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println(currentUser);
+	
+	@RequestMapping(value="Update", method=RequestMethod.POST, produces="application/json")
+	public void updateUser(@RequestBody Users currentUser) {
+		Users user = userService.findUserByEmail(currentUser.getEmail());
+		currentUser.setPwd(user.getPwd());
 		userService.addOrUpdateUser(currentUser);
 	}
-
-	@RequestMapping(value = "Register", method = RequestMethod.POST, produces = "application/json")
-	@ResponseBody
-	public void addUser(@RequestBody String jsonObject, HttpSession session) throws Exception {
-		Users currentUser = null;
-		System.out.println("jsonObject: " + jsonObject);
-		try {
-			currentUser = new ObjectMapper().readValue(jsonObject, Users.class);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println(currentUser);
-
-		if (userService.findUserByEmail(currentUser.getEmail()) == null) {
+	
+	@RequestMapping(value="Register", method=RequestMethod.POST, produces="application/json")
+	public void addUser(@RequestBody Users currentUser) throws Exception {
+		if(userService.findUserByEmail(currentUser.getEmail())==null){
 			currentUser.setRole(1);
 			userService.addOrUpdateUser(currentUser);
 		} else {
-			Exception e = null;
-			throw e;
-		}
+			throw new IllegalArgumentException("Email exists in database");
+		}	
 	}
 
 	/**
@@ -126,38 +101,32 @@ public class UserController {
 	 *            - current session
 	 * @throws Exception
 	 *             - for when previous password is wrong
+	 * @param jsonObject - object being passed in
+	 * @throws Exception - for when previous password is wrong
 	 * 
 	 *             Updates the user's password from the update view. Updates
 	 *             password to pwd2 when pwd equals their old pwd
 	 */
-	@RequestMapping(value = "Reset", method = RequestMethod.POST, produces = "application/java")
-	@ResponseBody
-	public void resetPassword(@RequestBody String jsonObject, HttpSession session) throws Exception {
-		Users userNewPass = null;
-		try {
-			userNewPass = new ObjectMapper().readValue(jsonObject, Users.class);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+	@RequestMapping(value="Reset", method=RequestMethod.POST, produces="application/java")
+	public void resetPassword(@RequestBody Users userNewPass) throws Exception{
 		Users currentUser = userService.findUserByEmail(userNewPass.getEmail());
 		if (currentUser.getPwd().equals(userNewPass.getPwd())) {
 			currentUser.setPwd(userNewPass.getPwd2());
 			userService.addOrUpdateUser(currentUser);
-		} else {
-			throw new Exception("Wrong password, password not changed");
+
+		}else{
+			throw new IllegalArgumentException("Wrong password, password not changed");
 		}
 	}
 
 	@RequestMapping(value = "Remove", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public List<Users> removeUser(HttpServletRequest request) {
-		// Get the user id from the request
-		int userId = Integer.parseInt(request.getParameter("userId"));
-		Users user = userService.findUserById(userId);
+
+		//Get the user id from the request
+		int userId = Integer.parseInt( request.getParameter(USER_ID) );
+		Users user = userService.findUserById( userId );
 		int batchId = user.getBatch().getId();
 
 		// Set the user as inactive
@@ -172,13 +141,14 @@ public class UserController {
 	@RequestMapping(value = "Add", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public List<Users> addUserToBatch(HttpServletRequest request) {
-		// Get the user id from the request
-		int userId = Integer.parseInt(request.getParameter("userId"));
-		// Get the batch to add the user to from the request
-		int batchId = Integer.parseInt(request.getParameter("batchId"));
 
-		Users user = userService.findUserById(userId);
-
+		//Get the user id from the request
+		int userId = Integer.parseInt( request.getParameter(USER_ID) );
+		//Get the batch to add the user to from the request
+		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
+		
+		Users user = userService.findUserById( userId );
+		
 		user.setBatch(batchService.getBatchById(batchId));
 
 		userService.addOrUpdateUser(user);
