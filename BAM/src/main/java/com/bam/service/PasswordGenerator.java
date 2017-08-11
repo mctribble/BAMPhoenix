@@ -1,8 +1,7 @@
 package com.bam.service;
 
 public class PasswordGenerator {
-
-	public String makePassword() {
+	public static String makePassword() {
 		String pass = "";
 
 		for (int i = 0; i < 8; i++) {
