@@ -46,7 +46,7 @@ public class Users {
 	
 	@Column(name = "Password")
 	@NotEmpty(message="Password cannot be empty")
-	@JsonIgnore
+//	@JsonIgnore
 	private String pwd;
 	
 	@Column(name = "Role")						// Role 1 is for associates	// Role 2 is for trainers & QC
@@ -68,7 +68,6 @@ public class Users {
 	private String skype;
 	
 	@Column(name = "Password_Bak")		// This is a backup password that will be used when
-	@JsonIgnore
 	private String pwd2;				// the user needs to reset their password.
 
 	public Users() {
