@@ -13,7 +13,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 
-import com.bam.beans.Batch;
+import com.bam.bean.Batch;
 
 
 

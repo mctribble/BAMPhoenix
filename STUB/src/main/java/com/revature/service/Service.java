@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.revature.beans.Batch;
-import com.revature.beans.Curriculum;
-import com.revature.beans.Topic;
-import com.revature.dao.BatchRepository;
-import com.revature.dao.CurriculumRepository;
-import com.revature.dao.TopicRepository;
+import com.revature.bean.Batch;
+import com.revature.bean.Curriculum;
+import com.revature.bean.Topic;
+import com.revature.repository.BatchRepository;
+import com.revature.repository.CurriculumRepository;
+import com.revature.repository.TopicRepository;
 
 public class Service {
 	

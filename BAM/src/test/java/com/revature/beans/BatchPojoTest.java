@@ -1,10 +1,11 @@
 package com.revature.beans;
-import com.bam.beans.Batch;
 import static com.google.code.beanmatchers.BeanMatchers.*;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.Test;
+
+import com.bam.bean.Batch;
 
 /**
  * 

@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bam.beans.Batch;
+import com.bam.bean.Batch;
 import com.bam.service.BatchService;
-import com.bam.service.UsersService;
+import com.bam.service.BamUserService;
 
 @RestController
 @RequestMapping(value = "/api/v1/Batches/")
@@ -30,7 +30,7 @@ public class BatchController
 	BatchService batchService;
 	
 	@Autowired
-	UsersService usersService;
+	BamUserService bamUserService;
 
 	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
@@ -44,7 +44,7 @@ public class BatchController
 	@ResponseBody
 	public List<Batch> getPastBatches(HttpServletRequest request)
 	{
-		List<Batch> batches = batchService.getBatchByTrainer(usersService.findUserByEmail(request.getParameter("email")));
+		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter("email")));
 		List<Batch> pastBatches = new ArrayList<Batch>();
 		for(Batch b : batches){
 			if(new Timestamp(System.currentTimeMillis()).after(b.getEndDate())){
@@ -58,7 +58,7 @@ public class BatchController
 	@ResponseBody
 	public List<Batch> getFutureBatches(HttpServletRequest request)
 	{
-		List<Batch> batches = batchService.getBatchByTrainer(usersService.findUserByEmail(request.getParameter("email")));
+		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter("email")));
 		List<Batch> futureBatches = new ArrayList<Batch>();
 		for(Batch b : batches){
 			if(new Timestamp(System.currentTimeMillis()).before(b.getStartDate())){
@@ -72,7 +72,7 @@ public class BatchController
 	@ResponseBody
 	public Batch getBatchInProgress(HttpServletRequest request)
 	{
-		List<Batch> batches = batchService.getBatchByTrainer(usersService.findUserByEmail(request.getParameter("email")));
+		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter("email")));
 		Batch BatchInProgress = null;
 		Timestamp t = new Timestamp(System.currentTimeMillis());
 		for(Batch b : batches){
