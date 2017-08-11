@@ -15,7 +15,7 @@ import org.aspectj.lang.annotation.Aspect;
 public class LoggerClass {
 	
 	//Created Logger for Intercepting Methods and logging that Information
-	final static Logger logger = Logger.getLogger(LoggerClass.class);
+		final static Logger logger = Logger.getLogger(LoggerClass.class);
 
 	
 	

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.bam.bean.SubtopicStatus;
 
 import java.lang.String;
-
 @Repository
 public interface SubtopicStatusRepository extends JpaRepository<SubtopicStatus, Integer> {
 	public SubtopicStatus findById(Integer id);
