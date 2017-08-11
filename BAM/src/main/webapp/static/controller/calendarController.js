@@ -422,6 +422,7 @@
                   center: '',
                   right: 'today prev,next'
                 },
+                defaultView: 'basicWeek',
                 eventClick: $scope.alertOnEventClick,
                 eventDrop: $scope.alertOnDrop,
                 eventResize: $scope.alertOnResize,
