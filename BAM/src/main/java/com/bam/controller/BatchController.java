@@ -63,6 +63,7 @@ public class BatchController
 		List<Batch> batches = batchService.getBatchByTrainer(usersService.findUserByEmail(request.getParameter("email")));
 		List<Batch> futureBatches = new ArrayList<Batch>();
 		for(Batch b : batches){
+			System.out.println(b.getStartDate());
 			if(new Timestamp(System.currentTimeMillis()).before(b.getStartDate())){
 				futureBatches.add(b);
 			}
