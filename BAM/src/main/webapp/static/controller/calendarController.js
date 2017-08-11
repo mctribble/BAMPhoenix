@@ -18,7 +18,7 @@
   
 	  		
 	  		
-  app.controller('uiCalendarCtrl', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig',
+  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig',
         function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig) {
 		  if(!$rootScope.user.batch && $rootScope.user.role == 1)
 			{
