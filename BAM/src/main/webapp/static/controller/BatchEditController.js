@@ -1,5 +1,5 @@
 
-app.controller("editBatchController",function($rootScope, $scope, $location, $http){
+app.controller("batchEditController",function($rootScope, $scope, $location, $http){
 	console.log("Edit Batch Controller");
 	//set batchId with the id of the currentBatch if it exists else use the trainerBatch
 	var batchId;

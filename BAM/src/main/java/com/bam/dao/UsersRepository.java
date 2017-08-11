@@ -6,15 +6,16 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.bam.beans.Batch;
-import com.bam.beans.Users;
+import com.bam.bean.Batch;
+import com.bam.bean.BamUser;
 
 @Repository
-public interface UsersRepository extends JpaRepository<Users, Integer>{
-	public Users findByUserId(Integer id);
-	public Users findByEmail(String email);
-	public List<Users> findByBatch(Batch batch);
-	public List<Users> findByRole(int role);
+public interface UsersRepository extends JpaRepository<BamUser, Integer> {
+	public BamUser findByUserId(Integer id);
+
+	public BamUser findByEmail(String email);
+
+	public List<BamUser> findByBatch(Batch batch);
+
+	public List<BamUser> findByRole(int role);
 }
-
-

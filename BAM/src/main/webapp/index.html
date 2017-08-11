@@ -25,15 +25,18 @@
 <script src="static/js/app.js"></script>
 <script src="static/controller/calendarController.js"></script>
 <script src="static/controller/loginController.js"></script>
-<script src="static/controller/ViewAssociatesController.js"></script>
-<script src="static/controller/BatchEditController.js"></script>
-<script src="static/controller/batchesAllCtr.js"></script>
-<script src="static/controller/batchesPastCtr.js"></script>
-<script src="static/controller/batchesFutureCtr.js"></script>
-<script src="static/controller/registerController.js"></script>
-<script src="static/controller/updateAssociateController.js"></script>
+<script src="static/controller/associateViewController.js"></script>
+<script src="static/controller/batchEditController.js"></script>
+<script src="static/controller/batchesAllController.js"></script>
+<script src="static/controller/batchesPastController.js"></script>
+<script src="static/controller/batchesFutureController.js"></script>
+<script src="static/controller/bamUserRegisterController.js"></script>
+<script src="static/controller/associateUpdateController.js"></script>
 <script src="static/controller/navController.js"></script>
-<script src="static/controller/resetController.js"></script>
+<script src="static/controller/passwordResetController.js"></script>
+<script src="static/controller/curriculumController.js"></script>
+<script src="static/controller/passwordResetController.js"></script>
+
 
 
 <link rel="stylesheet" type="text/css"
@@ -44,8 +47,9 @@
 <script src="https://momentjs.com/downloads/moment.js"></script>
 <!-- <script src="https://code.angularjs.org/1.3.9/angular.js"></script> -->
 <script src="//rawgit.com/angular-ui/ui-calendar/master/src/calendar.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.6/fullcalendar.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/gcal.min.js"></script>
+<script src="static/js/fullcalendar.js"></script>
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.6/fullcalendar.min.js"></script>  -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/gcal.min.js"></script> -->
 
 <link rel="apple-touch-icon-precomposed" sizes="57x57" href="static/img/favicon/apple-touch-icon-57x57.png" />
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/img/favicon/apple-touch-icon-114x114.png" />
@@ -77,11 +81,9 @@
 <title>BAM</title>
 </head>
 <body class= "main">
-
-			<div ng-include="'static/pages/navbar.html'"></div>
+		
+	<div ng-include="'static/pages/navbar.html'"></div>
 	<div id="page-wrap">
-		
-		
 		<div id="content" class="container">
 			<div class="well contentwell" ng-view></div>
 		</div>		
