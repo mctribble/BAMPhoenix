@@ -187,7 +187,7 @@ body {
 		#142863 100vh);
 }
 
-#content {
+/*#content {
 	background-color: #FFFFFF;
 	border-radius: 4px;
 	overflow: auto;
@@ -199,7 +199,18 @@ body {
     left: 0;
 	height:73%; 
 	width: 78%;
-	padding-top: 4%; 
+	padding-top: 4%;*/
+
+#content{
+	margin-top: 50px;
+	background-color: #FFFFFF ;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	border-radius: 4px;
+	overflow-y: hidden;
+	max-height: 85vh;
+	
+
 	
 	/*
 	position: relative;
