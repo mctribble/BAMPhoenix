@@ -187,7 +187,7 @@ app.controller("batchEditController",function($rootScope, $scope, $location, $ht
 			$scope.batch.usersInBatch.splice(recIndex,1);
 		}, function error(){
 			$scope.message = true;
-			$scope.msg = "Faild to Drop Associate";
+			$scope.msg = "Failed to Drop Associate";
 		})
 		
 		
