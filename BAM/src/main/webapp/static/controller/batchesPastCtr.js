@@ -4,7 +4,9 @@ app.controller('batchesPast', function($scope, $rootScope, $location, $http)
 	$scope.batchesPast;
 	
 	$scope.getBatchesPast = function(){
-		$rootScope.currentBatch = batch;
+		// Both of this and the following comments ought to be removed:
+		// The variable below was invalid and was causing the failure of this controller.
+		// $rootScope.currentBatch = batch;
 		var emailer = $rootScope.user.email;
 		
 		$http({

@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	   	.antMatchers("/Users/Register.do").permitAll()
 	    .anyRequest().authenticated()
 	    .and()
-	   .formLogin()
+	    .formLogin()
 	   	.loginPage("/")
 	    .loginProcessingUrl("/authenticate")
 	    .successHandler(restAuthenticationSuccessHandler)
@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    .passwordParameter("password")
 	    .permitAll()
 	    .and()
-	   .logout()
+	    .logout()
 	    .logoutUrl("/logout")
 	    //.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
 	    .deleteCookies("JSESSIONID")
@@ -77,5 +77,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    .and();
 		
 	 }
-
 }
