@@ -209,9 +209,10 @@ public class BamUser {
 
 	@Override
 	public String toString() {
-		return "Users [userId=" + userId + ", fName=" + fName + ", mName=" + mName + ", lName=" + lName + ", email="
-				+ email + ", pwd=" + pwd + ", role=" + role + ", phone=" + phone + ", phone2=" + phone2 + ", skype="
-				+ skype + ", pwd2=" + pwd2 + "]";
+		return "BamUser [userId=" + userId + ", fName=" + fName + ", mName=" + mName + ", lName=" + lName + ", email="
+				+ email + ", pwd=" + pwd + ", role=" + role + ", batch=" + batch + ", phone=" + phone + ", phone2="
+				+ phone2 + ", skype=" + skype + ", pwd2=" + pwd2 + "]";
 	}
+
 
 }
