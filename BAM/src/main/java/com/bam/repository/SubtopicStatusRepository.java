@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.bam.bean.SubtopicStatus;
 
 import java.lang.String;
-import java.util.List;
 
 @Repository
 public interface SubtopicStatusRepository extends JpaRepository<SubtopicStatus, Integer> {

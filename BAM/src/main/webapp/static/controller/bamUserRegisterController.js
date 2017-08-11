@@ -1,4 +1,4 @@
-app.controller("registerCtrl", ['$http', '$scope', '$location', '$timeout', function($http, $scope, $location, $timeout){
+app.controller("bamUserRegisterController", ['$http', '$scope', '$location', '$timeout', function($http, $scope, $location, $timeout){
 	
 	$scope.updateDisplay = false;	
 	

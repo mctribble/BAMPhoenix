@@ -1,4 +1,4 @@
-app.controller('batchesAllCtr', function($scope, $rootScope, $location, $http)
+app.controller('batchesAllController', function($scope, $rootScope, $location, $http)
 {	
 	$scope.msg;
 	$rootScope.batchesAll;

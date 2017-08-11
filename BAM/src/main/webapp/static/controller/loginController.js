@@ -1,4 +1,4 @@
-app.controller('loginCtl', function($rootScope, $scope, $location, $http) {
+app.controller('loginController', function($rootScope, $scope, $location, $http) {
 	
 	$scope.msg;
 	$rootScope.user;

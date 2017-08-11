@@ -1,4 +1,4 @@
-app.controller("associatesController", function($scope, $rootScope, $http){
+app.controller("associateViewController", function($scope, $rootScope, $http){
 	
 	console.log("Associates Controller");
 	var bId;

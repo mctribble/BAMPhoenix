@@ -1,4 +1,4 @@
-app.controller("resetCtrl", ['$rootScope', '$http', '$scope', function($rootScope, $http, $scope){
+app.controller("passwordResetController", ['$rootScope', '$http', '$scope', function($rootScope, $http, $scope){
 	
 	$scope.resetDisplay = false;	
 	

@@ -1,31 +1,29 @@
-app.controller('batchesPast', function($scope, $rootScope, $location, $http)
+app.controller('batchesFutureController', function($scope, $rootScope, $location, $http)
 {
 	$scope.msg;
-	$scope.batchesPast;
-	
-	$scope.getBatchesPast = function(){
-		$rootScope.currentBatch = batch;
-		var emailer = $rootScope.user.email;
+	$scope.batchesFuture;
+	$scope.getBatchesFuture = function(){
 		
+		var emailer = $rootScope.user.email;
+		console.log(emailer);
 		$http({
-			url: 'rest/api/v1/Batches/Past',
-			method: 'GET',		
+			url: 'rest/api/v1/Batches/Future',
+			method: 'GET',	
 			params: {email: emailer}
 		})
 		.then(function success(response){
-			console.log("past batches: " + response.data);
+			console.log("future batches: " + response.data)
 			$scope.message = true;
-			$scope.msg = 'past batches retreived';
-			$scope.batchesPast = response.data;
-			
+			$scope.msg = 'future batches retreived';
+			$scope.batchesFuture = response.data;
 		}, function error(response){
 			$scope.message = true;
-			$scope.msg = 'past batches not retreived';
+			$scope.msg = 'future batches not retreived';
 		});
 	}
 	
 	$scope.goToBatch = function(batch){
-				console.log(batch.id);
+		$rootScope.currentBatch = batch;
 		$http({
 			
 			url: "rest/api/v1/Calendar/Topics?batchId=" + batch.id,
@@ -46,5 +44,5 @@ app.controller('batchesPast', function($scope, $rootScope, $location, $http)
 		});
 	}
 	
-	$scope.getBatchesPast();
+	$scope.getBatchesFuture();
 });
