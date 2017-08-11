@@ -1,8 +1,12 @@
 
 package com.bam.service;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,5 +63,5 @@ public class UsersService {
 		}
 		return users;
 	}
-	
+
 }

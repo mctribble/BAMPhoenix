@@ -22,10 +22,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	@Qualifier("userDetailsService")
+<<<<<<< HEAD
 
 	UserDetailsService userDetailsService; 
+=======
+	UserDetailsService userDetailsService;//LoadUsername() will load the User Record from DB 
+										  //Past back a Spring Security 
+>>>>>>> f4db1d94ce03abce4eba607d86ce2729143dead0
 	// LoadUsername() will load the User record from the DB
 	// Pass back a Spring Security User Object NOT BAMUser object
+
 	
 	@Autowired
     private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
@@ -42,7 +48,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	 public void configure(WebSecurity web) throws Exception {
+<<<<<<< HEAD
 
+=======
+		// Ignore certain URLs.
+>>>>>>> f4db1d94ce03abce4eba607d86ce2729143dead0
 	  web.ignoring().antMatchers("/index.html", "/static/**", "/");
 	 }
 
@@ -51,13 +61,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	 protected void configure(HttpSecurity http) throws Exception {
 	  http
 	   .headers().disable()
-	   .csrf().disable()
+	   .csrf().disable()//not suppose to disable this in production
 	   .authorizeRequests()
 	   	//.antMatchers("/Batches/**").hasRole("2")
 	   	.antMatchers("/Users/Register.do").permitAll()
 	    .anyRequest().authenticated()
 	    .and()
-	   .formLogin()
+	    .formLogin()
 	   	.loginPage("/")
 	    .loginProcessingUrl("/authenticate")
 	    .successHandler(restAuthenticationSuccessHandler)
@@ -66,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	    .passwordParameter("password")
 	    .permitAll()
 	    .and()
-	   .logout()
+	    .logout()
 	    .logoutUrl("/logout")
 	    //.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
 	    .deleteCookies("JSESSIONID")
