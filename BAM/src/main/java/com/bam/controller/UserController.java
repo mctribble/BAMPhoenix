@@ -77,33 +77,16 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="Update", method=RequestMethod.POST, produces="application/json")
-	@ResponseBody
-	public void updateUser(@RequestBody String jsonObject, HttpSession session) {
-		System.out.println("Enter update controller");
-		Users currentUser = null;
-		System.out.println("jsonObject: " + jsonObject);
-		try {
-			currentUser = new ObjectMapper().readValue(jsonObject, Users.class);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println(currentUser);
-		
-		//added
-//		Users currentUser = userService.parseUserFromJson(jsonObject);
+	public void updateUser(@RequestBody Users currentUser, HttpSession session) {
+		String pass = userService.findUserByEmail(currentUser.getEmail()).getPwd();
+		System.out.println("password: "+pass);
+		currentUser.setPwd(pass);
+		System.out.println("user:  "+ currentUser);
 		userService.addOrUpdateUser(currentUser);
 	}
 	
 	@RequestMapping(value="Register", method=RequestMethod.POST, produces="application/json")
 	public void addUser(@RequestBody Users currentUser, HttpSession session) throws Exception {
-	
-		System.out.println("Hit the Register endpoint");
-		//added
-//		Users currentUser = userService.parseUserFromJson(jsonObject);
 		
 		if(userService.findUserByEmail(currentUser.getEmail())==null){
 			currentUser.setRole(1);

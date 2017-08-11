@@ -64,21 +64,4 @@ public class UsersService {
 		return users;
 	}
 
-	public Users parseUserFromJson(String jsonObject) {
-		Users currentUser = null;
-		System.out.println("jsonObject: " + jsonObject);
-		try {
-			currentUser = new ObjectMapper().readValue(jsonObject, Users.class);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println(currentUser);
-		
-		return currentUser;
-	}
-	
 }
