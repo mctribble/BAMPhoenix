@@ -14,18 +14,19 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "Batch_Type")
 public class BatchType {
-	
+
 	@Id
-	@Column(name="Batch_Type_ID")
+	@Column(name = "Batch_Type_ID")
 	@SequenceGenerator(name = "BATCH_TYPE_ID_SEQ", sequenceName = "BATCH_TYPE_ID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BATCH_TYPE_ID_SEQ")
 	private Integer id;
-	
-	@Column(name="Batch_Type_Name")
+
+	@Column(name = "Batch_Type_Name")
 	private String name;
-	
-	@Column(name="Batch_Type_Length")	// For now, this defaults to 10 and can't be changed.
-	private Integer length = 10;		// In the future, this field can be editable.
+
+	@Column(name = "Batch_Type_Length") // For now, this defaults to 10 and
+										// can't be changed.
+	private Integer length = 10; // In the future, this field can be editable.
 
 	public BatchType() {
 		super();
@@ -72,6 +73,5 @@ public class BatchType {
 	public String toString() {
 		return "BatchType [id=" + id + ", name=" + name + ", length=" + length + "]";
 	}
-	
-	
+
 }

@@ -39,7 +39,7 @@ public class SubtopicService {
 		SubtopicName st = new SubtopicName();
 		SubtopicStatus ss = new SubtopicStatus();
 		Date date = null;
-		
+
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			date = dateFormat.parse("23/09/2017");
@@ -52,7 +52,7 @@ public class SubtopicService {
 		b = batchRepository.findById(batch);
 		st = subtopicNameRepository.findById(subtopic);
 		ss = subtopicStatusRepository.findById(1);
-		
+
 		s.setBatch(b);
 		s.setSubtopicName(st);
 		s.setStatus(ss);
@@ -60,21 +60,21 @@ public class SubtopicService {
 		
 		subtopicRepository.save(s);
 	}
-	
+
 	public List<Subtopic> getSubtopicByBatch(Batch batch) {
 		return subtopicRepository.findByBatch(batch);
 	}
-	
+
 	public List<Subtopic> getSubtopicByBatchId(int batchId) {
 		return subtopicRepository.findByBatch(batchRepository.findById(batchId));
 	}
-	
+
 	public void updateSubtopic(Subtopic topic) {
 		subtopicRepository.save(topic);
 	}
-	
+
 	public SubtopicStatus getStatus(String name) {
 		return subtopicStatusRepository.findByName(name);
 	}
-	
+
 }

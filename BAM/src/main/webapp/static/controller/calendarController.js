@@ -253,12 +253,14 @@
             	console.log($rootScope);
             	 var url;
 	            if($rootScope.user.role == 1){
-	            	url ="Calendar/Subtopics.do?batchId="+$rootScope.user.batch.id;
-	            }else if (($rootScope.user.role == 2 ||  $rootScope.user.role == 3) && $rootScope.currentBatch) {
-	            	url ="Calendar/Subtopics.do?batchId="+$rootScope.currentBatch.id;
+	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.user.batch.id;
+	            }else if($rootScope.user.role == 2 && $rootScope.trainerBatch){
+	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.trainerBatch.id;
+	            }else if (($rootScope.user.role == 3) && $rootScope.currentBatch) {
+	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
 	            	console.log(url);
-	            }else if($rootScope.user.role == 3 && $rootScope.trainerBatch){
-	             	url ="Calendar/Subtopics.do?batchId="+$rootScope.trainerBatch.id;
+	            }else{
+	            	console.log('ajax request for subtopics failed');
 	            }
             /* event source that contains custom events on the scope */
             	$scope.events = [];

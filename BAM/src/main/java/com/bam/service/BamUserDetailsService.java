@@ -30,7 +30,7 @@ public class BamUserDetailsService implements UserDetailsService {
 		BamUser user = bamUserService.findUserByEmail(email);
 		System.out.println(email);
 		System.out.println(user);
-		
+
 		return buildUserForAuthentication(user, buildUserAuthority(user));
 	}
 
@@ -45,7 +45,7 @@ public class BamUserDetailsService implements UserDetailsService {
 
 		// Build user's authorities
 		setAuths.add(new SimpleGrantedAuthority("ROLE_"+String.valueOf(user.getRole())));
-		
+
 		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
 
 		return Result;

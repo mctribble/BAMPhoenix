@@ -1,4 +1,4 @@
-package com.revature.bean;
+package com.bam.bean;
 
 public class Driver {
 

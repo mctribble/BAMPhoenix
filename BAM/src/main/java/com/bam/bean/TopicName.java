@@ -14,14 +14,14 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "Topic_Name")
 public class TopicName {
-	
+
 	@Id
-	@Column(name="Topic_ID")
+	@Column(name = "Topic_ID")
 	@SequenceGenerator(name = "Topic_ID_SEQ", sequenceName = "Topic_ID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Topic_ID_SEQ")
 	private Integer id;
-	
-	@Column(name="Topic_Name")
+
+	@Column(name = "Topic_Name")
 	private String name;
 
 	public TopicName() {
@@ -59,6 +59,5 @@ public class TopicName {
 	public String toString() {
 		return "TopicName [id=" + id + ", name=" + name + "]";
 	}
-	
-	
+
 }

@@ -24,28 +24,29 @@ import com.bam.service.BamUserService;
 
 @RestController
 @RequestMapping(value = "/api/v1/Batches/")
-public class BatchController 
-{
+public class BatchController {
+
+	
+	private final String EMAIL = "email";
+	
 	@Autowired
 	BatchService batchService;
-	
+
 	@Autowired
 	BamUserService bamUserService;
 
 	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public List<Batch> getBatchAll(HttpServletRequest request)
-	{
-		
+	public List<Batch> getBatchAll() {
 		return batchService.getBatchAll();
 	}
-	
+
 	@RequestMapping(value = "Past", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<Batch> getPastBatches(HttpServletRequest request)
 	{
-		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter("email")));
-		List<Batch> pastBatches = new ArrayList<Batch>();
+		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
+		List<Batch> pastBatches = new ArrayList<>();
 		for(Batch b : batches){
 			if(new Timestamp(System.currentTimeMillis()).after(b.getEndDate())){
 				pastBatches.add(b);
@@ -53,13 +54,13 @@ public class BatchController
 		}
 		return pastBatches;
 	}
-	
+
 	@RequestMapping(value = "Future", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<Batch> getFutureBatches(HttpServletRequest request)
 	{
-		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter("email")));
-		List<Batch> futureBatches = new ArrayList<Batch>();
+		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
+		List<Batch> futureBatches = new ArrayList<>();
 		for(Batch b : batches){
 			if(new Timestamp(System.currentTimeMillis()).before(b.getStartDate())){
 				futureBatches.add(b);
@@ -67,46 +68,40 @@ public class BatchController
 		}
 		return futureBatches;
 	}
-	
+
 	@RequestMapping(value = "InProgress", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public Batch getBatchInProgress(HttpServletRequest request)
 	{
-		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter("email")));
-		Batch BatchInProgress = null;
+		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
+		Batch batchInProgress = null;
 		Timestamp t = new Timestamp(System.currentTimeMillis());
 		for(Batch b : batches){
-			
 			if(t.after(b.getStartDate()) && t.before(b.getEndDate())){
-				BatchInProgress = b;
+				batchInProgress = b;
 				break;
 			}
 		}
-		return BatchInProgress;
+		return batchInProgress;
 	}
 	
 	
 	@RequestMapping(value="Edit", method=RequestMethod.POST, produces="application/json")
-	@ResponseBody
-	public void updateUser(@RequestBody String jsonObject, HttpSession session) {
+	public void updateUser(@RequestBody String jsonObject) {
 		Batch currentBatch = null;
-		System.out.println("jsonObject: " + jsonObject);
 		try {
 			currentBatch = new ObjectMapper().readValue(jsonObject, Batch.class);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		batchService.addOrUpdateBatch(currentBatch);
 	}
-	
+
 	@RequestMapping(value = "ById", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public Batch getBatchById(HttpServletRequest request){
+	public Batch getBatchById(HttpServletRequest request) {
+
 		return batchService.getBatchById( Integer.parseInt(request.getParameter("batchId")) );
 
 	}

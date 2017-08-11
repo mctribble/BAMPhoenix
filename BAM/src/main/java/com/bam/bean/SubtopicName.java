@@ -19,23 +19,23 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "Subtopic_Name")
 public class SubtopicName {
-	
+
 	@Id
-	@Column(name="Subtopic_Name_ID")
+	@Column(name = "Subtopic_Name_ID")
 	@SequenceGenerator(name = "Subtopic_Name_ID_SEQ", sequenceName = "Subtopic_Name_ID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Subtopic_Name_ID_SEQ")
 	private Integer id;
-	
-	@Column(name="Subtopic_Name")
+
+	@Column(name = "Subtopic_Name")
 	private String name;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="Subtopic_Topic", referencedColumnName = "Topic_ID")
+	@JoinColumn(name = "Subtopic_Topic", referencedColumnName = "Topic_ID")
 	@Autowired
 	private TopicName topic;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="Subtopic_Type", referencedColumnName = "Type_ID")
+	@JoinColumn(name = "Subtopic_Type", referencedColumnName = "Type_ID")
 	@Autowired
 	private SubtopicType type;
 

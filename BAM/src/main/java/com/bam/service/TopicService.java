@@ -38,15 +38,15 @@ public class TopicService {
 		
 		topicWeekRepository.save(topic);
 	}
-	
+
 	public List<TopicWeek> getTopicByBatch(Batch batch) {
 		return topicWeekRepository.findByBatch(batch);
 	}
-	
+
 	public List<TopicWeek> getTopicByBatchId(int batchId) {
 		return topicWeekRepository.findByBatch(batchRepistory.findById(batchId));
 	}
-	
+
 	public List<TopicName> getTopics() {
 		return topicNameRepository.findAll();
 	}
@@ -54,5 +54,5 @@ public class TopicService {
 	public void addOrUpdateTopicName(TopicName topic){
 		topicNameRepository.save(topic);
 	}
-	
+
 }

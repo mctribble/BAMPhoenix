@@ -22,27 +22,27 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "batches")
 public class Batch {
-	
+
 	@Id
-	@Column(name="Batch_ID")
+	@Column(name = "Batch_ID")
 	@SequenceGenerator(name = "BATCH_ID_SEQ", sequenceName = "BATCH_ID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BATCH_ID_SEQ")
 	private Integer id;
-	
-	@Column(name="Batch_Name")
-	@NotEmpty(message="Batch name cannot be empty")
+
+	@Column(name = "Batch_Name")
+	@NotEmpty(message = "Batch name cannot be empty")
 	private String name;
-	
-	@Column(name="Start_Date")
-	@NotEmpty(message="Start date cannot be empty")
+
+	@Column(name = "Start_Date")
+	@NotEmpty(message = "Start date cannot be empty")
 	private Timestamp startDate;
-	
-	@Column(name="End_Date")
-	@NotEmpty(message="End date cannot be empty")
+
+	@Column(name = "End_Date")
+	@NotEmpty(message = "End date cannot be empty")
 	private Timestamp endDate;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="Trainer_ID", referencedColumnName = "User_Id")
+	@JoinColumn(name = "Trainer_ID", referencedColumnName = "User_Id")
 	@Autowired
 	private BamUser trainer;
 	
@@ -52,9 +52,9 @@ public class Batch {
 		 * table is empty.  All information about a trainer's batch is stored in
 		 * this table.
 		 */
-	
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="Batch_Type_ID", referencedColumnName = "Batch_Type_ID")
+	@JoinColumn(name = "Batch_Type_ID", referencedColumnName = "Batch_Type_ID")
 	@Autowired
 	private BatchType type;
 
@@ -134,6 +134,5 @@ public class Batch {
 		return "Batches [id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", trainer=" + trainer + ", type=" + type + "]";
 	}
-	
-	
+
 }

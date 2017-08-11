@@ -1,4 +1,4 @@
-package com.revature.logging;
+package com.bam.logging;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
