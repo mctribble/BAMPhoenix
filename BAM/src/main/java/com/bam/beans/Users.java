@@ -77,6 +77,7 @@ public class Users {
 	@JsonIgnore
 	private String pwd2; // the user needs to reset their password.
 
+
 	public Users() {
 		super();
 	}
