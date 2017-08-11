@@ -21,62 +21,61 @@ import com.bam.beans.Users;
 import com.bam.service.BatchService;
 import com.bam.service.UsersService;
 
-
 @RestController
-@RequestMapping(value="/api/v1/Users/")
+@RequestMapping(value = "/api/v1/Users/")
 public class UserController {
 	@Autowired
 	UsersService userService;
-	
+
 	@Autowired
 	BatchService batchService;
-	
-	@RequestMapping(value="All", method=RequestMethod.GET, produces="application/json")
+
+	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public List<Users> getAllUsers(){
+	public List<Users> getAllUsers() {
 		return userService.findAllUsers();
 	}
-	
-	@RequestMapping(value="AllTrainers", method=RequestMethod.GET, produces="application/json")
+
+	@RequestMapping(value = "AllTrainers", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public List<Users> getAllTrainers(){
+	public List<Users> getAllTrainers() {
 		return userService.findByRole(2);
 	}
-	
-	@RequestMapping(value="AllAssociates", method=RequestMethod.GET, produces="application/json")
+
+	@RequestMapping(value = "AllAssociates", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public List<Users> getAllAssociates(){
+	public List<Users> getAllAssociates() {
 		return userService.findByRole(1);
 	}
-	
-	@RequestMapping(value="InBatch", method=RequestMethod.GET, produces="application/json")
+
+	@RequestMapping(value = "InBatch", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<Users> getUsersInBatch(HttpServletRequest request) {
-		//Get the batch id from the request
-		int batchId = Integer.parseInt( request.getParameter("batchId") );
-		
-		//Retrieve and return users in a batch from the database
+		// Get the batch id from the request
+		int batchId = Integer.parseInt(request.getParameter("batchId"));
+
+		// Retrieve and return users in a batch from the database
 		return userService.findUsersInBatch(batchId);
 	}
-	
-	@RequestMapping(value="Drop", method=RequestMethod.POST, produces="application/json")
+
+	@RequestMapping(value = "Drop", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public List<Users> dropUserFromBatch(HttpServletRequest request) {
-		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter("userId") );
-		Users user = userService.findUserById( userId );
+		// Get the user id from the request
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		Users user = userService.findUserById(userId);
 		int batchId = user.getBatch().getId();
-		
-		//Drop user from the batch
+
+		// Drop user from the batch
 		user.setBatch(null);
 		user.setRole(0);
 		userService.addOrUpdateUser(user);
-		
-		//Return users from batch without the user
+
+		// Return users from batch without the user
 		return userService.findUsersInBatch(batchId);
 	}
-	
-	@RequestMapping(value="Update", method=RequestMethod.POST, produces="application/json")
+
+	@RequestMapping(value = "Update", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public void updateUser(@RequestBody String jsonObject, HttpSession session) {
 		Users currentUser = null;
@@ -93,8 +92,8 @@ public class UserController {
 		System.out.println(currentUser);
 		userService.addOrUpdateUser(currentUser);
 	}
-	
-	@RequestMapping(value="Register", method=RequestMethod.POST, produces="application/json")
+
+	@RequestMapping(value = "Register", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public void addUser(@RequestBody String jsonObject, HttpSession session) throws Exception {
 		Users currentUser = null;
@@ -109,27 +108,31 @@ public class UserController {
 			e.printStackTrace();
 		}
 		System.out.println(currentUser);
-	
-		if(userService.findUserByEmail(currentUser.getEmail())==null){
+
+		if (userService.findUserByEmail(currentUser.getEmail()) == null) {
 			currentUser.setRole(1);
 			userService.addOrUpdateUser(currentUser);
 		} else {
 			Exception e = null;
-			throw  e;
-		}	
+			throw e;
+		}
 	}
 
 	/**
 	 * @author Tom Scheffer
-	 * @param jsonObject - object being passed in
-	 * @param session - current session
-	 * @throws Exception - for when previous password is wrong
+	 * @param jsonObject
+	 *            - object being passed in
+	 * @param session
+	 *            - current session
+	 * @throws Exception
+	 *             - for when previous password is wrong
 	 * 
-	 * 	Updates the user's password from the update view. Updates password to pwd2 when pwd equals their old pwd
+	 *             Updates the user's password from the update view. Updates
+	 *             password to pwd2 when pwd equals their old pwd
 	 */
-	@RequestMapping(value="Reset", method=RequestMethod.POST, produces="application/java")
+	@RequestMapping(value = "Reset", method = RequestMethod.POST, produces = "application/java")
 	@ResponseBody
-	public void resetPassword(@RequestBody String jsonObject, HttpSession session) throws Exception{
+	public void resetPassword(@RequestBody String jsonObject, HttpSession session) throws Exception {
 		Users userNewPass = null;
 		try {
 			userNewPass = new ObjectMapper().readValue(jsonObject, Users.class);
@@ -141,52 +144,52 @@ public class UserController {
 			e.printStackTrace();
 		}
 		Users currentUser = userService.findUserByEmail(userNewPass.getEmail());
-		if(currentUser.getPwd().equals(userNewPass.getPwd())){
+		if (currentUser.getPwd().equals(userNewPass.getPwd())) {
 			currentUser.setPwd(userNewPass.getPwd2());
 			userService.addOrUpdateUser(currentUser);
-		}else{
+		} else {
 			throw new Exception("Wrong password, password not changed");
 		}
 	}
-	
-	@RequestMapping(value="Remove", method=RequestMethod.POST, produces="application/json")
+
+	@RequestMapping(value = "Remove", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public List<Users> removeUser(HttpServletRequest request) {
-		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter("userId") );
-		Users user = userService.findUserById( userId );
+		// Get the user id from the request
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		Users user = userService.findUserById(userId);
 		int batchId = user.getBatch().getId();
-		
-		//Set the user as inactive
+
+		// Set the user as inactive
 		Batch b = null;
 		user.setBatch(b);
 		userService.addOrUpdateUser(user);
-		
-		//Return users from batch without the user
+
+		// Return users from batch without the user
 		return userService.findUsersInBatch(batchId);
 	}
-	
-	@RequestMapping(value="Add", method=RequestMethod.POST, produces="application/json")
+
+	@RequestMapping(value = "Add", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public List<Users> addUserToBatch(HttpServletRequest request) {
-		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter("userId") );
-		//Get the batch to add the user to from the request
-		int batchId = Integer.parseInt( request.getParameter("batchId") );
-		
-		Users user = userService.findUserById( userId );
-		
+		// Get the user id from the request
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		// Get the batch to add the user to from the request
+		int batchId = Integer.parseInt(request.getParameter("batchId"));
+
+		Users user = userService.findUserById(userId);
+
 		user.setBatch(batchService.getBatchById(batchId));
-		
+
 		userService.addOrUpdateUser(user);
-		
+
 		return userService.findUsersNotInBatch();
 	}
-	
-	@RequestMapping(value="NotInABatch", method=RequestMethod.GET, produces="application/json")
+
+	@RequestMapping(value = "NotInABatch", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<Users> getUsersNotInBatch(HttpServletRequest request) {
 		return userService.findUsersNotInBatch();
 	}
-	
+
 }

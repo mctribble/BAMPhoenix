@@ -12,68 +12,52 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+
 /*
  * 
  * 
  */
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
-	
-//Get user from the database, via Hibernate
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	// Get user from the database, via Hibernate
 	@Autowired
 	@Qualifier("userDetailsService")
-	UserDetailsService userDetailsService; 
+	UserDetailsService userDetailsService;
 	// LoadUsername() will load the User record from the DB
 	// Pass back a Spring Security User Object NOT BAMUser object
-	
+
 	@Autowired
-    private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
+	private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
 
-    @Autowired
-    private AuthenticationFailureHandler restAuthenticationFailureHandler;
-
+	@Autowired
+	private AuthenticationFailureHandler restAuthenticationFailureHandler;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
-		//.passwordEncoder(new BCryptPasswordEncoder());
+		// .passwordEncoder(new BCryptPasswordEncoder());
 	}
-	
-	@Override
-	 public void configure(WebSecurity web) throws Exception {
-		//Ignore certain URLs
 
-	  web.ignoring().antMatchers("/index.html", "/static/**", "/");
-	 }
-
-	
 	@Override
-	 protected void configure(HttpSecurity http) throws Exception {
-	  http
-	   .headers().disable()
-	   .csrf().disable()
-	   .authorizeRequests()
-	   	//.antMatchers("/Batches/**").hasRole("2")
-	   	.antMatchers("/Users/Register.do").permitAll()
-	    .anyRequest().authenticated()
-	    .and()
-	   .formLogin()
-	   	.loginPage("/")
-	    .loginProcessingUrl("/authenticate")
-	    .successHandler(restAuthenticationSuccessHandler)
-	    .failureHandler(restAuthenticationFailureHandler)
-	    .usernameParameter("username")
-	    .passwordParameter("password")
-	    .permitAll()
-	    .and()
-	   .logout()
-	    .logoutUrl("/logout")
-	    //.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
-	    .deleteCookies("JSESSIONID")
-	    .permitAll()
-	    .and();
-		
-	 }
+	public void configure(WebSecurity web) throws Exception {
+		// Ignore certain URLs
+
+		web.ignoring().antMatchers("/index.html", "/static/**", "/");
+	}
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.headers().disable().csrf().disable().authorizeRequests()
+				// .antMatchers("/Batches/**").hasRole("2")
+				.antMatchers("/Users/Register.do").permitAll().anyRequest().authenticated().and().formLogin()
+				.loginPage("/").loginProcessingUrl("/authenticate").successHandler(restAuthenticationSuccessHandler)
+				.failureHandler(restAuthenticationFailureHandler).usernameParameter("username")
+				.passwordParameter("password").permitAll().and().logout().logoutUrl("/logout")
+				// .logoutSuccessHandler(new
+				// HttpStatusReturningLogoutSuccessHandler())
+				.deleteCookies("JSESSIONID").permitAll().and();
+
+	}
 }
-

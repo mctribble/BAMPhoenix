@@ -19,24 +19,24 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "Topic_Week")
 public class TopicWeek {
-	
+
 	@Id
-	@Column(name="Week_ID")
+	@Column(name = "Week_ID")
 	@SequenceGenerator(name = "Week_ID_SEQ", sequenceName = "Week_ID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Week_ID_SEQ")
 	private Integer id;
-	
+
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name="Topic_Name_ID", referencedColumnName = "Topic_ID")
+	@JoinColumn(name = "Topic_Name_ID", referencedColumnName = "Topic_ID")
 	@Autowired
 	private TopicName topic;
-	
+
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name="Topic_Batch_ID", referencedColumnName = "Batch_ID")
+	@JoinColumn(name = "Topic_Batch_ID", referencedColumnName = "Batch_ID")
 	@Autowired
 	private Batch batch;
 
-	@Column(name="Topic_Week_Number")
+	@Column(name = "Topic_Week_Number")
 	private Integer weekNumber;
 
 	public TopicWeek() {
@@ -94,9 +94,7 @@ public class TopicWeek {
 
 	@Override
 	public String toString() {
-		return "TopicWeek [id=" + id + ", topic=" + topic + ", batch=" + batch + ", weekNumber=" + weekNumber
-				+ "]";
+		return "TopicWeek [id=" + id + ", topic=" + topic + ", batch=" + batch + ", weekNumber=" + weekNumber + "]";
 	}
-	
-	
+
 }

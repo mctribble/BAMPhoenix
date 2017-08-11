@@ -16,48 +16,49 @@ public class UsersService {
 
 	@Autowired
 	UsersRepository dao;
-	
+
 	@Autowired
 	BatchRepository bdao;
-	
-	public void addOrUpdateUser(Users user){
+
+	public void addOrUpdateUser(Users user) {
 		dao.save(user);
-		
+
 	}
-	
-	public List<Users> findAllUsers(){
+
+	public List<Users> findAllUsers() {
 		return dao.findAll();
-		
+
 	}
-	
-	public List<Users> findByRole(int role){
+
+	public List<Users> findByRole(int role) {
 		return dao.findByRole(role);
 	}
-	public Users findUserById(int userId){
+
+	public Users findUserById(int userId) {
 		return dao.findByUserId(userId);
 	}
-	
-	public Users findUserByEmail(String email){
+
+	public Users findUserByEmail(String email) {
 		return dao.findByEmail(email);
 	}
-	
-	public List<Users> findUsersInBatch(int batchId){
-		//Get batch object by the id
+
+	public List<Users> findUsersInBatch(int batchId) {
+		// Get batch object by the id
 		Batch batch = bdao.findById(batchId);
-		//Return users in the batch
+		// Return users in the batch
 		return dao.findByBatch(batch);
 	}
-	
-	public List<Users> findUsersNotInBatch(){
-		//Return users in the batch with a null
+
+	public List<Users> findUsersNotInBatch() {
+		// Return users in the batch with a null
 		List<Users> users = dao.findByBatch(null);
-		for(int i=0; i<users.size(); i++) {
-			if(users.get(i).getRole() != 1) {
+		for (int i = 0; i < users.size(); i++) {
+			if (users.get(i).getRole() != 1) {
 				users.remove(i);
 				i--;
 			}
 		}
 		return users;
 	}
-	
+
 }

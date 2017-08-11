@@ -11,17 +11,16 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.stereotype.Component;
 
 @Component("restAuthenticationFailureHandler")
-public class RestAuthenticationFailureHandler
-extends SimpleUrlAuthenticationFailureHandler {
- 
- @Override
- public void onAuthenticationFailure(HttpServletRequest request,
-  HttpServletResponse response, AuthenticationException exception)
- throws IOException, ServletException {
-//  SecurityUtils.sendError(response, exception, HttpServletResponse.SC_UNAUTHORIZED,
-//   "Authentication failed");
-	 System.out.println("FAIL");
-     response.setContentType("application/json;charset=UTF-8");
-	 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
- }
+public class RestAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+
+	@Override
+	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException exception) throws IOException, ServletException {
+		// SecurityUtils.sendError(response, exception,
+		// HttpServletResponse.SC_UNAUTHORIZED,
+		// "Authentication failed");
+		System.out.println("FAIL");
+		response.setContentType("application/json;charset=UTF-8");
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	}
 }

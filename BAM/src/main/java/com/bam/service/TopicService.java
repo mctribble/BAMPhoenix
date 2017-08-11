@@ -17,42 +17,42 @@ public class TopicService {
 
 	@Autowired
 	TopicWeekRepository topicRep;
-	
+
 	@Autowired
 	BatchRepository batchRep;
-	
+
 	@Autowired
 	TopicNameRepository tNameRep;
-	
-	public void addTopic(int topicNameId, int batch, int weekNumber){
+
+	public void addTopic(int topicNameId, int batch, int weekNumber) {
 		TopicWeek topic = new TopicWeek();
 		Batch b = new Batch();
 		TopicName topicName = new TopicName();
-		
+
 		b = batchRep.findById(batch);
 		topicName = tNameRep.findById(topicNameId);
-		
+
 		topic.setBatch(b);
 		topic.setTopic(topicName);
 		topic.setWeekNumber(weekNumber);
-		
+
 		topicRep.save(topic);
 	}
-	
+
 	public List<TopicWeek> getTopicByBatch(Batch batch) {
 		return topicRep.findByBatch(batch);
 	}
-	
+
 	public List<TopicWeek> getTopicByBatchId(int batchId) {
 		return topicRep.findByBatch(batchRep.findById(batchId));
 	}
-	
+
 	public List<TopicName> getTopics() {
 		return tNameRep.findAll();
 	}
-	
-	public void addOrUpdateTopicName(TopicName topic){
+
+	public void addOrUpdateTopicName(TopicName topic) {
 		tNameRep.save(topic);
 	}
-	
+
 }
