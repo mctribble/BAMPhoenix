@@ -71,17 +71,11 @@ public class Users {
 
 	@Column(name = "Skype_ID")
 	private String skype;
-<<<<<<< HEAD
 
 	@Column(name = "Password_Bak") // This is a backup password that will be
 									// used when
 	@JsonIgnore
 	private String pwd2; // the user needs to reset their password.
-=======
-	
-	@Column(name = "Password_Bak")		// This is a backup password that will be used when
-	private String pwd2;				// the user needs to reset their password.
->>>>>>> 2784957e241e9206381e01e72076c3441ed7b260
 
 	public Users() {
 		super();
