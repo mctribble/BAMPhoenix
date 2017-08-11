@@ -18,7 +18,7 @@ app.config(function($routeProvider, $locationProvider){
 		controller: "associateViewController"
 	}).when("/update",{
 		templateUrl: "static/pages/update.html",
-		controller: "updateAssociateCtrl"
+		controller: "associateUpdateController"
 	}).when("/reset",{
 		templateUrl: "static/pages/reset.html",
 		controller: "passwordResetController"

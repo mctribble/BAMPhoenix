@@ -1,4 +1,4 @@
-app.controller("updateAssociateCtrl", ['$rootScope', '$http', '$scope', function($rootScope, $http, $scope){
+app.controller("associateUpdateController", ['$rootScope', '$http', '$scope', function($rootScope, $http, $scope){
 	
 	$scope.updateDisplay = false;	
 	
