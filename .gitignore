@@ -20,7 +20,6 @@
 *.mf
 STUB/target
 BAM/target
-BAM/Servers
 
 pom.properties
 MANIFEST.MF
@@ -67,3 +66,7 @@ dist/
 nbdist/
 
 .nb-gradle/
+
+### workspace ###
+.metadata/
+Servers/
