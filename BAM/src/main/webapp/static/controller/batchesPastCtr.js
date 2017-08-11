@@ -1,6 +1,6 @@
 app.controller('batchesPast', function($scope, $rootScope, $location, $http)
 {
-	$scope.smg;
+	$scope.msg;
 	$scope.batchesPast;
 	
 	$scope.getBatchesPast = function(){
@@ -10,7 +10,7 @@ app.controller('batchesPast', function($scope, $rootScope, $location, $http)
 		var emailer = $rootScope.user.email;
 		
 		$http({
-			url: 'Batches/Past.do',
+			url: 'rest/api/v1/Batches/Past',
 			method: 'GET',		
 			params: {email: emailer}
 		})
@@ -30,7 +30,7 @@ app.controller('batchesPast', function($scope, $rootScope, $location, $http)
 				console.log(batch.id);
 		$http({
 			
-			url: "Calendar/Topics.do?batchId=" + batch.id,
+			url: "rest/api/v1/Calendar/Topics?batchId=" + batch.id,
 			method: 'GET'
 			
 		})
