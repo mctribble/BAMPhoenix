@@ -467,7 +467,7 @@
                     eventSources : '=ngModel',
                     calendarWatchEvent : '&'
                 },
-                controller : 'uiCalendarCtrl',
+                controller : 'calendarController',
                 link : function (scope, elm, attrs, controller) {
                     var sources = scope.eventSources;
                     var sourcesChanged = false;
