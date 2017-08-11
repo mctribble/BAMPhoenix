@@ -5,12 +5,9 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
-
 import org.aspectj.lang.ProceedingJoinPoint;
-
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-
 
 
 
@@ -18,7 +15,7 @@ import org.aspectj.lang.annotation.Aspect;
 public class LoggerClass {
 	
 	//Created Logger for Intercepting Methods and logging that Information
-	final static Logger logger = Logger.getLogger(LoggerClass.class);
+		final static Logger logger = Logger.getLogger(LoggerClass.class);
 
 	
 	
