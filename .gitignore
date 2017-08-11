@@ -20,6 +20,7 @@
 *.mf
 STUB/target
 BAM/target
+BAM/Servers
 
 pom.properties
 MANIFEST.MF

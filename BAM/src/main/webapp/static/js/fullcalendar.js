@@ -7423,7 +7423,8 @@ DayGrid.mixin({
 		if (seg.isStart) {
 			timeText = this.getEventTimeText(event);
 			if (timeText) {
-				timeHtml = '<span class="fc-time">' + htmlEscape(timeText) + '</span>';
+								// Removing '12a' from each event. 
+				timeHtml = ""; //'<span class="fc-time">' + htmlEscape(timeText) + '</span>';
 			}
 		}
 
