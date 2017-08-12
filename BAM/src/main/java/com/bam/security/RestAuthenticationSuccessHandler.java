@@ -12,8 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.bam.beans.Users;
-import com.bam.dao.UsersRepository;
+import com.bam.bean.BamUser;
+import com.bam.repository.BamUserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -31,13 +31,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
 	@Autowired
-	private UsersRepository userService;
+	private BamUserRepository userService;
 
 	private static final ObjectMapper mapper = new ObjectMapper();
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws ServletException, IOException {
+
 		
 		Users user = userService.findByEmail(authentication.getName());
 		

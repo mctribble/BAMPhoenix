@@ -5,15 +5,9 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
-
-import com.bam.beans.Batch;
 
 
 
@@ -21,7 +15,9 @@ import com.bam.beans.Batch;
 public class LoggerClass {
 	
 	//Created Logger for Intercepting Methods and logging that Information
+
 	private final static Logger logger = Logger.getLogger(LoggerClass.class);
+
 
 	private String intercepted = "intercepted method : ";
 	private String interceptedArg = "hijacked arguments : ";

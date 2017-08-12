@@ -35,7 +35,7 @@
 	<bean id="entityManagerFactory" name="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="myDataSource" />
-		<property name="packagesToScan" value="com.bam.beans" />
+		<property name="packagesToScan" value="com.bam.bean" />
 		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
 		<property name="jpaProperties">
 			<props>
@@ -51,14 +51,17 @@
 	</bean>    
 	
 	<!-- Find JPA Repositories -->
-	<jpa:repositories base-package="com.bam.dao" />
+	<jpa:repositories base-package="com.bam.repository" />
 	
+
+	<bean name="usersService" class="com.bam.service.BamUserService"></bean>
+
 	<bean name="batchesService" class="com.bam.service.BatchService"></bean>
 	<bean name="subtopicsService" class="com.bam.service.SubtopicService"></bean>
 	<bean name="topicsService" class="com.bam.service.TopicService"></bean>
-	<bean name="calendarsService" class="com.bam.service.CalendarService"></bean>
+	<!-- <bean name="calendarsService" class="com.bam.service.CalendarService"></bean> -->
 	<bean name="mailService" class="com.bam.service.MailService"></bean>
 	<bean name="passwordGenerator" class="com.bam.service.PasswordGenerator"></bean>
-	<bean name="userDetailsService" class="com.bam.service.UsersDetailsService"></bean>
+	<bean name="userDetailsService" class="com.bam.service.BamUserDetailsService"></bean>
 	
 </beans>
