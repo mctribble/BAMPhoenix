@@ -1,0 +1,44 @@
+/* PARENT ELEMENT */
+#curriculumManager{
+	height: 100vh;
+}
+
+.columnHeader{
+	padding: 10px;
+		
+}
+
+.columnBody{
+	padding: 0px;
+}
+
+/* LEFT SIDEBAR */
+#curriculaLoaderView{
+	border: 1px solid #333;
+	border-radius: 3px;
+}
+
+/* MIDDLE */
+#curriculumView{
+	border: 1px solid #333;
+	border-radius: 3px;
+}
+
+/* RIGHT SIDEBAR */
+#poolView{
+	padding:0px;
+	border: 1px solid #333;
+	border-radius: 3px;
+}
+
+.dropdown-menu{
+	width: 100%;
+}
+
+.dropdown-toggle{
+	width: 100%;
+}
+
+.dropdown{
+	width: 100%;
+}

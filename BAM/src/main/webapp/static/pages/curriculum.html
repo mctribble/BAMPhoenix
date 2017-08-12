@@ -1,1 +1,35 @@
-<h1>Curriculum page</h1>
+<div id="curriculumManager" class="container"
+	ng-app="curriculumController">
+	<div class="row">
+		<div id="curriculaLoaderView" class="col col-md-2">
+			<div class="columnHeader text-center">
+				<h5>Curricula</h5>
+			</div>
+
+		</div>
+		<div id="curriculumView" class="col col-md-8">
+			<div class="columnHeader text-center">
+				<h3>Java Curriculum #1</h3>
+			</div>
+		</div>
+		<div id="poolView" class="col col-md-2">
+			<div class="columnHeader text-center">
+				<h5>Topic Pool</h5>
+			</div>
+			<div class="dropdown">
+				<button class="btn btn-secondary dropdown-toggle" 
+						type="button" 
+						id="dropdownMenuButton" 
+						data-toggle="dropdown">Topic Set</button>
+				<select class="dropdown-menu" ng-model="topicFilter" ng-options="topic as topic.name for topic in topics">
+					
+				</select>
+			</div>
+			
+			<ul >
+				<li id="subtopics" ng-repeat="subtopic in subtopics | filter: {id: topicFilter.id}: true">{{subtopic.name}}</li>
+			</ul>
+			
+		</div>
+	</div>
+</div>
