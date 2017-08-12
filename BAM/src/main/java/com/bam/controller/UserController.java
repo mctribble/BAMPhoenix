@@ -3,6 +3,7 @@ package com.bam.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,17 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bam.beans.Batch;
 import com.bam.beans.Users;
 import com.bam.service.BatchService;
-import com.bam.service.UsersService;
+import com.bam.service.UsersDetailsService;
 
 @RestController
 @RequestMapping(value = "/api/v1/Users/")
 public class UserController {
 	
-	private final String USER_ID = "userId";
-	private final String BATCH_ID = "batchId";
+	private final String userID = "userId";
+	private final String batchID = "batchId";
 	
 	@Autowired
-	UsersService userService;
+	UsersDetailsService userService;
 
 	@Autowired
 	BatchService batchService;
@@ -51,7 +52,7 @@ public class UserController {
 	public List<Users> getUsersInBatch(HttpServletRequest request) {
 
 		//Get the batch id from the request
-		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
+		int batchId = Integer.parseInt( request.getParameter(batchID) );
 		
 		//Retrieve and return users in a batch from the database
 		return userService.findUsersInBatch(batchId);
@@ -62,7 +63,7 @@ public class UserController {
 	public List<Users> dropUserFromBatch(HttpServletRequest request) {
 
 		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter(USER_ID) );
+		int userId = Integer.parseInt( request.getParameter(userID) );
 		Users user = userService.findUserById( userId );
 		int batchId = user.getBatch().getId();
 
@@ -125,7 +126,7 @@ public class UserController {
 	public List<Users> removeUser(HttpServletRequest request) {
 
 		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter(USER_ID) );
+		int userId = Integer.parseInt( request.getParameter(userID) );
 		Users user = userService.findUserById( userId );
 		int batchId = user.getBatch().getId();
 
@@ -143,9 +144,9 @@ public class UserController {
 	public List<Users> addUserToBatch(HttpServletRequest request) {
 
 		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter(USER_ID) );
+		int userId = Integer.parseInt( request.getParameter(userID) );
 		//Get the batch to add the user to from the request
-		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
+		int batchId = Integer.parseInt( request.getParameter(batchID) );
 		
 		Users user = userService.findUserById( userId );
 		
