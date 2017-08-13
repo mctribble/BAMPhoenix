@@ -1,17 +1,44 @@
+<!-- @author Brian McKalip -->
+
+<!-- *********************************************** Begin CurriculaManager view ********************************************************* -->
 <div id="curriculumManager" class="container"
 	ng-controller="curriculumController">
 	<div class="row">
 		<div id="curriculaLoaderView" class="col col-md-2">
 			<div class="columnHeader text-center">
 				<h5>Curricula</h5>
+				<button class="btn btn-md btn-success" ng-click="newCurriculum()">New Curriculum</button>
+				<!-- ***************************** Begin Curricula Accordion***************************************** -->
+				<div id="curriculaAccordion" role="tablist">
+					<div class="card" ng-repeat="curriculum in curricula">
+						<div class="card-header" role="tab">
+							<h5 class="mb-0">
+								<a data-toggle="collapse" data-parent="#curriculaAccordion"
+									data-target="#collapseCurriculum{{curriculum.type}}"> {{curriculum.type}}
+								</a>
+							</h5>
+						</div>
+	
+						<div id="collapseCurriculum{{curriculum.type}}" class="collapse" role="tabpanel">
+							<div class="card-block">
+								<ul class="list-group">
+									<li class="list-group-item" ng-repeat="version in curriculum.versions" ng-click="setTemplate($parent.$index, $index)">Version #{{$index}}</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- ***************************** End Curricula Accordion***************************************** -->
 			</div>
 		</div>
+<!-- *********************************************** End CurriculaManager view ********************************************************* -->
 
+<!-- *********************************************** Begin Curriculum view ********************************************************* -->
 		<div id="curriculumView" class="col col-md-8">
 			<div class="columnHeader">
 				<div class="row">
 					<div class="col col-md-9">
-						<h3>Java Curriculum - V1.0</h3>
+						<h3>{{meta.type}} Curriculum - Version #{{meta.version}}</h3>
 					</div>
 					<div class="col col-md-3">
 						<button class="btn btn-md btn-success text-right" ng-click="addWeek()">Add Week</button>
@@ -21,7 +48,7 @@
 			
 			<!-- ***************************** Begin Week Accordion***************************************** -->
 			<div id="weekAccordion" role="tablist">
-				<div class="card" ng-repeat="week in weeks">
+				<div class="card" ng-repeat="week in displayedCurriculum.weeks">
 					<div class="card-header" role="tab">
 
 						<div class="row">
@@ -78,7 +105,9 @@
 			</div>
 			<!-- ***************************** End Week Accordion***************************************** -->
 		</div>
+<!-- ************************************************** End Curriculum View ********************************************************************** -->
 
+<!-- ************************************************** Begin Pool Sidebar View ********************************************************************** -->
 		<div id="poolView" class="col col-md-2">
 			<div class="columnHeader text-center">
 				<h5>Topic Pool</h5>
