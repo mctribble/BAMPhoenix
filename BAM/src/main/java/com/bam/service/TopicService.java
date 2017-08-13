@@ -5,54 +5,54 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bam.beans.Batch;
-import com.bam.beans.TopicName;
-import com.bam.beans.TopicWeek;
-import com.bam.dao.BatchRepository;
-import com.bam.dao.TopicNameRepository;
-import com.bam.dao.TopicWeekRepository;
+import com.bam.bean.Batch;
+import com.bam.bean.TopicName;
+import com.bam.bean.TopicWeek;
+import com.bam.repository.BatchRepository;
+import com.bam.repository.TopicNameRepository;
+import com.bam.repository.TopicWeekRepository;
 
 @Transactional
 public class TopicService {
 
 	@Autowired
-	TopicWeekRepository topicRep;
-
+	TopicWeekRepository topicWeekRepository;
+	
 	@Autowired
-	BatchRepository batchRep;
-
+	BatchRepository batchRepistory;
+	
 	@Autowired
-	TopicNameRepository tNameRep;
-
-	public void addTopic(int topicNameId, int batch, int weekNumber) {
+	TopicNameRepository topicNameRepository;
+	
+	public void addTopic(int topicNameId, int batch, int weekNumber){
 		TopicWeek topic = new TopicWeek();
 		Batch b = new Batch();
 		TopicName topicName = new TopicName();
-
-		b = batchRep.findById(batch);
-		topicName = tNameRep.findById(topicNameId);
-
+		
+		b = batchRepistory.findById(batch);
+		topicName = topicNameRepository.findById(topicNameId);
+		
 		topic.setBatch(b);
 		topic.setTopic(topicName);
 		topic.setWeekNumber(weekNumber);
-
-		topicRep.save(topic);
+		
+		topicWeekRepository.save(topic);
 	}
 
 	public List<TopicWeek> getTopicByBatch(Batch batch) {
-		return topicRep.findByBatch(batch);
+		return topicWeekRepository.findByBatch(batch);
 	}
 
 	public List<TopicWeek> getTopicByBatchId(int batchId) {
-		return topicRep.findByBatch(batchRep.findById(batchId));
+		return topicWeekRepository.findByBatch(batchRepistory.findById(batchId));
 	}
 
 	public List<TopicName> getTopics() {
-		return tNameRep.findAll();
+		return topicNameRepository.findAll();
 	}
-
-	public void addOrUpdateTopicName(TopicName topic) {
-		tNameRep.save(topic);
+	
+	public void addOrUpdateTopicName(TopicName topic){
+		topicNameRepository.save(topic);
 	}
 
 }
