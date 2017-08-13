@@ -10,10 +10,12 @@
 		<div id="curriculumView" class="col col-md-8">
 			<div class="columnHeader">
 				<div class="row">
-					<div class="col col-md-8">
+					<div class="col col-md-9">
 						<h3>Java Curriculum - V1.0</h3>
 					</div>
-					<div class="col col-md-4"></div>
+					<div class="col col-md-3">
+						<button class="btn btn-md btn-success text-right" ng-click="addWeek()">Add Week</button>
+					</div>
 				</div>
 			</div>
 			
@@ -35,8 +37,6 @@
 								<button class="btn btn-md btn-danger text-right" ng-click="deleteWeek($index+1)">Delete Week</button>
 							</div>
 						</div>
-
-
 					</div>
 
 					<div id="collapseWeek{{$index+1}}" class="collapse"
@@ -58,9 +58,13 @@
 										class="collapse" role="tabpanel">
 										<div class="card-block">
 											<!-- ***************************** Begin Subtopic List***************************************** -->
-											<ul class="list-group">
-												<li class="list-group-item"
-													ng-repeat="subtopic in day.subtopics">{{subtopic}}</li>
+											<ul class="list-group" dnd-list="day.subtopics">
+												<li class="list-group-item" 
+													ng-repeat="subtopic in day.subtopics" 
+													dnd-draggable="subtopic"
+													dnd-effect-allowed="move"
+													dnd-moved="day.subtopics.splice($index, 1)"
+													>{{subtopic}}</li>
 											</ul>
 											<!-- ***************************** End Subtopic List***************************************** -->
 										</div>
@@ -86,8 +90,12 @@
 					ng-value="{{topic}}">{{topic.name}}</option>
 			</select>
 
-			<ul class="list-group">
-				<li class="list-group-item" ng-repeat="sub in topicFilter.subtopics">{{sub}}</li>
+			<ul class="list-group" dnd-list="topicFilter.subtopics">
+				<li class="list-group-item" 
+					ng-repeat="sub in topicFilter.subtopics" 
+					dnd-draggable="sub" 
+					dnd-effect-allowed="copy" 
+					dnd-moved="topicFilter.subtopics.splice($index, 1)">{{sub}}</li>
 			</ul>
 
 		</div>

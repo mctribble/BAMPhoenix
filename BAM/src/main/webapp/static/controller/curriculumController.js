@@ -72,10 +72,15 @@ app.controller(
 				},
 			
 			];
+		
 		$scope.deleteWeek = function(index){
 			if(confirm("Are you sure you want to delete week #" + index + "?")){
 				$scope.weeks.splice(index-1, 1);
 			}
+		}
+		
+		$scope.addWeek = function(){
+			$scope.weeks.push({days:[]});
 		}
 	}
 );
