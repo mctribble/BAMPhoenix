@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
 @Table(name = "USERS")
 @Component
@@ -48,7 +47,6 @@ public class BamUser {
 	@Column(name = "Password")
 
 	@NotEmpty(message="Password cannot be empty")
-//	@JsonIgnore
 
 	private String pwd;
 
