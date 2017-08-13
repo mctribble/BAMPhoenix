@@ -427,15 +427,11 @@
                   center: '',
                   right: 'today prev,next'
                 },
-<<<<<<< HEAD
-                defaultView: 'basicWeek',
-=======
                 footer:{
                 	left: 'month',
                 	center: 'basicWeek',
                 	right: 'basicDay'
                 },
->>>>>>> 045d1946b2810dc9ca97561d74bef5d7dd50e9a3
                 eventClick: $scope.alertOnEventClick,
                 eventDrop: $scope.alertOnDrop,
                 eventResize: $scope.alertOnResize,
