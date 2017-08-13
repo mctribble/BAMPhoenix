@@ -118,6 +118,10 @@
 	color: white;
 }
 
+#navbarNavAltMarkup{
+	text-align: right;
+}
+
 .navbar-button {
 	/* 	font-family: "Audimat" !important; */
 	background-color: #3379b7;
@@ -253,6 +257,7 @@ body {
 		#142863 100vh);
 }
 
+
 #content{
 	margin-top: 50px;
 	background-color: #FFFFFF ;
@@ -262,13 +267,6 @@ body {
 	overflow-y: auto;
 	max-height: 85vh;
 	
-	/*
-	position: relative;
-	top: 35vh;
-	-webkit-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%);
-	*/
 }
 
 /***** Edit Batch Page *****/
