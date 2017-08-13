@@ -48,7 +48,6 @@ public class BamUser {
 	@Column(name = "Password")
 
 	@NotEmpty(message="Password cannot be empty")
-//	@JsonIgnore
 
 	private String pwd;
 
