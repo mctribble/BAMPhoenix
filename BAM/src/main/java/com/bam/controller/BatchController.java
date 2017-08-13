@@ -46,7 +46,7 @@ public class BatchController {
 
 	public List<Batch> getPastBatches(HttpServletRequest request)
 	{
-		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
+		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(email)));
 
 		List<Batch> pastBatches = new ArrayList<>();
 		for(Batch b : batches){
@@ -62,7 +62,7 @@ public class BatchController {
 
 	public List<Batch> getFutureBatches(HttpServletRequest request)
 	{
-		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
+		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(email)));
 
 		List<Batch> futureBatches = new ArrayList<>();
 		for(Batch b : batches){
@@ -78,7 +78,7 @@ public class BatchController {
 
 	public Batch getBatchInProgress(HttpServletRequest request)
 	{
-		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
+		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(email)));
 
 		Batch batchInProgress = null;
 		Timestamp t = new Timestamp(System.currentTimeMillis());

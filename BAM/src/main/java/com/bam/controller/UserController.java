@@ -66,7 +66,7 @@ public class UserController {
 	public List<BamUser> dropUserFromBatch(HttpServletRequest request) {
 		//Get the user id from the request
 
-		int userId = Integer.parseInt( request.getParameter(USER_ID) );
+		int userId = Integer.parseInt( request.getParameter(userID) );
 		BamUser user = bamUserService.findUserById( userId );
 
 		int batchId = user.getBatch().getId();
@@ -131,7 +131,7 @@ public class UserController {
 
 		//Get the user id from the request
 
-		int userId = Integer.parseInt( request.getParameter(USER_ID) );
+		int userId = Integer.parseInt( request.getParameter(userID) );
 		BamUser user = bamUserService.findUserById( userId );
 
 		int batchId = user.getBatch().getId();

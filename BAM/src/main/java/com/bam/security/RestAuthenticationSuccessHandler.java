@@ -40,7 +40,7 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 			Authentication authentication) throws ServletException, IOException {
 
 		
-		Users user = userService.findByEmail(authentication.getName());
+		BamUser user = userService.findByEmail(authentication.getName());
 		
 		
 		response.setContentType("application/json;charset=UTF-8");

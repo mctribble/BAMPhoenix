@@ -17,21 +17,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import com.bam.bean.BamUser;
+import com.bam.repository.BamUserRepository;
 
 @Service("userDetailsService")
 public class BamUserDetailsService implements UserDetailsService {
 
 
 	@Autowired
-
 	private BamUserService bamUserService;
+	
+	@Autowired
+	private BamUserRepository bamUserRepository;
 
 
 	/**
 	 * Returns users in the batch with a null
 	 */
-	public List<Users> findUsersNotInBatch() {
-		List<Users> users = dao.findByBatch(null);
+	public List<BamUser> findUsersNotInBatch() {
+		List<BamUser> users = bamUserRepository.findByBatch(null);
 		for (int i = 0; i < users.size(); i++) {
 			if (users.get(i).getRole() != 1) {
 				users.remove(i);
