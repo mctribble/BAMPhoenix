@@ -1,35 +1,95 @@
 <div id="curriculumManager" class="container"
-	ng-app="curriculumController">
+	ng-controller="curriculumController">
 	<div class="row">
 		<div id="curriculaLoaderView" class="col col-md-2">
 			<div class="columnHeader text-center">
 				<h5>Curricula</h5>
 			</div>
+		</div>
 
-		</div>
 		<div id="curriculumView" class="col col-md-8">
-			<div class="columnHeader text-center">
-				<h3>Java Curriculum #1</h3>
+			<div class="columnHeader">
+				<div class="row">
+					<div class="col col-md-8">
+						<h3>Java Curriculum - V1.0</h3>
+					</div>
+					<div class="col col-md-4"></div>
+				</div>
 			</div>
+			
+			<!-- ***************************** Begin Week Accordion***************************************** -->
+			<div id="weekAccordion" role="tablist">
+				<div class="card" ng-repeat="week in weeks">
+					<div class="card-header" role="tab">
+
+						<div class="row">
+							<div class="col col-md-9">
+								<h5 class="mb-0">
+									<a data-toggle="collapse" data-parent="#weekAccordion"
+										data-target="#collapseWeek{{$index+1}}"> 
+										Week #{{$index+1}} 
+									</a>
+								</h5>
+							</div>
+							<div class="col col-md-3">
+								<button class="btn btn-md btn-danger text-right" ng-click="deleteWeek($index)">Delete Week</button>
+							</div>
+						</div>
+
+
+					</div>
+
+					<div id="collapseWeek{{$index+1}}" class="collapse"
+						role="tabpanel">
+						<div class="card-block">
+							<!-- ***************************** Begin Day Accordion***************************************** -->
+							<div id="dayAccordion" role="tablist">
+								<div class="card" ng-repeat="day in week.days">
+									<div class="card-header" role="tab">
+										<h5 class="mb-0">
+											<a data-toggle="collapse" data-parent="#dayAccordion"
+												data-target="#collapseWeek{{$parent.$index+1}}-Day{{day.name}}">
+												{{weekdays[$index]}}
+											</a>
+										</h5>
+									</div>
+
+									<div id="collapseWeek{{$parent.$index+1}}-Day{{day.name}}"
+										class="collapse" role="tabpanel">
+										<div class="card-block">
+											<!-- ***************************** Begin Subtopic List***************************************** -->
+											<ul classs="list-group">
+												<li class="list-group-item"
+													ng-repeat="subtopic in day.subtopics">{{subtopic}}</li>
+											</ul>
+											<!-- ***************************** End Subtopic List***************************************** -->
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- **************************** End Day Accordion****************************************** -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ***************************** End Week Accordion***************************************** -->
 		</div>
+
 		<div id="poolView" class="col col-md-2">
 			<div class="columnHeader text-center">
 				<h5>Topic Pool</h5>
 			</div>
-			<div class="dropdown">
-				<button class="btn btn-secondary dropdown-toggle" 
-						type="button" 
-						id="dropdownMenuButton" 
-						data-toggle="dropdown">Topic Set</button>
-				<select class="dropdown-menu" ng-model="topicFilter" ng-options="topic as topic.name for topic in topics">
-					
-				</select>
-			</div>
-			
-			<ul >
-				<li id="subtopics" ng-repeat="subtopic in subtopics | filter: {id: topicFilter.id}: true">{{subtopic.name}}</li>
+
+			<select class="topicFilter text-center" ng-model="topicFilter">
+				<option class="topicFilter" selected="selected" value="">All</option>
+				<option class="topicFilter" ng-repeat="topic in topics"
+					ng-value="{{topic}}">{{topic.name}}</option>
+			</select>
+
+			<ul class="list-group">
+				<li class="list-group-item" ng-repeat="sub in topicFilter.subtopics">{{sub}}</li>
 			</ul>
-			
+
 		</div>
 	</div>
 </div>

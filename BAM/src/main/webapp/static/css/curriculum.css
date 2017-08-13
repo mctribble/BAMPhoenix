@@ -31,14 +31,43 @@
 	border-radius: 3px;
 }
 
-.dropdown-menu{
-	width: 100%;
+.topicFilter{
+	-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 5px;
+    width:100%;
+	text-align-last:center;
 }
 
-.dropdown-toggle{
-	width: 100%;
+/* FOR ACCORDIAN */
+.accordion {
+  .expander {
+    margin-bottom: 0;
+    
+    &:not(:last-child) {
+      border-bottom: 0;
+    }
+  }
 }
 
-.dropdown{
-	width: 100%;
+.expander {
+  margin-bottom: 20px;
+  list-style: none;
+  border: 1px solid #888;  
+  
+  .title {
+    text-indent: 5px;
+    background: #ddd;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .content {
+    padding: 5px;
+  }
 }
