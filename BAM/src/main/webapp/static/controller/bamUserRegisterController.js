@@ -29,7 +29,7 @@ app.controller("bamUserRegisterController", ['$http', '$scope', '$location', '$t
 		
 		}, function error(response){
 			$scope.updateDisplay = true;
-			$scope.updateMsg = 'Email is Already in Use';
+			$scope.updateMsg = 'Email is Already in use or Invalid Inputs';
 			$scope.alertClass = 'alert alert-danger';
 			console.log("Didnt work");
 		});
