@@ -48,13 +48,13 @@
 									<div class="card-header" role="tab">
 										<h5 class="mb-0">
 											<a data-toggle="collapse" data-parent="#dayAccordion"
-												data-target="#collapseWeek{{$parent.$index+1}}-Day{{day.name}}">
+												data-target="#collapseWeek{{$parent.$index+1}}-Day{{$index+1}}">
 												{{weekdays[$index]}}
 											</a>
 										</h5>
 									</div>
 
-									<div id="collapseWeek{{$parent.$index+1}}-Day{{day.name}}"
+									<div id="collapseWeek{{$parent.$index+1}}-Day{{$index+1}}"
 										class="collapse" role="tabpanel">
 										<div class="card-block">
 											<!-- ***************************** Begin Subtopic List***************************************** -->
