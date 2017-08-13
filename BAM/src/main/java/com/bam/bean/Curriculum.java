@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -29,13 +32,13 @@ public class Curriculum {
 	@Column(name ="Curriculum_version")
 	private int curriculum_Version;
 	
-	@Column(name ="Curriculum_Creator")
-	@NotEmpty(message = "Curriculum Creator cannot be empty")
-	private String curriculum_Creator;
+	@ManyToOne
+	@JoinColumn(name = "User_Id", referencedColumnName = "User_Id")
+	private BamUser curriculum_Creator;
 	
-	@Column(name = "Curriculum_Modifier")
-	@NotEmpty(message = "Curriculum Modifier cannot be empty")
-	private String curriculum_Modifier;
+	@ManyToMany
+	@JoinColumn(name = "User_Id", referencedColumnName = "User_Id")
+	private BamUser curriculum_Modifier;
 	
 	@Column(name = "Curriculum_Date_Created")
 	@NotEmpty(message = "Curriculum Date Created cannot be empty")
@@ -44,4 +47,74 @@ public class Curriculum {
 	@Column(name = "Curriculum_Number_Of_Weeks")
 	@NotEmpty(message = "Curriculum Number of weeks cannot be empty")
 	private int curriculum_Number_Of_Weeks;
+	
+	public Curriculum(){}
+
+	public int getCurriculum_Id() {
+		return curriculum_Id;
+	}
+
+	public void setCurriculum_Id(int curriculum_Id) {
+		this.curriculum_Id = curriculum_Id;
+	}
+
+	public String getCurriculum_Name() {
+		return curriculum_Name;
+	}
+
+	public void setCurriculum_Name(String curriculum_Name) {
+		this.curriculum_Name = curriculum_Name;
+	}
+
+	public int getCurriculum_Version() {
+		return curriculum_Version;
+	}
+
+	public void setCurriculum_Version(int curriculum_Version) {
+		this.curriculum_Version = curriculum_Version;
+	}
+
+	public BamUser getCurriculum_Creator() {
+		return curriculum_Creator;
+	}
+
+	public void setCurriculum_Creator(BamUser curriculum_Creator) {
+		this.curriculum_Creator = curriculum_Creator;
+	}
+
+	public BamUser getCurriculum_Modifier() {
+		return curriculum_Modifier;
+	}
+
+	public void setCurriculum_Modifier(BamUser curriculum_Modifier) {
+		this.curriculum_Modifier = curriculum_Modifier;
+	}
+
+	public String getCurriculum_dateCreated() {
+		return curriculum_dateCreated;
+	}
+
+	public void setCurriculum_dateCreated(String curriculum_dateCreated) {
+		this.curriculum_dateCreated = curriculum_dateCreated;
+	}
+
+	public int getCurriculum_Number_Of_Weeks() {
+		return curriculum_Number_Of_Weeks;
+	}
+
+	public void setCurriculum_Number_Of_Weeks(int curriculum_Number_Of_Weeks) {
+		this.curriculum_Number_Of_Weeks = curriculum_Number_Of_Weeks;
+	}
+
+	@Override
+	public String toString() {
+		return "Curriculum [curriculum_Id=" + curriculum_Id + ", curriculum_Name=" + curriculum_Name
+				+ ", curriculum_Version=" + curriculum_Version + ", curriculum_Creator=" + curriculum_Creator
+				+ ", curriculum_Modifier=" + curriculum_Modifier + ", curriculum_dateCreated=" + curriculum_dateCreated
+				+ ", curriculum_Number_Of_Weeks=" + curriculum_Number_Of_Weeks + "]";
+	}
+	
+	
+	
+	
 }
