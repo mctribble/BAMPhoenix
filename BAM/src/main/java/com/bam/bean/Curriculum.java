@@ -1,7 +1,9 @@
 package com.bam.bean;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,11 +34,11 @@ public class Curriculum {
 	@Column(name ="Curriculum_version")
 	private int curriculum_Version;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "User_Id", referencedColumnName = "User_Id")
 	private BamUser curriculum_Creator;
 	
-	@ManyToMany
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "User_Id", referencedColumnName = "User_Id")
 	private BamUser curriculum_Modifier;
 	
