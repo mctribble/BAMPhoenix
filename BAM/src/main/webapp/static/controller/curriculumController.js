@@ -30,7 +30,7 @@ app.controller(
 				{
 					days : 
 						[
-							{subtopics : [ 'Subtopic 1', 'Subtopic 2', 'subtopic 3' ]},
+							{subtopics : [ 'Java', 'Subtopic 2', 'subtopic 3' ]},
 							{subtopics : [ 'Subtopic 1', 'Subtopic 2' ]},
 							{subtopics : [ 'Subtopic 1', 'Subtopic 2', 'subtopic 3', 'Subtopic 4' ]},
 							{subtopics : []}, 
@@ -41,7 +41,7 @@ app.controller(
 				{
 					days : 
 						[
-							{subtopics : [ 'Subtopic 1', 'Subtopic 2', 'subtopic 3' ]},
+							{subtopics : [ 'SQL', 'Subtopic 2', 'subtopic 3' ]},
 							{subtopics : [ 'Subtopic 1', 'Subtopic 2' ]},
 							{subtopics : [ 'Subtopic 1', 'Subtopic 2', 'subtopic 3', 'Subtopic 4' ]},
 							{subtopics : []}, 
@@ -52,7 +52,7 @@ app.controller(
 				{
 					days : 
 						[
-							{subtopics : [ 'Subtopic 1', 'Subtopic 2', 'subtopic 3' ]},
+							{subtopics : [ '.net', 'Subtopic 2', 'subtopic 3' ]},
 							{subtopics : [ 'Subtopic 1', 'Subtopic 2' ]},
 							{subtopics : [ 'Subtopic 1', 'Subtopic 2', 'subtopic 3', 'Subtopic 4' ]},
 							{subtopics : []}, 
@@ -73,7 +73,9 @@ app.controller(
 			
 			];
 		$scope.deleteWeek = function(index){
-			$scope.weeks.splice(index, 1);
+			if(confirm("Are you sure you want to delete week #" + index + "?")){
+				$scope.weeks.splice(index-1, 1);
+			}
 		}
 	}
 );

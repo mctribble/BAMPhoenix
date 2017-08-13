@@ -32,7 +32,7 @@
 								</h5>
 							</div>
 							<div class="col col-md-3">
-								<button class="btn btn-md btn-danger text-right" ng-click="deleteWeek($index)">Delete Week</button>
+								<button class="btn btn-md btn-danger text-right" ng-click="deleteWeek($index+1)">Delete Week</button>
 							</div>
 						</div>
 
@@ -58,7 +58,7 @@
 										class="collapse" role="tabpanel">
 										<div class="card-block">
 											<!-- ***************************** Begin Subtopic List***************************************** -->
-											<ul classs="list-group">
+											<ul class="list-group">
 												<li class="list-group-item"
 													ng-repeat="subtopic in day.subtopics">{{subtopic}}</li>
 											</ul>
