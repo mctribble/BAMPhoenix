@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  <display-name>BAMStub</display-name><context-param>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>BAMStub</display-name>
+	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/beans.xml</param-value>
 	</context-param>
@@ -10,11 +14,8 @@
 	</context-param>
 
 
-	<!-- 
-	<listener>
-		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-	</listener>
- -->
+	<!-- <listener> <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class> 
+		</listener> -->
 
 	<!-- Next we hookup the spring mvc listener. this will take all requests 
 		and forward them to our dispatcher servlet. NORE: this is pulling from the 

@@ -53,7 +53,9 @@
 	<!-- Find JPA Repositories -->
 	<jpa:repositories base-package="com.bam.repository" />
 	
+
 	<bean name="usersService" class="com.bam.service.BamUserService"></bean>
+
 	<bean name="batchesService" class="com.bam.service.BatchService"></bean>
 	<bean name="subtopicsService" class="com.bam.service.SubtopicService"></bean>
 	<bean name="topicsService" class="com.bam.service.TopicService"></bean>
