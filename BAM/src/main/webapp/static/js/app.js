@@ -3,35 +3,38 @@ app.config(function($routeProvider, $locationProvider){
 	$locationProvider.html5Mode(false).hashPrefix('');
 	$routeProvider.when("/",{
 		templateUrl: "static/pages/login.html",
-		controller: 'loginCtl'
+		controller: 'loginController'
 	}).when("/batchesAll",{
 		templateUrl:"static/pages/batchesAll.html",
-		controller: "batchesAllCtr"
+		controller: "batchesAllController"
 	}).when("/register",{
 		templateUrl: "static/pages/register.html",
-		controller: "registerCtrl"
+		controller: "bamUserRegisterController"
 	}).when("/home",{
 		templateUrl: "static/pages/calendar.html",
-		controller: "uiCalendarCtrl"
+		controller: "calendarController"
 	}).when("/associates",{
 		templateUrl: "static/pages/ViewAssociates.html",
-		controller: "associatesController"
+		controller: "associateViewController"
 	}).when("/update",{
 		templateUrl: "static/pages/update.html",
-		controller: "updateAssociateCtrl"
+		controller: "associateUpdateController"
 	}).when("/reset",{
 		templateUrl: "static/pages/reset.html",
-		controller: "resetCtrl"
+		controller: "passwordResetController"
 	}).when("/batchesPast",{
 		templateUrl: "static/pages/batchesPast.html",
-		controller: "batchesPast"
+		controller: "batchesPastController"
 	}).when("/batchesFuture",{
 		templateUrl: "static/pages/batchesFuture.html",
-		controller: "batchesFuture"
+		controller: "batchesFutureController"
 	}).when("/editBatch", {
 		templateUrl: "static/pages/EditBatch.html",
-		controller: "editBatchController"
+		controller: "batchEditController"
 	}).when("/noBatch",{
 		templateUrl: "static/pages/NoBatch.html"
+	}).when("/curriculum",{
+		templateUrl: "static/pages/curriculum.html",
+		controller: "curriculumController"
 	}).otherwise({redirectTo: '/'});
 });

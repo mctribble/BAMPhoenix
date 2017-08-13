@@ -1,61 +1,57 @@
 
 package com.bam.service;
 
-import java.io.IOException;
-import java.util.List;
 
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bam.beans.Batch;
-import com.bam.beans.Users;
-import com.bam.dao.BatchRepository;
-import com.bam.dao.UsersRepository;
+import com.bam.bean.Batch;
+import com.bam.bean.BamUser;
+import com.bam.repository.BatchRepository;
+import com.bam.repository.BamUserRepository;
 
 @Transactional
 public class UsersService {
 
 	@Autowired
-	UsersRepository dao;
+	BamUserRepository bamUserRepository;
 
 	@Autowired
-	BatchRepository bdao;
+	BatchRepository batchRepository;
 
-	public void addOrUpdateUser(Users user) {
-		dao.save(user);
-
-	}
-
-	public List<Users> findAllUsers() {
-		return dao.findAll();
+	public void addOrUpdateUser(BamUser user) {
+	  bamUserRepository.save(user);
 
 	}
 
-	public List<Users> findByRole(int role) {
-		return dao.findByRole(role);
+	public List<BamUser> findAllUsers() {
+		return bamUserRepository.findAll();
+
 	}
 
-	public Users findUserById(int userId) {
-		return dao.findByUserId(userId);
+	public List<BamUser> findByRole(int role) {
+		return bamUserRepository.findByRole(role);
 	}
 
-	public Users findUserByEmail(String email) {
-		return dao.findByEmail(email);
+	public BamUser findUserById(int userId) {
+		return bamUserRepository.findByUserId(userId);
 	}
 
-	public List<Users> findUsersInBatch(int batchId) {
+	public BamUser findUserByEmail(String email) {
+		return bamUserRepository.findByEmail(email);
+	}
+
+	public List<BamUser> findUsersInBatch(int batchId) {
 		// Get batch object by the id
-		Batch batch = bdao.findById(batchId);
+		Batch batch = batchRepository.findById(batchId);
 		// Return users in the batch
-		return dao.findByBatch(batch);
+		return bamUserRepository.findByBatch(batch);
 	}
 
-	public List<Users> findUsersNotInBatch() {
+	public List<BamUser> findUsersNotInBatch() {
 		// Return users in the batch with a null
-		List<Users> users = dao.findByBatch(null);
+		List<BamUser> users = bamUserRepository.findByBatch(null);
 		for (int i = 0; i < users.size(); i++) {
 			if (users.get(i).getRole() != 1) {
 				users.remove(i);

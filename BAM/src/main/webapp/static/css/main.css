@@ -118,6 +118,10 @@
 	color: white;
 }
 
+#navbarNavAltMarkup{
+	text-align: right;
+}
+
 .navbar-button {
 	/* 	font-family: "Audimat" !important; */
 	background-color: #3379b7;
@@ -252,6 +256,7 @@ body {
 	background-image: radial-gradient(ellipse farthest-corner at right bottom, #FFE8FC 0%,
 		#142863 100vh);
 }
+
 
 #content{
 	margin-top: 50px;
