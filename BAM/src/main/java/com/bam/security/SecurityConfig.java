@@ -12,22 +12,29 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-/*
+/**
  * 
- * 
+ * @author Duncan Hayward
+ * Getting user from the database with
+ * @Autowired
+ * UserDetailsService
+ *
+ *LoadUsername() will load the User Record from DB 
+  //Past back a Spring Security 
+  // LoadUsername() will load the User record from the DB
+  // Pass back a Spring Security User Object NOT BAMUser object
+   * .passwordEncoder(new BCryptPasswordEncoder());
+   * 
+   * Don't disable csrf in production
+   * 
+   *  //.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
  */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	// Get user from the database, via Hibernate
 	@Autowired
-	@Qualifier("userDetailsService")
-
-	UserDetailsService userDetailsService;//LoadUsername() will load the User Record from DB 
-										  //Past back a Spring Security 
-	// LoadUsername() will load the User record from the DB
-	// Pass back a Spring Security User Object NOT BAMUser object
+	UserDetailsService userDetailsService;
 
 	@Autowired
 	private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
@@ -38,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
-		// .passwordEncoder(new BCryptPasswordEncoder());
+	
 	}
 
 	@Override
@@ -54,9 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 protected void configure(HttpSecurity http) throws Exception {
 	  http
 	   .headers().disable()
-	   .csrf().disable()//not suppose to disable this in production
+	   .csrf().disable()
 	   .authorizeRequests()
-	   	//.antMatchers("/Batches/**").hasRole("2")
 	   	.antMatchers("/Users/Register.do").permitAll()
 	    .anyRequest().authenticated()
 	    .and()
@@ -71,7 +77,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    .and()
 	    .logout()
 	    .logoutUrl("/logout")
-	    //.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
 	    .deleteCookies("JSESSIONID")
 	    .permitAll()
 	    .and();

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.bean.Batch;
 import com.bam.service.BatchService;
+
 import com.bam.service.BamUserService;
 
 @RestController
@@ -24,13 +25,15 @@ import com.bam.service.BamUserService;
 public class BatchController {
 
 	
-	private final String EMAIL = "email";
+	private final static String email = "email";
 	
 	@Autowired
 	BatchService batchService;
 
 	@Autowired
+
 	BamUserService bamUserService;
+
 
 	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
@@ -40,9 +43,11 @@ public class BatchController {
 
 	@RequestMapping(value = "Past", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+
 	public List<Batch> getPastBatches(HttpServletRequest request)
 	{
 		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
+
 		List<Batch> pastBatches = new ArrayList<>();
 		for(Batch b : batches){
 			if(new Timestamp(System.currentTimeMillis()).after(b.getEndDate())){
@@ -54,9 +59,11 @@ public class BatchController {
 
 	@RequestMapping(value = "Future", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+
 	public List<Batch> getFutureBatches(HttpServletRequest request)
 	{
 		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
+
 		List<Batch> futureBatches = new ArrayList<>();
 		for(Batch b : batches){
 			if(new Timestamp(System.currentTimeMillis()).before(b.getStartDate())){
@@ -68,9 +75,11 @@ public class BatchController {
 
 	@RequestMapping(value = "InProgress", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+
 	public Batch getBatchInProgress(HttpServletRequest request)
 	{
 		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
+
 		Batch batchInProgress = null;
 		Timestamp t = new Timestamp(System.currentTimeMillis());
 		for(Batch b : batches){
