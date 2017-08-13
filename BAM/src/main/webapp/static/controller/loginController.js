@@ -25,6 +25,7 @@ app.controller('loginController', function($rootScope, $scope, $location, $http)
 			console.log($rootScope.user)
 			if($rootScope.user.role == 3){
 				$rootScope.userRole = '(Quality Control)';
+				$location.path('/home');
 			} else if($rootScope.user.role == 2){
 				$rootScope.userRole = '(Trainer)';
 				$http({
@@ -40,8 +41,7 @@ app.controller('loginController', function($rootScope, $scope, $location, $http)
 				});
 			} else if($rootScope.user.role == 1) {
 				$rootScope.userRole = '(Associate)';
-				if(!$rootScope.user.batch)
-				{
+				if(!$rootScope.user.batch){
 					$location.path('/noBatch');
 				}else{
 					$rootScope.gotSubtopics = false;

@@ -3,6 +3,7 @@ package com.bam.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,17 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bam.bean.Batch;
 import com.bam.bean.BamUser;
 import com.bam.service.BatchService;
+
 import com.bam.service.BamUserService;
+
 
 @RestController
 @RequestMapping(value = "/api/v1/Users/")
 public class UserController {
 	
-	private final String USER_ID = "userId";
-	private final String BATCH_ID = "batchId";
+	private final String userID = "userId";
+	private final String batchID = "batchId";
 	
 	@Autowired
+
 	BamUserService bamUserService;
+
 
 	@Autowired
 	BatchService batchService;
@@ -50,7 +55,7 @@ public class UserController {
 	@ResponseBody
 	public List<BamUser> getUsersInBatch(HttpServletRequest request) {
 		//Get the batch id from the request
-		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
+		int batchId = Integer.parseInt( request.getParameter(batchID) );
 		
 		//Retrieve and return users in a batch from the database
 		return bamUserService.findUsersInBatch(batchId);
@@ -60,8 +65,10 @@ public class UserController {
 	@ResponseBody
 	public List<BamUser> dropUserFromBatch(HttpServletRequest request) {
 		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter(USER_ID) );
+
+		int userId = Integer.parseInt( request.getParameter(userID) );
 		BamUser user = bamUserService.findUserById( userId );
+
 		int batchId = user.getBatch().getId();
 
 		// Drop user from the batch
@@ -123,8 +130,10 @@ public class UserController {
 	public List<BamUser> removeUser(HttpServletRequest request) {
 
 		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter(USER_ID) );
+
+		int userId = Integer.parseInt( request.getParameter(userID) );
 		BamUser user = bamUserService.findUserById( userId );
+
 		int batchId = user.getBatch().getId();
 
 		// Set the user as inactive
@@ -140,9 +149,9 @@ public class UserController {
 	@ResponseBody
 	public List<BamUser> addUserToBatch(HttpServletRequest request) {
 		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter(USER_ID) );
+		int userId = Integer.parseInt( request.getParameter(userID) );
 		//Get the batch to add the user to from the request
-		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
+		int batchId = Integer.parseInt( request.getParameter(batchID) );
 		
 		BamUser user = bamUserService.findUserById( userId );
 		
