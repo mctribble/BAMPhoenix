@@ -71,3 +71,15 @@
     padding: 5px;
   }
 }
+
+.dndDraggingSource{
+	display:none;
+	list-style-type:none;
+}
+
+.dndPlaceholder{
+	height:50px;
+	opacity:.5;
+	list-style-type:none;
+}
+

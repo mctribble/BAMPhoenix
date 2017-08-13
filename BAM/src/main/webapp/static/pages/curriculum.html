@@ -84,13 +84,15 @@
 				<h5>Topic Pool</h5>
 			</div>
 
+			<ul class="list-group" dnd-list="[]" style="height:50px;background-color:#ccc"></ul>
+
 			<select class="topicFilter text-center" ng-model="topicFilter">
 				<option class="topicFilter" selected="selected" value="">All</option>
 				<option class="topicFilter" ng-repeat="topic in topics"
 					ng-value="{{topic}}">{{topic.name}}</option>
 			</select>
 
-			<ul class="list-group" dnd-list="topicFilter.subtopics">
+			<ul class="list-group">
 				<li class="list-group-item" 
 					ng-repeat="sub in topicFilter.subtopics" 
 					dnd-draggable="sub" 
