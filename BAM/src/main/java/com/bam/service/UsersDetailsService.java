@@ -82,7 +82,6 @@ public class UsersDetailsService implements UserDetailsService {
 	
 	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
 		BamUser user = dao.findByEmail(email);
-		System.out.println(email);
 
 		return buildUserForAuthentication(user, buildUserAuthority(user));
 	}

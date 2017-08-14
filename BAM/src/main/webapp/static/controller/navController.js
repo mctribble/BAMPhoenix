@@ -1,4 +1,6 @@
+
 app.controller('navController', function($rootScope, $window, $scope, $location, $http) {
+
 
 	$scope.$on('$routeChangeStart', function(next, current) {
 		$rootScope.gotSubtopics = false;
@@ -13,6 +15,11 @@ app.controller('navController', function($rootScope, $window, $scope, $location,
 		//}
 	});
 	
+	$scope.hideNav = function (){
+		delete $rootScope.user;
+	}
+	
+	
 	$scope.redirect = function (){
 		$rootScope.gotSubtopics = false;
 		if(!angular.fromJson($window.sessionStorage.getItem('sessionUser'))){
@@ -21,4 +28,8 @@ app.controller('navController', function($rootScope, $window, $scope, $location,
 	}
 	
 	$scope.redirect();
+	
+	$scope.hideNav = function (){
+        delete $rootScope.user;
+    }
 });

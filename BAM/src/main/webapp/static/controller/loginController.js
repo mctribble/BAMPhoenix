@@ -1,8 +1,11 @@
+
 app.controller('loginController', ['SessionService', function($rootScope, $window, $scope, $location, $http, SessionSevice) {
 
 	$rootScope.userRole;
 	$scope.msg;
+
 	$rootScope.user;
+	$scope.msg;
 	$rootScope.trainerBatch;
 	$scope.logIn = function() {
 		var user = {
@@ -20,9 +23,11 @@ app.controller('loginController', ['SessionService', function($rootScope, $windo
 	        }
 		})
 		.then(function success(response){
+
 			SessionSevice.set("currentUser", response.data);
 			if(SessionSevice.get("currentUser").role == 3){
 				SessionService.set("userRole", '(Quality Control)');
+
 				$location.path('/home');
 			} else if(SessionSevice.get("currentUser").role == 2){
 				SessionService.set("userRole", '(Trainer)');
