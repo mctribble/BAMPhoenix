@@ -76,7 +76,6 @@
             // @return {String} fingerprint of the source object and its events array
             
             this.sourceFingerprint = function (source) {
-            	console.log(source);
                 var fp = '' + (source.__id || (source.__id = sourceSerialId++));
                 var events = angular.isObject(source) && source.events;
 
@@ -250,7 +249,6 @@
             
            
             if($rootScope){
-            	console.log($rootScope);
             	 var url;
 	            if($rootScope.user.role == 1){
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.user.batch.id;
@@ -258,9 +256,7 @@
 	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.trainerBatch.id;
 	            }else if (($rootScope.user.role == 3) && $rootScope.currentBatch) {
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
-	            	console.log(url);
 	            }else{
-	            	console.log('ajax request for subtopics failed');
 	            }
             /* event source that contains custom events on the scope */
             	$scope.events = [];
@@ -275,13 +271,20 @@
                 		for(var i = 0; i < response.data.length ; i++) {
                     			var title = response.data[i].subtopicName.name;
                         		var dates = response.data[i].subtopicDate;
+                        		var status= response.data[i].status.id;
                         	
                         		var a = new Date(dates);  
                                 var year = a.getUTCFullYear();
                                 var month = a.getMonth();
                                 var day = a.getDate();
                                 var formattedTime = new Date(year, month, day);
-                        		var temp = {title: title, start: formattedTime, end: formattedTime};
+                                if(status == 1 )
+                            		var temp = {title: title, start: formattedTime, end: formattedTime};
+                                    if(status == 2 )
+                                		var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
+                                    if(status == 3 )
+                                		var temp = {title: title, start: formattedTime, entd: formattedTime, className:['topiccolorred']};
+                                    
                     			$scope.events.push(temp);
                 		}
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
@@ -315,34 +318,56 @@
             if($rootScope.user.role == 2 && $rootScope.currentBatch == null){
             /* alert on eventClick */
             $scope.alertOnEventClick = function( date, jsEvent, view){
-            	var name = jsEvent.target.parentNode.getAttribute("class");
-                if (name == "fc-content full-calendar-highlight-green") {
-                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green"); // remove green
-                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-red"); // add red
+            	var name = jsEvent.target.parentNode.parentNode.getAttribute("class");
+            	if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorgreen fc-draggable ng-scope fc-allow-mouse-resize") {
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove green
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add red
                     // http for green to red
                     $http({
                  		method : "GET",
                  		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
                  	 }).then(function successCallback(response) {
-                 		//console.log("SUCCESS");
                  	 });
-                } else if(name == "fc-content full-calendar-highlight-red"){
-                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-red"); // remove red
+                }  else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorred fc-draggable ng-scope fc-allow-mouse-resize"){
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove red
                     // http for red to blue
                     $http({
                  		method : "GET",
                  		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
                  	 }).then(function successCallback(response) {
-                 		//console.log("SUCCESS");
                  	 });
-                } else if(name == "fc-content") {
-                    $(jsEvent.target.parentNode).toggleClass("full-calendar-highlight-green"); //add green
+                } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize") {
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); //add green
                     // http for blue to green
                     $http({
                  		method : "GET",
                  		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Completed"
                  	 }).then(function successCallback(response) {
-                 		//console.log("SUCCESS");
+                 	 });
+                }    else  if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorgreen") {
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove green
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add red
+                    // http for green to red
+                    $http({
+                 		method : "GET",
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
+                 	 }).then(function successCallback(response) {
+                 	 });
+                } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorred"){
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove red
+                    // http for red to blue
+                    $http({
+                 		method : "GET",
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
+                 	 }).then(function successCallback(response) {
+                 	 });
+                }else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope topiccolorred fc-allow-mouse-resize"){
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove red
+                    // http for red to blue
+                    $http({
+                 		method : "GET",
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
+                 	 }).then(function successCallback(response) {
                  	 });
                 }
             };
@@ -353,7 +378,6 @@
              		method : "GET",
              		url : "rest/api/v1/Calendar/DateUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&date="+event.start
              	 }).then(function successCallback(response) {
-             		//console.log("SUCCESS");
              	 });
             };
             
@@ -411,7 +435,6 @@
             };
             
             if($rootScope.user.role == 1 || $rootScope.currentBatch != null){
-            	console.log("role =" + $rootScope.user.role )
             /* config object */
             $scope.uiConfig = {
               calendar:{
@@ -439,9 +462,7 @@
               }
             
             };
-            	console.log("config: " + $scope.uiConfig);
             }else {
-            	console.log("role =" +$rootScope.user.role )
             /* config object */
             $scope.uiConfig = {
               calendar:{
