@@ -33,24 +33,27 @@
 			</table>
 			<div ng-show="user.role>=2 && (currentBatch.id ==null) || user.role>=3">
 			<h3>Click Events To Change Status</h3>
+			<!-- Editor: Joseph Nguyen
+					Modified colors to be easier on the eyes.
+			 -->
 			<table border="2" class="table">
 				<tr>
-					<td bgcolor="green" style="border: 3px"><font color="white">Covered</font></td>
+					<td bgcolor="#32cd32" style="border: 3px"><font color="white">Covered</font></td>
 				<tr>
-					<td bgcolor="#3a87ad" style="border: 3px"><font color="white">Planned</font></td>
+					<td bgcolor="#0275d8" style="border: 3px"><font color="white">Planned</font></td>
 				<tr>
-					<td bgcolor="red" style="border: 3px"><font color="white">Missed</font></td>
+					<td bgcolor="#fd4234" style="border: 3px"><font color="white">Missed</font></td>
 			</table>
 			</div>
 			<div ng-show="user.role>=2 && (currentBatch.id !=null) ">
 			<h3> Events Status</h3>
 			<table border="2" class="table">
 				<tr>
-					<td bgcolor="green" style="border: 3px"><font color="white">Covered</font></td>
+					<td bgcolor="#32cd32" style="border: 3px"><font color="white">Covered</font></td>
 				<tr>
-					<td bgcolor="#3a87ad" style="border: 3px"><font color="white">Planned</font></td>
+					<td bgcolor="#0275d8" style="border: 3px"><font color="white">Planned</font></td>
 				<tr>
-					<td bgcolor="red" style="border: 3px"><font color="white">Missed</font></td>
+					<td bgcolor="#fd4234" style="border: 3px"><font color="white">Missed</font></td>
 			</table>
 			</div>
 		</div>
