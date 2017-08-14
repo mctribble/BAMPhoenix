@@ -1,5 +1,4 @@
 app.controller('loginController', function($rootScope, $scope, $location, $http) {
-
 	$rootScope.userRole;
 	
 	$scope.msg;
