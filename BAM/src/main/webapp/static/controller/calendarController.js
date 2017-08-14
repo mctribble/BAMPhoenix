@@ -267,30 +267,67 @@
            //POST method to show subtopics on the calendar
             	$scope.loading = true;		// For showing and hiding the loading gif.
             	if(!$rootScope.gotSubtopics) {
-            		$rootScope.gotSubtopics = true; 
-            		$http({
-                		method : "GET",
-                		url : url
-                	}).then(function successCallback(response) {
-                		for(var i = 0; i < response.data.length ; i++) {
-                    			var title = response.data[i].subtopicName.name;
-                        		var dates = response.data[i].subtopicDate;
-                        	
-                        		var a = new Date(dates);  
-                                var year = a.getUTCFullYear();
-                                var month = a.getMonth();
-                                var day = a.getDate();
-                                var formattedTime = new Date(year, month, day);
-                        		var temp = {title: title, start: formattedTime, end: formattedTime};
-                    			$scope.events.push(temp);
-                		}
-                			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
-                		
-                		//$scope.renderCalendar('myCalendar');
-                	}).finally(function() {
-                		// Turn off loading indicator whether success or failure.
-                		$scope.loading = false;
-                	});
+            		$rootScope.gotSubtopics = true;
+            		var xhr = new XMLHttpRequest();
+
+					xhr.onreadystatechange = function() {
+						if (xhr.readyState == 4
+								&& xhr.status == 200) {
+							console.log('Loading subtopics');
+							console.log(xhr.response);
+							var r = JSON.parse(xhr.response);
+							for (var i = 0; i < r.length; i++) {
+								var title = r[i].subtopicName.name;
+								var dates = r[i].subtopicDate;
+
+								var a = new Date(dates);
+								var year = a.getUTCFullYear();
+								var month = a.getMonth();
+								var day = a.getDate();
+								var formattedTime = new Date(
+										year, month, day);
+								var temp = {
+									title : title,
+									start : formattedTime,
+									end : formattedTime
+								};
+								$scope.events.push(temp);
+								if (i % 10 == 0) {
+									uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource', $scope.events);
+									$scope.events = [];
+									console.log('loaded 10');
+									continue;
+								}
+							}
+						}
+					}
+					xhr.open('GET', url, true); // true:
+					// asynchronize
+					xhr.send();
+					$scope.loading = false;
+//            		$http({
+//                		method : "GET",
+//                		url : url
+//                	}).then(function successCallback(response) {
+//                		for(var i = 0; i < response.data.length ; i++) {
+//                    			var title = response.data[i].subtopicName.name;
+//                        		var dates = response.data[i].subtopicDate;
+//                        	
+//                        		var a = new Date(dates);  
+//                                var year = a.getUTCFullYear();
+//                                var month = a.getMonth();
+//                                var day = a.getDate();
+//                                var formattedTime = new Date(year, month, day);
+//                        		var temp = {title: title, start: formattedTime, end: formattedTime};
+//                    			$scope.events.push(temp);
+//                		}
+//                			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
+//                		
+//                		//$scope.renderCalendar('myCalendar');
+//                	}).finally(function() {
+//                		// Turn off loading indicator whether success or failure.
+//                		$scope.loading = false;
+//                	});
             	}
             }
             
