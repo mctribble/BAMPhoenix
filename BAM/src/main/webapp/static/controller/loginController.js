@@ -21,7 +21,6 @@ app.controller('loginController', function($rootScope, $scope, $location, $http)
 		})
 		.then(function success(response){
 			$rootScope.user = response.data;
-			console.log($rootScope.user)
 			if($rootScope.user.role == 3){
 				$rootScope.userRole = '(Quality Control)';
 				$location.path('/home');
