@@ -415,12 +415,22 @@
             /* config object */
             $scope.uiConfig = {
               calendar:{
-                height: 450,
+                contentHeight: 'auto',
                 editable: false,
+                views:{
+                	month:{
+                		eventLimit: 5
+                	}
+                },
                 header:{
                   left: 'title',
                   center: '',
                   right: 'today prev,next'
+                },
+                footer:{
+                	left: 'month',
+                	center: 'basicWeek',
+                	right: 'basicDay'
                 },
                 eventClick: $scope.alertOnEventClick,
                 eventDrop: $scope.alertOnDrop,
@@ -435,12 +445,25 @@
             /* config object */
             $scope.uiConfig = {
               calendar:{
-                height: 450,
+                contentHeight: 'auto',
                 editable: true,
+                views:{
+                	month:{
+                		eventLimit: 5
+                	},
+                	day:{
+                		aspectRatio: .5
+                	}
+                },
                 header:{
                   left: 'title',
                   center: '',
                   right: 'today prev,next'
+                },
+                footer:{
+                	left: 'month',
+                	center: 'basicWeek',
+                	right: 'basicDay'
                 },
                 eventClick: $scope.alertOnEventClick,
                 eventDrop: $scope.alertOnDrop,
