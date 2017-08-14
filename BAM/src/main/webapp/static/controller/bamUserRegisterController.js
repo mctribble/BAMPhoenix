@@ -33,5 +33,4 @@ app.controller("bamUserRegisterController", ['$http', '$scope', '$location', '$t
 			$scope.alertClass = 'alert alert-danger';
 		}
 	}
-	}
-])
+}])

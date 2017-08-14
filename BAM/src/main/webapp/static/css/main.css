@@ -66,6 +66,11 @@
 	background-color: #f26925;
 }
 
+/******** REGISTER STYLING *********/
+.input-group .form-control{
+	    width: 200px;
+}
+
 /***** 2.0 NAVBAR STYLING *****/
 .full-navbar {
 	width: 100%;

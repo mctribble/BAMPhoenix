@@ -1,5 +1,5 @@
 app.controller('navController', function($rootScope, $scope, $location, $http) {
-
+	
 	$scope.$on('$routeChangeStart', function(next, current) {
 		$rootScope.gotSubtopics = false;
 		var somePath = $location.path();
@@ -26,4 +26,8 @@ app.controller('navController', function($rootScope, $scope, $location, $http) {
 	}
 	
 	$scope.redirect();
+	
+	$scope.hideNav = function (){
+        delete $rootScope.user;
+    }
 });
