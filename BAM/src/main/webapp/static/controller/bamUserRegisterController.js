@@ -34,4 +34,4 @@ app.controller("bamUserRegisterController", ['$http', '$scope', '$location', '$t
 		}
 	}
 	}
-])
+}])
