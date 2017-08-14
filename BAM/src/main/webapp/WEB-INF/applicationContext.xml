@@ -62,5 +62,6 @@
 	<bean name="mailService" class="com.bam.service.MailService"></bean>
 	<bean name="passwordGenerator" class="com.bam.service.PasswordGenerator"></bean>
 	<bean name="userDetailsService" class="com.bam.service.BamUserDetailsService"></bean>
+	<bean name="curriculumService" class="com.bam.service.CurriculumService"></bean>
 	
 </beans>
