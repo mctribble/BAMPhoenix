@@ -26,6 +26,7 @@ public class Curriculum {
 	@SequenceGenerator(name = "Curriculum_ID_SEQ", sequenceName = "Curriculum_ID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Curriculum_ID_SEQ")
 	private Integer id;
+
 	
 	@Column(name= "Curriculum_name")
 	@NotEmpty(message = "Curriculum name cannot be empty")
@@ -40,6 +41,7 @@ public class Curriculum {
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Curriculum_Modifier", referencedColumnName = "User_Id")
+
 	private BamUser curriculum_Modifier;
 	
 	@Column(name = "Curriculum_Date_Created")
