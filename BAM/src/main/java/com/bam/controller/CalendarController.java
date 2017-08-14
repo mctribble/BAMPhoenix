@@ -10,6 +10,9 @@ import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +23,7 @@ import com.bam.beans.Subtopic;
 import com.bam.beans.SubtopicStatus;
 import com.bam.beans.TopicName;
 import com.bam.beans.TopicWeek;
+import com.bam.dao.SubtopicRepository;
 import com.bam.service.SubtopicService;
 import com.bam.service.TopicService;
 
@@ -35,19 +39,42 @@ public class CalendarController {
 	@Autowired
 	TopicService topicService;
 	
+	@Autowired
+	SubtopicRepository subtopicRepository;
+	
 	@RequestMapping(value="Subtopics", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Subtopic> getSubtopicsByBatch(HttpServletRequest request) {
+		System.out.println("CalendarController - getSubtopicsByBatch()");
 		//Get the batch id from the request
 		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
 		
 		//Retrieve and return users in a batch from the database
+		//System.out.println(subtopicService.getSubtopicByBatchId(batchId));
+		return subtopicService.getSubtopicByBatchId(batchId);
+	}
+	
+	@RequestMapping(value="SubtopicsPag", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public List<Subtopic> getTopicsByBatchPag(HttpServletRequest request, Pageable pageable, Model model){
+		System.out.println("Line 1");
+		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
+		System.out.println("Line 2");
+		Page<Subtopic> subtopic = this.subtopicRepository.findAll(pageable);
+		System.out.println("Line 3");
+		model.addAttribute("subtopic", subtopic.getContent());
+		System.out.println("Line 4");
+		float numOfPages = subtopic.getTotalPages();
+		System.out.println("Line 5");
+		model.addAttribute("maxPages", numOfPages);
+		System.out.println("Line 6");
 		return subtopicService.getSubtopicByBatchId(batchId);
 	}
 	
 	@RequestMapping(value="Topics", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<TopicWeek> getTopicsByBatch(HttpServletRequest request) {
+		System.out.println("CalendarController - getTopicsByBatch()");
 		//Get the batch id from the request
 		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
 		
@@ -98,6 +125,7 @@ public class CalendarController {
 	
 	@RequestMapping(value="AddTopics", method=RequestMethod.POST, produces="application/json")
 	public void addTopics(@RequestBody String jsonObject, HttpSession session) throws NullPointerException {
+		System.out.println("CalendarController - addTopics()");
 		List<TopicName> topicsFromStub = null;
 
 		ObjectMapper mapper = new ObjectMapper();
