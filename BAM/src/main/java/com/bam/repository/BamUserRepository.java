@@ -11,7 +11,7 @@ import com.bam.bean.BamUser;
 
 @Repository
 public interface BamUserRepository extends JpaRepository<BamUser, Integer>{
-	public BamUser findByUserId(Integer id);
+	public BamUser findByUserId(int id);
 	public BamUser findByEmail(String email);
 	public List<BamUser> findByBatch(Batch batch);
 	public List<BamUser> findByRole(int role);
