@@ -1,8 +1,8 @@
 app.controller('loginController', function($rootScope, $scope, $location, $http) {
 	$rootScope.userRole;
 	
-	$scope.msg;
 	$rootScope.user;
+	$scope.msg;
 	$rootScope.trainerBatch;
 	$scope.logIn = function() {
 		var user = {
