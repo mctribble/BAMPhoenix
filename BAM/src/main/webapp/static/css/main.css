@@ -200,6 +200,19 @@ li.expand{
 }
 */
 /***** 4.0 TABLES *****/
+
+.topiccolorred{
+background-color: red !important;	
+}
+
+.topiccolorblue{
+background-color: blue !important;
+}
+
+.topiccolorgreen{
+background-color:green !important;		
+}
+
 .searchbox-container {
 	/* 	font-family: "Audimat"; */
 	font-size: 1.2em;
