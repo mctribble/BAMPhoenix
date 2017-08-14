@@ -27,12 +27,11 @@ app.controller("bamUserRegisterController", ['$http', '$scope', '$location', '$t
 			$scope.updateMsg = 'Email is Already in use or Invalid Inputs';
 			$scope.alertClass = 'alert alert-danger';
 		});
-		console.log("Last")
 		}else{
 			$scope.updateDisplay = true;
 			$scope.updateMsg = 'Passwords do not match';
 			$scope.alertClass = 'alert alert-danger';
 		}
-		
+	}
 	}
 ])

@@ -76,7 +76,6 @@
             // @return {String} fingerprint of the source object and its events array
             
             this.sourceFingerprint = function (source) {
-            	console.log(source);
                 var fp = '' + (source.__id || (source.__id = sourceSerialId++));
                 var events = angular.isObject(source) && source.events;
 
@@ -250,7 +249,6 @@
             
            
             if($rootScope){
-            	console.log($rootScope);
             	 var url;
 	            if($rootScope.user.role == 1){
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.user.batch.id;
@@ -258,9 +256,7 @@
 	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.trainerBatch.id;
 	            }else if (($rootScope.user.role == 3) && $rootScope.currentBatch) {
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
-	            	console.log(url);
 	            }else{
-	            	console.log('ajax request for subtopics failed');
 	            }
             /* event source that contains custom events on the scope */
             	$scope.events = [];
@@ -331,7 +327,6 @@
                  		method : "GET",
                  		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
                  	 }).then(function successCallback(response) {
-                 		//console.log("SUCCESS");
                  	 });
                 }  else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorred fc-draggable ng-scope fc-allow-mouse-resize"){
                     $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove red
@@ -340,7 +335,6 @@
                  		method : "GET",
                  		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
                  	 }).then(function successCallback(response) {
-                 		//console.log("SUCCESS");
                  	 });
                 } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize") {
                     $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); //add green
@@ -349,7 +343,6 @@
                  		method : "GET",
                  		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Completed"
                  	 }).then(function successCallback(response) {
-                 		//console.log("SUCCESS");
                  	 });
                 }    else  if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorgreen") {
                     $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove green
@@ -359,7 +352,6 @@
                  		method : "GET",
                  		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
                  	 }).then(function successCallback(response) {
-                 		//console.log("SUCCESS");
                  	 });
                 } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorred"){
                     $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove red
@@ -368,7 +360,6 @@
                  		method : "GET",
                  		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
                  	 }).then(function successCallback(response) {
-                 		//console.log("SUCCESS");
                  	 });
                 }else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope topiccolorred fc-allow-mouse-resize"){
                     $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove red
@@ -377,7 +368,6 @@
                  		method : "GET",
                  		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
                  	 }).then(function successCallback(response) {
-                 		//console.log("SUCCESS");
                  	 });
                 }
             };
@@ -388,7 +378,6 @@
              		method : "GET",
              		url : "rest/api/v1/Calendar/DateUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&date="+event.start
              	 }).then(function successCallback(response) {
-             		//console.log("SUCCESS");
              	 });
             };
             
@@ -446,7 +435,6 @@
             };
             
             if($rootScope.user.role == 1 || $rootScope.currentBatch != null){
-            	console.log("role =" + $rootScope.user.role )
             /* config object */
             $scope.uiConfig = {
               calendar:{
@@ -474,9 +462,7 @@
               }
             
             };
-            	console.log("config: " + $scope.uiConfig);
             }else {
-            	console.log("role =" +$rootScope.user.role )
             /* config object */
             $scope.uiConfig = {
               calendar:{

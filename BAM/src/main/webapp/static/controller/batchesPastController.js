@@ -30,7 +30,6 @@ app.controller('batchesPastController', function($scope, $rootScope, $location, 
 	}
 	
 	$scope.goToBatch = function(batch){
-				console.log(batch.id);
 		$http({
 			
 			url: "rest/api/v1/Calendar/Topics?batchId=" + batch.id,
