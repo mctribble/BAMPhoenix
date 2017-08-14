@@ -25,7 +25,7 @@ public class Curriculum {
 	@Column(name = "Curriculum_Id")
 	@SequenceGenerator(name = "Curriculum_ID_SEQ", sequenceName = "Curriculum_ID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Curriculum_ID_SEQ")
-	private int curriculum_Id;
+	private Integer id;
 	
 	@Column(name= "Curriculum_name")
 	@NotEmpty(message = "Curriculum name cannot be empty")
@@ -35,11 +35,11 @@ public class Curriculum {
 	private int curriculum_Version;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "User_Id", referencedColumnName = "User_Id")
+	@JoinColumn(name = "Curriculum_Creator", referencedColumnName = "User_Id")
 	private BamUser curriculum_Creator;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "User_Id", referencedColumnName = "User_Id")
+	@JoinColumn(name = "Curriculum_Modifier", referencedColumnName = "User_Id")
 	private BamUser curriculum_Modifier;
 	
 	@Column(name = "Curriculum_Date_Created")
@@ -52,12 +52,12 @@ public class Curriculum {
 	
 	public Curriculum(){}
 
-	public int getCurriculum_Id() {
-		return curriculum_Id;
+	public Integer getCurriculum_Id() {
+		return id;
 	}
 
-	public void setCurriculum_Id(int curriculum_Id) {
-		this.curriculum_Id = curriculum_Id;
+	public void setCurriculum_Id(Integer curriculum_Id) {
+		this.id = curriculum_Id;
 	}
 
 	public String getCurriculum_Name() {
@@ -110,7 +110,7 @@ public class Curriculum {
 
 	@Override
 	public String toString() {
-		return "Curriculum [curriculum_Id=" + curriculum_Id + ", curriculum_Name=" + curriculum_Name
+		return "Curriculum [curriculum_Id=" + id + ", curriculum_Name=" + curriculum_Name
 				+ ", curriculum_Version=" + curriculum_Version + ", curriculum_Creator=" + curriculum_Creator
 				+ ", curriculum_Modifier=" + curriculum_Modifier + ", curriculum_dateCreated=" + curriculum_dateCreated
 				+ ", curriculum_Number_Of_Weeks=" + curriculum_Number_Of_Weeks + "]";
