@@ -1,4 +1,4 @@
-app.controller('navCtl', function($rootScope, $scope, $location, $http) {
+app.controller('navController', function($rootScope, $scope, $location, $http) {
 
 	$scope.$on('$routeChangeStart', function(next, current) {
 		$rootScope.gotSubtopics = false;

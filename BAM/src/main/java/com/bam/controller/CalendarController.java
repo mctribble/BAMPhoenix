@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bam.beans.Subtopic;
-import com.bam.beans.SubtopicStatus;
-import com.bam.beans.TopicName;
-import com.bam.beans.TopicWeek;
+import com.bam.bean.Subtopic;
+import com.bam.bean.SubtopicStatus;
+import com.bam.bean.TopicName;
+import com.bam.bean.TopicWeek;
 import com.bam.service.SubtopicService;
 import com.bam.service.TopicService;
 
@@ -27,7 +27,7 @@ import com.bam.service.TopicService;
 @RequestMapping(value = "/api/v1/Calendar/")
 public class CalendarController {
 	
-	private final String BATCH_ID = "batchId";
+	private final static String batchID = "batchId";
 	
 	@Autowired
 	SubtopicService subtopicService;
@@ -40,7 +40,7 @@ public class CalendarController {
 	public List<Subtopic> getSubtopicsByBatch(HttpServletRequest request) {
 
 		//Get the batch id from the request
-		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
+		int batchId = Integer.parseInt( request.getParameter(batchID) );
 		
 		//Retrieve and return users in a batch from the database
 		return subtopicService.getSubtopicByBatchId(batchId);
@@ -51,7 +51,7 @@ public class CalendarController {
 	public List<TopicWeek> getTopicsByBatch(HttpServletRequest request) {
 
 		//Get the batch id from the request
-		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
+		int batchId = Integer.parseInt( request.getParameter(batchID) );
 		
 		//Retrieve and return users in a batch from the database
 		return topicService.getTopicByBatchId(batchId);
@@ -62,7 +62,7 @@ public class CalendarController {
 		// Get the batch id from the request
 		String subtopicName = request.getParameter("subtopicId");
 
-		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
+		int batchId = Integer.parseInt( request.getParameter(batchID) );
 		List<Subtopic> topics = subtopicService.getSubtopicByBatchId(batchId);
 		Subtopic sub;
 		for (int i = 0; i < topics.size(); i++) {
@@ -84,7 +84,7 @@ public class CalendarController {
 		// Get the batch id from the request
 		String subtopicName = request.getParameter("subtopicId");
 
-		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
+		int batchId = Integer.parseInt( request.getParameter(batchID) );
 		List<Subtopic> topics = subtopicService.getSubtopicByBatchId(batchId);
 		Subtopic sub;
 		SubtopicStatus status = subtopicService.getStatus(request.getParameter("status"));
@@ -101,7 +101,7 @@ public class CalendarController {
 	}
 
 	@RequestMapping(value="AddTopics", method=RequestMethod.POST, produces="application/json")
-	public void addTopics(@RequestBody String jsonObject, HttpSession session) throws NullPointerException {
+	public void addTopics(@RequestBody String jsonObject, HttpSession session) {
 		List<TopicName> topicsFromStub = null;
 
 		ObjectMapper mapper = new ObjectMapper();
