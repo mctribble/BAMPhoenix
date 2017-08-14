@@ -1,0 +1,86 @@
+/* PARENT ELEMENT */
+#curriculumManager{
+	height: 100vh;
+}
+
+.columnHeader{
+	padding: 10px;
+		
+}
+
+.columnBody{
+	padding: 0px;
+}
+
+/* LEFT SIDEBAR */
+#curriculaLoaderView{
+	border: 1px solid #333;
+	border-radius: 3px;
+	padding:0px;
+}
+
+/* MIDDLE */
+#curriculumView{
+	border: 1px solid #333;
+	border-radius: 3px;
+}
+
+/* RIGHT SIDEBAR */
+#poolView{
+	padding:0px;
+	border: 1px solid #333;
+	border-radius: 3px;
+}
+
+.topicFilter{
+	-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 5px;
+    width:100%;
+	text-align-last:center;
+}
+
+/* FOR ACCORDIAN */
+.accordion {
+  .expander {
+    margin-bottom: 0;
+    
+    &:not(:last-child) {
+      border-bottom: 0;
+    }
+  }
+}
+
+.expander {
+  margin-bottom: 20px;
+  list-style: none;
+  border: 1px solid #888;  
+  
+  .title {
+    text-indent: 5px;
+    background: #ddd;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .content {
+    padding: 5px;
+  }
+}
+
+.dndDraggingSource{
+	display:none;
+	list-style-type:none;
+}
+
+.dndPlaceholder{
+	height:50px;
+	opacity:.5;
+	list-style-type:none;
+}
+

@@ -1,1 +1,134 @@
-<h1>Curriculum page</h1>
+<!-- @author Brian McKalip -->
+
+<!-- *********************************************** Begin CurriculaManager view ********************************************************* -->
+<div id="curriculumManager" class="container"
+	ng-controller="curriculumController">
+	<div class="row">
+		<div id="curriculaLoaderView" class="col col-md-2">
+			<div class="columnHeader text-center">
+				<h5>Curricula</h5>
+				<button class="btn btn-md btn-success" ng-click="newCurriculum()">New Curriculum</button>
+				<!-- ***************************** Begin Curricula Accordion***************************************** -->
+				<div id="curriculaAccordion" role="tablist">
+					<div class="card" ng-repeat="curriculum in curricula">
+						<div class="card-header" role="tab">
+							<h5 class="mb-0">
+								<a data-toggle="collapse" data-parent="#curriculaAccordion"
+									data-target="#collapseCurriculum{{curriculum.type}}"> {{curriculum.type}}
+								</a>
+							</h5>
+						</div>
+	
+						<div id="collapseCurriculum{{curriculum.type}}" class="collapse" role="tabpanel">
+							<div class="card-block">
+								<ul class="list-group">
+									<li class="list-group-item" ng-repeat="version in curriculum.versions" ng-click="setTemplate($parent.$index, $index)">Version #{{$index}}</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- ***************************** End Curricula Accordion***************************************** -->
+			</div>
+		</div>
+<!-- *********************************************** End CurriculaManager view ********************************************************* -->
+
+<!-- *********************************************** Begin Curriculum view ********************************************************* -->
+		<div id="curriculumView" class="col col-md-8">
+			<div class="columnHeader">
+				<div class="row">
+					<div class="col col-md-9">
+						<h3>{{meta.type}} Curriculum - Version #{{meta.version}}</h3>
+					</div>
+					<div class="col col-md-3">
+						<button class="btn btn-md btn-success text-right" ng-click="addWeek()">Add Week</button>
+					</div>
+				</div>
+			</div>
+			
+			<!-- ***************************** Begin Week Accordion***************************************** -->
+			<div id="weekAccordion" role="tablist">
+				<div class="card" ng-repeat="week in displayedCurriculum.weeks">
+					<div class="card-header" role="tab">
+
+						<div class="row">
+							<div class="col col-md-9">
+								<h5 class="mb-0">
+									<a data-toggle="collapse" data-parent="#weekAccordion"
+										data-target="#collapseWeek{{$index+1}}"> 
+										Week #{{$index+1}} 
+									</a>
+								</h5>
+							</div>
+							<div class="col col-md-3">
+								<button class="btn btn-md btn-danger text-right" ng-click="deleteWeek($index+1)">Delete Week</button>
+							</div>
+						</div>
+					</div>
+
+					<div id="collapseWeek{{$index+1}}" class="collapse"
+						role="tabpanel">
+						<div class="card-block">
+							<!-- ***************************** Begin Day Accordion***************************************** -->
+							<div id="dayAccordion" role="tablist">
+								<div class="card" ng-repeat="day in week.days">
+									<div class="card-header" role="tab">
+										<h5 class="mb-0">
+											<a data-toggle="collapse" data-parent="#dayAccordion"
+												data-target="#collapseWeek{{$parent.$index+1}}-Day{{$index+1}}">
+												{{weekdays[$index]}}
+											</a>
+										</h5>
+									</div>
+
+									<div id="collapseWeek{{$parent.$index+1}}-Day{{$index+1}}"
+										class="collapse" role="tabpanel">
+										<div class="card-block">
+											<!-- ***************************** Begin Subtopic List***************************************** -->
+											<ul class="list-group" dnd-list="day.subtopics">
+												<li class="list-group-item" 
+													ng-repeat="subtopic in day.subtopics" 
+													dnd-draggable="subtopic"
+													dnd-effect-allowed="move"
+													dnd-moved="day.subtopics.splice($index, 1)"
+													>{{subtopic}}</li>
+											</ul>
+											<!-- ***************************** End Subtopic List***************************************** -->
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- **************************** End Day Accordion****************************************** -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ***************************** End Week Accordion***************************************** -->
+		</div>
+<!-- ************************************************** End Curriculum View ********************************************************************** -->
+
+<!-- ************************************************** Begin Pool Sidebar View ********************************************************************** -->
+		<div id="poolView" class="col col-md-2">
+			<div class="columnHeader text-center">
+				<h5>Topic Pool</h5>
+			</div>
+
+			<ul class="list-group" dnd-list="[]" style="height:50px;background-color:#ccc"></ul>
+
+			<select class="topicFilter text-center" ng-model="topicFilter">
+				<option class="topicFilter" selected="selected" value="">All</option>
+				<option class="topicFilter" ng-repeat="topic in topics"
+					ng-value="{{topic}}">{{topic.name}}</option>
+			</select>
+
+			<ul class="list-group">
+				<li class="list-group-item" 
+					ng-repeat="sub in topicFilter.subtopics" 
+					dnd-draggable="sub" 
+					dnd-effect-allowed="copy" 
+					dnd-moved="topicFilter.subtopics.splice($index, 1)">{{sub}}</li>
+			</ul>
+
+		</div>
+	</div>
+</div>

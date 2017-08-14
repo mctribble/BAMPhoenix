@@ -5,8 +5,6 @@ app.controller("bamUserRegisterController", ['$http', '$scope', '$location', '$t
 	$scope.testMsg = 'test message from registerController.js';
 
 	$scope.addUser = function(){	
-		console.log("IN the FUNC")
-		console.log($scope.user)
 		if($scope.user.pwd == $scope.confirm_password){
 		$http({
 			url: 'rest/api/v1/Users/Register',
@@ -24,14 +22,10 @@ app.controller("bamUserRegisterController", ['$http', '$scope', '$location', '$t
 			 $timeout(function() {
 			     $location.path('/');
 			     }, 3000);
-
-			   
-		
 		}, function error(response){
 			$scope.updateDisplay = true;
 			$scope.updateMsg = 'Email is Already in use or Invalid Inputs';
 			$scope.alertClass = 'alert alert-danger';
-			console.log("Didnt work");
 		});
 		console.log("Last")
 		}else{
@@ -41,5 +35,4 @@ app.controller("bamUserRegisterController", ['$http', '$scope', '$location', '$t
 		}
 		
 	}
-
-}])
+])
