@@ -51,22 +51,22 @@ public class CalendarController {
 		return subtopicService.getSubtopicByBatchId(batchId);
 	}
 	
-//	@RequestMapping(value="SubtopicsPag", method=RequestMethod.GET, produces="application/json")
-//	@ResponseBody
-//	public List<Subtopic> getTopicsByBatchPag(HttpServletRequest request, Pageable pageable, Model model){
-//		System.out.println("Line 1");
-//		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
-//		System.out.println("Line 2");
-//		Page<Subtopic> subtopic = this.subtopicRepository.findAll(pageable);
-//		System.out.println("Line 3");
-//		model.addAttribute("subtopic", subtopic.getContent());
-//		System.out.println("Line 4");
-//		float numOfPages = subtopic.getTotalPages();
-//		System.out.println("Line 5");
-//		model.addAttribute("maxPages", numOfPages);
-//		System.out.println("Line 6");
-//		return subtopicService.getSubtopicByBatchId(batchId);
-//	}
+	@RequestMapping(value="SubtopicsPag", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public List<Subtopic> getTopicsByBatchPag(HttpServletRequest request, Pageable pageable, Model model){
+		System.out.println("Line 1");
+		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
+		System.out.println("Line 2");
+		Page<Subtopic> subtopic = this.subtopicRepository.findAll(pageable);
+		System.out.println("Line 3");
+		model.addAttribute("subtopic", subtopic.getContent());
+		System.out.println("Line 4");
+		float numOfPages = subtopic.getTotalPages();
+		System.out.println("Line 5");
+		model.addAttribute("maxPages", numOfPages);
+		System.out.println("Line 6");
+		return subtopicService.getSubtopicByBatchId(batchId);
+	}
 
 	@RequestMapping(value = "Topics", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody

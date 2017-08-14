@@ -1,4 +1,4 @@
-
+var allTopics = {};
 /*
 *  AngularJs Fullcalendar Wrapper for the JQuery FullCalendar
 *  API @ http://arshaw.com/fullcalendar/
@@ -271,10 +271,10 @@
             		var xhr = new XMLHttpRequest();
 
 					xhr.onreadystatechange = function() {
-						if (xhr.readyState == 4
-								&& xhr.status == 200) {
+						if (xhr.readyState == 4 && xhr.status == 200) {
 							console.log('Loading subtopics');
 							console.log(xhr.response);
+							//allTopics = JSON.parse(xhr.response);
 							var r = JSON.parse(xhr.response);
 							for (var i = 0; i < r.length; i++) {
 								var title = r[i].subtopicName.name;
@@ -296,6 +296,7 @@
 									uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource', $scope.events);
 									$scope.events = [];
 									console.log('loaded 10');
+									//$scope.renderCalendar('myCalendar');
 									continue;
 								}
 							}
@@ -330,6 +331,38 @@
 //                	});
             	}
             }
+            
+//            $scope.$watch(allTopics, function(newValue){
+//            	console.log(newValue)
+//						console.log('Loading subtopics');
+//						$scope.events = [];
+//						var r = newValue;
+//						for (var i = 0; i < r.length; i++) {
+//							var title = r[i].subtopicName.name;
+//							var dates = r[i].subtopicDate;
+//
+//							var a = new Date(dates);
+//							var year = a.getUTCFullYear();
+//							var month = a.getMonth();
+//							var day = a.getDate();
+//							var formattedTime = new Date(
+//									year, month, day);
+//							var temp = {
+//								title : title,
+//								start : formattedTime,
+//								end : formattedTime
+//							};
+//							$scope.events.push(temp);
+//							if (i % 10 == 0) {
+//								uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource', $scope.events);
+//								$scope.events = [];
+//								console.log('loaded 10');
+//								$scope.fullCalendar('render');
+//								continue;
+//							}
+//						}
+//            });
+            
             
             /* event source that calls a function on every view switch */
             $scope.eventsF = function (start, end, timezone, callback) {
