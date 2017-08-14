@@ -18,6 +18,10 @@ app.controller('batchesPastController', function($scope, $rootScope, $location, 
 			console.log("past batches: " + response.data);
 			$scope.message = true;
 			$scope.msg = 'past batches retreived';
+			for(var i=0;i<response.data.length;i++){
+				response.data[i].startDate=formatDate(response.data[i].startDate)
+				response.data[i].endDate=formatDate(response.data[i].endDate)
+			}
 			$scope.batchesPast = response.data;
 			
 		}, function error(response){

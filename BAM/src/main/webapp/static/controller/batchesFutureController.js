@@ -15,6 +15,10 @@ app.controller('batchesFutureController', function($scope, $rootScope, $location
 			console.log("future batches: " + response.data)
 			$scope.message = true;
 			$scope.msg = 'future batches retreived';
+			for(var i=0;i<response.data.length;i++){
+				response.data[i].startDate=formatDate(response.data[i].startDate)
+				response.data[i].endDate=formatDate(response.data[i].endDate)
+			}
 			$scope.batchesFuture = response.data;
 		}, function error(response){
 			$scope.message = true;
