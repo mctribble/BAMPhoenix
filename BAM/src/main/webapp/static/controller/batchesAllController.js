@@ -28,7 +28,7 @@ app.controller('batchesAllController', function($scope, $rootScope, $location, $
 				response.data[i].startDate=formatDate(response.data[i].startDate)
 				response.data[i].endDate=formatDate(response.data[i].endDate)
 			}
-			console.log(response.data)
+			
 			$rootScope.batchesAll = response.data
 			
 		

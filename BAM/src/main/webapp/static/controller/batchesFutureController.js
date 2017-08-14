@@ -5,7 +5,6 @@ app.controller('batchesFutureController', function($scope, $rootScope, $location
 	$scope.getBatchesFuture = function(){
 		
 		var emailer = $rootScope.user.email;
-		console.log(emailer);
 		$http({
 			url: 'rest/api/v1/Batches/Future',
 			method: 'GET',	
