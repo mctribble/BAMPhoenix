@@ -66,6 +66,11 @@
 	background-color: #f26925;
 }
 
+/******** REGISTER STYLING *********/
+.input-group .form-control{
+	    width: 200px;
+}
+
 /***** 2.0 NAVBAR STYLING *****/
 .full-navbar {
 	width: 100%;
@@ -227,6 +232,19 @@ label::before {
 }
 */
 /***** 4.0 TABLES *****/
+
+.topiccolorred{
+background-color: red !important;	
+}
+
+.topiccolorblue{
+background-color: blue !important;
+}
+
+.topiccolorgreen{
+background-color:green !important;		
+}
+
 .searchbox-container {
 	/* 	font-family: "Audimat"; */
 	font-size: 1.2em;

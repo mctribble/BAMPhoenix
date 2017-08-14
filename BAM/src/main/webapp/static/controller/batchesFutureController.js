@@ -5,20 +5,22 @@ app.controller('batchesFutureController', function($scope, $rootScope, $location
 	$scope.getBatchesFuture = function(){
 		
 		var emailer = $rootScope.user.email;
-		console.log(emailer);
 		$http({
 			url: 'rest/api/v1/Batches/Future',
 			method: 'GET',	
 			params: {email: emailer}
 		})
 		.then(function success(response){
-			console.log("future batches: " + response.data)
 			$scope.message = true;
-			$scope.msg = 'future batches retreived';
+			$scope.msg = 'future batches retrieved';
+			for(var i=0;i<response.data.length;i++){
+				response.data[i].startDate=formatDate(response.data[i].startDate)
+				response.data[i].endDate=formatDate(response.data[i].endDate)
+			}
 			$scope.batchesFuture = response.data;
 		}, function error(response){
 			$scope.message = true;
-			$scope.msg = 'future batches not retreived';
+			$scope.msg = 'future batches not retrieved';
 		});
 	}
 	
@@ -34,13 +36,13 @@ app.controller('batchesFutureController', function($scope, $rootScope, $location
 			$rootScope.gotSubtopics = false;
 			$location.path('/home');
 			$scope.message = true;
-			$scope.msg = 'batch retreived';
+			$scope.msg = 'batch retrieved';
 			
 		}, function error(response){
 			$rootScope.gotSubtopics = false;
 			$location.path('/home');
 			$scope.message = true;
-			$scope.msg = 'batch not retreived';
+			$scope.msg = 'batch not retrieved';
 		});
 	}
 	

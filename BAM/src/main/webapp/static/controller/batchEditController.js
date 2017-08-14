@@ -1,6 +1,5 @@
 
 app.controller("batchEditController",function($rootScope, $scope, $location, $http){
-	console.log("Edit Batch Controller");
 	//set batchId with the id of the currentBatch if it exists else use the trainerBatch
 	var batchId;
 	$rootScope.currentBatchName;
@@ -30,7 +29,6 @@ app.controller("batchEditController",function($rootScope, $scope, $location, $ht
 		},function(response) {
 			$scope.message = true;
 			$scope.msg = 'Failed to retrieve batch';
-			console.log($scope.msg);		
 		});
 		//get users in the batch by the batchId
 		$http({
@@ -44,7 +42,6 @@ app.controller("batchEditController",function($rootScope, $scope, $location, $ht
 		},function (response) {
 			$scope.message = true;
 			$scope.msg = 'Failed to retrieve users in batch';
-			console.log($scope.msg);
 		});
 		//get users who are not in a batch
 		$http({
@@ -55,7 +52,6 @@ app.controller("batchEditController",function($rootScope, $scope, $location, $ht
 		},function (response) {
 			$scope.message = true;
 			$scope.msg = 'Failed to retrieve users without a batch';
-			console.log($scope.msg);
 		});
 	}	
 	
@@ -84,13 +80,11 @@ app.controller("batchEditController",function($rootScope, $scope, $location, $ht
 	
 	//This function is meant to toggle the users container to display and hide it.
 	$scope.addRemAssociate = function(){
-		console.log("toggle users div");
 		jQuery("#users").toggle();
 	}
 	//This function adds a user to the batch
 	$scope.addAssociate = function(id){
 		
-		console.log("id : " + id);
 		//tell the server
 		$http({
 			url: "rest/api/v1/Users/Add",

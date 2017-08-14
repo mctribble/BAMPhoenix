@@ -20,9 +20,9 @@ public class LoggerClass {
 
 
 	private String intercepted = "intercepted method : ";
-	private String interceptedArg = "hijacked arguments : ";
+	private String interceptedArg = "intercepted arguments : ";
 	private String dataRequest = "data request made at ";
-	private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
 
 	
 	/**
@@ -38,7 +38,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.BatchService.getBatchById(..))")
@@ -46,7 +46,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));	
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));	
 	}
 	
 	@Around("execution(* com.bam.service.BatchService.getBatchAll(..))")
@@ -54,7 +54,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed()); 
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.BatchService.getBatchByTrainer(..))")
@@ -62,7 +62,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed()); 
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	/**
@@ -76,7 +76,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	/**
@@ -106,7 +106,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed()); 
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.Subtopic.getSubtopicByBatch(..))")
@@ -114,7 +114,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.Subtopic.getSubtopicByBatchId(..))")
@@ -122,7 +122,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.Subtopic.updateSubtopic(..))")
@@ -130,7 +130,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed()); 
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.Subtopic.getStatus(..))")
@@ -138,7 +138,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed()); 
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	/**
@@ -155,7 +155,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed()); 
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.TopicService.getTopicByBatch(..))")
@@ -163,7 +163,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed()); 
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.TopicService.getTopicByBatchId(..))")
@@ -171,7 +171,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.TopicService.getTopics(..))")
@@ -179,7 +179,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed()); 
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.TopicService.addOrUpdateTopicName(..))")
@@ -187,7 +187,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed()); 
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	/**
@@ -202,7 +202,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.UsersDetailsService.buildUserForAuthentication(..))")
@@ -210,7 +210,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed()); 
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.UsersDetailsService.buildUserAuthority(..))")
@@ -218,7 +218,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed()); 
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	/**
@@ -237,7 +237,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.UsersService.findAllUsers(..))")
@@ -245,7 +245,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.UsersService.findByRole(..))")
@@ -253,7 +253,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed()); 
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.UsersService.findUserById(..))")
@@ -261,7 +261,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.UsersService.findUserByEmail(..))")
@@ -269,7 +269,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 	@Around("execution(* com.bam.service.UsersService.findUserInBatch(..))")
@@ -277,7 +277,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed()); 
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
   
 	@Around("execution(* com.bam.service.UsersService.findUserNotInBatch(..))")
@@ -285,7 +285,7 @@ public class LoggerClass {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
-		logger.info(dataRequest + sdf.format(new Date(System.currentTimeMillis())));
+		logger.info(dataRequest +simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
 }
