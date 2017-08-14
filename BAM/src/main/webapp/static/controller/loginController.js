@@ -1,9 +1,8 @@
 app.controller('loginController', function($rootScope, $scope, $location, $http) {
-
 	$rootScope.userRole;
 	
-	$scope.msg;
 	$rootScope.user;
+	$scope.msg;
 	$rootScope.trainerBatch;
 	$scope.logIn = function() {
 		var user = {
@@ -22,9 +21,9 @@ app.controller('loginController', function($rootScope, $scope, $location, $http)
 		})
 		.then(function success(response){
 			$rootScope.user = response.data;
-			console.log($rootScope.user)
 			if($rootScope.user.role == 3){
 				$rootScope.userRole = '(Quality Control)';
+				$location.path('/home');
 			} else if($rootScope.user.role == 2){
 				$rootScope.userRole = '(Trainer)';
 				$http({
@@ -40,8 +39,7 @@ app.controller('loginController', function($rootScope, $scope, $location, $http)
 				});
 			} else if($rootScope.user.role == 1) {
 				$rootScope.userRole = '(Associate)';
-				if(!$rootScope.user.batch)
-				{
+				if(!$rootScope.user.batch){
 					$location.path('/noBatch');
 				}else{
 					$rootScope.gotSubtopics = false;

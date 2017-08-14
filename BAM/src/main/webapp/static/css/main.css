@@ -66,6 +66,11 @@
 	background-color: #f26925;
 }
 
+/******** REGISTER STYLING *********/
+.input-group .form-control{
+	    width: 200px;
+}
+
 /***** 2.0 NAVBAR STYLING *****/
 .full-navbar {
 	width: 100%;
@@ -116,6 +121,10 @@
 
 #myNavbar ul li a {
 	color: white;
+}
+
+#navbarNavAltMarkup{
+	text-align: right;
 }
 
 .navbar-button {
@@ -171,6 +180,33 @@ li.expand{
 	margin: auto;
 }
 
+/******** 'FORGOT PASSWORD?' STYLING ********/
+.pw {
+  display: none;
+  visibility: hidden;
+}
+label {
+  display: block;
+  padding: 0.5em;
+  text-align: center;
+  border-bottom: 1px solid #CCC;
+  color: #666;
+}
+label:hover {
+  color: #000;
+}
+label::before {
+  font-family: Consolas, monaco, monospace;
+  font-weight: bold;
+  font-size: 15px;
+  content: "+";
+  vertical-align: text-top;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 3px;
+  background: radial-gradient(ellipse at center, #CCC 50%, transparent 50%);
+}
 
 /***** 3.0 FONTS *****/
 /*
@@ -196,6 +232,19 @@ li.expand{
 }
 */
 /***** 4.0 TABLES *****/
+
+.topiccolorred{
+background-color: red !important;	
+}
+
+.topiccolorblue{
+background-color: blue !important;
+}
+
+.topiccolorgreen{
+background-color:green !important;		
+}
+
 .searchbox-container {
 	/* 	font-family: "Audimat"; */
 	font-size: 1.2em;
@@ -253,6 +302,7 @@ body {
 		#142863 100vh);
 }
 
+
 #content{
 	margin-top: 50px;
 	background-color: #FFFFFF ;
@@ -261,15 +311,10 @@ body {
 	border-radius: 4px;
 	overflow-y: auto;
 	max-height: 85vh;
-	
-	/*
-	position: relative;
-	top: 35vh;
-	-webkit-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%);
-	*/
+	width: 90%;
+	height: -webkit-fill-available;
 }
+
 
 /***** Edit Batch Page *****/
 .nav-link {
@@ -279,3 +324,4 @@ body {
 .input-tag {
 	width: 125px;
 }
+

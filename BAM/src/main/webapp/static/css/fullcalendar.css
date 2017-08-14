@@ -532,6 +532,7 @@ temporary rendered events).
 
 .fc-scroller {
 	-webkit-overflow-scrolling: touch;
+	height: auto;
 }
 
 /* TODO: move to agenda/basic */
@@ -761,6 +762,7 @@ tr:first-child > td > .fc-day-grid-event {
 .fc-day-grid-event .fc-content { /* force events to be one-line tall */
 	white-space: nowrap;
 	overflow: hidden;
+	color: white;
 }
 
 .fc-day-grid-event .fc-time {
@@ -987,6 +989,10 @@ a.fc-more:hover {
 	text-align: center;
 	background-color: #f2f2f2;
 	color: #808080;
+}
+
+.fc-week {
+	min-height: 5em;
 }
 
 /* when week/day number have own column */
