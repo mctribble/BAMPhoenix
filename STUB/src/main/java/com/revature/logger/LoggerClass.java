@@ -11,6 +11,7 @@ import org.aspectj.lang.annotation.Pointcut;
 @Aspect
 public class LoggerClass {
 	
+	
 	final static Logger logger = Logger.getLogger(LoggerClass.class);
 
 	@Pointcut("execution(public * find*(..))")

@@ -266,8 +266,10 @@ body {
 	border-radius: 4px;
 	overflow-y: auto;
 	max-height: 85vh;
-	
+	width: 90%;
+	height: -webkit-fill-available;
 }
+
 
 /***** Edit Batch Page *****/
 .nav-link {
@@ -277,3 +279,4 @@ body {
 .input-tag {
 	width: 125px;
 }
+
