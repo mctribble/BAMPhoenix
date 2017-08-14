@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -26,7 +25,6 @@ public class Curriculum {
 	@SequenceGenerator(name = "Curriculum_ID_SEQ", sequenceName = "Curriculum_ID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Curriculum_ID_SEQ")
 	private Integer id;
-
 	
 	@Column(name= "Curriculum_name")
 	@NotEmpty(message = "Curriculum name cannot be empty")
@@ -41,7 +39,6 @@ public class Curriculum {
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Curriculum_Modifier", referencedColumnName = "User_Id")
-
 	private BamUser curriculum_Modifier;
 	
 	@Column(name = "Curriculum_Date_Created")
@@ -117,8 +114,4 @@ public class Curriculum {
 				+ ", curriculum_Modifier=" + curriculum_Modifier + ", curriculum_dateCreated=" + curriculum_dateCreated
 				+ ", curriculum_Number_Of_Weeks=" + curriculum_Number_Of_Weeks + "]";
 	}
-	
-	
-	
-	
 }
