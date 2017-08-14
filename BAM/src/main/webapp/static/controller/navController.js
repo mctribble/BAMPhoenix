@@ -13,6 +13,11 @@ app.controller('navController', function($rootScope, $scope, $location, $http) {
 		}
 	});
 	
+	$scope.hideNav = function (){
+		delete $rootScope.user;
+	}
+	
+	
 	$scope.redirect = function (){
 		$rootScope.gotSubtopics = false;
 		if(!$rootScope.user){
