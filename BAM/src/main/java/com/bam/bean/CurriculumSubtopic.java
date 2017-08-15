@@ -26,12 +26,12 @@ public class CurriculumSubtopic {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Curriculum_Subtopic_ID_SEQ")
 	private int curriculumSubtopic_Id;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Subtopic_Name_Id", referencedColumnName = "Subtopic_Name_Id")
 	@NotEmpty(message="Curriculum Subtopic Name cannot be empty")
 	private SubtopicName curriculumSubtopic_Name_Id;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Curriculum_Id", referencedColumnName = "Curriculum_Id")
 	@NotEmpty(message="Curriculum cannot be empty")
 	private Curriculum curriculumSubtopic_Curriculum_ID;
