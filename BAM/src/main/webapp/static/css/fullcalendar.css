@@ -760,9 +760,12 @@ tr:first-child > td > .fc-day-grid-event {
 }
 
 .fc-day-grid-event .fc-content { /* force events to be one-line tall */
-	white-space: nowrap;
-	overflow: hidden;
-	color: white;
+	height: 35px;	/* Make the sizes of the event boxes longer for easier legibility */
+    white-space: nowrap;
+    overflow: hidden;
+    color: white;
+    border-style: outset;	/* Outset borders for easier reading division between topics (and looks nice) */
+    font-size: 16px;	/* Make topic font larger for easier legibility */
 }
 
 .fc-day-grid-event .fc-time {

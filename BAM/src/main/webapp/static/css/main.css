@@ -233,16 +233,22 @@ label::before {
 */
 /***** 4.0 TABLES *****/
 
+/* Editor: Joseph Nguyen
+		Modified colors to be easier on the eyes.
+*/
+/* Missed */
 .topiccolorred{
-background-color: red !important;	
+background-color: #fd4234 !important;	
 }
 
+/* Planned */
 .topiccolorblue{
-background-color: blue !important;
+background-color: #0275d8 !important;
 }
 
+/* Covered */
 .topiccolorgreen{
-background-color:green !important;		
+background-color: #32cd32 !important;		
 }
 
 .searchbox-container {
