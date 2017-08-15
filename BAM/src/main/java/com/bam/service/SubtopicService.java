@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bam.bean.Batch;
@@ -78,4 +81,17 @@ public class SubtopicService {
 		return subtopicStatusRepository.findByName(name);
 	}
 
+	public Page<Subtopic> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Subtopic> findByBatchId(int batchId, PageRequest pageRequest) {
+		return subtopicRepository.findByBatch(batchRepository.findById(batchId), pageRequest);
+//        Pageable pageRequest = createPageRequest();
+//          
+//        //Obtain search results by invoking the preferred repository method.
+//        Page<Todo> searchResultPage 
+//        return TodoMapper.mapEntityPageIntoDTOPage(pageRequest, searchResultPage);
+    }
 }

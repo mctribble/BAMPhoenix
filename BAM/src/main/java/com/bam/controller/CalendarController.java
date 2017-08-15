@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,20 +54,29 @@ public class CalendarController {
 	
 	@RequestMapping(value="SubtopicsPag", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
-	public List<Subtopic> getTopicsByBatchPag(HttpServletRequest request, Pageable pageable, Model model){
-		System.out.println("Line 1");
-		int batchId = Integer.parseInt( request.getParameter(BATCH_ID) );
-		System.out.println("Line 2");
-		Page<Subtopic> subtopic = this.subtopicRepository.findAll(pageable);
-		System.out.println("Line 3");
-		model.addAttribute("subtopic", subtopic.getContent());
-		System.out.println("Line 4");
-		float numOfPages = subtopic.getTotalPages();
-		System.out.println("Line 5");
-		model.addAttribute("maxPages", numOfPages);
-		System.out.println("Line 6");
-		return subtopicService.getSubtopicByBatchId(batchId);
+	public List<Subtopic> getSubTopicsByBatchPag(HttpServletRequest request){
+		System.out.println("CalendarController - getSubTopicsByBatchPag");
+		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		System.out.println("batchId: " + batchId);
+		System.out.println(subtopicService.findByBatchId(batchId, new PageRequest(0,2)));
+		return subtopicService.findByBatchId(batchId, new PageRequest(0,2));
 	}
+//	@RequestMapping(value="SubtopicsPag", method=RequestMethod.GET, produces="application/json")
+//	@ResponseBody
+//	public List<Subtopic> getTopicsByBatchPag(HttpServletRequest request, Pageable pageable, Model model){
+//		
+//		int batchId = Integer.parseInt( request.getParameter(batchID) );
+//		
+//		Page<Subtopic> subtopic = this.subtopicService.findAll(pageable);
+//		
+//		model.addAttribute("subtopic", subtopic.getContent());
+//		
+//		float numOfPages = subtopic.getTotalPages();
+//		
+//		model.addAttribute("maxPages", numOfPages);
+//		
+//		return subtopicService.getSubtopicByBatchId(batchId);
+//	}
 
 	@RequestMapping(value = "Topics", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
