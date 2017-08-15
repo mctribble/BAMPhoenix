@@ -297,15 +297,6 @@
             	}
             }
             
-            /* event source that calls a function on every view switch */
-            $scope.eventsF = function (start, end, timezone, callback) {
-              var s = new Date(start).getTime() / 1000;
-              var e = new Date(end).getTime() / 1000;
-              var m = new Date(start).getMonth();
-              var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
-              callback(events);
-            };
-            
             $scope.calEventsExt = {
             	       color: '#f00',
             	       textColor: 'yellow',
@@ -496,7 +487,6 @@
             
             /* event sources array*/
             $scope.eventSources = [$scope.events];
-            $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
             $scope.sources 			= "";
    			$scope.source 			= "";
             
