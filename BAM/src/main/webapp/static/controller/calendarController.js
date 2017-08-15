@@ -11,8 +11,9 @@
 
 //angular.module('myCalendarApp', ['ngRoute'])
 
-  app.constant('uiCalendarConfig', {	//Angular ui-Calendar API used to create 
-	  //AngularJS calendar.
+  app.constant('uiCalendarConfig', {	// Angular ui-Calendar API used to
+										// create
+	  // AngularJS calendar.
         calendars : {}
     })
   
@@ -25,19 +26,23 @@
 				$location.path('/noBatch');
 			}
 	  	
-	  	//Varibles set for the use of adding day,month,year,to the Date attribute of a calendar. 
+	  	// Varibles set for the use of adding day,month,year,to the Date
+		// attribute of a calendar.
 		    var date = new Date();
 		    var d = date.getDate();
 		    var m = date.getMonth();
 		    var y = date.getFullYear();
+		    $scope.searchDate = new Date(); // Current Date
 		    
-            var sources = $scope.eventSources;	//variable sources to hold different 
-            //events taking place on the calendar at any given time
+            var sources = $scope.eventSources;	// variable sources to hold
+												// different
+            // events taking place on the calendar at any given time
             var extraEventSignature = $scope.calendarWatchEvent ? $scope.calendarWatchEvent : angular.noop;
 
             var wrapFunctionWithScopeApply = function (functionToWrap) {
                 return function () {
-                    // This may happen outside of angular context, so create one if outside.
+                    // This may happen outside of angular context, so create one
+					// if outside.
                     if ($scope.$root.$$phase) {
                         return functionToWrap.apply(this, arguments);
                     }
@@ -52,10 +57,27 @@
                 };
             };
             
-          
+          /*
+			 * @Author: Tom Scheffer Calls the function changeDate if enter is
+			 * pressed when in the scope of the date search bar
+			 */
+          $scope.changeDateKeyPress = function(keyEvent){
+        	  if(keyEvent.which === 13){
+        		  $scope.changeDate();
+        	  }
+          };
+            
+          /*
+			 * @Author: Tom Scheffer Changes the view of the calendar so it
+			 * shows the date inputed into the search bar
+			 */
+          $scope.changeDate = function(){
+        	  uiCalendarConfig.calendars["myCalendar"].fullCalendar('gotoDate', $scope.searchDate);
+          };
 
             var eventSerialId = 1;
-            // @return {String} fingerprint of the event object and its properties
+            // @return {String} fingerprint of the event object and its
+			// properties
             this.eventFingerprint = function (e) {
                 if (!e._id) {
                     e._id = eventSerialId++;
@@ -67,13 +89,15 @@
                 var start = moment.isMoment(e.start) ? e.start.unix() : (e.start ? moment(e.start).unix() : '');
                 var end = moment.isMoment(e.end) ? e.end.unix() : (e.end ? moment(e.end).unix() : '');
 
-                // This extracts all the information we need from the event. http://jsperf.com/angular-calendar-events-fingerprint/3
+                // This extracts all the information we need from the event.
+				// http://jsperf.com/angular-calendar-events-fingerprint/3
                 return [e._id, e.id || '', e.title || '', e.url || '', start, end, e.allDay || '', e.className || '', extraSignature].join('');
             };
 
             var sourceSerialId = 1;
             var sourceEventsSerialId = 1;
-            // @return {String} fingerprint of the source object and its events array
+            // @return {String} fingerprint of the source object and its events
+			// array
             
             this.sourceFingerprint = function (source) {
                 var fp = '' + (source.__id || (source.__id = sourceSerialId++));
@@ -115,14 +139,18 @@
                 );
             };
 
-            // Track changes in array of objects by assigning id tokens to each element and watching the scope for changes in the tokens
+            // Track changes in array of objects by assigning id tokens to each
+			// element and watching the scope for changes in the tokens
             // @param {Array|Function} arraySource array of objects to watch
-            // @param tokenFn {Function} that returns the token for a given object
+            // @param tokenFn {Function} that returns the token for a given
+			// object
             // @return {Object}
-            //  subscribe: function(scope, function(newTokens, oldTokens))
-            //    called when source has changed. return false to prevent individual callbacks from firing
-            //  onAdded/Removed/Changed:
-            //    when set to a callback, called each item where a respective change is detected
+            // subscribe: function(scope, function(newTokens, oldTokens))
+            // called when source has changed. return false to prevent
+			// individual callbacks from firing
+            // onAdded/Removed/Changed:
+            // when set to a callback, called each item where a respective
+			// change is detected
             this.changeWatcher = function (arraySource, tokenFn) {
                 var self;
 
@@ -142,7 +170,7 @@
                 // @param {Array} b
                 // @return {Array} elements in that are in a but not in b
                 // @example
-                //  subtractAsSets([6, 100, 4, 5], [4, 5, 7]) // [6, 100]
+                // subtractAsSets([6, 100, 4, 5], [4, 5, 7]) // [6, 100]
                 var subtractAsSets = function (a, b) {
                     var obj = (b || []).reduce(
                         function (rslt, val) {
@@ -161,7 +189,8 @@
                 // Map objects to tokens and vice-versa
                 var map = {};
 
-                // Compare newTokens to oldTokens and call onAdded, onRemoved, and onChanged handlers for each affected event respectively.
+                // Compare newTokens to oldTokens and call onAdded, onRemoved,
+				// and onChanged handlers for each affected event respectively.
                 var applyChanges = function (newTokens, oldTokens) {
                     var i;
                     var token;
@@ -172,7 +201,9 @@
                         var el = map[removedToken];
                         delete map[removedToken];
                         var newToken = tokenFn(el);
-                        // if the element wasn't removed but simply got a new token, its old token will be different from the current one
+                        // if the element wasn't removed but simply got a new
+						// token, its old token will be different from the
+						// current one
                         if (newToken === removedToken) {
                             self.onRemoved(el);
                         } else {
@@ -225,7 +256,8 @@
                 if (!fullCalendarConfig.lang && !fullCalendarConfig.locale || fullCalendarConfig.useNgLocale) {
                     // Configure to use locale names by default
                     var tValues = function (data) {
-                        // convert {0: "Jan", 1: "Feb", ...} to ["Jan", "Feb", ...]
+                        // convert {0: "Jan", 1: "Feb", ...} to ["Jan", "Feb",
+						// ...]
                         return (Object.keys(data) || []).reduce(
                             function (rslt, el) {
                                 rslt.push(data[el]);
@@ -260,8 +292,9 @@
 	            }
             /* event source that contains custom events on the scope */
             	$scope.events = [];
-           //POST method to show subtopics on the calendar
-            	$scope.loading = true;		// For showing and hiding the loading gif.
+           // POST method to show subtopics on the calendar
+            	$scope.loading = true;		// For showing and hiding the
+											// loading gif.
             	if(!$rootScope.gotSubtopics) {
             		$rootScope.gotSubtopics = true; 
             		$http({
@@ -289,9 +322,10 @@
                 		}
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
                 		
-                		//$scope.renderCalendar('myCalendar');
+                		// $scope.renderCalendar('myCalendar');
                 	}).finally(function() {
-                		// Turn off loading indicator whether success or failure.
+                		// Turn off loading indicator whether success or
+						// failure.
                 		$scope.loading = false;
                 	});
             	}
@@ -320,8 +354,10 @@
             $scope.alertOnEventClick = function( date, jsEvent, view){
             	var name = jsEvent.target.parentNode.parentNode.getAttribute("class");
             	if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorgreen fc-draggable ng-scope fc-allow-mouse-resize") {
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove green
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add red
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove
+																							// green
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add
+																							// red
                     // http for green to red
                     $http({
                  		method : "GET",
@@ -329,7 +365,8 @@
                  	 }).then(function successCallback(response) {
                  	 });
                 }  else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorred fc-draggable ng-scope fc-allow-mouse-resize"){
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove red
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
+																							// red
                     // http for red to blue
                     $http({
                  		method : "GET",
@@ -337,7 +374,8 @@
                  	 }).then(function successCallback(response) {
                  	 });
                 } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize") {
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); //add green
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // add
+																							// green
                     // http for blue to green
                     $http({
                  		method : "GET",
@@ -345,8 +383,10 @@
                  	 }).then(function successCallback(response) {
                  	 });
                 }    else  if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorgreen") {
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove green
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add red
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove
+																							// green
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add
+																							// red
                     // http for green to red
                     $http({
                  		method : "GET",
@@ -354,7 +394,8 @@
                  	 }).then(function successCallback(response) {
                  	 });
                 } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorred"){
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove red
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
+																							// red
                     // http for red to blue
                     $http({
                  		method : "GET",
@@ -362,7 +403,8 @@
                  	 }).then(function successCallback(response) {
                  	 });
                 }else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope topiccolorred fc-allow-mouse-resize"){
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove red
+                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
+																							// red
                     // http for red to blue
                     $http({
                  		method : "GET",
@@ -400,7 +442,7 @@
               }
             };
             
-            /* add custom event*/
+            /* add custom event */
             $scope.addEvent = function() {
               $scope.events.push({
                 title: 'Open Sesame',
@@ -494,7 +536,7 @@
             	};
             }
             
-            /* event sources array*/
+            /* event sources array */
             $scope.eventSources = [$scope.events];
             $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
             $scope.sources 			= "";
@@ -529,7 +571,7 @@
                             eventSources : sources
                         };
                         angular.extend(options, localeFullCalendarConfig);
-                        //remove calendars from options
+                        // remove calendars from options
                         options.calendars = null;
 
                         var options2 = {};
@@ -618,7 +660,8 @@
                     eventsWatcher.subscribe(scope, function () {
                         if (sourcesChanged === true) {
                             sourcesChanged = false;
-                            // return false to prevent onAdded/Removed/Changed handlers from firing in this case
+                            // return false to prevent onAdded/Removed/Changed
+							// handlers from firing in this case
                             return false;
                         }
                     });
