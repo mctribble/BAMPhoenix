@@ -38,10 +38,6 @@ app.config(function($routeProvider, $locationProvider){
 		controller: "curriculumController"
 	}).when("/logout", {
 	    templateUrl: "static/pages/login.html", 
-<<<<<<< HEAD
 	    controller: "loginController"
-=======
-	    controller: 'loginController'
->>>>>>> 5b98851782eac1c9046cbe660c408c8adbc8d0e8
 	}).otherwise({redirectTo: '/'});
 });
