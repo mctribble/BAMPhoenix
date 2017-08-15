@@ -258,7 +258,7 @@
                     var tValues = function (data) {
                         // convert {0: "Jan", 1: "Feb", ...} to ["Jan", "Feb",
 						// ...]
-                        return (Object.keys(data) || []).reduce(
+                        return (Object.keys(data)).reduce(
                             function (rslt, el) {
                                 rslt.push(data[el]);
                                 return rslt;

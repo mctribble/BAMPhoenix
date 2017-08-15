@@ -12846,7 +12846,7 @@ function EventManager() { // assumed to be a calendar
 	}
 
 
-	function reportEventChange() {
+	function reportEventChange(cache) {
 		prunedCache = filterEventsWithinRange(cache);
 		t.trigger('eventsReset', prunedCache);
 	}
@@ -15069,9 +15069,7 @@ var AgendaView = FC.AgendaView = View.extend({
 		}
 
 		// render the events in the subcomponents
-		timedSegs = this.timeGrid.renderEvents(timedEvents);
 		if (this.dayGrid) {
-			daySegs = this.dayGrid.renderEvents(dayEvents);
 		}
 
 		// the all-day area is flexible and might have a lot of events, so shift the height
