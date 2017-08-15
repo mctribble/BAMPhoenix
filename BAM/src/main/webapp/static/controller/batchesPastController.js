@@ -15,9 +15,8 @@ app.controller('batchesPastController', function($scope, $rootScope, $location, 
 			params: {email: emailer}
 		})
 		.then(function success(response){
-			console.log("past batches: " + response.data);
 			$scope.message = true;
-			$scope.msg = 'past batches retreived';
+			$scope.msg = 'past batches retrieved';
 			for(var i=0;i<response.data.length;i++){
 				response.data[i].startDate=formatDate(response.data[i].startDate)
 				response.data[i].endDate=formatDate(response.data[i].endDate)
@@ -26,12 +25,11 @@ app.controller('batchesPastController', function($scope, $rootScope, $location, 
 			
 		}, function error(response){
 			$scope.message = true;
-			$scope.msg = 'past batches not retreived';
+			$scope.msg = 'past batches not retrieved';
 		});
 	}
 	
 	$scope.goToBatch = function(batch){
-				console.log(batch.id);
 		$http({
 			
 			url: "rest/api/v1/Calendar/Topics?batchId=" + batch.id,
@@ -42,13 +40,13 @@ app.controller('batchesPastController', function($scope, $rootScope, $location, 
 			$rootScope.gotSubtopics = false;
 			$location.path('/home');
 			$scope.message = true;
-			$scope.msg = 'batch retreived';
+			$scope.msg = 'batch retrieved';
 			
 		}, function error(response){
 			$rootScope.gotSubtopics = false;
 			$location.path('/home');
 			$scope.message = true;
-			$scope.msg = 'batch not retreived';
+			$scope.msg = 'batch not retrieved';
 		});
 	}
 	

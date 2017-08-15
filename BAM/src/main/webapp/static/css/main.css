@@ -66,6 +66,11 @@
 	background-color: #f26925;
 }
 
+/******** REGISTER STYLING *********/
+.input-group .form-control{
+	    width: 200px;
+}
+
 /***** 2.0 NAVBAR STYLING *****/
 .full-navbar {
 	width: 100%;
@@ -175,6 +180,33 @@ li.expand{
 	margin: auto;
 }
 
+/******** 'FORGOT PASSWORD?' STYLING ********/
+.pw {
+  display: none;
+  visibility: hidden;
+}
+label {
+  display: block;
+  padding: 0.5em;
+  text-align: center;
+  border-bottom: 1px solid #CCC;
+  color: #666;
+}
+label:hover {
+  color: #000;
+}
+label::before {
+  font-family: Consolas, monaco, monospace;
+  font-weight: bold;
+  font-size: 15px;
+  content: "+";
+  vertical-align: text-top;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 3px;
+  background: radial-gradient(ellipse at center, #CCC 50%, transparent 50%);
+}
 
 /***** 3.0 FONTS *****/
 /*
@@ -200,6 +232,19 @@ li.expand{
 }
 */
 /***** 4.0 TABLES *****/
+
+.topiccolorred{
+background-color: red !important;	
+}
+
+.topiccolorblue{
+background-color: blue !important;
+}
+
+.topiccolorgreen{
+background-color:green !important;		
+}
+
 .searchbox-container {
 	/* 	font-family: "Audimat"; */
 	font-size: 1.2em;

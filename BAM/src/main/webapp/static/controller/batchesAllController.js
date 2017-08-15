@@ -1,5 +1,3 @@
-
-
 var k;
 function formatDate(inputStr) {
     var timestamp = parseInt(inputStr, 10);

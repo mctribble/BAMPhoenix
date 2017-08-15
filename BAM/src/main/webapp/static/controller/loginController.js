@@ -1,9 +1,8 @@
 app.controller('loginController', function($rootScope, $scope, $location, $http) {
-
 	$rootScope.userRole;
 	
-	$scope.msg;
 	$rootScope.user;
+	$scope.msg;
 	$rootScope.trainerBatch;
 	$scope.logIn = function() {
 		var user = {
@@ -22,7 +21,6 @@ app.controller('loginController', function($rootScope, $scope, $location, $http)
 		})
 		.then(function success(response){
 			$rootScope.user = response.data;
-			console.log($rootScope.user)
 			if($rootScope.user.role == 3){
 				$rootScope.userRole = '(Quality Control)';
 				$location.path('/home');
