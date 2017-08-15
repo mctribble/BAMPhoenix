@@ -38,7 +38,7 @@ public class SubtopicService {
 		Batch b = new Batch();
 		SubtopicName st = new SubtopicName();
 		SubtopicStatus ss = new SubtopicStatus();
-		Date date = null;
+		Date date = new Date();
 
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		try {
