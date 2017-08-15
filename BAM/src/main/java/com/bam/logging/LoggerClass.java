@@ -22,7 +22,7 @@ public class LoggerClass {
 	private String intercepted = "intercepted method : ";
 	private String interceptedArg = "intercepted arguments : ";
 	private String dataRequest = "data request made at ";
-	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+	private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
 
 	
 	/**
