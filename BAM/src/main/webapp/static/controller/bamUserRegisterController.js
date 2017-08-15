@@ -3,9 +3,10 @@ app.controller("bamUserRegisterController", ['$http', '$scope', '$location', '$t
 	$scope.updateDisplay = false;	
 	
 	$scope.testMsg = 'test message from registerController.js';
+	$scope.pwd='empty'
 
 	$scope.addUser = function(){}
-		if($scope.user.pwd == $scope.confirm_password){
+		if($scope.pwd == $scope.confirm_password){
 		$http({
 			url: 'rest/api/v1/Users/Register',
 			method: 'POST',
