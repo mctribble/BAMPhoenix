@@ -1,6 +1,5 @@
 app.controller("associateViewController", function($scope, $rootScope, $http){
 	
-	console.log("Associates Controller");
 	var bId;
 	$scope.currentBatchName;
 	
@@ -17,14 +16,12 @@ app.controller("associateViewController", function($scope, $rootScope, $http){
 		bId = $rootScope.trainerBatch.id;
 	}
 	
-	console.log("batch id" + bId);
 	
 	$http({
 		url: "rest/api/v1/Users/InBatch",
 		method: "GET",
 		params: {batchId: bId}
 	}).then(function(response){
-		console.log("users:" + response.data);
 		$scope.associateList = response.data;
 	}, function(response){
 		$scope.message = true;

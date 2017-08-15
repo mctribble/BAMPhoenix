@@ -1,4 +1,4 @@
-var app = angular.module('bam', ['ngRoute']);
+var app = angular.module('bam', ['ngRoute', 'dndLists']);
 app.config(function($routeProvider, $locationProvider){
 	$locationProvider.html5Mode(false).hashPrefix('');
 	$routeProvider.when("/",{
@@ -36,5 +36,8 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/curriculum",{
 		templateUrl: "static/pages/curriculum.html",
 		controller: "curriculumController"
+	}).when("/logout", {
+	    templateUrl: "static/pages/login.html", 
+	    controller: 'loginController'
 	}).otherwise({redirectTo: '/'});
 });

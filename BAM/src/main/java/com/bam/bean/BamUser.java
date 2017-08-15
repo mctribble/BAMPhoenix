@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
 @Table(name = "USERS")
 @Component
@@ -46,9 +45,7 @@ public class BamUser {
 	private String email;
 
 	@Column(name = "Password")
-
 	@NotEmpty(message="Password cannot be empty")
-
 	private String pwd;
 
 	@Column(name = "Role") // Role 1 is for associates // Role 2 is for trainers
@@ -74,7 +71,6 @@ public class BamUser {
 
 	@Column(name = "Password_Bak") // This is a backup password that will be
 									// used when
-	@JsonIgnore
 	private String pwd2; // the user needs to reset their password.
 
 
