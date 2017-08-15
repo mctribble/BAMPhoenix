@@ -3,14 +3,15 @@
 	<button class="navbar-toggler navbar-toggler-right" type="button"
 		data-toggle="collapse" data-target="#navbarNavAltMarkup"
 		aria-controls="navbarNavAltMarkup" aria-expanded="false"
-		aria-label="Toggle navigation" ng-show="user.role>=2">
+		aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 
-	<a class="navbar-brand" href="#/home">Home</a>
+	<a class="navbar-brand" href="#/home">Dashboard</a>
 	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		<div class="navbar-nav">
 			<!-- <a class="nav-item nav-link" href="#/associates" ng-show="user.role>=2">Associates</a>  -->
+			<a class="nav-item nav-link" href="#/calendar">Calendar</a>
 			<a class="nav-item nav-link" href="#/batchesAll"
 				ng-show="user.role>=2">All Batches</a>
 			<a class="nav-item nav-link" href="#/curriculum" ng-show="user.role>=2">Curriculum</a>
