@@ -1,18 +1,23 @@
 
+
 <ul class="nav nav-tabs>
 	<li class="nav-link active"><a href="#/home">Calendar</a></li>
 	<li class="nav-link"><a href="#/associates">View Associates</a></li>
 	<li class="nav-link"><a href="#/editBatch" >Edit Batch</a></li>
+
+
 </ul>
 <br>
 
 <!-- Loading gif -->
-<img src="static/img/ajax-loader-logo.ec18efd7.gif" ng-show="loading" width="300" height="192" style="display: block; margin: 0 auto;"></img>
+<img src="static/img/ajax-loader-logo.ec18efd7.gif" ng-show="loading"
+	width="300" height="192" style="display: block; margin: 0 auto;"></img>
 
 <div class="row">
 	<div class="col-md-9">
 		<!-- Display calendar -->
-		<div class="calendar" ng-model="eventSources" calendar="myCalendar" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+		<div class="calendar" ng-model="eventSources" calendar="myCalendar"
+			config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
 		<!-- Alert that is filled currently based on clicks and drags.
 		<div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
 		    <h4>{{alertMessage}}</h4>
@@ -21,6 +26,15 @@
 	<!-- <c:if test="${rootScope.user.role==2 || $rootScope.user.role ==3}">  -->
 	<!-- Side column to list Events -->
 	<div class="col-md-3 container">
+		<!-- Search bar to change the current calendar by date -->
+		<div>
+			<div>
+				<span>Search by Date:</span> <input type="date" class="form-control"
+					ng-model="searchDate" ng-keyup="changeDateKeyPress($event)" />
+			</div>
+			<button ng-click="changeDate()">Search</button>
+		</div>
+		<br>
 		<div class="well">
 			<h3>Events</h3>
 			<table border="2" class="table table-hover">
@@ -33,27 +47,30 @@
 			</table>
 			<div >
 			<h3>Click Events To Change Status</h3>
+			<!-- Editor: Joseph Nguyen
+					Modified colors to be easier on the eyes.
+			 -->
 			<table border="2" class="table">
 				<tr>
-					<td bgcolor="green" style="border: 3px"><font color="white">Covered</font></td>
+					<td bgcolor="#32cd32" style="border: 3px"><font color="white">Covered</font></td>
 				<tr>
-					<td bgcolor="#3a87ad" style="border: 3px"><font color="white">Planned</font></td>
+					<td bgcolor="#0275d8" style="border: 3px"><font color="white">Planned</font></td>
 				<tr>
-					<td bgcolor="red" style="border: 3px"><font color="white">Missed</font></td>
+					<td bgcolor="#fd4234" style="border: 3px"><font color="white">Missed</font></td>
 			</table>
 			</div>
 			<div >
 			<h3> Events Status</h3>
 			<table border="2" class="table">
 				<tr>
-					<td bgcolor="green" style="border: 3px"><font color="white">Covered</font></td>
+					<td bgcolor="#32cd32" style="border: 3px"><font color="white">Covered</font></td>
 				<tr>
-					<td bgcolor="#3a87ad" style="border: 3px"><font color="white">Planned</font></td>
+					<td bgcolor="#0275d8" style="border: 3px"><font color="white">Planned</font></td>
 				<tr>
-					<td bgcolor="red" style="border: 3px"><font color="white">Missed</font></td>
+					<td bgcolor="#fd4234" style="border: 3px"><font color="white">Missed</font></td>
 			</table>
 			</div>
 		</div>
 	</div>
-	
+
 </div>
