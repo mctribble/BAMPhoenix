@@ -18,12 +18,14 @@
   
 	  		
 	  		
-  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig',
-        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig) {
-		  if(!$rootScope.user.batch && $rootScope.user.role == 1)
-			{
+  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService',
+        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService) {
+	
+		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
+			{  console.log('I was here');
 				$location.path('/noBatch');
 			}
+		  
 	  	
 	  	//Varibles set for the use of adding day,month,year,to the Date attribute of a calendar. 
 		    var date = new Date();
@@ -247,23 +249,24 @@
                 return {};
             };
             
-           
-            if($rootScope){
+           console.log($rootScope);
+           console.log('Current User Role'+ SessionService.get("currentUser").role );
+//            if($rootScope){
             	 var url;
-	            if($rootScope.user.role == 1){
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.user.batch.id;
-	            }else if($rootScope.user.role == 2 && $rootScope.trainerBatch){
-	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.trainerBatch.id;
-	            }else if (($rootScope.user.role == 3) && $rootScope.currentBatch) {
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
+	            if(SessionService.get("currentUser").role == 1){
+	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("currentUser").batch.id;
+	            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
+	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
+	            }else if ((SessionService.get("currentUser").role == 3) && SessionService.get("currentBatch")) {
+	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
 	            }else{
 	            }
             /* event source that contains custom events on the scope */
             	$scope.events = [];
            //POST method to show subtopics on the calendar
             	$scope.loading = true;		// For showing and hiding the loading gif.
-            	if(!$rootScope.gotSubtopics) {
-            		$rootScope.gotSubtopics = true; 
+            	if(!SessionService.get("gotSubtopics")) {
+            		SessionService.set("gotSubtopics", true); 
             		$http({
                 		method : "GET",
                 		url : url
@@ -272,7 +275,7 @@
                     			var title = response.data[i].subtopicName.name;
                         		var dates = response.data[i].subtopicDate;
                         		var status= response.data[i].status.id;
-                        	
+                        	console.log('title: '+ title);
                         		var a = new Date(dates);  
                                 var year = a.getUTCFullYear();
                                 var month = a.getMonth();
@@ -295,7 +298,7 @@
                 		$scope.loading = false;
                 	});
             	}
-            }
+//            }
             
             /* event source that calls a function on every view switch */
             $scope.eventsF = function (start, end, timezone, callback) {
@@ -315,7 +318,7 @@
             	          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
             	        ]
             	    };
-            if($rootScope.user.role == 2 && $rootScope.currentBatch == null){
+            if(SessionService.get("currentUser").role == 2 && SessionService.set("currentBatch") == null){
             /* alert on eventClick */
             $scope.alertOnEventClick = function( date, jsEvent, view){
             	var name = jsEvent.target.parentNode.parentNode.getAttribute("class");
@@ -325,7 +328,7 @@
                     // http for green to red
                     $http({
                  		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Canceled"
                  	 }).then(function successCallback(response) {
                  	 });
                 }  else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorred fc-draggable ng-scope fc-allow-mouse-resize"){
@@ -333,7 +336,7 @@
                     // http for red to blue
                     $http({
                  		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Pending/Missed"
                  	 }).then(function successCallback(response) {
                  	 });
                 } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize") {
@@ -341,7 +344,7 @@
                     // http for blue to green
                     $http({
                  		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Completed"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Completed"
                  	 }).then(function successCallback(response) {
                  	 });
                 }    else  if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorgreen") {
@@ -350,7 +353,7 @@
                     // http for green to red
                     $http({
                  		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Canceled"
                  	 }).then(function successCallback(response) {
                  	 });
                 } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorred"){
@@ -358,7 +361,7 @@
                     // http for red to blue
                     $http({
                  		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Pending/Missed"
                  	 }).then(function successCallback(response) {
                  	 });
                 }else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope topiccolorred fc-allow-mouse-resize"){
@@ -366,7 +369,7 @@
                     // http for red to blue
                     $http({
                  		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Pending/Missed"
                  	 }).then(function successCallback(response) {
                  	 });
                 }
@@ -376,7 +379,7 @@
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
             	 $http({
              		method : "GET",
-             		url : "rest/api/v1/Calendar/DateUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&date="+event.start
+             		url : "rest/api/v1/Calendar/DateUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&date="+event.start
              	 }).then(function successCallback(response) {
              	 });
             };
@@ -434,7 +437,7 @@
               }
             };
             
-            if($rootScope.user.role == 1 || $rootScope.currentBatch != null){
+            if(SessionService.get("currentUser").role == 1 || SessionService.set("currentBatch") != null){
             /* config object */
             $scope.uiConfig = {
               calendar:{

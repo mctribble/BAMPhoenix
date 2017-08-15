@@ -1,10 +1,10 @@
-app.controller("associateUpdateController", ['$rootScope', '$http', '$scope', function($rootScope, $http, $scope){
+app.controller("associateUpdateController", ['$rootScope', 'SessionService','$http', '$scope', function($rootScope, SessionService, $http, $scope){
 	
 	$scope.updateDisplay = false;	
 	
 	$scope.testMsg = 'test message from updateAssociateController.js';
 
-	$rootScope.currentBatch = null;
+	SessionService.set("currentBatch", null);
 	
 	$scope.updateAssociate = function(){
 
@@ -15,7 +15,7 @@ app.controller("associateUpdateController", ['$rootScope', '$http', '$scope', fu
 		        'Content-Type': 'application/json', 
 		        'Accept': 'application/json' 
 		    },
-			data: $rootScope.user
+			data: SessionService.get("currentUser")
 		}).then (function success(response){
 			$scope.updateDisplay = true;
 			$scope.updateMsg = 'Update Successful';

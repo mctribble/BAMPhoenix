@@ -7,7 +7,7 @@ function formatDate(inputStr) {
 var fixeded=[];
 var fixedstart=[];
 
-app.controller('batchesAllController', function($scope, $rootScope, $location, $http,$filter)
+app.controller('batchesAllController', function($scope, SessionService, $rootScope, $location, $http,$filter)
 {	
 	$scope.msg;
 	$rootScope.batchesAll;
@@ -28,8 +28,8 @@ app.controller('batchesAllController', function($scope, $rootScope, $location, $
 				response.data[i].startDate=formatDate(response.data[i].startDate)
 				response.data[i].endDate=formatDate(response.data[i].endDate)
 			}
-			
-			$rootScope.batchesAll = response.data
+			//SessionService.set("batchesAll", response.data);
+			$scope.batchesAll=response.data;
 			
 		
 			
@@ -43,7 +43,7 @@ app.controller('batchesAllController', function($scope, $rootScope, $location, $
 	}
 	
 	$scope.goToBatch = function(batch){
-		$rootScope.currentBatch = batch;
+		SessionService.set("currentBatch", batch);
 		$http({
 			
 			url: 'rest/api/v1/Calendar/Topics',
@@ -51,13 +51,13 @@ app.controller('batchesAllController', function($scope, $rootScope, $location, $
 			params: {batchId: batch.id}
 		})
 		.then(function success(response){
-			$rootScope.gotSubtopics = false;
+			SessionService.set("gotSubtopics", false);
 			$location.path('/home');
 			$scope.message = true;
 			$scope.msg = 'batch retreived';
 			
 		}, function error(response){
-			$rootScope.gotSubtopics = false;
+			SessionService.set("gotSubtopics", false);
 			$location.path('/home');
 			$scope.message = true;
 			$scope.msg = 'batch not retreived';

@@ -1,16 +1,16 @@
 
-app.controller("batchEditController",function($rootScope, $scope, $location, $http){
+app.controller("batchEditController",function($rootScope, $scope, SessionService, $location, $http){
 	//set batchId with the id of the currentBatch if it exists else use the trainerBatch
 	var batchId;
 	$rootScope.currentBatchName;
-	if($rootScope.currentBatch)
+	if(SessionService.get("currentBatch"))
 	{
-		batchId = $rootScope.currentBatch.id;
-		$rootScope.currentBatchName = $rootScope.currentBatch.name;
+		batchId = SessionService.get("currentBatch").id;
+		SessionService.set("currentBatchName", SessionService.get("currentBatch").name);
 	}else
 	{
-		batchId = $rootScope.trainerBatch.id; //if currentBatch is not set use the trainerBatch's id
-		$rootScope.currentBatchName = $rootScope.trainerBatch.name;
+		batchId = SessionService.get("trainerBatch").id; //if currentBatch is not set use the trainerBatch's id
+		SessionService.set("currentBatchName", SessionService.get("trainerBatch").name);
 	}
 	
 	if(batchId) //Check if currentBatch is set before using it.

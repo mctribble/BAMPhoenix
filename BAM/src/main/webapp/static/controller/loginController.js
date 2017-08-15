@@ -1,5 +1,5 @@
 
-app.controller('loginController', ['SessionService', function($rootScope, $window, $scope, $location, $http, SessionSevice) {
+app.controller('loginController', function($rootScope, $window, $scope, $location, $http, SessionService) {
 
 	$rootScope.userRole;
 	$scope.msg;
@@ -24,17 +24,21 @@ app.controller('loginController', ['SessionService', function($rootScope, $windo
 		})
 		.then(function success(response){
 
-			SessionSevice.set("currentUser", response.data);
-			if(SessionSevice.get("currentUser").role == 3){
+//			SessionService.set("currentUser", angular.toJson(response.data));
+//			console.log('Current user object role->'+ JSON.parse(SessionService.get("currentUser")).role);
+			SessionService.set("currentUser", response.data);
+			console.log('Current user object role->'+ SessionService.get("currentUser").role);
+			if(SessionService.get("currentUser").role == 3){
 				SessionService.set("userRole", '(Quality Control)');
 
 				$location.path('/home');
-			} else if(SessionSevice.get("currentUser").role == 2){
+			} else if(SessionService.get("currentUser").role == 2){
+				console.log('http response role =2');
 				SessionService.set("userRole", '(Trainer)');
 				$http({
 					url: 'rest/api/v1/Batches/InProgress',
 					method: 'GET',
-					params: {email : SessionSevice.get("currentUser").email}
+					params: {email : SessionService.get("currentUser").email}
 				}).then(function success (progResponse){
 					SessionService.set("trainerBatch", progResponse.data);
 					SessionService.set("gotSubtopics", false);
@@ -42,12 +46,12 @@ app.controller('loginController', ['SessionService', function($rootScope, $windo
 				}, function error(progResponse){
 					$scope.msg = 'Batch Acquisition failed';
 				});
-			} else if(SessionSevice.get("currentUser").role == 1) {
+			} else if(SessionService.get("currentUser").role == 1) {
 				SessionService.set("userRole", '(Associate)');
-				if(!SessionSevice.get("currentUser").batch){
+				if(!SessionService.get("currentUser").batch){
 					$location.path('/noBatch');
 				}else{
-					$rootScope.gotSubtopics = false;
+					SessionService.set("gotSubtopics", false);
 					$location.path('/home');
 				}
 				
@@ -63,4 +67,4 @@ app.controller('loginController', ['SessionService', function($rootScope, $windo
 	}
 	
 	
-}]);
+});
