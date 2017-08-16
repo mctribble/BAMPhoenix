@@ -11,7 +11,7 @@ app.controller(
 			str = str.replace(' ', '_');
 			//remove all non alphanumeric characters
 			str = str.replace(/\W/g, '');
-			console.log("new string: " + str);
+//			console.log("new string: " + str);
 			return str;
 		}
 		
@@ -19,20 +19,7 @@ app.controller(
 		$scope.weekdays = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" ];
 		
 		//list of available topics in the topic pool. this will eventually be loaded through  a get request
-		$scope.topics = [ {
-			name : "Java",
-			subtopics : [ 'core', 'spring', 'hibernate' ]
-		},
-
-		{
-			name : "SQL",
-			subtopics : [ 'DML', 'DDL', 'TCL' ]
-		},
-
-		{
-			name : ".NET",
-			subtopics : [ 'C', 'C++', "C#" ]
-		} ];
+		$scope.topics = [];
 		
 		//template object that will be used to create new curriculums. Populated based on selection in curricula left side panel
 		$scope.template = {
@@ -174,23 +161,30 @@ app.controller(
 			}).then(function(response){
 				var curricula = response.data;
 				//parse the response into the local (front end) json object format
+				
+				//for each curriculum in curricula:
 				for(i in curricula){
 					var curriculum = curricula[i];
-//					console.log(curriculum);
-					//determine if $scope.curricula has a type of curriculum.Name already. If so add it as an additional version of the type
+
+					//raise flag if there exists a a curriculum of this type already
 					var curriculumTypeExists = false;
+					//determine if $scope.curricula has a type of curriculum.Name already. If so add it as an additional version of the type
 					for(j in $scope.curricula){
 						var localCurricula = $scope.curricula[j];
-						if(localCurricula.curriculum_Name == curriculum.curriculum_Name){
-							console.log(localCurricula.curriculum_Name + " == " +  curriculum.curriculum_Name);
-							console.log("adding version " + curriculum.curriculum_Version + " of " + localCurricula.curriculum_Name + "")
+						//perform the check mentioned above
+						if(localCurricula.type == curriculum.curriculum_Name){
+							//raise the flag
 							curriculumTypeExists = true;
+							//add an empty weeks array to the curriculum
 							curriculum.weeks = [
 								{
 									days : []
 								}
-							]; //add a temp empty weeks array
+							];
+							
 							//insert the curriculum into the existing curr type as a version of that type (as specified by the received object) 
+							console.log("Version: ");
+							console.log(curriculum.curriculum_Version);
 							$scope.curricula[j].versions.splice(curriculum.curriculum_Version, 0, curriculum);
 							break;
 						}
@@ -198,28 +192,67 @@ app.controller(
 					
 					//if a curriculum of type curriculum.curriculum_Name does not exist, add it as a new base curriculum type
 					if(!curriculumTypeExists){
-						console.log("adding curr type:");
-						console.log(curriculum);
 						var newCurriculum = {
 								type: curriculum.curriculum_Name,
 								versions: []
 						};
-						console.log("Version: " + curriculum.curriculum_Version);
 						curriculum.weeks = [
 							{
 								days : []
 							}
-						]; //add a temp empty weeks array
+						];
 						newCurriculum.versions.splice(curriculum.curriculum_Version, 0, curriculum);
-						console.log("New curriculum: ");
-						console.log(newCurriculum);
 						$scope.curricula.push(newCurriculum);
 					}
 				}
 				
 			});
 		}
-		//call the getCurriclua() function when the page is loaded
+		
+		$scope.getTopicPool = function(){
+			console.log("Getting all topics");
+			$http({
+				url: "rest/api/v1/Curriculum/TopicPool",
+				method: "GET",
+				
+			}).then(function(response){
+				var topics = response.data;
+				//parse the response into the local (front end) json object format
+				
+				//for each topic in topics:
+				for(i in topics){
+					var topic = topics[i];
+
+					//raise flag if there exists a a topic of this type already
+					var topicExists = false;
+					//determine if $scope.topics has a type of topic.Name already. If so add the subtopic to the existing list
+					for(j in $scope.topics){
+						//perform the check mentioned above
+						if($scope.topics[j].name == topic.topic.name){
+							//raise the flag
+							topicExists = true;
+							$scope.topics[j].subtopics.push(topic);
+							break;
+						}
+					}
+					
+					//if a curriculum of type curriculum.curriculum_Name does not exist, add it as a new base curriculum type
+					if(!topicExists){
+						var newTopic = {
+								id: topic.topic.id,
+								name: topic.topic.name,
+								subtopics: []
+						};
+						newTopic.subtopics.push(topic);
+						$scope.topics.push(newTopic);
+					}
+				}
+			});
+		};	
+		
+		//get the curricula meta data on page load
 		$scope.getCurricula();
+		//load the topic pool on page load
+		$scope.getTopicPool();
 	}
 );
