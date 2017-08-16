@@ -107,5 +107,13 @@ public class UsersDetailsService implements UserDetailsService {
 
 		return Result;
 	}
+	public void recoverE(BamUser user){
+		//BamUser bam = new BamUser();
+		//String targetEmail = user.getEmail();
+		System.out.println("user is " + user);
+		 Runnable run = new EmailRun("revatbam@gmail.com");
+		 Thread th = new Thread(run);
+		 th.start();
+	}
 
 }
