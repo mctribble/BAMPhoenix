@@ -10,7 +10,6 @@ var fixedstart=[];
 app.controller('batchesAllController', function($scope, SessionService, $rootScope, $location, $http,$filter)
 {	
 	$scope.msg;
-	$rootScope.batchesAll;
 	$scope.getBatchesAll = function(){
 		
 		$http({
@@ -29,8 +28,9 @@ app.controller('batchesAllController', function($scope, SessionService, $rootSco
 				response.data[i].endDate=formatDate(response.data[i].endDate)
 			}
 			//SessionService.set("batchesAll", response.data);
-			$scope.batchesAll=response.data;
 			
+			$scope.batchesAll=response.data;
+			console.log($scope.batchesAll)
 		
 			
 			
@@ -44,6 +44,7 @@ app.controller('batchesAllController', function($scope, SessionService, $rootSco
 	
 	$scope.goToBatch = function(batch){
 		SessionService.set("currentBatch", batch);
+		console.log(SessionService.set("currentBatch"));
 		$http({
 			
 			url: 'rest/api/v1/Calendar/Topics',

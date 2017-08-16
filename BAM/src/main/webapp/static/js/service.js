@@ -1,5 +1,8 @@
 /**
- * 
+ * @Author: Duncan Hayward, Jaydeep Bhatia 
+ * Creating a service method that creates a Session
+ * call the get function for getting a session object
+ * call the set method for setting a session object
  */
 app.service('SessionService', function($window){
 	var service = this;
@@ -14,5 +17,8 @@ app.service('SessionService', function($window){
 	};
 	service.unset = function(key){
 		sessionStorage.removeItem(key);
+	};
+	service.remove = function(){
+		sessionStorage.clear();
 	};
 });

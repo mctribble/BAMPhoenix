@@ -1,10 +1,9 @@
 app.controller("associateViewController", function($scope, SessionService, $rootScope, $http){
 	
 	var bId;
-	$scope.currentBatchName;
-	console.log(SessionService.get("currentBatch"));
+	
 	if(SessionService.get("currentBatch") != null)
-	{
+	{console.log(SessionService.get("currentBatch"));
 		$scope.currentBatchName= true;
 		$scope.currentBatchName = SessionService.get("currentBatch").name;
 		bId = SessionService.get("currentBatch").id;

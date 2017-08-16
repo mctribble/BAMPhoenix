@@ -1,6 +1,6 @@
 
 app.controller('loginController', function($rootScope, $window, $scope, $location, $http, SessionService) {
-
+	$(".navbar").hide();
 	$rootScope.userRole;
 	$scope.msg;
 
@@ -23,17 +23,16 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 	        }
 		})
 		.then(function success(response){
-
+			
 //			SessionService.set("currentUser", angular.toJson(response.data));
 //			console.log('Current user object role->'+ JSON.parse(SessionService.get("currentUser")).role);
+//			console.log('Current user object role->'+ SessionService.get("currentUser").role);
+			
 			SessionService.set("currentUser", response.data);
-			console.log('Current user object role->'+ SessionService.get("currentUser").role);
 			if(SessionService.get("currentUser").role == 3){
 				SessionService.set("userRole", '(Quality Control)');
-
 				$location.path('/home');
 			} else if(SessionService.get("currentUser").role == 2){
-				console.log('http response role =2');
 				SessionService.set("userRole", '(Trainer)');
 				$http({
 					url: 'rest/api/v1/Batches/InProgress',

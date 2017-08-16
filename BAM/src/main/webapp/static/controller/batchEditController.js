@@ -2,7 +2,6 @@
 app.controller("batchEditController",function($rootScope, $scope, SessionService, $location, $http){
 	//set batchId with the id of the currentBatch if it exists else use the trainerBatch
 	var batchId;
-	$rootScope.currentBatchName;
 	if(SessionService.get("currentBatch"))
 	{
 		batchId = SessionService.get("currentBatch").id;

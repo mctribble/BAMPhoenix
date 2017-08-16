@@ -21,7 +21,7 @@
 	  		
   app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService',
         function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService) {
-	
+	  	$(".navbar").show();
 		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  console.log('I was here');
 				$location.path('/noBatch');
@@ -299,8 +299,8 @@
            // POST method to show subtopics on the calendar
             	$scope.loading = true;		// For showing and hiding the
 											// loading gif.
-            	if(!$rootScope.gotSubtopics) {
-            		$rootScope.gotSubtopics = true; 
+            	if(!SessionService.get("gotSubtopics")) {
+            		SessionService.set("gotSubtopics", true); 
 
             		$http({
                 		method : "GET",

@@ -2,9 +2,9 @@
 app.controller('navController', function($rootScope, SessionService, $scope, $location, $http) {
 
 
-	$scope.$on('$routeChangeStart', function(next, current) {
-		SessionService.set("gotSubtopics", false);
-		var somePath = $location.path();
+//	$scope.$on('routeChangeStart', function(next, current) {
+//		SessionService.set("gotSubtopics", false);
+//		var somePath = $location.path();
 
 		if (SessionService.get("currentUser").role < 2) {
 			if (somePath == "/batchesAll" || somePath == "/batchesFuture"
@@ -13,7 +13,7 @@ app.controller('navController', function($rootScope, SessionService, $scope, $lo
 				$location.path('/home');
 			}
 		}
-	});
+//	});
 	
 //	$scope.hideNav = function (){
 //		delete $rootScope.user;
@@ -29,7 +29,7 @@ app.controller('navController', function($rootScope, SessionService, $scope, $lo
 	
 	$scope.redirect();
 	
-//	$scope.hideNav = function (){
-//        delete $rootScope.user;
-//    }
+	$scope.hideNav = function (){
+        SessionService.remove();
+    }
 });
