@@ -1,35 +1,38 @@
 <!-- @author Brian McKalip -->
 
 <!-- *********************************************** Begin CurriculaManager view ********************************************************* -->
-<div id="curriculumManager" class="container"
-	ng-controller="curriculumController">
+<div id="curriculumManager" class="container" ng-controller="curriculumController">
 	<div class="row">
 		<div id="curriculaLoaderView" class="col col-md-2">
 			<div class="columnHeader text-center">
 				<h5>Curricula</h5>
-				<button class="btn btn-md btn-success" ng-click="newCurriculum()">New Curriculum</button>
+				<button class="btn btn-md btn-primary" ng-click="delectItems(); newCurriculum()">New Curriculum</button>
+				<button class="btn btn-md btn-default btn-block" ng-click="delectItems(); setTemplate(-1)">Clear Template</button>
+			</div>
 				<!-- ***************************** Begin Curricula Accordion***************************************** -->
 				<div id="curriculaAccordion" role="tablist">
 					<div class="card" ng-repeat="curriculum in curricula">
 						<div class="card-header" role="tab">
 							<h5 class="mb-0">
 								<a data-toggle="collapse" data-parent="#curriculaAccordion"
-									data-target="#collapseCurriculum{{curriculum.type}}"> {{curriculum.type}}
+									data-target="#collapseCurriculum{{sanitizeString(curriculum.type)}}"> {{curriculum.type}}
 								</a>
 							</h5>
 						</div>
 	
-						<div id="collapseCurriculum{{curriculum.type}}" class="collapse" role="tabpanel">
+						<div id="collapseCurriculum{{sanitizeString(curriculum.type)}}" class="collapse" role="tabpanel">
 							<div class="card-block">
-								<ul class="list-group">
-									<li class="list-group-item" ng-repeat="version in curriculum.versions" ng-click="setTemplate($parent.$index, $index)">Version #{{$index}}</li>
-								</ul>
+								<div class="list-group">
+									<a ng-class="{'active': active === true}" class="list-group-item" ng-repeat="version in curriculum.versions" ng-click="setTemplate(version); delectItems(); active = !active;">
+										Version #{{$index}}
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<!-- ***************************** End Curricula Accordion***************************************** -->
-			</div>
+
 		</div>
 <!-- *********************************************** End CurriculaManager view ********************************************************* -->
 
@@ -38,23 +41,35 @@
 			<div class="columnHeader">
 				<div class="row">
 					<div class="col col-md-9">
-						<h3>{{meta.type}} Curriculum - Version #{{meta.version}}</h3>
+						<h3>{{displayedCurriculum.meta.type}} Curriculum - Version #{{displayedCurriculum.meta.version}}</h3>
 					</div>
 					<div class="col col-md-3">
-						<button class="btn btn-md btn-success text-right" ng-click="addWeek()">Add Week</button>
+						<button class="btn btn-md btn-success text-right" ng-click="saveCurriculum()">Save Curriculum</button>
+
+					</div>
+				</div>
+				
+				<div id="addWeekHeader" class="row">
+					<div class="col col-md-9"></div>
+					<div class="col col-md-3">
+						<button class="btn btn-md btn-primary btn-block" ng-click="addWeek()">Add Week</button>
 					</div>
 				</div>
 			</div>
 			
 			<!-- ***************************** Begin Week Accordion***************************************** -->
-			<div id="weekAccordion" role="tablist">
-				<div class="card" ng-repeat="week in displayedCurriculum.weeks">
+			<div id="weekAccordion" role="tablist" dnd-list="week.days" dnd-allowed-typed="['week']">
+				<div class="card" 
+					 ng-repeat="week in displayedCurriculum.weeks"
+					 dnd-draggable="week"
+					 dnd-effect-allowed="move"
+					 dnd-moved="week.days.splice($index, 1); console.log('moving week')"
+					 >
 					<div class="card-header" role="tab">
-
 						<div class="row">
 							<div class="col col-md-9">
 								<h5 class="mb-0">
-									<a data-toggle="collapse" data-parent="#weekAccordion"
+									<a data-toggle="collapse"
 										data-target="#collapseWeek{{$index+1}}"> 
 										Week #{{$index+1}} 
 									</a>
@@ -66,37 +81,54 @@
 						</div>
 					</div>
 
-					<div id="collapseWeek{{$index+1}}" class="collapse"
-						role="tabpanel">
+					<div id="collapseWeek{{$index+1}}" class="collapse" role="tabpanel">
 						<div class="card-block">
-							<!-- ***************************** Begin Day Accordion***************************************** -->
-							<div id="dayAccordion" role="tablist">
-								<div class="card" ng-repeat="day in week.days">
-									<div class="card-header" role="tab">
-										<h5 class="mb-0">
-											<a data-toggle="collapse" data-parent="#dayAccordion"
-												data-target="#collapseWeek{{$parent.$index+1}}-Day{{$index+1}}">
-												{{weekdays[$index]}}
-											</a>
-										</h5>
+							<!-- ***************************** Begin Day List***************************************** -->
+							<div class="row center-block" id="dayList" 
+								 dnd-list="week.days" 
+								 dnd-horizontal-list="true" 
+								 dnd-allowed-typed="['day']">
+								<div class="col col-md-1" dnd-no-drag="true"></div>
+								<div class="col col-md-2 day-list" 
+									 ng-repeat="day in week.days"
+									 dnd-draggable="day"
+									 dnd-effect-allowed="move"
+									 dnd-moved="week.days.splice($index, 1); console.log($index)"
+									 >
+									 
+									<div class="card-header day-header">
+										<h6 class="text-center mb-0">
+											{{weekdays[$index]}}
+										</h6>
 									</div>
 
-									<div id="collapseWeek{{$parent.$index+1}}-Day{{$index+1}}"
-										class="collapse" role="tabpanel">
-										<div class="card-block">
-											<!-- ***************************** Begin Subtopic List***************************************** -->
-											<ul class="list-group" dnd-list="day.subtopics">
-												<li class="list-group-item" 
-													ng-repeat="subtopic in day.subtopics" 
-													dnd-draggable="subtopic"
-													dnd-effect-allowed="move"
-													dnd-moved="day.subtopics.splice($index, 1)"
-													>{{subtopic}}</li>
-											</ul>
-											<!-- ***************************** End Subtopic List***************************************** -->
-										</div>
+									<div class="card-block">
+										<!-- ***************************** Begin Subtopic List***************************************** -->
+										<ul class="list-group" dnd-list="day.subtopics" dnd-allowed-typed="['subtopic']">
+											<li class="list-group-item day-list-item" 
+												ng-repeat="subtopic in day.subtopics" 
+												dnd-draggable="subtopic"
+												dnd-effect-allowed="move"
+												dnd-moved="day.subtopics.splice($index, 1); console.log($index)">
+												
+<!-- 
+												<div class="row">
+													<div class="col col-xs-11"></div>
+													<div class="col col-xs-1" style="width=100%;background-color:red;">x</div>
+												</div>
+ -->
+												<div class="row">
+													<div class="col col-xs-12">
+														{{subtopic}} 
+													</div>
+												</div>
+												
+											</li>
+										</ul>
+										<!-- ***************************** End Subtopic List***************************************** -->
 									</div>
 								</div>
+								<div class="col col-md-1" dnd-no-drag="true"></div>
 							</div>
 							<!-- **************************** End Day Accordion****************************************** -->
 						</div>
