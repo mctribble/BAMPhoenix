@@ -125,7 +125,6 @@ public class CalendarController {
 			if (topics.get(i).getSubtopicName().getName().equals(subtopicName)) {
 				sub = topics.get(i);
 				sub.setStatus(status);
-
 				// Update topic in the database
 				subtopicService.updateSubtopic(sub);
 				break;

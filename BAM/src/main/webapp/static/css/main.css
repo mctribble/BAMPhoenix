@@ -236,7 +236,7 @@ label::before {
 /* Editor: Joseph Nguyen
 		Modified colors to be easier on the eyes.
 */
-/* Missed */
+/* Cancelled */
 .topiccolorred{
 background-color: #b80d00 !important;	
 }
@@ -249,6 +249,11 @@ background-color: #00689b !important;
 /* Covered */
 .topiccolorgreen{
 background-color: #008400 !important;		
+}
+
+/* Missed */
+.topiccoloryellow{
+background-color: #afa400 !important;    
 }
 
 .searchbox-container {

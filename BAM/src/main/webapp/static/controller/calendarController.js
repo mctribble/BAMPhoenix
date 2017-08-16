@@ -80,10 +80,14 @@
 
           $scope.currentBatch = function(){
         	  SessionService.unset("currentBatch");
-        	  SessionService.get("trainerBatch");
-        	  $scope.renderCalendar('myCalendar');
-        	  
-        	  
+        	  if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
+	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
+        	  }
+        	  if(!SessionService.get("gotSubtopics") && url){
+            		SessionService.set("gotSubtopics", true); 
+	             	$scope.loading = true;
+              	    $scope.loadCalendar(url);
+        	  }
           };
             var eventSerialId = 1;
             // @return {String} fingerprint of the event object and its
@@ -300,13 +304,7 @@
 	            }
             /* event source that contains custom events on the scope */
             	$scope.events = [];
-           // POST method to show subtopics on the calendar
-            			// For showing and hiding the
-											// loading gif.
-            	if(!SessionService.get("gotSubtopics") && url) {
-            		SessionService.set("gotSubtopics", true); 
-            		$scope.loading = true;
-
+            	$scope.loadCalendar = function(url){
             		$http({
                 		method : "GET",
                 		url : url
@@ -321,13 +319,15 @@
                                 var month = a.getMonth();
                                 var day = a.getDate();
                                 var formattedTime = new Date(year, month, day);
-                                if(status == 1 )
+                                if(status == 1 ){
                             		var temp = {title: title, start: formattedTime, end: formattedTime};
-                                    if(status == 2 )
-                                		var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
-                                    if(status == 3 )
-                                		var temp = {title: title, start: formattedTime, entd: formattedTime, className:['topiccolorred']};
-                                    
+                                }else if(status == 2 ){
+                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
+                                }else if(status == 3 ){
+                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
+                                }else if(status == 4){
+                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
+                                }   
                     			$scope.events.push(temp);
                 		}
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
@@ -339,7 +339,14 @@
                 		$scope.loading = false;
                 	});
             	}
-  //          }
+           // POST method to show subtopics on the calendar
+            			// For showing and hiding the
+											// loading gif.
+            	if(!SessionService.get("gotSubtopics") && url) {
+            		SessionService.set("gotSubtopics", true); 
+            		$scope.loading = true;
+            		$scope.loadCalendar(url);
+            	}
             
             $scope.calEventsExt = {
             	       color: '#f00',
@@ -507,6 +514,8 @@
             		var finishDate = moment(SessionService.get("currentBatch").endDate);
             		finishDate.add(finishDate.utcOffset(), 'minutes');
             		if(currentWeek >= beginDate && currentWeek < finishDate){
+            			console.log(currentWeek + " curr");
+            			console.log(beginDate + " begin");
             			return currentWeek.diff(beginDate, 'weeks') + 1;
             		}
             	}
@@ -531,13 +540,8 @@
                 },
                 header:{
                   left: 'title',
-                  center: '',
+                  center: 'month,basicWeek,basicDay',
                   right: 'today prev,next'
-                },
-                footer:{
-                	left: 'month',
-                	center: 'basicWeek',
-                	right: 'basicDay'
                 },
                 eventClick: $scope.alertOnEventClick,
                 eventDrop: $scope.alertOnDrop,
@@ -559,20 +563,12 @@
                 views:{
                 	month:{
                 		eventLimit: 5
-                	},
-                	day:{
-                		aspectRatio: .5
                 	}
                 },
                 header:{
                   left: 'title',
-                  center: '',
+                  center: 'month,basicWeek,basicDay',
                   right: 'today prev,next'
-                },
-                footer:{
-                	left: 'month',
-                	center: 'basicWeek',
-                	right: 'basicDay'
                 },
                 eventClick: $scope.alertOnEventClick,
                 eventDrop: $scope.alertOnDrop,
@@ -586,7 +582,7 @@
             $scope.eventSources = [$scope.events];
             $scope.sources 			= "";
    			$scope.source 			= "";
-            
+
         }
     ])
     .directive('uiCalendar', ['uiCalendarConfig',

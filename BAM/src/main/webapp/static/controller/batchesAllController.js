@@ -18,7 +18,7 @@ app.controller('batchesAllController', function($scope, SessionService, $rootSco
 		})
 		.then(function success(response){
 			$scope.message = true;
-			$scope.msg = 'all batches retreived';
+			$scope.msg = 'all batches retrieved';
 		
 			
 		
@@ -29,22 +29,16 @@ app.controller('batchesAllController', function($scope, SessionService, $rootSco
 			}
 			//SessionService.set("batchesAll", response.data);
 			
-			$scope.batchesAll=response.data;
-			console.log($scope.batchesAll)
-		
-			
-			
-			
+			$scope.batchesAll=response.data;			
 
 		}, function error(response){
 			$scope.message = true;
-			$scope.msg = 'all batches not retreived';
+			$scope.msg = 'all batches not retrieved';
 		});
 	}
 	
 	$scope.goToBatch = function(batch){
 		SessionService.set("currentBatch", batch);
-		console.log(SessionService.get("currentBatch"));
 		$http({
 			
 			url: 'rest/api/v1/Calendar/Topics',
@@ -55,13 +49,13 @@ app.controller('batchesAllController', function($scope, SessionService, $rootSco
 			SessionService.set("gotSubtopics", false);
 			$location.path('/home');
 			$scope.message = true;
-			$scope.msg = 'batch retreived';
+			$scope.msg = 'batch retrieved';
 			
 		}, function error(response){
 			SessionService.set("gotSubtopics", false);
 			$location.path('/home');
 			$scope.message = true;
-			$scope.msg = 'batch not retreived';
+			$scope.msg = 'batch not retrieved';
 		});
 	}
 	
