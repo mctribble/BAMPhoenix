@@ -22,5 +22,31 @@ app.controller('dashboardController', function($http, $scope, $rootScope) {
 			$scope.message = 'no user info to display.';
 		}
 	}
-
+	
+		
+		
+		if ($scope.trainerBatch){
+			
+			var currentDate = new Date().getTime();
+			var startDate = $scope.trainerBatch.startDate;
+			var endDate = $scope.trainerBatch.endDate;
+			
+			var daysComplete = currentDate - startDate;
+			var totalDays = endDate - startDate;
+			
+			$scope.percent = Math.round((daysComplete * 100) / totalDays) + "%";
+			
+		} else if ($scope.user.batch){
+			
+			var currentDate = new Date().getTime();
+			var startDate = $scope.user.batch.startDate;
+			var endDate = $scope.user.batch.endDate;
+			
+			var daysComplete = currentDate - startDate;
+			var totalDays = endDate - startDate;
+			
+			$scope.percent = Math.round((daysComplete * 100) / totalDays) + "%";
+		}
+		
+		
 });

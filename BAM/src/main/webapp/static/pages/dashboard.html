@@ -1,4 +1,4 @@
-<div class="jumbotron" ng-controller="dashboardController">
+ <div class="jumbotron" ng-controller="dashboardController">
 	<div class="container" ng-init = "getData()">
 		<div class="pan">
 		<h1 class="display-3" ng-model="getData">Welcome, {{firstName}}</h1>
@@ -12,6 +12,16 @@
 			<li>Current Batch Start Date: {{currentBatchStart | date: 'MM-dd-yyyy'}}</li>
 			<li>Current Batch End Date: {{currentBatchEnd | date: 'MM-dd-yyyy'}}</li>
 		</ul>
+		
+		<div id="progress" ng-show="user.batch || trainerBatch">
+		Batch Progress:<span id="noBatchSpan"></span>
+		<div id="batchProgress" class="progress" >
+  			<div class="progress-bar progress-bar-striped active" role="progressbar"
+  				aria-valuemin="0" aria-valuemax="100" ng-style="{width: percent}">
+   				{{ percent }}
+  			</div>
+		</div>
+		</div>
   </div>
 
  

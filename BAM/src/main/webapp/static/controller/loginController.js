@@ -1,5 +1,5 @@
 app.controller('loginController', function($rootScope, $scope, $location, $http) {
-	$scope.userRole;
+	$rootScope.userRole;
 	
 	$rootScope.user;
 	$scope.msg;
@@ -22,10 +22,10 @@ app.controller('loginController', function($rootScope, $scope, $location, $http)
 		.then(function success(response){
 			$rootScope.user = response.data;
 			if($rootScope.user.role == 3){
-				$scope.userRole = '(Quality Control)';
+				$rootScope.userRole = '(Quality Control)';
 				$location.path('/home');
 			} else if($rootScope.user.role == 2){
-				$scope.userRole = '(Trainer)';
+				$rootScope.userRole = '(Trainer)';
 				$http({
 					url: 'rest/api/v1/Batches/InProgress',
 					method: 'GET',
@@ -38,7 +38,7 @@ app.controller('loginController', function($rootScope, $scope, $location, $http)
 					$scope.msg = 'Batch Acquisition failed';
 				});
 			} else if($rootScope.user.role == 1) {
-				$scope.userRole = '(Associate)';
+				$rootScope.userRole = '(Associate)';
 				if(!$rootScope.user.batch){
 					$location.path('/noBatch');
 				}else{
