@@ -258,7 +258,7 @@
                     var tValues = function (data) {
                         // convert {0: "Jan", 1: "Feb", ...} to ["Jan", "Feb",
 						// ...]
-                        return (Object.keys(data)).reduce(
+                        return Object.keys(data).reduce(
                             function (rslt, el) {
                                 rslt.push(data[el]);
                                 return rslt;
@@ -288,7 +288,6 @@
 	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.trainerBatch.id;
 	            }else if (($rootScope.user.role == 3) && $rootScope.currentBatch) {
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
-	            }else{
 	            }
             /* event source that contains custom events on the scope */
             	$scope.events = [];
@@ -314,9 +313,9 @@
                                 if(status == 1 )
                             		var temp = {title: title, start: formattedTime, end: formattedTime};
                                     if(status == 2 )
-                                		var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
+                                		 temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
                                     if(status == 3 )
-                                		var temp = {title: title, start: formattedTime, entd: formattedTime, className:['topiccolorred']};
+                                		 temp = {title: title, start: formattedTime, entd: formattedTime, className:['topiccolorred']};
                                     
                     			$scope.events.push(temp);
                 		}

@@ -33,7 +33,7 @@ public class SubtopicService {
 	@Autowired
 	SubtopicStatusRepository subtopicStatusRepository;
 	
-	public void addSubtopic(int subtopic, int batch, int lessonDate){
+	public void addSubtopic(int subtopic, int batch){
 		Subtopic s = new Subtopic();
 		Batch b = new Batch();
 		SubtopicName st = new SubtopicName();

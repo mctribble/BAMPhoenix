@@ -21,8 +21,8 @@ import com.bam.service.UsersDetailsService;
 @RequestMapping(value = "/api/v1/Users/")
 public class UserController {
 	
-	private final String userID = "userId";
-	private final String batchID = "batchId";
+	private static final String userID = "userId";
+	private static final String batchID = "batchId";
 	
 	@Autowired
 	UsersDetailsService userService;
@@ -111,7 +111,7 @@ public class UserController {
 	 */
 
 	@RequestMapping(value="Reset", method=RequestMethod.POST, produces="application/java")
-	public void resetPassword(@RequestBody BamUser userNewPass) throws Exception{
+	public void resetPassword(@RequestBody BamUser userNewPass) throws Throwable{
 		BamUser currentUser = userService.findUserByEmail(userNewPass.getEmail());
 		if (currentUser.getPwd().equals(userNewPass.getPwd())) {
 			currentUser.setPwd(userNewPass.getPwd2());

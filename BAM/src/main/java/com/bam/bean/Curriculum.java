@@ -49,7 +49,9 @@ public class Curriculum {
 	@NotEmpty(message = "Curriculum Number of weeks cannot be empty")
 	private int curriculum_Number_Of_Weeks;
 	
-	public Curriculum(){}
+	public Curriculum(){
+		//No-args constructor
+	}
 
 	public Integer getCurriculum_Id() {
 		return id;
