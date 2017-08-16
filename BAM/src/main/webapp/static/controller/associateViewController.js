@@ -1,19 +1,18 @@
-app.controller("associateViewController", function($scope, $rootScope, $http){
+app.controller("associateViewController", function($scope, SessionService, $rootScope, $http){
 	
 	var bId;
-	$scope.currentBatchName;
 	
-	if($rootScope.currentBatch != null)
+	if(SessionService.get("currentBatch") != null)
 	{
 		$scope.currentBatchName= true;
-		$scope.currentBatchName = $rootScope.currentBatch.name;
-		bId = $rootScope.currentBatch.id;
+		$scope.currentBatchName = SessionService.get("currentBatch").name;
+		bId = SessionService.get("currentBatch").id;
 	}
 	else
 	{
 		$scope.currentBatchName= true;
-		$scope.currentBatchName = $rootScope.trainerBatch.name;
-		bId = $rootScope.trainerBatch.id;
+		$scope.currentBatchName = SessionService.get("trainerBatch").name;
+		bId = SessionService.get("trainerBatch").id;
 	}
 	
 	
