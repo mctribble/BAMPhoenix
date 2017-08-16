@@ -23,7 +23,7 @@
         function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService) {
 	  	$(".navbar").show();
 		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
-			{  console.log('I was here');
+			{  
 				$location.path('/noBatch');
 			}
 		  
@@ -77,6 +77,13 @@
         	  uiCalendarConfig.calendars["myCalendar"].fullCalendar('gotoDate', $scope.searchDate);
           };
 
+          $scope.currentBatch = function(){
+        	  SessionService.unset("currentBatch");
+        	  SessionService.get("trainerBatch");
+        	  $scope.renderCalendar('myCalendar');
+        	  
+        	  
+          };
             var eventSerialId = 1;
             // @return {String} fingerprint of the event object and its
 			// properties
@@ -281,27 +288,26 @@
                 return {};
             };
             
-           console.log($rootScope);
            console.log('Current User Role'+ SessionService.get("currentUser").role );
 //            if($rootScope){
             	 var url;
 	            if(SessionService.get("currentUser").role == 1){
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("currentUser").batch.id;
+	            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
+	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
 	            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
 	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
-	            }else if ((SessionService.get("currentUser").role == 3) && SessionService.get("currentBatch")) {
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
 	            }else{
 	            }
             /* event source that contains custom events on the scope */
             	$scope.events = [];
-
+            	console.log(url);
            // POST method to show subtopics on the calendar
-            	$scope.loading = true;		// For showing and hiding the
+            			// For showing and hiding the
 											// loading gif.
-            	if(!SessionService.get("gotSubtopics")) {
+            	if(!SessionService.get("gotSubtopics") && url) {
             		SessionService.set("gotSubtopics", true); 
-
+            		$scope.loading = true;
             		$http({
                 		method : "GET",
                 		url : url
@@ -334,7 +340,7 @@
                 		$scope.loading = false;
                 	});
             	}
-//            }
+  //          }
             
             $scope.calEventsExt = {
             	       color: '#f00',
@@ -345,7 +351,7 @@
             	          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
             	        ]
             	    };
-            if(SessionService.get("currentUser").role == 2 && SessionService.set("currentBatch") == null){
+            if(SessionService.get("currentUser").role == 2 && SessionService.get("currentBatch") == null){
             /* alert on eventClick */
             $scope.alertOnEventClick = function( date, jsEvent, view){
             	var name = jsEvent.target.parentNode.parentNode.getAttribute("class");
@@ -466,13 +472,13 @@
               uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
             };
             /* Change View */
-            $scope.renderCalender = function(calendar) {
+            $scope.renderCalendar = function(calendar) {
               if(uiCalendarConfig.calendars[calendar]){
                 uiCalendarConfig.calendars[calendar].fullCalendar('render');
               }
             };
             
-            if(SessionService.get("currentUser").role == 1 || SessionService.set("currentBatch") != null){
+            if(SessionService.get("currentUser").role == 1 || SessionService.get("currentBatch") != null){
             /* config object */
             $scope.uiConfig = {
               calendar:{

@@ -33,6 +33,7 @@
 					ng-model="searchDate" ng-keyup="changeDateKeyPress($event)" />
 			</div>
 			<button ng-click="changeDate()">Search</button>
+			<button ng-click="currentBatch()">Current Batch</button>
 		</div>
 		<br>
 		<div class="well">
@@ -59,17 +60,7 @@
 					<td bgcolor="#fd4234" style="border: 3px"><font color="white">Missed</font></td>
 			</table>
 			</div>
-			<div >
-			<h3> Events Status</h3>
-			<table border="2" class="table">
-				<tr>
-					<td bgcolor="#32cd32" style="border: 3px"><font color="white">Covered</font></td>
-				<tr>
-					<td bgcolor="#0275d8" style="border: 3px"><font color="white">Planned</font></td>
-				<tr>
-					<td bgcolor="#fd4234" style="border: 3px"><font color="white">Missed</font></td>
-			</table>
-			</div>
+
 		</div>
 	</div>
 
