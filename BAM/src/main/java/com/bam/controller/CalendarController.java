@@ -10,10 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.ui.Model;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +30,8 @@ import com.bam.service.TopicService;
 public class CalendarController {
 	
 	private final static String batchID = "batchId";
+	private final static String pageNumber = "pageNumber";
+	private final static String pageSize = "pageSize";
 	
 	@Autowired
 	SubtopicService subtopicService;
@@ -42,7 +42,6 @@ public class CalendarController {
 	@RequestMapping(value = "Subtopics", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<Subtopic> getSubtopicsByBatch(HttpServletRequest request) {
-	System.out.println("CalendarController - getSubtopicsByBatch()");
 
 		//Get the batch id from the request
 		int batchId = Integer.parseInt( request.getParameter(batchID) );
@@ -52,36 +51,37 @@ public class CalendarController {
 		return subtopicService.getSubtopicByBatchId(batchId);
 	}
 	
+	/**
+	 * 
+	 * This uses pagination.
+	 * Will return a list of subtopics depending on what page and how many
+	 * per page of subtopics you want. The page number and size is determined
+	 * by the parameters.
+	 * 
+	 * Depending on how the FullCalendar API is setup to take pages of json
+	 * data, this method may need to change.
+	 * 
+	 * @param request
+	 * 		- HttpServletRequest
+	 * @return
+	 * 		List<Stubtopic>
+	 * 
+	 * Authors: Michael Garza
+	 * 			Gary LaMountain
+	 */
 	@RequestMapping(value="SubtopicsPag", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
-	public List<Subtopic> getSubTopicsByBatchPag(HttpServletRequest request){
-		System.out.println("CalendarController - getSubTopicsByBatchPag");
+	public List<Subtopic> getSubTopicsByBatch(HttpServletRequest request){
 		int batchId = Integer.parseInt( request.getParameter(batchID) );
-		System.out.println("batchId: " + batchId);
-		System.out.println(subtopicService.findByBatchId(batchId, new PageRequest(0,2)));
-		return subtopicService.findByBatchId(batchId, new PageRequest(0,2));
+		int pageNum = Integer.parseInt( request.getParameter(pageNumber) );
+		int pageSiz = Integer.parseInt( request.getParameter(pageSize) );
+		
+		return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz, Direction.DESC, "subtopicDate"));
 	}
-//	@RequestMapping(value="SubtopicsPag", method=RequestMethod.GET, produces="application/json")
-//	@ResponseBody
-//	public List<Subtopic> getTopicsByBatchPag(HttpServletRequest request, Pageable pageable, Model model){
-//		
-//		int batchId = Integer.parseInt( request.getParameter(batchID) );
-//		
-//		Page<Subtopic> subtopic = this.subtopicService.findAll(pageable);
-//		
-//		model.addAttribute("subtopic", subtopic.getContent());
-//		
-//		float numOfPages = subtopic.getTotalPages();
-//		
-//		model.addAttribute("maxPages", numOfPages);
-//		
-//		return subtopicService.getSubtopicByBatchId(batchId);
-//	}
-
+	
 	@RequestMapping(value = "Topics", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<TopicWeek> getTopicsByBatch(HttpServletRequest request) {
-		System.out.println("CalendarController - getTopicsByBatch()");
 
 		//Get the batch id from the request
 		int batchId = Integer.parseInt( request.getParameter(batchID) );

@@ -86,12 +86,19 @@ public class SubtopicService {
 		return null;
 	}
 
+	/**
+	 * Service method to return the pages of json information to the FullCalendar API. 
+	 * This is hard coded until the FullCalendar API is set up for getting pages of 
+	 * json sub-topics.
+	 * 
+	 * @param batchId
+	 * @param pageRequest
+	 * @return
+	 * 
+	 * Authors: Michael Garza
+	 * 			Gary LaMountain
+	 */
 	public List<Subtopic> findByBatchId(int batchId, PageRequest pageRequest) {
 		return subtopicRepository.findByBatch(batchRepository.findById(batchId), pageRequest);
-//        Pageable pageRequest = createPageRequest();
-//          
-//        //Obtain search results by invoking the preferred repository method.
-//        Page<Todo> searchResultPage 
-//        return TodoMapper.mapEntityPageIntoDTOPage(pageRequest, searchResultPage);
     }
 }

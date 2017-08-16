@@ -255,7 +255,7 @@ var allTopics = {};
 	            if($rootScope.user.role == 1){
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.user.batch.id;
 	            }else if($rootScope.user.role == 2 && $rootScope.trainerBatch){
-	             	url ="rest/api/v1/Calendar/SubtopicsPag?batchId="+$rootScope.trainerBatch.id;
+	             	url ="rest/api/v1/Calendar/SubtopicsPag?batchId="+$rootScope.trainerBatch.id + "&pageNumber=" + 0 + "&pageSize=" + 100;
 	            }else if (($rootScope.user.role == 3) && $rootScope.currentBatch) {
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
 	            	console.log(url);
