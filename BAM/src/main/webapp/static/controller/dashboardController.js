@@ -1,26 +1,35 @@
 /**
  * 
  */
-app.controller('dashboardController', function($http, $scope, $rootScope) {
+app.controller('dashboardController', function($http, $scope) {
+	$scope.user;
 	
 	$scope.getData = function() {
-		if($rootScope.user.role == 2){
-			console.log('hitting function');
-		$http.get(
-				'http://assignforce.revaturelabs.com/api/v2/trainer/8'
-				).then(function(info) {
-
-			$scope.trainerId = info.data.trainerId;
-			$scope.firstName = info.data.firstName;
-			$scope.lastName = info.data.lastName;
-			$scope.currentBatchStart = info.data.unavailabilities[3].startDate;
-			$scope.currentBatchEnd = info.data.unavailabilities[3].endDate;
-
-
-		})
+			
+		if($scope.user){
+			var currentDate = new Date().getTime();
+			
+			if($scope.trainerBatch.endDate > currentDate){
+				$scope.message = $scope.trainerBatch.name;
+				$scope.currentBatchStart1 = $scope.trainerBatch.startDate;
+				$scope.currentBatchEnd1 = $scope.trainerBatch.endDate;
+				
+				//Count difference between start date and currentDate
+				function weeksBetween(d1, d2) {
+				    return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
+				}
+				
+				var dif = weeksBetween($scope.currentBatchStart1, currentDate);
+				console.log('weeeks: ' + dif);
+				//Current week number
+				$scope.weekNum = dif;
+				
 		}else{
-			$scope.message = 'no user info to display.';
+			$scope.message = 'You have no current batches';
 		}
-	}
+			
+			$scope.batchmates = $scope.batch.usersInBatch;
+		}
+}
 
 });

@@ -17,3 +17,22 @@
     color: white;
     border-radius: 5px;
 }
+
+#pan2{
+	width: 500px;
+    background-color: rgba(230, 17, 17, 0.83);
+    padding: 50px;
+    margin: 25px;
+    color: white;
+    border-radius: 5px;
+}
+
+#pan3{
+	width: 200px;
+    background-color: rgba(9, 26, 113, 0.82);
+    float: right;
+    padding: 50px;
+    margin: 25px;
+    color: white;
+    border-radius: 5px;
+}

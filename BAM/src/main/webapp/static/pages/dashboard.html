@@ -1,17 +1,26 @@
 <div class="jumbotron" ng-controller="dashboardController">
-	<div class="container" ng-init = "getData()">
+	<div class="container" ng-init = "getData()"  ng-model="getData">
 		<div class="pan">
-		<h1 class="display-3" ng-model="getData">Welcome, {{firstName}}</h1>
+		<h1 class="display-3">Welcome, {{user.fName}}</h1>
 		<p class="lead">Pick up where you left off</p>
-		</div>
-		</div>
+		<div>Batch Status: {{message}}</div>	
+ 		</div>
+		
+		<div class="row">
+		<div id="pan2" class="col-md-4">
 		<ul  ng-model="getData">
-			<li>ID: {{trainerId}}</li>
-			<li>First Name: {{firstName}}</li>
-			<li>Last Name: {{lastName}}</li>
-			<li>Current Batch Start Date: {{currentBatchStart | date: 'MM-dd-yyyy'}}</li>
-			<li>Current Batch End Date: {{currentBatchEnd | date: 'MM-dd-yyyy'}}</li>
+			<li>First Name: {{user.fName}}</li>
+			<li>Last Name: {{user.lName}}</li>
+			<li>Current Batch Start Date: {{currentBatchStart1 | date: 'MM-dd-yyyy'}}</li>
+			<li>Current Batch End Date: {{currentBatchEnd1 | date: 'MM-dd-yyyy'}}</li>
 		</ul>
+		</div>
+		<div id="pan3" class="col-md-4">
+			<h2>Week: {{weekNum}}</h2>
+				<h3>This week's topic: {{batchmates}}</h3>
+		</div>
+		</div>
+		</div>
   </div>
 
  
