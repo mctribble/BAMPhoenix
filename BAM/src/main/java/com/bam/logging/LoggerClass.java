@@ -65,6 +65,20 @@ public class LoggerClass {
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
+	
+	/**
+	 * Logging methods from the Curriculum Service Class
+	 * getAllCurriculum()
+	 * @author Jonathan Layssard
+	 */
+	@Around("execution(* com.bam.service.CurriculumService.getAllCurriculum(..))")
+	public void hijackGetAllCurriculum(ProceedingJoinPoint jp)throws Throwable{
+		logger.info(intercepted + jp.getSignature().getName());
+		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
+		logger.info(jp.proceed());
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
+	}
+	
 	/**
 	 * Logging methods from the MailService Class
 	 * sendMail()
