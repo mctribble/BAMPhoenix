@@ -301,6 +301,7 @@
                 		method : "GET",
                 		url : url
                 	}).then(function successCallback(response) {
+                		var id=0;
                 		for(var i = 0; i < response.data.length ; i++) {
                     			var title = response.data[i].subtopicName.name;
                         		var dates = response.data[i].subtopicDate;
@@ -312,13 +313,14 @@
                                 var day = a.getDate();
                                 var formattedTime = new Date(year, month, day);
                                 if(status == 1 )
-                            		var temp = {title: title, start: formattedTime, end: formattedTime};
+                            		var temp = {id: id, title: title, start: formattedTime, end: formattedTime};
                                     if(status == 2 )
-                                		var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
+                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
                                     if(status == 3 )
-                                		var temp = {title: title, start: formattedTime, entd: formattedTime, className:['topiccolorred']};
+                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
                                     
                     			$scope.events.push(temp);
+                    			id++;
                 		}
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
                 		
@@ -342,67 +344,82 @@
             	    };
             if($rootScope.user.role == 2 && $rootScope.currentBatch == null){
             /* alert on eventClick */
-            $scope.alertOnEventClick = function( date, jsEvent, view){
-            	var name = jsEvent.target.parentNode.parentNode.getAttribute("class");
-            	if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorgreen fc-draggable ng-scope fc-allow-mouse-resize") {
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove
-																							// green
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add
-																							// red
-                    // http for green to red
-                    $http({
-                 		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
-                 	 }).then(function successCallback(response) {
-                 	 });
-                }  else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorred fc-draggable ng-scope fc-allow-mouse-resize"){
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
-																							// red
-                    // http for red to blue
-                    $http({
-                 		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
-                 	 }).then(function successCallback(response) {
-                 	 });
-                } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize") {
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // add
-																							// green
-                    // http for blue to green
-                    $http({
-                 		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Completed"
-                 	 }).then(function successCallback(response) {
-                 	 });
-                }    else  if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorgreen") {
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove
-																							// green
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add
-																							// red
-                    // http for green to red
-                    $http({
-                 		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
-                 	 }).then(function successCallback(response) {
-                 	 });
-                } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorred"){
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
-																							// red
-                    // http for red to blue
-                    $http({
-                 		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
-                 	 }).then(function successCallback(response) {
-                 	 });
-                }else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope topiccolorred fc-allow-mouse-resize"){
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
-																							// red
-                    // http for red to blue
-                    $http({
-                 		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
-                 	 }).then(function successCallback(response) {
-                 	 });
-                }
+            $scope.alertOnEventClick = function( event, date, jsEvent, view){
+            	console.log('Event->'+ event.id);
+            	if(event.className == 'topiccolorgreen'){
+            		event.className= 'topiccolorred';
+            		console.log('topic green clicked');
+            		uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
+//            		var temp = {id: event.id, title: event.title, start: event.start, entd: event.end, className:['topiccolorred']};
+//            		$scope.event1= [];
+//            		uiCalendarConfig.calendars['myCalendar'].fullCalendar('removeEvents',event.id);
+//            		uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'addEventSource', source )
+            	}else if(event.className == 'topiccolorred'){
+            		console.log('topic red clicked');
+            	}else {
+            		
+            	}
+//            	var name = jsEvent.target.parentNode.parentNode.getAttribute("class");
+//            	if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorgreen fc-draggable ng-scope fc-allow-mouse-resize") {
+//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove
+//																							// green
+//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add
+////                    uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'removeEvents' [ event.id ] );
+//			
+//                    // http for green to red
+//                    $http({
+//                 		method : "GET",
+//                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
+//                 	 }).then(function successCallback(response) {
+//                 	 });
+//                }  else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorred fc-draggable ng-scope fc-allow-mouse-resize"){
+//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
+//																							// red
+//                    // http for red to blue
+//                    $http({
+//                 		method : "GET",
+//                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
+//                 	 }).then(function successCallback(response) {
+//                 	 });
+//                } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize") {
+//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // add
+//																							// green
+//                    // http for blue to green
+//                    $http({
+//                 		method : "GET",
+//                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Completed"
+//                 	 }).then(function successCallback(response) {
+//                 	 });
+//                }    else  if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorgreen") {
+//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove
+//																							// green
+//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add
+//																							// red
+//                    // http for green to red
+//                    $http({
+//                 		method : "GET",
+//                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
+//                 	 }).then(function successCallback(response) {
+//                 	 });
+//                } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorred"){
+//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
+//																							// red
+//                    // http for red to blue
+//                    $http({
+//                 		method : "GET",
+//                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
+//                 	 }).then(function successCallback(response) {
+//                 	 });
+//                }else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope topiccolorred fc-allow-mouse-resize"){
+//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
+//																							// red
+//                    // http for red to blue
+//                    $http({
+//                 		method : "GET",
+//                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
+//                 	 }).then(function successCallback(response) {
+//                 	 });
+//                }
             };
             }
             /* alert on Drop */
@@ -522,7 +539,7 @@
                 eventClick: $scope.alertOnEventClick,
                 eventDrop: $scope.alertOnDrop,
                 eventResize: $scope.alertOnResize,
-                eventRender: $scope.eventRender
+               // eventRender: $scope.eventRender
               		}
             	};
             }
