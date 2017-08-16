@@ -167,12 +167,9 @@ public class UserController {
 	
 	@RequestMapping(value = "Recovery", method = RequestMethod.POST, produces = "application/json")
     public void RecoverPassword(@RequestBody String email) {
-		System.out.println(email);
-		System.out.println(email.toString());
     	String generate = PasswordGenerator.makePassword();
         // Lookup user in database by e-mail
         BamUser user = userService.findUserByEmail(email);
-        System.out.println(user);
         if (user != null) {
         	user.setPwd(generate);
         	userService.addOrUpdateUser(user);
