@@ -38,13 +38,9 @@ app.config(function($routeProvider, $locationProvider){
 		controller: "curriculumController"
 	}).when("/logout", {
 	    templateUrl: "static/pages/login.html", 
-<<<<<<< HEAD
 	    controller: 'loginController'
 	}).when("/home", {
 	    templateUrl: "static/pages/dashboard.html", 
 	    controller: 'dashboardController'
-=======
-	    controller: "loginController"
->>>>>>> navbar
 	}).otherwise({redirectTo: '/'});
 });

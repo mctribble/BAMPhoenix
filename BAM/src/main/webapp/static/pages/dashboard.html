@@ -1,6 +1,17 @@
-<h1>AssignForce API</h1>
-<ul ng-controller="dashboardController">
-	<li>{{trainerId}}</li>
-	<li>{{firstName}}</li>
-	<li>{{lastName}}</li>
-</ul>
+<div class="jumbotron" ng-controller="dashboardController">
+	<div class="container" ng-init = "getData()">
+		<div class="pan">
+		<h1 class="display-3" ng-model="getData">Welcome, {{firstName}}</h1>
+		<p class="lead">Pick up where you left off</p>
+		</div>
+		</div>
+		<ul  ng-model="getData">
+			<li>ID: {{trainerId}}</li>
+			<li>First Name: {{firstName}}</li>
+			<li>Last Name: {{lastName}}</li>
+			<li>Current Batch Start Date: {{currentBatchStart | date: 'MM-dd-yyyy'}}</li>
+			<li>Current Batch End Date: {{currentBatchEnd | date: 'MM-dd-yyyy'}}</li>
+		</ul>
+  </div>
+
+ 
