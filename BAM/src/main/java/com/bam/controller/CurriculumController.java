@@ -51,6 +51,8 @@ public class CurriculumController {
 		return curriculumSubtopicService.getCurriculumSubtopicForCurriculum(c);
 	}
 	
+	@RequestMapping(value = "TopicPool", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
 	public List<SubtopicName> getTopicPool(){
 		return subtopicService.getAllSubtopics();
 	}
