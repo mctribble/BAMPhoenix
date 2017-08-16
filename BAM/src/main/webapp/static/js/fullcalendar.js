@@ -12846,7 +12846,7 @@ function EventManager() { // assumed to be a calendar
 	}
 
 
-	function reportEventChange(cache) {
+	function reportEventChange() {
 		prunedCache = filterEventsWithinRange(cache);
 		t.trigger('eventsReset', prunedCache);
 	}
@@ -13004,7 +13004,7 @@ function EventManager() { // assumed to be a calendar
 	function decrementPendingSourceCnt() {
 		pendingSourceCnt--;
 		if (!pendingSourceCnt) {
-			reportEventChange(cache); // updates prunedCache
+			reportEventChange(); // updates prunedCache
 			t.trigger('eventsReceived', prunedCache);
 		}
 	}
@@ -15067,10 +15067,10 @@ var AgendaView = FC.AgendaView = View.extend({
 				timedEvents.push(events[i]);
 			}
 		}
-
+		
+		
 		// render the events in the subcomponents
-		if (this.dayGrid) {
-		}
+		
 
 		// the all-day area is flexible and might have a lot of events, so shift the height
 		this.updateHeight();

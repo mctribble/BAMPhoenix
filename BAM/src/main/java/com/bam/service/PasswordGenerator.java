@@ -1,10 +1,8 @@
 package com.bam.service;
 
-public class PasswordGenerator {
+class PasswordGenerator {
 	
-	private PasswordGenerator(){
-		throw new IllegalStateException("Sonarqube told me to do this idk");
-	}
+
 	
 	public static String makePassword() {
 		String pass = "";

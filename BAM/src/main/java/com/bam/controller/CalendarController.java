@@ -27,7 +27,7 @@ import com.bam.service.TopicService;
 @RequestMapping(value = "/api/v1/Calendar/")
 public class CalendarController {
 	
-	private final static String batchID = "batchId";
+	private final static String BATCHID = "batchId";
 	
 	@Autowired
 	SubtopicService subtopicService;
@@ -40,7 +40,7 @@ public class CalendarController {
 	public List<Subtopic> getSubtopicsByBatch(HttpServletRequest request) {
 
 		//Get the batch id from the request
-		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		
 		//Retrieve and return users in a batch from the database
 		return subtopicService.getSubtopicByBatchId(batchId);
@@ -51,7 +51,7 @@ public class CalendarController {
 	public List<TopicWeek> getTopicsByBatch(HttpServletRequest request) {
 
 		//Get the batch id from the request
-		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		
 		//Retrieve and return users in a batch from the database
 		return topicService.getTopicByBatchId(batchId);
@@ -62,7 +62,7 @@ public class CalendarController {
 		// Get the batch id from the request
 		String subtopicName = request.getParameter("subtopicId");
 
-		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		List<Subtopic> topics = subtopicService.getSubtopicByBatchId(batchId);
 		Subtopic sub;
 		for (int i = 0; i < topics.size(); i++) {
@@ -84,7 +84,7 @@ public class CalendarController {
 		// Get the batch id from the request
 		String subtopicName = request.getParameter("subtopicId");
 
-		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		List<Subtopic> topics = subtopicService.getSubtopicByBatchId(batchId);
 		Subtopic sub;
 		SubtopicStatus status = subtopicService.getStatus(request.getParameter("status"));

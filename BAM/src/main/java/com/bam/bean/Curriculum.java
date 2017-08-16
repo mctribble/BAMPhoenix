@@ -28,92 +28,96 @@ public class Curriculum {
 	
 	@Column(name= "Curriculum_name")
 	@NotEmpty(message = "Curriculum name cannot be empty")
-	private String curriculum_Name;
+	private String curriculumName;
 	
 	@Column(name ="Curriculum_version")
-	private int curriculum_Version;
+	private int curriculumVersion;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Curriculum_Creator", referencedColumnName = "User_Id")
-	private BamUser curriculum_Creator;
+	private BamUser curriculumCreator;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Curriculum_Modifier", referencedColumnName = "User_Id")
-	private BamUser curriculum_Modifier;
+	private BamUser curriculumModifier;
 	
 	@Column(name = "Curriculum_Date_Created")
 	@NotEmpty(message = "Curriculum Date Created cannot be empty")
-	private String curriculum_dateCreated;
+	private String curriculumdateCreated;
 	
 	@Column(name = "Curriculum_Number_Of_Weeks")
 	@NotEmpty(message = "Curriculum Number of weeks cannot be empty")
-	private int curriculum_Number_Of_Weeks;
+	private int curriculumNumberOfWeeks;
 	
 	public Curriculum(){
-		//No-args constructor
+		// Empty beacuse of No-args constructor
 	}
 
-	public Integer getCurriculum_Id() {
+	public Integer getCurriculumId() {
 		return id;
 	}
 
-	public void setCurriculum_Id(Integer curriculum_Id) {
-		this.id = curriculum_Id;
+	public void setCurriculumId(Integer curriculumId) {
+		this.id = curriculumId;
 	}
 
-	public String getCurriculum_Name() {
-		return curriculum_Name;
+	public String getCurriculumName() {
+		return curriculumName;
 	}
 
-	public void setCurriculum_Name(String curriculum_Name) {
-		this.curriculum_Name = curriculum_Name;
+	public void setCurriculumName(String curriculumName) {
+		this.curriculumName = curriculumName;
 	}
 
-	public int getCurriculum_Version() {
-		return curriculum_Version;
+	public int getCurriculumVersion() {
+		return curriculumVersion;
 	}
 
-	public void setCurriculum_Version(int curriculum_Version) {
-		this.curriculum_Version = curriculum_Version;
+	public void setCurriculumVersion(int curriculumVersion) {
+		this.curriculumVersion = curriculumVersion;
 	}
 
 	public BamUser getCurriculum_Creator() {
-		return curriculum_Creator;
+		return curriculumCreator;
 	}
 
-	public void setCurriculum_Creator(BamUser curriculum_Creator) {
-		this.curriculum_Creator = curriculum_Creator;
+	public void setCurriculumCreator(BamUser curriculumCreator) {
+		this.curriculumCreator = curriculumCreator;
 	}
 
-	public BamUser getCurriculum_Modifier() {
-		return curriculum_Modifier;
+	public BamUser getCurriculumModifier() {
+		return curriculumModifier;
 	}
 
-	public void setCurriculum_Modifier(BamUser curriculum_Modifier) {
-		this.curriculum_Modifier = curriculum_Modifier;
+	public void setCurriculumModifier(BamUser curriculumModifier) {
+		this.curriculumModifier = curriculumModifier;
 	}
 
-	public String getCurriculum_dateCreated() {
-		return curriculum_dateCreated;
+	public String getCurriculumdateCreated() {
+		return curriculumdateCreated;
 	}
 
-	public void setCurriculum_dateCreated(String curriculum_dateCreated) {
-		this.curriculum_dateCreated = curriculum_dateCreated;
+	public void setCurriculumdateCreated(String curriculumdateCreated) {
+		this.curriculumdateCreated = curriculumdateCreated;
 	}
 
-	public int getCurriculum_Number_Of_Weeks() {
-		return curriculum_Number_Of_Weeks;
+	public int getCurriculumNumberOf_Weeks() {
+		return curriculumNumberOfWeeks;
 	}
 
-	public void setCurriculum_Number_Of_Weeks(int curriculum_Number_Of_Weeks) {
-		this.curriculum_Number_Of_Weeks = curriculum_Number_Of_Weeks;
+	public void setCurriculumNumberOf_Weeks(int curriculumNumberOfWeeks) {
+		this.curriculumNumberOfWeeks = curriculumNumberOfWeeks;
 	}
 
 	@Override
 	public String toString() {
-		return "Curriculum [curriculum_Id=" + id + ", curriculum_Name=" + curriculum_Name
-				+ ", curriculum_Version=" + curriculum_Version + ", curriculum_Creator=" + curriculum_Creator
-				+ ", curriculum_Modifier=" + curriculum_Modifier + ", curriculum_dateCreated=" + curriculum_dateCreated
-				+ ", curriculum_Number_Of_Weeks=" + curriculum_Number_Of_Weeks + "]";
+		return "Curriculum [id=" + id + ", curriculumName=" + curriculumName + ", curriculumVersion="
+				+ curriculumVersion + ", curriculumCreator=" + curriculumCreator + ", curriculumModifier="
+				+ curriculumModifier + ", curriculumdateCreated=" + curriculumdateCreated + ", curriculumNumberOfWeeks="
+				+ curriculumNumberOfWeeks + "]";
 	}
+
+	
+
+	
 }

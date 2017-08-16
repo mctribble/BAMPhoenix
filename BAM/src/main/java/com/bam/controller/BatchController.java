@@ -24,7 +24,7 @@ import com.bam.service.UsersDetailsService;
 public class BatchController {
 
 	
-	private final static String email = "email";
+	private final static String EMAIL = "email";
 	
 	@Autowired
 	BatchService batchService;
@@ -45,7 +45,7 @@ public class BatchController {
 
 	public List<Batch> getPastBatches(HttpServletRequest request)
 	{
-		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(email)));
+		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
 
 		List<Batch> pastBatches = new ArrayList<>();
 		for(Batch b : batches){
@@ -61,7 +61,7 @@ public class BatchController {
 
 	public List<Batch> getFutureBatches(HttpServletRequest request)
 	{
-		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(email)));
+		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
 
 		List<Batch> futureBatches = new ArrayList<>();
 		for(Batch b : batches){
@@ -77,7 +77,7 @@ public class BatchController {
 
 	public Batch getBatchInProgress(HttpServletRequest request)
 	{
-		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(email)));
+		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
 
 		Batch batchInProgress = null;
 		Timestamp t = new Timestamp(System.currentTimeMillis());
