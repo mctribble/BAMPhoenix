@@ -313,7 +313,6 @@
                     			var title = response.data[i].subtopicName.name;
                         		var dates = response.data[i].subtopicDate;
                         		var status= response.data[i].status.id;
-                        	console.log('title: '+ title);
                         		var a = new Date(dates);  
                                 var year = a.getUTCFullYear();
                                 var month = a.getMonth();
@@ -514,8 +513,6 @@
             		var finishDate = moment(SessionService.get("currentBatch").endDate);
             		finishDate.add(finishDate.utcOffset(), 'minutes');
             		if(currentWeek >= beginDate && currentWeek < finishDate){
-            			console.log(currentWeek + " curr");
-            			console.log(beginDate + " begin");
             			return currentWeek.diff(beginDate, 'weeks') + 1;
             		}
             	}

@@ -29,7 +29,6 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 		
 			
 			SessionService.set("currentUser", response.data);
-			console.log('Current user object role->'+ SessionService.get("currentUser").lName);
 			if(SessionService.get("currentUser").role == 3){
 				SessionService.set("userRole", '(Quality Control)');
 				$location.path('/home');
