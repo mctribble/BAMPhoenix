@@ -282,55 +282,69 @@
            
             if($rootScope){
             	 var url;
-	            if($rootScope.user.role == 1){
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.user.batch.id;
-	            }else if($rootScope.user.role == 2 && $rootScope.trainerBatch){
-	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.trainerBatch.id;
-	            }else if (($rootScope.user.role == 3) && $rootScope.currentBatch) {
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
-	            }else{
+            	 var morePages = true;
+            	 var pageNumber = 0;
+            	 var pageSize = 20;
+            	 
+//            	 while(morePages){
+            		 console.log('morePages: ' + morePages + '\npageNumber: ' + pageNumber + '\npageSize: ' + pageSize);
+		            if($rootScope.user.role == 1){
+		            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.user.batch.id;
+		            }else if($rootScope.user.role == 2 && $rootScope.trainerBatch){
+		             	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+$rootScope.trainerBatch.id + "&pageNumber=" + pageNumber + "&pageSize=" + pageSize;
+		            }else if (($rootScope.user.role == 3) && $rootScope.currentBatch) {
+		            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
+		            }else{
+		            }
+	            /* event source that contains custom events on the scope */
+	            	$scope.events = [];
+	           // POST method to show subtopics on the calendar
+	            	$scope.loading = true;		// For showing and hiding the
+												// loading gif.
+	            	if(!$rootScope.gotSubtopics) {
+	            		$rootScope.gotSubtopics = true; 
+	            		$http({
+	                		method : "GET",
+	                		url : url
+	                	}).then(function successCallback(response) {
+	                		console.log('response.data.length is :' + response.data.length)
+	                		for(var i = 0; i < response.data.length ; i++) {
+	                    			var title = response.data[i].subtopicName.name;
+	                        		var dates = response.data[i].subtopicDate;
+	                        		var status= response.data[i].status.id;
+	                        	
+	                        		var a = new Date(dates);  
+	                                var year = a.getUTCFullYear();
+	                                var month = a.getMonth();
+	                                var day = a.getDate();
+	                                var formattedTime = new Date(year, month, day);
+	                                if(status == 1 )
+	                            		var temp = {title: title, start: formattedTime, end: formattedTime};
+	                                    if(status == 2 )
+	                                		var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
+	                                    if(status == 3 )
+	                                		var temp = {title: title, start: formattedTime, entd: formattedTime, className:['topiccolorred']};
+	                                    
+	                    			$scope.events.push(temp);
+	                    			
+	                    			//this may need to move
+	                    			if(response.data.length < pageSize){
+	                    				console.log('ending loop')
+	                    				morePages = false;
+	                    			}
+	                		}
+	                			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
+	                		
+	                		// $scope.renderCalendar('myCalendar');
+	                	}).finally(function() {
+	                		// Turn off loading indicator whether success or
+							// failure.
+	                		$scope.loading = false;
+	                	});
+	            	}
+	            	pageNumber++;
 	            }
-            /* event source that contains custom events on the scope */
-            	$scope.events = [];
-           // POST method to show subtopics on the calendar
-            	$scope.loading = true;		// For showing and hiding the
-											// loading gif.
-            	if(!$rootScope.gotSubtopics) {
-            		$rootScope.gotSubtopics = true; 
-            		$http({
-                		method : "GET",
-                		url : url
-                	}).then(function successCallback(response) {
-                		for(var i = 0; i < response.data.length ; i++) {
-                    			var title = response.data[i].subtopicName.name;
-                        		var dates = response.data[i].subtopicDate;
-                        		var status= response.data[i].status.id;
-                        	
-                        		var a = new Date(dates);  
-                                var year = a.getUTCFullYear();
-                                var month = a.getMonth();
-                                var day = a.getDate();
-                                var formattedTime = new Date(year, month, day);
-                                if(status == 1 )
-                            		var temp = {title: title, start: formattedTime, end: formattedTime};
-                                    if(status == 2 )
-                                		var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
-                                    if(status == 3 )
-                                		var temp = {title: title, start: formattedTime, entd: formattedTime, className:['topiccolorred']};
-                                    
-                    			$scope.events.push(temp);
-                		}
-                			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
-                		
-                		// $scope.renderCalendar('myCalendar');
-                	}).finally(function() {
-                		// Turn off loading indicator whether success or
-						// failure.
-                		$scope.loading = false;
-                	});
-            	}
-            }
-            
+//            }
             $scope.calEventsExt = {
             	       color: '#f00',
             	       textColor: 'yellow',
