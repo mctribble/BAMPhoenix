@@ -69,7 +69,7 @@ public class CalendarController {
 	 * Authors: Michael Garza
 	 * 			Gary LaMountain
 	 */
-	@RequestMapping(value="SubtopicsPag", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="SubtopicsPagination", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Subtopic> getSubTopicsByBatch(HttpServletRequest request){
 		int batchId = Integer.parseInt( request.getParameter(batchID) );
