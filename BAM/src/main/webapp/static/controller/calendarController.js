@@ -75,6 +75,7 @@
 			 */
           $scope.changeDate = function(){
         	  uiCalendarConfig.calendars["myCalendar"].fullCalendar('gotoDate', $scope.searchDate);
+        	  $scope.searchDate = new Date();
           };
 
           $scope.currentBatch = function(){
@@ -288,8 +289,6 @@
                 return {};
             };
             
-           console.log('Current User Role'+ SessionService.get("currentUser").role );
-//            if($rootScope){
             	 var url;
 	            if(SessionService.get("currentUser").role == 1){
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("currentUser").batch.id;
@@ -301,13 +300,13 @@
 	            }
             /* event source that contains custom events on the scope */
             	$scope.events = [];
-            	console.log(url);
            // POST method to show subtopics on the calendar
             			// For showing and hiding the
 											// loading gif.
             	if(!SessionService.get("gotSubtopics") && url) {
             		SessionService.set("gotSubtopics", true); 
             		$scope.loading = true;
+
             		$http({
                 		method : "GET",
                 		url : url
@@ -478,12 +477,53 @@
               }
             };
             
+            /*
+             *  @Author: Tom Scheffer
+             *  @param: currentWeek - week in calendar on screen
+             *  @param: beginDate - first day of batch
+             *  @param: finishDate - last day of batch
+             *  Used to calculate week number of batch, assumes batch doesn't have set starting time
+             */
+            var calculateWeekNumber = function(currentWeek){
+            	if(SessionService.get("currentUser").role == 1){
+            		var beginDate = moment(SessionService.get("currentUser").batch.startDate);
+            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
+            		var finishDate = moment(SessionService.get("currentUser").batch.endDate);
+            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		if(currentWeek >= beginDate && currentWeek < finishDate){
+            			return currentWeek.diff(SessionService.get("currentUser").batch.startDate, 'weeks') + 1;
+            		}
+            	}else if(SessionService.get("currentUser").role >= 2 && !SessionService.get("currentBatch") && SessionService.get("trainerBatch")){
+            		var beginDate = moment(SessionService.get("trainerBatch").startDate);
+            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
+            		var finishDate = moment(SessionService.get("trainerBatch").endDate);
+            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		if(currentWeek >= beginDate && currentWeek < finishDate){
+            			return currentWeek.diff(SessionService.get("trainerBatch").startDate, 'weeks') + 1;
+            		}
+            	}else if(SessionService.get("currentUser").role >= 2 && SessionService.get("currentBatch")){
+            		var beginDate = moment(SessionService.get("currentBatch").startDate);
+            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
+            		var finishDate = moment(SessionService.get("currentBatch").endDate);
+            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		if(currentWeek >= beginDate && currentWeek < finishDate){
+            			return currentWeek.diff(beginDate, 'weeks') + 1;
+            		}
+            	}
+            	return 0;
+            };
+            //var now = fullCalendar.moment
+            
             if(SessionService.get("currentUser").role == 1 || SessionService.get("currentBatch") != null){
             /* config object */
             $scope.uiConfig = {
               calendar:{
                 contentHeight: 'auto',
                 editable: false,
+                navLinks: true,
+                weekNumbers: true,
+                weekNumberTitle: "Week in Batch",
+                weekNumberCalculation: calculateWeekNumber,
                 views:{
                 	month:{
                 		eventLimit: 5
@@ -512,6 +552,10 @@
               calendar:{
                 contentHeight: 'auto',
                 editable: true,
+                navLinks: true,
+                weekNumbers: true,
+                weekNumberTitle: "Week in Batch",
+                weekNumberCalculation: calculateWeekNumber,
                 views:{
                 	month:{
                 		eventLimit: 5

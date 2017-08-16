@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +30,8 @@ import com.bam.service.TopicService;
 public class CalendarController {
 	
 	private final static String batchID = "batchId";
+	private final static String pageNumber = "pageNumber";
+	private final static String pageSize = "pageSize";
 	
 	@Autowired
 	SubtopicService subtopicService;
@@ -43,9 +47,38 @@ public class CalendarController {
 		int batchId = Integer.parseInt( request.getParameter(batchID) );
 		
 		//Retrieve and return users in a batch from the database
+
 		return subtopicService.getSubtopicByBatchId(batchId);
 	}
-
+	
+	/**
+	 * 
+	 * This uses pagination.
+	 * Will return a list of subtopics depending on what page and how many
+	 * per page of subtopics you want. The page number and size is determined
+	 * by the parameters.
+	 * 
+	 * Depending on how the FullCalendar API is setup to take pages of json
+	 * data, this method may need to change.
+	 * 
+	 * @param request
+	 * 		- HttpServletRequest
+	 * @return
+	 * 		List<Stubtopic>
+	 * 
+	 * Authors: Michael Garza
+	 * 			Gary LaMountain
+	 */
+	@RequestMapping(value="SubtopicsPagination", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public List<Subtopic> getSubTopicsByBatch(HttpServletRequest request){
+		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		int pageNum = Integer.parseInt( request.getParameter(pageNumber) );
+		int pageSiz = Integer.parseInt( request.getParameter(pageSize) );
+		
+		return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz, Direction.DESC, "subtopicDate"));
+	}
+	
 	@RequestMapping(value = "Topics", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<TopicWeek> getTopicsByBatch(HttpServletRequest request) {
