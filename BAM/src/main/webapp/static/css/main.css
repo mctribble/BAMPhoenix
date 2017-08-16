@@ -238,17 +238,17 @@ label::before {
 */
 /* Missed */
 .topiccolorred{
-background-color: #fd4234 !important;	
+background-color: #b80d00 !important;	
 }
 
 /* Planned */
 .topiccolorblue{
-background-color: #0275d8 !important;
+background-color: #00689b !important;
 }
 
 /* Covered */
 .topiccolorgreen{
-background-color: #32cd32 !important;		
+background-color: #008400 !important;		
 }
 
 .searchbox-container {
