@@ -38,7 +38,7 @@ public class SubtopicService {
 		Batch b = new Batch();
 		SubtopicName st = new SubtopicName();
 		SubtopicStatus ss = new SubtopicStatus();
-		Date date = new Date();
+		Date date = null;
 
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		try {
@@ -77,4 +77,8 @@ public class SubtopicService {
 		return subtopicStatusRepository.findByName(name);
 	}
 
+	public List<SubtopicName> getAllSubtopics(){
+		return subtopicNameRepository.findAll();
+	}
+	
 }

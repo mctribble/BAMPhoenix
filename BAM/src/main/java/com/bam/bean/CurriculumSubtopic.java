@@ -8,12 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Component
 @Entity
@@ -26,22 +28,22 @@ public class CurriculumSubtopic {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Curriculum_Subtopic_ID_SEQ")
 	private int curriculumSubtopic_Id;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "Subtopic_Name_Id", referencedColumnName = "Subtopic_Name_Id")
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "curriculum_Subtopic_Name_Id", referencedColumnName = "Subtopic_Name_Id")
 	@NotEmpty(message="Curriculum Subtopic Name cannot be empty")
-	private SubtopicName curriculumSubtopic_Name_Id;
+	private SubtopicName curriculum_Subtopic_Name_Id;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "Curriculum_Id", referencedColumnName = "Curriculum_Id")
-	@NotEmpty(message="Curriculum cannot be empty")
-	private Curriculum curriculumSubtopic_Curriculum_ID;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "curriculum_Subtopic_Cur_Id", referencedColumnName = "Curriculum_Id")
+	@NotEmpty(message ="Curriculum cannot be empty")
+	private Curriculum curriculum;
 	
-	@Column(name= "Curriculum_Week")
+	@Column(name = "Curriculum_Week")
 	@NotEmpty(message="Curriculum Week cannot be empty")
 	private int curriculumSubtopic_Week;
 	
-	@Column(name= "Curriculum_Day")
-	@NotEmpty(message="Curriculum Dawy cannot be empty")
+	@Column(name = "Curriculum_Day")
+	@NotEmpty(message ="Curriculum Day cannot be empty")
 	private int curriculumSubtopic_Day;
 	
 	public CurriculumSubtopic(){}
@@ -50,8 +52,8 @@ public class CurriculumSubtopic {
 			Curriculum curriculumSubtopic_Curriculum_ID, int curriculumSubtopic_Week, int curriculumSubtopic_Day) {
 		super();
 		this.curriculumSubtopic_Id = curriculumSubtopic_Id;
-		this.curriculumSubtopic_Name_Id = curriculumSubtopic_Name_Id;
-		this.curriculumSubtopic_Curriculum_ID = curriculumSubtopic_Curriculum_ID;
+		this.curriculum_Subtopic_Name_Id = curriculumSubtopic_Name_Id;
+		this.curriculum = curriculumSubtopic_Curriculum_ID;
 		this.curriculumSubtopic_Week = curriculumSubtopic_Week;
 		this.curriculumSubtopic_Day = curriculumSubtopic_Day;
 	}
@@ -65,19 +67,20 @@ public class CurriculumSubtopic {
 	}
 
 	public SubtopicName getCurriculumSubtopic_Name_Id() {
-		return curriculumSubtopic_Name_Id;
+		return curriculum_Subtopic_Name_Id;
 	}
 
 	public void setCurriculumSubtopic_Name_Id(SubtopicName curriculumSubtopic_Name_Id) {
-		this.curriculumSubtopic_Name_Id = curriculumSubtopic_Name_Id;
+		this.curriculum_Subtopic_Name_Id = curriculumSubtopic_Name_Id;
 	}
 
+	@JsonIgnore
 	public Curriculum getCurriculumSubtopic_Curriculum_ID() {
-		return curriculumSubtopic_Curriculum_ID;
+		return curriculum;
 	}
 
 	public void setCurriculumSubtopic_Curriculum_ID(Curriculum curriculumSubtopic_Curriculum_ID) {
-		this.curriculumSubtopic_Curriculum_ID = curriculumSubtopic_Curriculum_ID;
+		this.curriculum = curriculumSubtopic_Curriculum_ID;
 	}
 
 	public int getCurriculumSubtopic_Week() {
@@ -99,7 +102,7 @@ public class CurriculumSubtopic {
 	@Override
 	public String toString() {
 		return "CurriculumSubtopic [curriculumSubtopic_Id=" + curriculumSubtopic_Id + ", curriculumSubtopic_Name_Id="
-				+ curriculumSubtopic_Name_Id + ", curriculumSubtopic_Curriculum_ID=" + curriculumSubtopic_Curriculum_ID
+				+ curriculum_Subtopic_Name_Id + ", curriculumSubtopic_Curriculum_ID=" + curriculum
 				+ ", curriculumSubtopic_Week=" + curriculumSubtopic_Week + ", curriculumSubtopic_Day="
 				+ curriculumSubtopic_Day + "]";
 	}
