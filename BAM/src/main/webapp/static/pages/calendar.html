@@ -31,11 +31,11 @@
 				<span>Search by Date:</span> <input type="date" class="form-control"
 					ng-model="searchDate" ng-keyup="changeDateKeyPress($event)" />
 			</div>
-			<button ng-click="changeDate()">Search</button>
+			<button class="btn btn-warning" ng-click="changeDate()">Search</button>
 		</div>
 		<br>
 		<div class="well">
-			<h3>Events</h3>
+<!-- 			<h3>Events</h3>
 			<table border="2" class="table table-hover">
 				<tr>
 					<td class="topic">Topic</td>
@@ -43,7 +43,7 @@
 					<td class="interview">QC/Interviews</td>
 				<tr>
 					<td class="quiz">LMS/Prepanel/Panel</td>
-			</table>
+			</table> -->
 			<div ng-show="user.role>=2 && (currentBatch.id ==null) || user.role>=3">
 			<h3>Click Events To Change Status</h3>
 			<!-- Editor: Joseph Nguyen
@@ -51,22 +51,26 @@
 			 -->
 			<table border="2" class="table">
 				<tr>
-					<td bgcolor="#008400" style="border: 3px"><font color="white">Covered</font></td>
+					<td id="plannedEvent">Planned</td>
 				<tr>
-					<td bgcolor="#00689b" style="border: 3px"><font color="white">Planned</font></td>
+					<td id="completedEvent">Completed</td>
 				<tr>
-					<td bgcolor="#b80d00" style="border: 3px"><font color="white">Missed</font></td>
+					<td id="cancelledEvent">Cancelled</td>
+				<tr>
+					<td id="missedEvent">Missed</td>
 			</table>
 			</div>
 			<div ng-show="user.role>=2 && (currentBatch.id !=null) ">
 			<h3> Events Status</h3>
 			<table border="2" class="table">
 				<tr>
-					<td bgcolor="#008400" style="border: 3px"><font color="white">Covered</font></td>
+					<td id="plannedEvent">Planned</td>
 				<tr>
-					<td bgcolor="#00689b" style="border: 3px"><font color="white">Planned</font></td>
+					<td id="completedEvent">Completed</td>
 				<tr>
-					<td bgcolor="#b80d00" style="border: 3px"><font color="white">Missed</font></td>
+					<td id="cancelledEvent">Cancelled</td>
+				<tr>
+					<td id="missedEvent">Missed</td>
 			</table>
 			</div>
 		</div>

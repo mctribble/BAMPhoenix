@@ -236,10 +236,6 @@ label::before {
 /* Editor: Joseph Nguyen
 		Modified colors to be easier on the eyes.
 */
-/* Missed */
-.topiccolorred{
-background-color: #b80d00 !important;	
-}
 
 /* Planned */
 .topiccolorblue{
@@ -249,6 +245,11 @@ background-color: #00689b !important;
 /* Covered */
 .topiccolorgreen{
 background-color: #008400 !important;		
+}
+
+/* Cancelled */
+.topiccolorred{
+background-color: #b80d00 !important;	
 }
 
 .searchbox-container {
@@ -331,3 +332,36 @@ body {
 	width: 125px;
 }
 
+
+/***** Event Legend *****/
+#plannedEvent {
+	background-color: #00689b;
+	border: 3px;
+	font-size: 16px;
+	color: white;
+	font-weight: bold;
+}
+
+#completedEvent {
+	background-color: #008400;
+	border: 3px;
+	font-size: 16px;
+	color: white;
+	font-weight: bold;
+}
+
+#cancelledEvent {
+	background-color: #b80d00;
+	border: 3px;
+	font-size: 16px;
+	color: white;
+	font-weight: bold;
+}
+
+#missedEvent {
+	background-color: #fea100;
+	border: 3px;
+	font-size: 16px;
+	color: white;
+	font-weight: bold;
+}
