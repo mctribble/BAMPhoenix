@@ -73,6 +73,7 @@
 			 */
           $scope.changeDate = function(){
         	  uiCalendarConfig.calendars["myCalendar"].fullCalendar('gotoDate', $scope.searchDate);
+        	  $scope.searchDate = new Date();
           };
 
             var eventSerialId = 1;
@@ -281,21 +282,20 @@
             
            
             if($rootScope){
-            	 var url;
+            	 var url = "";
 	            if($rootScope.user.role == 1){
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.user.batch.id;
+	            }else if (($rootScope.user.role == 3 || $rootScope.user.role == 2) && $rootScope.currentBatch) {
+	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
 	            }else if($rootScope.user.role == 2 && $rootScope.trainerBatch){
 	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.trainerBatch.id;
-	            }else if (($rootScope.user.role == 3) && $rootScope.currentBatch) {
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
 	            }else{
 	            }
             /* event source that contains custom events on the scope */
             	$scope.events = [];
            // POST method to show subtopics on the calendar
-            	$scope.loading = true;		// For showing and hiding the
-											// loading gif.
-            	if(!$rootScope.gotSubtopics) {
+            	if(!$rootScope.gotSubtopics && url) {
+            		$scope.loading = true;// For showing and hiding the loading gif.
             		$rootScope.gotSubtopics = true; 
             		$http({
                 		method : "GET",
@@ -467,12 +467,53 @@
               }
             };
             
+            /*
+             *  @Author: Tom Scheffer
+             *  @param: currentWeek - week in calendar on screen
+             *  @param: beginDate - first day of batch
+             *  @param: finishDate - last day of batch
+             *  Used to calculate week number of batch, assumes batch doesn't have set starting time
+             */
+            var calculateWeekNumber = function(currentWeek){
+            	if($rootScope.user.role == 1){
+            		var beginDate = moment($rootScope.user.batch.startDate);
+            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
+            		var finishDate = moment($rootScope.user.batch.endDate);
+            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		if(currentWeek >= beginDate && currentWeek < finishDate){
+            			return currentWeek.diff($rootScope.user.batch.startDate, 'weeks') + 1;
+            		}
+            	}else if($rootScope.user.role >= 2 && !$rootScope.currentBatch && $rootScope.trainerBatch){
+            		var beginDate = moment($rootScope.trainerBatch.startDate);
+            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
+            		var finishDate = moment($rootScope.trainerBatch.endDate);
+            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		if(currentWeek >= beginDate && currentWeek < finishDate){
+            			return currentWeek.diff($rootScope.trainerBatch.startDate, 'weeks') + 1;
+            		}
+            	}else if($rootScope.user.role >= 2 && $rootScope.currentBatch){
+            		var beginDate = moment($rootScope.currentBatch.startDate);
+            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
+            		var finishDate = moment($rootScope.currentBatch.endDate);
+            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		if(currentWeek >= beginDate && currentWeek < finishDate){
+            			return currentWeek.diff(beginDate, 'weeks') + 1;
+            		}
+            	}
+            	return 0;
+            };
+            //var now = fullCalendar.moment
+            
             if($rootScope.user.role == 1 || $rootScope.currentBatch != null){
             /* config object */
             $scope.uiConfig = {
               calendar:{
                 contentHeight: 'auto',
                 editable: false,
+                navLinks: true,
+                weekNumbers: true,
+                weekNumberTitle: "Week in Batch",
+                weekNumberCalculation: calculateWeekNumber,
                 views:{
                 	month:{
                 		eventLimit: 5
@@ -501,6 +542,10 @@
               calendar:{
                 contentHeight: 'auto',
                 editable: true,
+                navLinks: true,
+                weekNumbers: true,
+                weekNumberTitle: "Week in Batch",
+                weekNumberCalculation: calculateWeekNumber,
                 views:{
                 	month:{
                 		eventLimit: 5

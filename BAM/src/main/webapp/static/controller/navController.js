@@ -15,6 +15,10 @@ app.controller('navController', function($rootScope, $scope, $location, $http) {
 	
 	$scope.hideNav = function (){
 		delete $rootScope.user;
+		delete $rootScope.currentBatch;
+		delete $rootScope.trainerBatch;
+		delete $rootScope.batchesAll;
+		delete $rootScope.userRole;
 	}
 	
 	
@@ -26,8 +30,4 @@ app.controller('navController', function($rootScope, $scope, $location, $http) {
 	}
 	
 	$scope.redirect();
-	
-	$scope.hideNav = function (){
-        delete $rootScope.user;
-    }
 });
