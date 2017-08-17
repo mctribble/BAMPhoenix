@@ -19,7 +19,7 @@
 }
 
 #pan2{
-	width: 500px;
+	width: auto;
     background-color: rgba(147, 144, 181, 0.9);
     margin: 15px;
     padding: 15px;
@@ -28,7 +28,7 @@
 }
 
 #pan3{
-	width: 200px;
+	width: auto;
     background-color: rgba(147, 144, 181, 0.9);
     float: right;
 	margin: 15px;
@@ -46,3 +46,12 @@
     font-weight: bold;
     border-radius: 10px;
 }
+
+ul {
+    padding-left: 15px;
+}
+
+li {
+	list-style: none;
+}
+
