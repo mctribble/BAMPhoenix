@@ -29,13 +29,10 @@ import com.bam.service.TopicService;
 @RequestMapping(value = "/api/v1/Calendar/")
 public class CalendarController {
 	
-<<<<<<< HEAD
 	private final static String BATCHID = "batchId";
-=======
-	private final static String batchID = "batchId";
 	private final static String pageNumber = "pageNumber";
 	private final static String pageSize = "pageSize";
->>>>>>> 3ae4ecab391085d1f44babf8831aa0f8936941cb
+
 	
 	@Autowired
 	SubtopicService subtopicService;
@@ -76,7 +73,7 @@ public class CalendarController {
 	@RequestMapping(value="SubtopicsPagination", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public List<Subtopic> getSubTopicsByBatch(HttpServletRequest request){
-		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		int pageNum = Integer.parseInt( request.getParameter(pageNumber) );
 		int pageSiz = Integer.parseInt( request.getParameter(pageSize) );
 		

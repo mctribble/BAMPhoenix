@@ -1,6 +1,6 @@
 package com.bam.service;
 
-class PasswordGenerator {
+public class PasswordGenerator {
 	
 
 	

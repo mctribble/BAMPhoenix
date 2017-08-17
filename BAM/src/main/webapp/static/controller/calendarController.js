@@ -294,22 +294,19 @@
             };
             
             	 var url;
-<<<<<<< HEAD
+            	 
 	            if($rootScope.user.role == 1){
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.user.batch.id;
 	            }else if($rootScope.user.role == 2 && $rootScope.trainerBatch){
 	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.trainerBatch.id;
 	            }else if (($rootScope.user.role == 3) && $rootScope.currentBatch) {
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
-=======
 	            if(SessionService.get("currentUser").role == 1){
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("currentUser").batch.id;
 	            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
 	            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
 	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
-	            }else{
->>>>>>> 3ae4ecab391085d1f44babf8831aa0f8936941cb
 	            }
             /* event source that contains custom events on the scope */
 	            
@@ -332,21 +329,13 @@
                                 var formattedTime = new Date(year, month, day);
                                 if(status == 1 ){
                             		var temp = {title: title, start: formattedTime, end: formattedTime};
-<<<<<<< HEAD
-                                    if(status == 2 )
-                                		 temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
-                                    if(status == 3 )
-                                		 temp = {title: title, start: formattedTime, entd: formattedTime, className:['topiccolorred']};
-                                    
-=======
                                 }else if(status == 2 ){
-                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
+                                	 temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
                                 }else if(status == 3 ){
-                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
+                                	 temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
                                 }else if(status == 4){
-                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
+                                	 temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
                                 }   
->>>>>>> 3ae4ecab391085d1f44babf8831aa0f8936941cb
                     			$scope.events.push(temp);
                 		}
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
@@ -591,15 +580,18 @@
                 eventRender: $scope.eventRender
               		}
             	};
-            }
+            };
             
             /* event sources array */
             $scope.eventSources = [$scope.events];
             $scope.sources 			= "";
    			$scope.source 			= "";
+	            }
+  }
+  
 
-        }
-    ])
+	         
+  ])
     .directive('uiCalendar', ['uiCalendarConfig',
         function (uiCalendarConfig) {
 
