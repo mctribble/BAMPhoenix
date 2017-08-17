@@ -29,6 +29,7 @@ hs_err_pid*
 
 ## STS ###
 
+*/bin
 .apt_generated
 *.classpath
 .factorypath
