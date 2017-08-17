@@ -41,9 +41,9 @@ public class MailService {
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(receiver));
             message.setSubject("Recover Password");
-            message.setText("Your temporary password is " + pass);   
-//            message.setText("Your temporary password is " + pass + " " + " Feel free to click the following link login \n" + " "+
-//                    "Login Page: http://localhost:8085/BAM/#/");            
+  
+            message.setText("Your temporary password is " + pass + " " + " Feel free to click the following link login \n" + " "+
+                    "Login Page: http://localhost:8085/BAM/#/");            
             
 //            + ", and your username is" +
 //            " " + email + ". Feel free to click the following link to set your own! \n"

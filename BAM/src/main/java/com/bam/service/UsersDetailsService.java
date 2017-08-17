@@ -111,7 +111,8 @@ public class UsersDetailsService implements UserDetailsService {
 		//BamUser bam = new BamUser();
 		//String targetEmail = user.getEmail();
 		System.out.println("user is " + user);
-		 Runnable run = new EmailRun("revatbam@gmail.com");
+		EmailRun er = new EmailRun();er.setEmail("revatbam@gmail.com");
+		 Runnable run = er;
 		 Thread th = new Thread(run);
 		 th.start();
 	}

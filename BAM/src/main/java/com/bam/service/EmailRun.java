@@ -1,16 +1,25 @@
 package com.bam.service;
 
-import com.bam.bean.BamUser;
-
 public class EmailRun implements Runnable{
+	private String email;
 
-	public EmailRun(String email) {
+	public EmailRun() {
 	
-		MailService.sendMail(email);
+		
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public void run() {
+		MailService.sendMail(email);
+		
 	}
 
 
