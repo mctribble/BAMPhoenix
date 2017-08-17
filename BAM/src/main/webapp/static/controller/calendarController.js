@@ -19,12 +19,14 @@
   
 	  		
 	  		
-  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig',
-        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig) {
-		  if(!$rootScope.user.batch && $rootScope.user.role == 1)
-			{
+  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService',
+        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService) {
+	  	$(".navbar").show();
+		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
+			{  
 				$location.path('/noBatch');
 			}
+		  
 	  	
 	  	// Varibles set for the use of adding day,month,year,to the Date
 		// attribute of a calendar.
@@ -73,8 +75,20 @@
 			 */
           $scope.changeDate = function(){
         	  uiCalendarConfig.calendars["myCalendar"].fullCalendar('gotoDate', $scope.searchDate);
+        	  $scope.searchDate = new Date();
           };
 
+          $scope.currentBatch = function(){
+        	  /*SessionService.unset("currentBatch");
+        	  if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
+	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
+        	  }
+        	  if(!SessionService.get("gotSubtopics") && url){
+            		SessionService.set("gotSubtopics", true); 
+	             	$scope.loading = true;
+              	    $scope.loadCalendar(url);
+        	  }*/
+          };
             var eventSerialId = 1;
             // @return {String} fingerprint of the event object and its
 			// properties
@@ -279,23 +293,30 @@
                 return {};
             };
             
-           
-            if($rootScope){
             	 var url;
+<<<<<<< HEAD
 	            if($rootScope.user.role == 1){
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.user.batch.id;
 	            }else if($rootScope.user.role == 2 && $rootScope.trainerBatch){
 	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.trainerBatch.id;
 	            }else if (($rootScope.user.role == 3) && $rootScope.currentBatch) {
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
+=======
+	            if(SessionService.get("currentUser").role == 1){
+	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("currentUser").batch.id;
+	            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
+	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
+	            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
+	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
+	            }else{
+>>>>>>> 3ae4ecab391085d1f44babf8831aa0f8936941cb
 	            }
             /* event source that contains custom events on the scope */
+	            
             	$scope.events = [];
-           // POST method to show subtopics on the calendar
-            	$scope.loading = true;		// For showing and hiding the
-											// loading gif.
-            	if(!$rootScope.gotSubtopics) {
-            		$rootScope.gotSubtopics = true; 
+            	if(!SessionService.get("gotSubtopics") && url) {
+            		SessionService.set("gotSubtopics", true); 
+            		$scope.loading = true;
             		$http({
                 		method : "GET",
                 		url : url
@@ -304,19 +325,28 @@
                     			var title = response.data[i].subtopicName.name;
                         		var dates = response.data[i].subtopicDate;
                         		var status= response.data[i].status.id;
-                        	
                         		var a = new Date(dates);  
                                 var year = a.getUTCFullYear();
                                 var month = a.getMonth();
                                 var day = a.getDate();
                                 var formattedTime = new Date(year, month, day);
-                                if(status == 1 )
+                                if(status == 1 ){
                             		var temp = {title: title, start: formattedTime, end: formattedTime};
+<<<<<<< HEAD
                                     if(status == 2 )
                                 		 temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
                                     if(status == 3 )
                                 		 temp = {title: title, start: formattedTime, entd: formattedTime, className:['topiccolorred']};
                                     
+=======
+                                }else if(status == 2 ){
+                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
+                                }else if(status == 3 ){
+                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
+                                }else if(status == 4){
+                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
+                                }   
+>>>>>>> 3ae4ecab391085d1f44babf8831aa0f8936941cb
                     			$scope.events.push(temp);
                 		}
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
@@ -326,9 +356,14 @@
                 		// Turn off loading indicator whether success or
 						// failure.
                 		$scope.loading = false;
+                		SessionService.set("gotSubtopics", false);
                 	});
             	}
-            }
+           // POST method to show subtopics on the calendar
+            			// For showing and hiding the
+											// loading gif.
+            	
+            		
             
             $scope.calEventsExt = {
             	       color: '#f00',
@@ -339,7 +374,7 @@
             	          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
             	        ]
             	    };
-            if($rootScope.user.role == 2 && $rootScope.currentBatch == null){
+            if(SessionService.get("currentUser").role == 2 && SessionService.get("currentBatch") == null){
             /* alert on eventClick */
             $scope.alertOnEventClick = function( date, jsEvent, view){
             	var name = jsEvent.target.parentNode.parentNode.getAttribute("class");
@@ -351,7 +386,7 @@
                     // http for green to red
                     $http({
                  		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Canceled"
                  	 }).then(function successCallback(response) {
                  	 });
                 }  else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorred fc-draggable ng-scope fc-allow-mouse-resize"){
@@ -360,7 +395,7 @@
                     // http for red to blue
                     $http({
                  		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Pending/Missed"
                  	 }).then(function successCallback(response) {
                  	 });
                 } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize") {
@@ -369,7 +404,7 @@
                     // http for blue to green
                     $http({
                  		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Completed"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Completed"
                  	 }).then(function successCallback(response) {
                  	 });
                 }    else  if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorgreen") {
@@ -380,7 +415,7 @@
                     // http for green to red
                     $http({
                  		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Canceled"
                  	 }).then(function successCallback(response) {
                  	 });
                 } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorred"){
@@ -389,7 +424,7 @@
                     // http for red to blue
                     $http({
                  		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Pending/Missed"
                  	 }).then(function successCallback(response) {
                  	 });
                 }else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope topiccolorred fc-allow-mouse-resize"){
@@ -398,7 +433,7 @@
                     // http for red to blue
                     $http({
                  		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Pending/Missed"
                  	 }).then(function successCallback(response) {
                  	 });
                 }
@@ -408,7 +443,7 @@
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
             	 $http({
              		method : "GET",
-             		url : "rest/api/v1/Calendar/DateUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+event.title+"&date="+event.start
+             		url : "rest/api/v1/Calendar/DateUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&date="+event.start
              	 }).then(function successCallback(response) {
              	 });
             };
@@ -460,18 +495,59 @@
               uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
             };
             /* Change View */
-            $scope.renderCalender = function(calendar) {
+            $scope.renderCalendar = function(calendar) {
               if(uiCalendarConfig.calendars[calendar]){
                 uiCalendarConfig.calendars[calendar].fullCalendar('render');
               }
             };
             
-            if($rootScope.user.role == 1 || $rootScope.currentBatch != null){
+            /*
+             *  @Author: Tom Scheffer
+             *  @param: currentWeek - week in calendar on screen
+             *  @param: beginDate - first day of batch
+             *  @param: finishDate - last day of batch
+             *  Used to calculate week number of batch, assumes batch doesn't have set starting time
+             */
+            var calculateWeekNumber = function(currentWeek){
+            	if(SessionService.get("currentUser").role == 1){
+            		var beginDate = moment(SessionService.get("currentUser").batch.startDate);
+            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
+            		var finishDate = moment(SessionService.get("currentUser").batch.endDate);
+            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		if(currentWeek >= beginDate && currentWeek < finishDate){
+            			return currentWeek.diff(SessionService.get("currentUser").batch.startDate, 'weeks') + 1;
+            		}
+            	}else if(SessionService.get("currentUser").role >= 2 && !SessionService.get("currentBatch") && SessionService.get("trainerBatch")){
+            		var beginDate = moment(SessionService.get("trainerBatch").startDate);
+            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
+            		var finishDate = moment(SessionService.get("trainerBatch").endDate);
+            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		if(currentWeek >= beginDate && currentWeek < finishDate){
+            			return currentWeek.diff(SessionService.get("trainerBatch").startDate, 'weeks') + 1;
+            		}
+            	}else if(SessionService.get("currentUser").role >= 2 && SessionService.get("currentBatch")){
+            		var beginDate = moment(SessionService.get("currentBatch").startDate);
+            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
+            		var finishDate = moment(SessionService.get("currentBatch").endDate);
+            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		if(currentWeek >= beginDate && currentWeek < finishDate){
+            			return currentWeek.diff(beginDate, 'weeks') + 1;
+            		}
+            	}
+            	return 0;
+            };
+            //var now = fullCalendar.moment
+            
+            if(SessionService.get("currentUser").role == 1 || SessionService.get("currentBatch") != null){
             /* config object */
             $scope.uiConfig = {
               calendar:{
                 contentHeight: 'auto',
                 editable: false,
+                navLinks: true,
+                weekNumbers: true,
+                weekNumberTitle: "Week in Batch",
+                weekNumberCalculation: calculateWeekNumber,
                 views:{
                 	month:{
                 		eventLimit: 5
@@ -479,13 +555,8 @@
                 },
                 header:{
                   left: 'title',
-                  center: '',
+                  center: 'month,basicWeek,basicDay',
                   right: 'today prev,next'
-                },
-                footer:{
-                	left: 'month',
-                	center: 'basicWeek',
-                	right: 'basicDay'
                 },
                 eventClick: $scope.alertOnEventClick,
                 eventDrop: $scope.alertOnDrop,
@@ -500,23 +571,19 @@
               calendar:{
                 contentHeight: 'auto',
                 editable: true,
+                navLinks: true,
+                weekNumbers: true,
+                weekNumberTitle: "Week in Batch",
+                weekNumberCalculation: calculateWeekNumber,
                 views:{
                 	month:{
                 		eventLimit: 5
-                	},
-                	day:{
-                		aspectRatio: .5
                 	}
                 },
                 header:{
                   left: 'title',
-                  center: '',
+                  center: 'month,basicWeek,basicDay',
                   right: 'today prev,next'
-                },
-                footer:{
-                	left: 'month',
-                	center: 'basicWeek',
-                	right: 'basicDay'
                 },
                 eventClick: $scope.alertOnEventClick,
                 eventDrop: $scope.alertOnDrop,
@@ -530,7 +597,7 @@
             $scope.eventSources = [$scope.events];
             $scope.sources 			= "";
    			$scope.source 			= "";
-            
+
         }
     ])
     .directive('uiCalendar', ['uiCalendarConfig',

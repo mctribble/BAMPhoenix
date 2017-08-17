@@ -1,4 +1,4 @@
-app.controller('batchesPastController', function($scope, $rootScope, $location, $http)
+app.controller('batchesPastController', function($scope, SessionService, $rootScope, $location, $http)
 {
 	$scope.msg;
 	$scope.batchesPast;
@@ -7,7 +7,7 @@ app.controller('batchesPastController', function($scope, $rootScope, $location, 
 		// Both of this and the following comments ought to be removed:
 		// The variable below was invalid and was causing the failure of this controller.
 		// $rootScope.currentBatch = batch;
-		var emailer = $rootScope.user.email;
+		var emailer = SessionService.get("currentUser").email;
 		
 		$http({
 			url: 'rest/api/v1/Batches/Past',
@@ -37,13 +37,13 @@ app.controller('batchesPastController', function($scope, $rootScope, $location, 
 			
 		})
 		.then(function success(response){
-			$rootScope.gotSubtopics = false;
+			SessionService.set("gotSubtopics", false);
 			$location.path('/home');
 			$scope.message = true;
 			$scope.msg = 'batch retrieved';
 			
 		}, function error(response){
-			$rootScope.gotSubtopics = false;
+			SessionService.set("gotSubtopics", false);
 			$location.path('/home');
 			$scope.message = true;
 			$scope.msg = 'batch not retrieved';

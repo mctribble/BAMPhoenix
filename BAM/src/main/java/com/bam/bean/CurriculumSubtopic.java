@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -26,12 +26,12 @@ public class CurriculumSubtopic {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Curriculum_Subtopic_ID_SEQ")
 	private int curriculumSubtopicId;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Subtopic_Name_Id", referencedColumnName = "Subtopic_Name_Id")
 	@NotEmpty(message="Curriculum Subtopic Name cannot be empty")
 	private SubtopicName curriculumSubtopicNameId;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Curriculum_Id", referencedColumnName = "Curriculum_Id")
 	@NotEmpty(message="Curriculum cannot be empty")
 	private Curriculum curriculumSubtopicCurriculumID;

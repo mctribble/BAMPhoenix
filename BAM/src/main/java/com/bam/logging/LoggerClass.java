@@ -42,7 +42,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
@@ -55,7 +55,6 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));	
@@ -68,7 +67,6 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
@@ -81,7 +79,6 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
@@ -100,7 +97,6 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
@@ -118,7 +114,6 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
@@ -140,7 +135,6 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
@@ -153,7 +147,6 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
@@ -166,7 +159,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
@@ -179,7 +172,6 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
