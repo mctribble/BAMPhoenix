@@ -1,8 +1,20 @@
 /**
  * 
  */
-app.controller('dashboardController', function($http, $scope) {
+app.controller('dashboardController', function($http, $scope, $rootScope) {
 	$scope.user;
+	//set batchId with the id of the currentBatch if it exists else use the trainerBatch
+	var batchId;
+	$rootScope.currentBatchName;
+	if($rootScope.currentBatch)
+	{
+		batchId = $rootScope.currentBatch.id;
+		$rootScope.currentBatchName = $rootScope.currentBatch.name;
+	}else
+	{
+		batchId = $rootScope.trainerBatch.id; //if currentBatch is not set use the trainerBatch's id
+		$rootScope.currentBatchName = $rootScope.trainerBatch.name;
+	}
 	
 	$scope.getData = function() {
 			
@@ -20,15 +32,43 @@ app.controller('dashboardController', function($http, $scope) {
 				}
 				
 				var dif = weeksBetween($scope.currentBatchStart1, currentDate);
-				console.log('weeeks: ' + dif);
 				//Current week number
 				$scope.weekNum = dif;
 				
 		}else{
 			$scope.message = 'You have no current batches';
 		}
-			
-			$scope.batchmates = $scope.batch.usersInBatch;
+			if(batchId) //Check if currentBatch is set before using it.
+			{
+				//get the batch from the server by the id.
+				$http({
+					url: "rest/api/v1/Batches/ById",
+					method: "GET",
+					params:{
+						batchId: batchId
+					}
+				}).then(function(response){
+					 $scope.batch = response.data //reponse.data is a javascript object (automatically parsed from the JSON from the server)
+					 $scope.batch.startDate = new Date($scope.batch.startDate); //get the JavaScript date object from the data sent from the server
+					 $scope.batch.endDate = new Date($scope.batch.endDate);
+				});
+			}
+			$http({
+				url: "rest/api/v1/Users/InBatch",
+				method: 'GET',
+				params: {
+					batchId: batchId
+				}
+			}).then(function(response) {
+				$scope.batch.usersInBatch = response.data 
+				console.log($scope.batch.usersInBatch);
+				for(var i = 0; i < $scope.batch.usersInBatch.length; i++) {
+					$scope.batch.users = $scope.batch.usersInBatch[i];
+				    console.log($scope.batch.users.fName);
+				    
+				}
+				
+			})
 		}
 	}
 	
