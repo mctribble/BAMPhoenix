@@ -7,7 +7,7 @@
  		</div>
 		
 		<div class="row">
-		<div id="pan2" class="col-md-4">
+		<div id="pan2" class="col-md-6">
 		<ul  ng-model="getData">
 			<li>First Name: {{user.fName}}</li>
 			<li>Last Name: {{user.lName}}</li>
@@ -15,14 +15,23 @@
 			<li>Current Batch End Date: {{currentBatchEnd1 | date: 'MM-dd-yyyy'}}</li>
 		</ul>
 		</div>
-		<div id="pan3" class="col-md-4">
+				
+		<div id="pan3" class="col-md-5">
 			<h2>Week: {{weekNum}}</h2>
 				<h3>Associates in batch:</h3>
 				 <p >{{batch.users.fName}}</p>
 
 		</div>
 		</div>
+		
+		<div id="progress" ng-show="user.batch || trainerBatch">
+		Batch Progress:
+			<div id="batchProgress" class="progress" >
+  				<div class="progress-bar progress-bar-striped active" role="progressbar"
+  					aria-valuemin="0" aria-valuemax="100" ng-style="{width: percent}">
+   					{{ percent }}
+  				</div>
+			</div>
 		</div>
-  </div>
 
  
