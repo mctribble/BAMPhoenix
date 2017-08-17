@@ -18,6 +18,9 @@
 	
 	<context:property-placeholder /><!--Local Host Environment Variables will be used -->
 	
+	
+	
+	
 	<context:component-scan base-package="com.bam"></context:component-scan>
 	<context:annotation-config />
 	<mvc:annotation-driven/>

@@ -20,6 +20,7 @@
 *.mf
 STUB/target
 BAM/target
+*/bin
 
 pom.properties
 MANIFEST.MF

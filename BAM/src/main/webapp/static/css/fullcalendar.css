@@ -765,7 +765,8 @@ tr:first-child > td > .fc-day-grid-event {
     overflow: hidden;
     color: white;
     border-style: outset;	/* Outset borders for easier reading division between topics (and looks nice) */
-    font-size: 16px;	/* Make topic font larger for easier legibility */
+    font-size: 20px;	/* Make topic font larger for easier legibility */
+    font-weight: bold;	/* Bold font for further legibility */
 }
 
 .fc-day-grid-event .fc-time {
