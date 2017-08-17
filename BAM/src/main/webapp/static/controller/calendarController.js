@@ -306,6 +306,7 @@
 	            }else{
 	            }
             /* event source that contains custom events on the scope */
+	            
             	$scope.events = [];
             	$scope.loadCalendar = function(url){
             		$http({
@@ -347,11 +348,12 @@
            // POST method to show subtopics on the calendar
             			// For showing and hiding the
 											// loading gif.
-            	if(!SessionService.get("gotSubtopics") && url) {
-            		SessionService.set("gotSubtopics", true); 
-            		$scope.loading = true;
-            		$scope.loadCalendar(url);
-            	}
+            if(!SessionService.get("gotSubtopics") && url) {           	
+            	SessionService.set("gotSubtopics", true);         		
+            	$scope.loading = true;		
+            	$scope.loadCalendar(url);		
+            }
+            		
             
             $scope.calEventsExt = {
             	       color: '#f00',
