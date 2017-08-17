@@ -29,11 +29,14 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 		
 			
 			SessionService.set("currentUser", response.data);
+			$rootScope.user = SessionService.get("currentUser");
 			if(SessionService.get("currentUser").role == 3){
 				SessionService.set("userRole", '(Quality Control)');
+				$rootScope.userRole = SessionService.get("userRole");
 				$location.path('/home');
 			} else if(SessionService.get("currentUser").role == 2){
 				SessionService.set("userRole", '(Trainer)');
+				$rootScope.userRole = SessionService.get("userRole");
 				$http({
 					url: 'rest/api/v1/Batches/InProgress',
 					method: 'GET',
@@ -47,6 +50,7 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 				});
 			} else if(SessionService.get("currentUser").role == 1) {
 				SessionService.set("userRole", '(Associate)');
+				$rootScope.userRole = SessionService.get("userRole");
 				if(!SessionService.get("currentUser").batch){
 					$location.path('/noBatch');
 				}else{
