@@ -272,7 +272,7 @@
                     var tValues = function (data) {
                         // convert {0: "Jan", 1: "Feb", ...} to ["Jan", "Feb",
 						// ...]
-                        return (Object.keys(data) || []).reduce(
+                        return Object.keys(data).reduce(
                             function (rslt, el) {
                                 rslt.push(data[el]);
                                 return rslt;
@@ -300,7 +300,6 @@
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
 	            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
 	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
-	            }else{
 	            }
             /* event source that contains custom events on the scope */
 	            
@@ -324,11 +323,11 @@
                                 if(status == 1 ){
                             		var temp = {title: title, start: formattedTime, end: formattedTime};
                                 }else if(status == 2 ){
-                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
+                                	 temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
                                 }else if(status == 3 ){
-                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
+                                	 temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
                                 }else if(status == 4){
-                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
+                                	 temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
                                 }   
                     			$scope.events.push(temp);
                 		}
@@ -574,15 +573,18 @@
                 eventRender: $scope.eventRender
               		}
             	};
-            }
+            };
             
             /* event sources array */
             $scope.eventSources = [$scope.events];
             $scope.sources 			= "";
    			$scope.source 			= "";
+	            }
+  }
+  
 
-        }
-    ])
+	         
+  ])
     .directive('uiCalendar', ['uiCalendarConfig',
         function (uiCalendarConfig) {
 
