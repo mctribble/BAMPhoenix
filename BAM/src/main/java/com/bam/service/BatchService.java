@@ -2,7 +2,7 @@ package com.bam.service;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +20,7 @@ public class BatchService {
 	}
 
 	public Batch getBatchById(Integer id) {
-		Logger.getLogger(BatchService.class).fatal(batchRepository);
+		LogManager.getLogger(BatchService.class).fatal(batchRepository);
 		System.out.println(batchRepository);
 		return batchRepository.findById(id);
 	}

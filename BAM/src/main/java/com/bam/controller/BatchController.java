@@ -23,14 +23,12 @@ import com.bam.service.UsersDetailsService;
 @RequestMapping(value = "/api/v1/Batches/")
 public class BatchController {
 
-	
 	private final static String email = "email";
 	
 	@Autowired
 	BatchService batchService;
 
 	@Autowired
-
 	UsersDetailsService bamUserService;
 
 

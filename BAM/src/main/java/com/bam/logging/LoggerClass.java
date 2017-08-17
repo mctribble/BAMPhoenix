@@ -4,19 +4,18 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-
-
 
 @Aspect
 public class LoggerClass {
 	
 	//Created Logger for Intercepting Methods and logging that Information
 
-	private final static Logger logger = Logger.getLogger(LoggerClass.class);
+	private final static Logger logger = LogManager.getLogger(LoggerClass.class);
 
 
 	private String intercepted = "intercepted method : ";
