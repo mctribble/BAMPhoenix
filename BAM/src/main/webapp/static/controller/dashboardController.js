@@ -59,13 +59,14 @@ app.controller('dashboardController', function($http, $scope, $rootScope) {
 				params: {
 					batchId: batchId
 				}
-			}).then(function(response) {
-				$scope.batch.usersInBatch = response.data 
+			}).then(function(response){
+				$scope.batch.usersInBatch = response.data;
 				console.log($scope.batch.usersInBatch);
 				for(var i = 0; i < $scope.batch.usersInBatch.length; i++) {
 					$scope.batch.users = $scope.batch.usersInBatch[i];
+					
+					 console.log($scope.batch.users);
 				    console.log($scope.batch.users.fName);
-				    
 				}
 				
 			})
