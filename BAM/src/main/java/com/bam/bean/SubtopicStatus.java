@@ -25,7 +25,7 @@ public class SubtopicStatus {
 	private String name;
 
 	public SubtopicStatus() {
-		super();
+		//Empty Because No Args
 	}
 
 	public SubtopicStatus(Integer id, String name) {
