@@ -85,11 +85,10 @@
         			  url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
         		  }
         		  if(!SessionService.get("gotSubtopics") && url){
-        			  //SessionService.set("gotSubtopics", true); 
-        			  //$scope.loading = true;
-        			  uiCalendarConfig.calendars["myCalendar"].fullCalendar("destroy");
-        			  uiCalendarConfig.calendars["myCalendar"].fullCalendar("render");
-        			  //$scope.loadCalendar(url);
+        			  SessionService.set("gotSubtopics", true); 
+        			  $scope.loading = true;
+        			  $scope.loadCalendarInfoTrainer();
+        			  $scope.loadCalendar(url);
         		  }
         	  }
           };
@@ -308,10 +307,7 @@
 	            }
             /* event source that contains custom events on the scope */
             	$scope.events = [];
-            	//$scope.loadCalendar = function(url){
-            	if(!SessionService.get("gotSubtopics") && url){
-        			SessionService.set("gotSubtopics", true); 
-        			$scope.loading = true;
+            	$scope.loadCalendar = function(url){
             		$http({
                 		method : "GET",
                 		url : url
@@ -344,16 +340,18 @@
 						// failure.
                 		$scope.loading = false;
                 		SessionService.set("gotSubtopics", false); 
+                  	  console.log(SessionService.get("currentBatch"));
+                  	console.log(SessionService.get("currentUser").role);
                 	});
             	}
            // POST method to show subtopics on the calendar
             			// For showing and hiding the
 											// loading gif.
-            	/*if(!SessionService.get("gotSubtopics") && url) {
+            	if(!SessionService.get("gotSubtopics") && url) {
             		SessionService.set("gotSubtopics", true); 
             		$scope.loading = true;
             		$scope.loadCalendar(url);
-            	}*/
+            	}
             
             $scope.calEventsExt = {
             	       color: '#f00',
@@ -364,7 +362,7 @@
             	          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
             	        ]
             	    };
-            if(SessionService.get("currentUser").role == 2 && SessionService.get("currentBatch") == null){
+            if(SessionService.get("currentUser").role == 2 && !SessionService.get("currentBatch")){
             /* alert on eventClick */
             $scope.alertOnEventClick = function( date, jsEvent, view){
             	var name = jsEvent.target.parentNode.parentNode.getAttribute("class");
@@ -385,7 +383,7 @@
                     // http for red to blue
                     $http({
                  		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Pending/Missed"
+                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Pending"
                  	 }).then(function successCallback(response) {
                  	 });
                 } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize") {
@@ -528,6 +526,33 @@
             };
             //var now = fullCalendar.moment
             
+            $scope.loadCalendarInfoTrainer = function(){
+            	$scope.uiConfig = {
+                        calendar:{
+                          contentHeight: 'auto',
+                          editable: true,
+                          navLinks: true,
+                          weekNumbers: true,
+                          weekNumberTitle: "Week in Batch",
+                          weekNumberCalculation: calculateWeekNumber,
+                          views:{
+                          	month:{
+                          		eventLimit: 5
+                          	}
+                          },
+                          header:{
+                            left: 'title',
+                            center: 'month,basicWeek,basicDay',
+                            right: 'today prev,next'
+                          },
+                          eventClick: $scope.alertOnEventClick,
+                          eventDrop: $scope.alertOnDrop,
+                          eventResize: $scope.alertOnResize,
+                          eventRender: $scope.eventRender
+                        		}
+                      	};
+            }
+            
             if(SessionService.get("currentUser").role == 1 || SessionService.get("currentBatch") != null){
             /* config object */
             $scope.uiConfig = {
@@ -557,30 +582,7 @@
             };
             }else {
             /* config object */
-            $scope.uiConfig = {
-              calendar:{
-                contentHeight: 'auto',
-                editable: true,
-                navLinks: true,
-                weekNumbers: true,
-                weekNumberTitle: "Week in Batch",
-                weekNumberCalculation: calculateWeekNumber,
-                views:{
-                	month:{
-                		eventLimit: 5
-                	}
-                },
-                header:{
-                  left: 'title',
-                  center: 'month,basicWeek,basicDay',
-                  right: 'today prev,next'
-                },
-                eventClick: $scope.alertOnEventClick,
-                eventDrop: $scope.alertOnDrop,
-                eventResize: $scope.alertOnResize,
-                eventRender: $scope.eventRender
-              		}
-            	};
+            	$scope.loadCalendarInfoTrainer();
             }
             
             /* event sources array */
