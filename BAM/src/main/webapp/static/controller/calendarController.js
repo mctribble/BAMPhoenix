@@ -79,7 +79,7 @@
           };
 
           $scope.currentBatch = function(){
-        	  SessionService.unset("currentBatch");
+        	  /*SessionService.unset("currentBatch");
         	  if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
 	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
         	  }
@@ -87,7 +87,7 @@
             		SessionService.set("gotSubtopics", true); 
 	             	$scope.loading = true;
               	    $scope.loadCalendar(url);
-        	  }
+        	  }*/
           };
             var eventSerialId = 1;
             // @return {String} fingerprint of the event object and its
@@ -303,8 +303,11 @@
 	            }else{
 	            }
             /* event source that contains custom events on the scope */
+	            
             	$scope.events = [];
-            	$scope.loadCalendar = function(url){
+            	if(!SessionService.get("gotSubtopics") && url) {
+            		SessionService.set("gotSubtopics", true); 
+            		$scope.loading = true;
             		$http({
                 		method : "GET",
                 		url : url
@@ -336,16 +339,14 @@
                 		// Turn off loading indicator whether success or
 						// failure.
                 		$scope.loading = false;
+                		SessionService.set("gotSubtopics", false);
                 	});
             	}
            // POST method to show subtopics on the calendar
             			// For showing and hiding the
 											// loading gif.
-            	if(!SessionService.get("gotSubtopics") && url) {
-            		SessionService.set("gotSubtopics", true); 
-            		$scope.loading = true;
-            		$scope.loadCalendar(url);
-            	}
+            	
+            		
             
             $scope.calEventsExt = {
             	       color: '#f00',
