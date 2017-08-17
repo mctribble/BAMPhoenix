@@ -65,34 +65,63 @@ app.controller(
 		
 		//when an existing curriculum is selected, it will be loaded into the template
 		$scope.setTemplate = function(curriculum){
-			//attempt to look for curr in curricula object before doing http req (caching)
-			console.log("in setTemplate - Curriculum: ")
-			console.log(curriculum);
-			
+			//TODO: attempt to look for curr in curricula object before doing http req (caching)
+//			console.log("curriculum");
+//			console.log(curriculum);
 			if(curriculum){
-				var newCurriculum;
 				//do request
-				
-				//add curriculum object to the version
-				$scope.template.meta = curriculum
-				$scope.template.weeks; //r
-				//add the curriculum to the curricula object
+				$http({
+					url: "rest/api/v1/Curriculum/Schedule",
+					method: "GET",
+					params: {curriculumId: curriculum.curriculum_Version}
+					
+				}).then(function(response){
+					var newCurriculum = {
+							meta: curriculum,
+							weeks:[]
+					}
+					
+					//add the (empty) weeks:
+					//warning hacky workaround: add one extra weeks object then splice out the first one because for some reason
+					//the first one added doesn't add the days to the weeks object before pushing it on. I'm sorry
+					for(var j = 0; j < newCurriculum.meta.curriculum_Number_Of_Weeks + 1; j++){
+						newCurriculum.weeks.push({
+							days:[
+								{subtopics:[]},
+								{subtopics:[]},
+								{subtopics:[]},
+								{subtopics:[]},
+								{subtopics:[]},
+							]
+						});
+					}
+					//splice out the messed up first day object. week array should then contain the correct # of weeks each with 5 days.
+					newCurriculum.weeks = newCurriculum.weeks.splice(1);
+					
+					//loop through array of response objects adding subtopics to the correct week and day arrays.
+					for(i in response.data){
+						var topic = response.data[i];
+						newCurriculum.weeks[topic.curriculumSubtopic_Week - 1].days[topic.curriculumSubtopic_Day - 1].subtopics.push(topic.curriculumSubtopic_Name_Id);
+					}
+					
+					//TODO: make this a unique object (not a reference to the old one)
+//					newCurriculum = Object.create(newCurriculum);
+//					console.log("newCurr after uniquification: ")
+//					console.log(newCurriculum);
+					//add newCurriculum as a version to the curricula type:
+					for(j in $scope.curricula){
+						if($scope.curricula[j].type == curriculum.curriculum_Name){
+							$scope.curricula[j].versions[newCurriculum.meta.curriculum_Version - 1] = newCurriculum;
+						}
+					}
+					
+					//set the newCurriculum object as the $scope.template
+					//TODO: need to make this unique instead of reference in the future.
+					$scope.template = newCurriculum;
+				});
 			}else{
-				
+				//TODO: modal to create new topic type
 			}
-			
-//			if(type == -1){
-//				//default template
-//				console.log("blank template");
-//				$scope.template.meta.type =  null;
-//				$scope.template.meta.version = null;
-//				$scope.template.weeks = [];
-//
-//			}else{
-//				$scope.template.meta.type = $scope.curricula[type].type;
-//				$scope.template.meta.version = version;
-//				$scope.template.weeks = $scope.curricula[type].versions[version].weeks;	
-//			}
 		}
 			
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
@@ -103,22 +132,17 @@ app.controller(
 
 			console.log("creating next version of " + $scope.template.meta.type);
 			
-			var curriculum = {
-				meta: {
-					type: $scope.template.meta.type,
-					version: '0'
-				},
-				weeks: $scope.template.weeks
-			}
+			var curriculum = $scope.template;
 			
 			//loop through the curricula looking for the curriculum type, when found count number of versions and set this curr. object's version to it
 			for(item in $scope.curricula){
-				if($scope.curricula[item].type == $scope.template.meta.type){
+				if($scope.curricula[item].type == $scope.template.meta.curriculum_Name){
 					curriculum.meta.version = $scope.curricula[item].versions.length;
 				}
 			}
 			
-			$scope.displayedCurriculum = curriculum;
+//			$scope.displayedCurriculum = curriculum;
+			$scope.displayedCurriculum = JSON.parse(JSON.stringify(curriculum));
 			console.log($scope.displayedCurriculum);
 		}
 		
@@ -131,11 +155,11 @@ app.controller(
 		
 		$scope.saveCurriculum = function(){
 			console.log("saving curriculum");
-			if($scope.displayedCurriculum.meta.type){
-				console.log("type: " + $scope.displayedCurriculum.meta.type);
+			if($scope.displayedCurriculum.meta.curriculum_Name){
+				console.log("type: " + $scope.displayedCurriculum.meta.curriculum_Name);
 				for(item in $scope.curricula){
 					console.log("checking type: " + $scope.curricula[item]);
-					if($scope.curricula[item].type == $scope.displayedCurriculum.meta.type){
+					if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculum_Name){
 						console.log("found match - adding curriculum")
 						$scope.curricula[item].versions.push({weeks: $scope.displayedCurriculum.weeks});
 					}
@@ -143,10 +167,9 @@ app.controller(
 			}else{
 				var curriculum = {
 					type:'',
-					versions: [
-					]
+					versions: []
 				};
-				
+				//TODO: modal
 				curriculum.type = "foo";
 				curriculum.versions.push({weeks:$scope.displayedCurriculum.weeks});
 				$scope.curricula.push(curriculum);
@@ -176,11 +199,7 @@ app.controller(
 							//raise the flag
 							curriculumTypeExists = true;
 							//add an empty weeks array to the curriculum
-							curriculum.weeks = [
-								{
-									days : []
-								}
-							];
+							curriculum.weeks = [];
 							
 							//insert the curriculum into the existing curr type as a version of that type (as specified by the received object) 
 							console.log("Version: ");
