@@ -22,6 +22,7 @@
   app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService',
         function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService) {
 	  	$(".navbar").show();
+	  	console.log(SessionService.get("currentUser"));
 		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
 				$location.path('/noBatch');
@@ -371,7 +372,7 @@
             	    };
             if(SessionService.get("currentUser").role == 2 && SessionService.get("currentBatch") == null){
             /* alert on eventClick */
-<<<<<<< HEAD
+
             $scope.alertOnEventClick = function( event, date, jsEvent, view){
             	var eventDate= new Date(event.start);
             	console.log('Event->'+ event.id);
