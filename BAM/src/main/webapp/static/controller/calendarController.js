@@ -294,13 +294,6 @@
             };
             
             	 var url;
-            	 
-	            if($rootScope.user.role == 1){
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.user.batch.id;
-	            }else if($rootScope.user.role == 2 && $rootScope.trainerBatch){
-	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.trainerBatch.id;
-	            }else if (($rootScope.user.role == 3) && $rootScope.currentBatch) {
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$rootScope.currentBatch.id;
 	            if(SessionService.get("currentUser").role == 1){
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("currentUser").batch.id;
 	            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
