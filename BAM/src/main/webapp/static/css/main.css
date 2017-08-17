@@ -237,12 +237,6 @@ label::before {
 		Modified colors to be easier on the eyes.
 */
 
-/* Cancelled */
-.topiccolorred{
-background-color: #b80d00 !important;	
-}
-
-
 /* Planned */
 .topiccolorblue{
 background-color: #00689b !important;
@@ -262,9 +256,7 @@ background-color: #b80d00 !important;
 .topiccoloryellow{
 background-color: #fea100 !important;    
 }
-.topiccoloryellow{
-background-color: #afa400 !important;	
-}
+
 .glyphicon-picture:hover{
 	color:blue;	
 }
