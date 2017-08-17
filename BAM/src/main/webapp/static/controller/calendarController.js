@@ -356,10 +356,14 @@
             if($rootScope.user.role == 2 && $rootScope.currentBatch == null){
             /* alert on eventClick */
             $scope.alertOnEventClick = function( event, date, jsEvent, view){
+            	var eventDate= new Date(event.start);
             	console.log('Event->'+ event.id);
-            	console.log('Date in event-> '+ event.start + ' Date now ' + new Date().setHours(0, 0, 0, 0));
+            	console.log('Date in event-> '+ eventDate.getDate() + ' Date now -day ' + new Date().getDate() + 'Date now - month ' + new Date().getMonth() + 'Date now -year ' + new Date().getFullYear());
+            	console.log('Date in event-> '+ eventDate.getDate() + ' Date event -day ' + (eventDate.getDate() + 1)  + 'Date event - month ' + eventDate.getMonth() + 'Date event -year ' + eventDate.getFullYear() );
+            	
             	//UTC offset
-            	if(event.start < new Date().setHours(0, 0, 0, 0) ){
+            	//&& ! (  new Date().setHours(0, 0, 0, 0).getDate() == eventDate.getDate() &&  new Date().setHours(0, 0, 0, 0).getMonth() == eventDate.getMonth() && new Date().setHours(0, 0, 0, 0).getFullYear() == eventDate.getFullYear() )	
+            	if(event.start < new Date().setHours(0, 0, 0, 0) && ! (  new Date().getDate() == (eventDate.getDate() + 1) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() )	 ){
             		
             		if(event.className == 'topiccolorgreen'){
                   		event.className= 'topiccolorred';
