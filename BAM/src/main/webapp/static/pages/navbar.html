@@ -3,7 +3,7 @@
 	<button class="navbar-toggler navbar-toggler-right" type="button"
 		data-toggle="collapse" data-target="#navbarNavAltMarkup"
 		aria-controls="navbarNavAltMarkup" aria-expanded="false"
-		aria-label="Toggle navigation" >
+		aria-label="Toggle navigation" ng-show="user.role>=2">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 
@@ -12,8 +12,8 @@
 		<div class="navbar-nav">
 			<!-- <a class="nav-item nav-link" href="#/associates" ng-show="user.role>=2">Associates</a>  -->
 			<a class="nav-item nav-link" href="#/batchesAll"
-				>All Batches</a>
-			<a class="nav-item nav-link" href="#/curriculum" >Curriculum</a>
+				ng-show="user.role>=2" >All Batches</a>
+			<a class="nav-item nav-link" href="#/curriculum" ng-show="user.role>=2">Curriculum</a>
 			<!-- <a class="nav-item nav-link" href="#/editBatch" ng-show="user.role>=2">Edit Batch</a>  -->
 		</div>
 	</div>

@@ -21,4 +21,8 @@ app.service('SessionService', function($window){
 	service.remove = function(){
 		sessionStorage.clear();
 	};
+	
+	service.loadCalendar = function(url){
+		
+	}
 });

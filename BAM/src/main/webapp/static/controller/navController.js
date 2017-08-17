@@ -1,9 +1,11 @@
 
 app.controller('navController', function($rootScope, SessionService, $scope, $location, $http) {
 
-	$scope.user = SessionService.get("currentUser");
-	$scope.userRole = SessionService.get("userRole");
-	console.log('in the nvabr'+SessionService.get("currentUser"));
+
+	$rootScope.user = SessionService.get("currentUser");
+	console.log($scope.user);
+	$rootScope.userRole = SessionService.get("userRole");
+
 	$scope.$on('routeChangeStart', function(next, current) {
 		console.log('in the routeChangeStart');
 		SessionService.set("gotSubtopics", false);
@@ -18,7 +20,6 @@ app.controller('navController', function($rootScope, SessionService, $scope, $lo
 			}
 		}
 	});
-	
 	
 	
 	$scope.redirect = function (){
