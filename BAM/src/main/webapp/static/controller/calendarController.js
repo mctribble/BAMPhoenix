@@ -463,67 +463,8 @@
             	}
             	
            	}//end of else	
-//            	var name = jsEvent.target.parentNode.parentNode.getAttribute("class");
-//            	if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorgreen fc-draggable ng-scope fc-allow-mouse-resize") {
-//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove
-//																							// green
-//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add
-////                    uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'removeEvents' [ event.id ] );
-//			
-//                    // http for green to red
-//                    $http({
-//                 		method : "GET",
-//                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
-//                 	 }).then(function successCallback(response) {
-//                 	 });
-//                }  else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorred fc-draggable ng-scope fc-allow-mouse-resize"){
-//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
-//																							// red
-//                    // http for red to blue
-//                    $http({
-//                 		method : "GET",
-//                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
-//                 	 }).then(function successCallback(response) {
-//                 	 });
-//                } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize") {
-//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // add
-//																							// green
-//                    // http for blue to green
-//                    $http({
-//                 		method : "GET",
-//                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Completed"
-//                 	 }).then(function successCallback(response) {
-//                 	 });
-//                }    else  if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorgreen") {
-//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove
-//																							// green
-//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add
-//																							// red
-//                    // http for green to red
-//                    $http({
-//                 		method : "GET",
-//                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Canceled"
-//                 	 }).then(function successCallback(response) {
-//                 	 });
-//                } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorred"){
-//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
-//																							// red
-//                    // http for red to blue
-//                    $http({
-//                 		method : "GET",
-//                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
-//                 	 }).then(function successCallback(response) {
-//                 	 });
-//                }else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope topiccolorred fc-allow-mouse-resize"){
-//                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
-//																							// red
-//                    // http for red to blue
-//                    $http({
-//                 		method : "GET",
-//                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+$rootScope.trainerBatch.id+"&subtopicId="+date.title+"&status=Pending/Missed"
-//                 	 }).then(function successCallback(response) {
-//                 	 });
-//                }
+
+            	
             };
             }
             /* alert on Drop */
