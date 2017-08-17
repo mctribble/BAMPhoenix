@@ -7,10 +7,9 @@ function formatDate(inputStr) {
 var fixeded=[];
 var fixedstart=[];
 
-app.controller('batchesAllController', function($scope, $rootScope, $location, $http,$filter)
+app.controller('batchesAllController', function($scope, SessionService, $rootScope, $location, $http,$filter)
 {	
 	$scope.msg;
-	$rootScope.batchesAll;
 	$scope.getBatchesAll = function(){
 		
 		$http({
@@ -19,7 +18,7 @@ app.controller('batchesAllController', function($scope, $rootScope, $location, $
 		})
 		.then(function success(response){
 			$scope.message = true;
-			$scope.msg = 'all batches retreived';
+			$scope.msg = 'all batches retrieved';
 		
 			
 		
@@ -28,22 +27,18 @@ app.controller('batchesAllController', function($scope, $rootScope, $location, $
 				response.data[i].startDate=formatDate(response.data[i].startDate)
 				response.data[i].endDate=formatDate(response.data[i].endDate)
 			}
+			//SessionService.set("batchesAll", response.data);
 			
-			$rootScope.batchesAll = response.data
-			
-		
-			
-			
-			
+			$scope.batchesAll=response.data;			
 
 		}, function error(response){
 			$scope.message = true;
-			$scope.msg = 'all batches not retreived';
+			$scope.msg = 'all batches not retrieved';
 		});
 	}
 	
 	$scope.goToBatch = function(batch){
-		$rootScope.currentBatch = batch;
+		SessionService.set("currentBatch", batch);
 		$http({
 			
 			url: 'rest/api/v1/Calendar/Topics',
@@ -51,16 +46,16 @@ app.controller('batchesAllController', function($scope, $rootScope, $location, $
 			params: {batchId: batch.id}
 		})
 		.then(function success(response){
-			$rootScope.gotSubtopics = false;
+			SessionService.set("gotSubtopics", false);
 			$location.path('/home');
 			$scope.message = true;
-			$scope.msg = 'batch retreived';
+			$scope.msg = 'batch retrieved';
 			
 		}, function error(response){
-			$rootScope.gotSubtopics = false;
+			SessionService.set("gotSubtopics", false);
 			$location.path('/home');
 			$scope.message = true;
-			$scope.msg = 'batch not retreived';
+			$scope.msg = 'batch not retrieved';
 		});
 	}
 	
