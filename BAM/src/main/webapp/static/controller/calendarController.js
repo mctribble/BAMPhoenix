@@ -629,9 +629,9 @@
             
             /* event sources array */
             $scope.eventSources = [$scope.events];
-            $scope.sources 			= "";
-   			$scope.source 			= "";
-	            }
+            $scope.sources 	= "";
+   	    $scope.source 	= "";
+	            
   }
   
 
