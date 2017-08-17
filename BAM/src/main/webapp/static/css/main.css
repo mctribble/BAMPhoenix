@@ -236,19 +236,28 @@ label::before {
 /* Editor: Joseph Nguyen
 		Modified colors to be easier on the eyes.
 */
-/* Missed */
+/* Cancelled */
 .topiccolorred{
+<<<<<<< HEAD
 background-color: #fd4234 !important;
+=======
+background-color: #b80d00 !important;	
+>>>>>>> 3ae4ecab391085d1f44babf8831aa0f8936941cb
 }
 
 /* Planned */
 .topiccolorblue{
-background-color: #0275d8 !important;
+background-color: #00689b !important;
 }
 
 /* Covered */
 .topiccolorgreen{
-background-color: #32cd32 !important;		
+background-color: #008400 !important;		
+}
+
+/* Missed */
+.topiccoloryellow{
+background-color: #afa400 !important;    
 }
 .topiccoloryellow{
 background-color: #afa400 !important;	

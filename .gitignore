@@ -20,6 +20,7 @@
 *.mf
 STUB/target
 BAM/target
+*/bin
 
 pom.properties
 MANIFEST.MF
@@ -30,12 +31,12 @@ hs_err_pid*
 ## STS ###
 
 .apt_generated
-.classpath
+*.classpath
 .factorypath
 
-.project
+*.project
 
-.settings
+*.settings
 
 .springBeans
 
