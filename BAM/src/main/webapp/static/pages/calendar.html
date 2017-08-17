@@ -1,10 +1,11 @@
 
+
 <ul class="nav nav-tabs" ng-show="user.role>=2">
 	<li class="nav-link active"><a href="#/calendar">Calendar</a></li>
 	<li class="nav-link"><a href="#/associates">View Associates</a></li>
-	<li class="nav-link"><a href="#/editBatch"
-		ng-show="user.role==3 || (currentBatch.trainer.fName == user.fName && currentBatch.trainer.mName == user.mName && currentBatch.trainer.lName == user.lName) || (!currentBatch && trainerBatch.trainer.fName == user.fName && trainerBatch.trainer.mName == user.mName && trainerBatch.trainer.lName == user.lName)">Edit
-			Batch</a></li>
+	<li class="nav-link"><a href="#/editBatch" >Edit Batch</a></li>
+
+
 </ul>
 <br>
 
@@ -22,7 +23,6 @@
 		    <h4>{{alertMessage}}</h4>
 		</div>-->
 	</div>
-	<!-- <c:if test="${rootScope.user.role==2 || $rootScope.user.role ==3}">  -->
 	<!-- Side column to list Events -->
 	<div class="col-md-3 container">
 		<!-- Search bar to change the current calendar by date -->
@@ -31,11 +31,12 @@
 				<span>Search by Date:</span> <input type="date" class="form-control"
 					ng-model="searchDate" ng-keyup="changeDateKeyPress($event)" />
 			</div>
-			<button ng-click="changeDate()">Search</button>
+			<button class="btn btn-warning" ng-click="changeDate()">Search</button>
+			<button class="btn btn-primary" ng-click="currentBatch()">Current Batch</button>
 		</div>
 		<br>
 		<div class="well">
-			<h3>Events</h3>
+<!-- 			<h3>Events</h3>
 			<table border="2" class="table table-hover">
 				<tr>
 					<td class="topic">Topic</td>
@@ -43,30 +44,36 @@
 					<td class="interview">QC/Interviews</td>
 				<tr>
 					<td class="quiz">LMS/Prepanel/Panel</td>
-			</table>
+
+			</table> -->
 			<div ng-show="user.role>=2 && (currentBatch.id ==null) || user.role>=3">
+
 			<h3>Click Events To Change Status</h3>
 			<!-- Editor: Joseph Nguyen
 					Modified colors to be easier on the eyes.
 			 -->
 			<table border="2" class="table">
 				<tr>
-					<td bgcolor="#32cd32" style="border: 3px"><font color="white">Covered</font></td>
+					<td id="plannedEvent">Planned</td>
 				<tr>
-					<td bgcolor="#0275d8" style="border: 3px"><font color="white">Planned</font></td>
+					<td id="completedEvent">Completed</td>
 				<tr>
-					<td bgcolor="#fd4234" style="border: 3px"><font color="white">Missed</font></td>
+					<td id="cancelledEvent">Cancelled</td>
+				<tr>
+					<td id="missedEvent">Missed</td>
 			</table>
 			</div>
 			<div ng-show="user.role>=2 && (currentBatch.id !=null) ">
 			<h3> Events Status</h3>
 			<table border="2" class="table">
 				<tr>
-					<td bgcolor="#32cd32" style="border: 3px"><font color="white">Covered</font></td>
+					<td id="plannedEvent">Planned</td>
 				<tr>
-					<td bgcolor="#0275d8" style="border: 3px"><font color="white">Planned</font></td>
+					<td id="completedEvent">Completed</td>
 				<tr>
-					<td bgcolor="#fd4234" style="border: 3px"><font color="white">Missed</font></td>
+					<td id="cancelledEvent">Cancelled</td>
+				<tr>
+					<td id="missedEvent">Missed</td>
 			</table>
 			</div>
 		</div>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bam.bean.BamUser;
 import com.bam.bean.Batch;
 import com.bam.service.BatchService;
+import com.bam.service.PasswordGenerator;
 import com.bam.service.UsersDetailsService;
 
 
@@ -163,5 +164,22 @@ public class UserController {
 	public List<BamUser> getUsersNotInBatch(HttpServletRequest request) {
 		return userService.findUsersNotInBatch();
 	}
+	
+	@RequestMapping(value = "Recovery", method = RequestMethod.POST, produces = "application/json")
+    public void RecoverPassword(@RequestBody String email) {
+    	String generate = PasswordGenerator.makePassword();
+        // Lookup user in database by e-mail
+        BamUser user = userService.findUserByEmail(email);
+        if (user != null) {
+        	user.setPwd(generate);
+        	userService.addOrUpdateUser(user);
+        	userService.recoverE(user);
+            
+        } else {
+        	throw new IllegalArgumentException("password not changed");
+
+        }
+
+    }
 
 }

@@ -1,10 +1,14 @@
-app.controller('navController', function($rootScope, $scope, $location, $http) {
-	
-	$scope.$on('$routeChangeStart', function(next, current) {
-		$rootScope.gotSubtopics = false;
+
+app.controller('navController', function($rootScope, SessionService, $scope, $location, $http) {
+
+	$rootScope.user = SessionService.get("currentUser");
+	console.log($scope.user);
+	$rootScope.userRole = SessionService.get("userRole");
+	$scope.$on('routeChangeStart', function(next, current) {
+		SessionService.set("gotSubtopics", false);
 		var somePath = $location.path();
 
-		if ($rootScope.user.role < 2) {
+		if (SessionService.get("currentUser").role < 2) {
 			if (somePath == "/batchesAll" || somePath == "/batchesFuture"
 					|| somePath == "/batchesPast" || somePath == "/register"
 					|| somePath == "/associates" || somePath == "/editBatch") {
@@ -12,10 +16,15 @@ app.controller('navController', function($rootScope, $scope, $location, $http) {
 			}
 		}
 	});
+<<<<<<< HEAD
 
+=======
+	
+	
+>>>>>>> b51621a5ca8bd9d0fb411bb91bb6513af1088ede
 	$scope.redirect = function (){
-		$rootScope.gotSubtopics = false;
-		if(!$rootScope.user){
+		SessionService.set("gotSubtopics", false);
+		if(!SessionService.get("currentUser")){
 			$location.path('/');
 		}
 	}
@@ -23,6 +32,7 @@ app.controller('navController', function($rootScope, $scope, $location, $http) {
 	$scope.redirect();
 	
 	$scope.hideNav = function (){
-        delete $rootScope.user;
+		
+        SessionService.remove();
     }
 });
