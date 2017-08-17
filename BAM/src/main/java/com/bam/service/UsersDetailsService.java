@@ -20,7 +20,6 @@ import com.bam.bean.BamUser;
 import com.bam.repository.BatchRepository;
 import com.bam.repository.BamUserRepository;
 
-@Service("userDetailsService")
 @Transactional
 public class UsersDetailsService implements UserDetailsService {
 	
@@ -106,6 +105,10 @@ public class UsersDetailsService implements UserDetailsService {
 		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
 
 		return Result;
+	}
+	
+	public List<BamUser> getByFNameAndLName(String f, String l) {
+		return dao.findByFNameAndLName(f, l);
 	}
 
 }
