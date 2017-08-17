@@ -6,13 +6,21 @@
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
-		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
-
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+	
+	
+	<context:property-placeholder /><!--Local Host Environment Variables will be used -->
+	
+	
+	
+	
 	<context:component-scan base-package="com.bam"></context:component-scan>
 	<context:annotation-config />
 	<mvc:annotation-driven/>
@@ -22,10 +30,9 @@
 	<bean id="myDataSource" name="myDataSource"
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
-		<property name="url"
-			value="jdbc:oracle:thin:@localhost:1521:xe"></property>
-		<property name="username" value="bam_test"></property>
-		<property name="password" value="p4ssw0rd"></property>
+		<property name="url" value="${DB_URL}"></property>
+		<property name="username" value="${DB_USERNAME}"></property>
+		<property name="password" value="${DB_PASSWORD}"></property>
 	</bean>    
 	<!-- Because we use Hibernate -->
 	<bean id="hibernateJpaVendorAdapter"

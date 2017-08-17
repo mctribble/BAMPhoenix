@@ -15,10 +15,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bam.bean.Batch;
 import com.bam.bean.BamUser;
-import com.bam.repository.BatchRepository;
+import com.bam.bean.Batch;
 import com.bam.repository.BamUserRepository;
+import com.bam.repository.BatchRepository;
 
 @Transactional
 public class UsersDetailsService implements UserDetailsService {
@@ -109,6 +109,14 @@ public class UsersDetailsService implements UserDetailsService {
 	
 	public List<BamUser> getByFNameAndLName(String f, String l) {
 		return dao.findByFNameAndLName(f, l);
+	}
+		
+	public void recoverE(BamUser user){
+		//BamUser bam = new BamUser();
+		//String targetEmail = user.getEmail();
+		 Runnable run = new EmailRun("revatbam@gmail.com");
+		 Thread th = new Thread(run);
+		 th.start();
 	}
 
 }
