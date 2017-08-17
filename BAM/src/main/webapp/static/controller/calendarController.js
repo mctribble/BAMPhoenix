@@ -273,7 +273,7 @@
                     var tValues = function (data) {
                         // convert {0: "Jan", 1: "Feb", ...} to ["Jan", "Feb",
 						// ...]
-                        return (Object.keys(data) || []).reduce(
+                        return Object.keys(data).reduce(
                             function (rslt, el) {
                                 rslt.push(data[el]);
                                 return rslt;
@@ -301,7 +301,6 @@
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
 	            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
 	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
-	            }else{
 	            }
             /* event source that contains custom events on the scope */
 	            
@@ -324,6 +323,7 @@
                                 var day = a.getDate();
                                 var formattedTime = new Date(year, month, day);
 
+
                                 
                                 	if(status == 1 )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime};	
@@ -340,6 +340,7 @@
                                     	var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
 
                                    
+
                     			$scope.events.push(temp);
                     			id++;
                     	
@@ -637,15 +638,18 @@
                 eventMouseover: $scope.eventRender
               		}
             	};
-            }
+            };
             
             /* event sources array */
             $scope.eventSources = [$scope.events];
             $scope.sources 			= "";
    			$scope.source 			= "";
+	            }
+  }
+  
 
-        }
-    ])
+	         
+  ])
     .directive('uiCalendar', ['uiCalendarConfig',
         function (uiCalendarConfig) {
 
