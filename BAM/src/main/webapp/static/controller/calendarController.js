@@ -22,7 +22,6 @@
   app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService',
         function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService) {
 	  	$(".navbar").show();
-	  	console.log(SessionService.get("currentUser"));
 		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
 				$location.path('/noBatch');
@@ -337,14 +336,11 @@
                                     if(status == 3 )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
                                     if (status == 4)
-                                    	var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
-
-                                   
+                                    	var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};             
 
                     			$scope.events.push(temp);
                     			id++;
                     	
-                    			console.log( 'topic name-> ' + title + 'dates-> '+ dates + 'today-> day' + new Date().getDate() + 'formatted day->'+ formattedTime.getDate() + 'today-> month' + new Date().getMonth() + 'formatted month->'+ formattedTime.getMonth() + 'today-> year' + new Date().getFullYear() + 'formatted time->'+ formattedTime.getFullYear()  );
                 		}
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
                 		
@@ -376,9 +372,6 @@
 
             $scope.alertOnEventClick = function( event, date, jsEvent, view){
             	var eventDate= new Date(event.start);
-            	console.log('Event->'+ event.id);
-            	console.log('Date in event-> '+ eventDate.getDate() + ' Date now -day ' + new Date().getDate() + 'Date now - month ' + new Date().getMonth() + 'Date now -year ' + new Date().getFullYear());
-            	console.log('Date in event-> '+ eventDate.getDate() + ' Date event -day ' + (eventDate.getDate() + 1)  + 'Date event - month ' + eventDate.getMonth() + 'Date event -year ' + eventDate.getFullYear() );
             	
             	//UTC offset
             	//&& ! (  new Date().setHours(0, 0, 0, 0).getDate() == eventDate.getDate() &&  new Date().setHours(0, 0, 0, 0).getMonth() == eventDate.getMonth() && new Date().setHours(0, 0, 0, 0).getFullYear() == eventDate.getFullYear() )	
@@ -386,7 +379,6 @@
             		
             		if(event.className == 'topiccolorgreen'){
                   		event.className= 'topiccolorred';
-                		console.log('topic green clicked');
                 		 uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
                 		 // http for green to red
                       $http({
@@ -403,7 +395,6 @@
 //                		uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'addEventSource', source )
                 	}else if(event.className == 'topiccolorred'){
                 		event.className= 'topiccoloryellow';
-                		console.log('topic red clicked');
                         uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
 
                 		  // http for red to blue
@@ -416,7 +407,6 @@
                 		
                 	}else {
                 		event.className= 'topiccolorgreen';
-                		console.log('topic blue clicked');
                         uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
                 		  // http for blue to green
                       $http({
@@ -437,7 +427,6 @@
       
             	if(event.className == 'topiccolorgreen'){
               		event.className= 'topiccolorred';
-            		console.log('topic green clicked');
             		 uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
             		 // http for green to red
                   $http({
@@ -454,7 +443,6 @@
 //            		uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'addEventSource', source )
             	}else if(event.className == 'topiccolorred'){
             		event.className= '';
-            		console.log('topic red clicked');
                     uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
 
             		  // http for red to blue
@@ -467,7 +455,6 @@
             		
             	}else {
             		event.className= 'topiccolorgreen';
-            		console.log('topic blue clicked');
                     uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
             		  // http for blue to green
                   $http({
