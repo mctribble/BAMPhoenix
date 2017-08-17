@@ -79,8 +79,8 @@
 
           $scope.currentBatch = function(){
         	  SessionService.unset("currentBatch");
-        	  SessionService.get("trainerBatch");
-        	  $scope.renderCalendar('myCalendar');
+        	  console.log(SessionService.get("currentBatch"))
+        	  uiCalendarConfig.calendars["myCalendar"].fullCalendar('refetchEvents');
         	  
         	  
           };
