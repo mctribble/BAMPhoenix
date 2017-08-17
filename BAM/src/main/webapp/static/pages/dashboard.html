@@ -19,7 +19,7 @@
 		<div id="pan3" class="col-md-5">
 			<h2>Week: {{weekNum}}</h2>
 				<h3>Associates in batch:</h3>
-				 <p >{{batch.users.fName}}</p>
+				 <p ng-repeat="user in usersInBatch" >{{batch.users.fName}}</p>
 
 		</div>
 		</div>
