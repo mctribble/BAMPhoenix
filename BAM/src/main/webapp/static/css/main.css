@@ -247,9 +247,15 @@ background-color: #00689b !important;
 background-color: #008400 !important;		
 }
 
+
 /* Cancelled */
 .topiccolorred{
 background-color: #b80d00 !important;	
+
+/* Missed */
+.topiccoloryellow{
+background-color: #afa400 !important;    
+
 }
 
 .searchbox-container {
