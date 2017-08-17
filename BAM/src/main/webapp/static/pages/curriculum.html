@@ -93,7 +93,9 @@
 									<div class="card-block">
 										<!-- ***************************** Begin Subtopic List***************************************** -->
 										<ul class="list-group" dnd-list="day.subtopics" dnd-allowed-typed="['subtopic']">
-											
+											<li class="list-group">
+												<input class="list-group-item" ng-model="search">
+											</li>
 											<li class="list-group-item day-list-item" 
 												ng-repeat="subtopic in day.subtopics" 
 												dnd-draggable="subtopic"
