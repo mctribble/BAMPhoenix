@@ -16,6 +16,8 @@
     margin: 10px;
     border-radius: 10px;
     font-weight: bold;
+    color: white;
+    
 }
 
 #pan2{
@@ -25,6 +27,7 @@
     padding: 15px;
     border-radius: 10px;
     font-weight: bold;
+    color: white;
 }
 
 #pan3{
@@ -35,6 +38,7 @@
     padding: 15px;
     border-radius: 10px;
     font-weight: bold;
+    color: white;
 }
 
 #progress{
@@ -45,6 +49,7 @@
     padding-right: 4px;
     font-weight: bold;
     border-radius: 10px;
+    color: white;
 }
 
 ul {
