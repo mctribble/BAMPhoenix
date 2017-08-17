@@ -6,8 +6,8 @@
 		<div id="curriculaLoaderView" class="col col-md-2">
 			<div class="columnHeader text-center">
 				<h2>Curricula</h2>
-				<button class="btn btn-lg btn-primary btn-block" ng-click="delectItems(); newCurriculum()">New Curriculum</button>
-				<button class="btn btn-lg btn-warning btn-block" ng-click="delectItems(); setTemplate()">Clear Template</button>
+				<button class="btn btn-lg btn-primary btn-block" ng-click="deselectItems(); newCurriculum()">New Curriculum</button>
+				<button class="btn btn-lg btn-warning btn-block" ng-click="deselectItems(); setTemplate()">Clear Template</button>
 			</div>
 				<!-- ***************************** Begin Curricula Accordion***************************************** -->
 				<div id="curriculaAccordion" role="tablist">
@@ -23,7 +23,7 @@
 						<div id="collapseCurriculum{{sanitizeString(curriculum.type)}}" class="collapse" role="tabpanel">
 							<div class="card-block">
 								<div class="list-group">
-									<a ng-class="{'active': active === true}" class="list-group-item" ng-repeat="version in curriculum.versions | orderBy:'-'" ng-click="setTemplate(version); delectItems(); active = !active;">
+									<a ng-class="{'active': active === true}" class="list-group-item" ng-repeat="version in curriculum.versions | orderBy:'-'" ng-click="setTemplate(version); deselectItems(); active = !active;">
 										Version #{{$index}}
 									</a>
 								</div>
@@ -58,13 +58,8 @@
 			</div>
 			
 			<!-- ***************************** Begin Week Accordion***************************************** -->
-			<div id="weekAccordion" role="tablist" dnd-list="week.days" dnd-allowed-typed="['week']">
-				<div class="card" 
-					 ng-repeat="week in displayedCurriculum.weeks"
-					 dnd-draggable="week"
-					 dnd-effect-allowed="move"
-					 dnd-moved="week.days.splice($index, 1); console.log('moving week')"
-					 >
+			<div id="weekAccordion" role="tablist">
+				<div class="card" ng-repeat="week in displayedCurriculum.weeks">
 					<div class="card-header" role="tab">
 						<div class="row">
 							<div class="col col-md-11">
@@ -84,17 +79,10 @@
 					<div id="collapseWeek{{$index+1}}" class="collapse" role="tabpanel">
 						<div class="card-block">
 							<!-- ***************************** Begin Day List***************************************** -->
-							<div class="row center-block" id="dayList" 
-								 dnd-list="week.days" 
-								 dnd-horizontal-list="true" 
-								 dnd-allowed-typed="['day']">
-								<div class="col col-md-1" dnd-no-drag="true"></div>
+							<div class="row center-block" id="dayList">
+								<div class="col col-md-1"></div>
 								<div class="col col-md-2 day-list" 
-									 ng-repeat="day in week.days"
-									 dnd-draggable="day"
-									 dnd-effect-allowed="move"
-									 dnd-moved="week.days.splice($index, 1); console.log($index)"
-									 >
+									 ng-repeat="day in week.days">
 									 
 									<div class="card-header day-header">
 										<h6 class="text-center mb-0">
@@ -105,6 +93,7 @@
 									<div class="card-block">
 										<!-- ***************************** Begin Subtopic List***************************************** -->
 										<ul class="list-group" dnd-list="day.subtopics" dnd-allowed-typed="['subtopic']">
+											
 											<li class="list-group-item day-list-item" 
 												ng-repeat="subtopic in day.subtopics" 
 												dnd-draggable="subtopic"
@@ -128,7 +117,7 @@
 										<!-- ***************************** End Subtopic List***************************************** -->
 									</div>
 								</div>
-								<div class="col col-md-1" dnd-no-drag="true"></div>
+								<div class="col col-md-1"></div>
 							</div>
 							<!-- **************************** End Day Accordion****************************************** -->
 						</div>

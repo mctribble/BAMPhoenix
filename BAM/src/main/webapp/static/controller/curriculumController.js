@@ -65,39 +65,49 @@ app.controller(
 		
 		//when an existing curriculum is selected, it will be loaded into the template
 		$scope.setTemplate = function(curriculum){
-			//TODO: attempt to look for curr in curricula object before doing http req (caching)
-//			console.log("curriculum");
-//			console.log(curriculum);
+			console.log("setting template")
 			if(curriculum){
+				//attempt to look for curr in curricula object before doing http req (caching)
+				for(i in $scope.curricula){
+					if( $scope.curricula[i].type == curriculum.meta.curriculum_Name && 
+						$scope.curricula[i].versions[curriculum.meta.curriculum_Version - 1].weeks.length > 0){
+						
+						console.log("already loaded, canceling request");
+						console.log($scope.curricula[i].versions[curriculum.meta.curriculum_Version - 1].weeks);
+						$scope.template = $scope.curricula[i].versions[curriculum.meta.curriculum_Version - 1];
+						return;
+					}else{
+						console.log("not loaded yet, requesting curriculum");
+					}
+				}
+				
 				//do request
+				console.log("curriculum in setTemplate")
+				console.log(curriculum);
 				$http({
 					url: "rest/api/v1/Curriculum/Schedule",
 					method: "GET",
-					params: {curriculumId: curriculum.curriculum_Version}
+					params: {curriculumId: curriculum.meta.curriculum_Version}
 					
 				}).then(function(response){
-					var newCurriculum = {
-							meta: curriculum,
-							weeks:[]
-					}
+					var newCurriculum = curriculum;
+					console.log("set template - new curriculum");
+					console.log(newCurriculum);
 					
 					//add the (empty) weeks:
-					//warning hacky workaround: add one extra weeks object then splice out the first one because for some reason
-					//the first one added doesn't add the days to the weeks object before pushing it on. I'm sorry
-					for(var j = 0; j < newCurriculum.meta.curriculum_Number_Of_Weeks + 1; j++){
-						newCurriculum.weeks.push({
-							days:[
-								{subtopics:[]},
-								{subtopics:[]},
-								{subtopics:[]},
-								{subtopics:[]},
-								{subtopics:[]},
-							]
-						});
+						for(var j = 0; j < newCurriculum.meta.curriculum_Number_Of_Weeks; j++){
+							newCurriculum.weeks.push({
+								days:[
+									{subtopics:[]},
+									{subtopics:[]},
+									{subtopics:[]},
+									{subtopics:[]},
+									{subtopics:[]}
+								]
+							});
 					}
-					//splice out the messed up first day object. week array should then contain the correct # of weeks each with 5 days.
-					newCurriculum.weeks = newCurriculum.weeks.splice(1);
-					
+//					console.log("weeks: ");
+//					console.log(newCurriculum);
 					//loop through array of response objects adding subtopics to the correct week and day arrays.
 					for(i in response.data){
 						var topic = response.data[i];
@@ -121,6 +131,7 @@ app.controller(
 				});
 			}else{
 				//TODO: modal to create new topic type
+				console.log("new type");
 			}
 		}
 			
@@ -146,7 +157,7 @@ app.controller(
 			console.log($scope.displayedCurriculum);
 		}
 		
-		$scope.delectItems = function(){
+		$scope.deselectItems = function(){
 			var activeItems = document.getElementsByClassName("active");
 			for (var i = 0; i < activeItems.length; i++) {
 				   activeItems[i].classList.remove('active');
@@ -202,26 +213,40 @@ app.controller(
 							curriculum.weeks = [];
 							
 							//insert the curriculum into the existing curr type as a version of that type (as specified by the received object) 
-							console.log("Version: ");
-							console.log(curriculum.curriculum_Version);
-							$scope.curricula[j].versions.splice(curriculum.curriculum_Version, 0, curriculum);
+
+							
+							var metaData = curriculum;
+							delete metaData.weeks;
+//							console.log("meta");
+//							console.log(metaData)
+							$scope.curricula[j].versions.splice(curriculum.curriculum_Version - 1, 0, {meta:metaData, weeks:[]});
+//							console.log("curriculum in for of getCurricula ");
+//							console.log({meta:metaData, weeks:[]});
+//							$scope.curricula[j].versions[curriculum.curriculum_Version - 1].meta = curriculum;
 							break;
 						}
 					}
 					
 					//if a curriculum of type curriculum.curriculum_Name does not exist, add it as a new base curriculum type
 					if(!curriculumTypeExists){
+//						console.log("new curr type")
+//						console.log(curriculum)
+						
+						var metaData = curriculum;
+						delete metaData.weeks;
+						
 						var newCurriculum = {
 								type: curriculum.curriculum_Name,
-								versions: []
+								versions: [
+									{
+										meta: metaData,
+										weeks: []
+									}
+								]
 						};
-						curriculum.weeks = [
-							{
-								days : []
-							}
-						];
-						newCurriculum.versions.splice(curriculum.curriculum_Version, 0, curriculum);
-						$scope.curricula.push(newCurriculum);
+						console.log("new curr: ")
+						console.log(newCurriculum);
+						$scope.curricula.push(newCurriculum	);
 					}
 				}
 				
