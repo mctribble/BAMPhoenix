@@ -328,18 +328,17 @@
                                 
                                 	if(status == 1 )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime};	
-                                	if (status == 1  && new Date().getMonth() > formattedTime.getMonth() && new Date().getFullYear() >= formattedTime.getFullYear() )
+                                	if(status == 1  && new Date().getMonth() > formattedTime.getMonth() && new Date().getFullYear() >= formattedTime.getFullYear() )
                                     	var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
-                                	if (status == 1  && new Date().getDate() > formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
+                                	if(status == 1  && new Date().getDate() > formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
                                     if(status == 2 )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
                                     if(status == 3 )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
-                                    if (status == 4)
-
+                                    if(status == 4)
                                     	var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
-                                	if (status == 4  && new Date().getDate() == formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
+                                	if(status == 4  && new Date().getDate() == formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime};  
                                     
 
@@ -378,8 +377,7 @@
             $scope.alertOnEventClick = function( event, date, jsEvent, view){
             	var eventDate= new Date(event.start);
             	
-            	//UTC offset
-            	//&& ! (  new Date().setHours(0, 0, 0, 0).getDate() == eventDate.getDate() &&  new Date().setHours(0, 0, 0, 0).getMonth() == eventDate.getMonth() && new Date().setHours(0, 0, 0, 0).getFullYear() == eventDate.getFullYear() )	
+            // if date is pass the current-date		
             	if(event.start < new Date().setHours(0, 0, 0, 0) && ! (  new Date().getDate() == (eventDate.getDate() +1 ) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() )	 ){
             		
             		if(event.className == 'topiccolorgreen'){
@@ -393,16 +391,12 @@
                    	 }).then(function successCallback(response) {
                  
                    	 });
-                     
-//                		var temp = {id: event.id, title: event.title, start: event.start, entd: event.end, className:['topiccolorred']};
-//                		$scope.event1= [];
-//                		uiCalendarConfig.calendars['myCalendar'].fullCalendar('removeEvents',event.id);
-//                		uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'addEventSource', source )
+
                 	}else if(event.className == 'topiccolorred'){
                 		event.className= 'topiccoloryellow';
                         uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
 
-                		  // http for red to blue
+                		  // http for red to yellow
                       $http({
                    		method : "GET",
                    		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Missed"
@@ -413,7 +407,7 @@
                 	}else {
                 		event.className= 'topiccolorgreen';
                         uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
-                		  // http for blue to green
+                		  // http for yellow to green
                       $http({
                    		method : "GET",
                    		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Completed"
@@ -427,7 +421,8 @@
             		
             		
             	}
-            	
+       
+            	// if event date is not pass the current-date   	
             	else{
       
             	if(event.className == 'topiccolorgreen'){
@@ -442,10 +437,7 @@
              
                	 });
                  
-//            		var temp = {id: event.id, title: event.title, start: event.start, entd: event.end, className:['topiccolorred']};
-//            		$scope.event1= [];
-//            		uiCalendarConfig.calendars['myCalendar'].fullCalendar('removeEvents',event.id);
-//            		uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'addEventSource', source )
+
             	}else if(event.className == 'topiccolorred'){
             		event.className= '';
                     uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
@@ -482,9 +474,7 @@
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
             	 console.log('dropped classname: '+ event.className);
             	 var eventDate= new Date(event.start);
-             	console.log('Event->'+ event.id);
-             	console.log('Date in event-> '+ eventDate.getDate() + ' Date now -day ' + new Date().getDate() + 'Date now - month ' + new Date().getMonth() + 'Date now -year ' + new Date().getFullYear());
-             	console.log('Date in event-> '+ eventDate.getDate() + ' Date event -day ' + (eventDate.getDate() + 1)  + 'Date event - month ' + eventDate.getMonth() + 'Date event -year ' + eventDate.getFullYear() );
+             
             	if(event.className == '' && event.start < new Date().setHours(0, 0, 0, 0) && ! (  new Date().getDate() == (eventDate.getDate() ) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() ) )
             	{
             		
