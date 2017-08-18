@@ -2,7 +2,7 @@
 	<div class="container" ng-init = "getData()"  ng-model="getData">
 		<div class="pan">
 		<h1 class="display-3">Welcome, {{user.fName}}</h1>
-		<p class="lead">Pick up where you left off</p>
+		<p class="lead"> Pick up where you left off</p>
 		<div>Batch Status: {{message}}</div>	
  		</div>
 		
@@ -25,18 +25,29 @@
 		
 		</div>
 		<!-- Progress bar that measures number of days complete -->
-		<div id="progress" ng-show="userHasBatch || trainerHasBatch">
-		Batch Progress:
-			<div id="batchProgress" class="progress" >
-  				<div class="progress-bar progress-bar-striped active" role="progressbar"
-  					aria-valuemin="0" aria-valuemax="100" ng-style="{width: percent}">
-   					{{ percent }}
-  				</div>
-			</div>
-		</div>
 		
 		<!-- Returns a count and list of topics missed in the batch -->
 		<div class="col-md-12" id="pan4" ng-init="returnMissed()">
+			<!-- Progress completed by day -->
+			<div ng-show="userHasBatch || trainerHasBatch && !loading">
+				Batch Progress By Day:
+				<div class="progress" >
+  					<div class="progress-bar progress-bar-striped active" role="progressbar"
+  							aria-valuemin="0" aria-valuemax="100" ng-style="{width: percent}">
+   					{{ percent }} Days Completed
+  					</div>
+				</div>
+			</div>
+			<!-- Progress completed by subtopic -->
+			<div ng-show="userHasBatch || trainerHasBatch && !loading">
+				Batch Progress By Subtopic:
+				<div class="progress" >
+  					<div class="progress-bar progress-bar-striped active" role="progressbar"
+  						aria-valuemin="0" aria-valuemax="100" ng-style="{width: subPercent}">
+   						{{ subPercent }} Subtopics Completed/Cancelled
+  					</div>
+				</div>
+			</div>
 			<h3>Topics Missed<img ng-show="loading" src="static/img/loading.gif" id="loadingPic"></img></h3>
 			<p id="missedCount" ng-hide="loading">{{ count }} / {{ totalSub }} missed</p>
 			<ul class="mainList" ng-hide="loading">
