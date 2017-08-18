@@ -315,6 +315,7 @@
                 	}).then(function successCallback(response) {
                 		var id=0;
                 		for(var i = 0; i < response.data.length ; i++) {
+                				$scope.eventSources = [{}];
                     			var title = response.data[i].subtopicName.name;
                         		var dates = response.data[i].subtopicDate;
                         		var status= response.data[i].status.id;
@@ -323,6 +324,7 @@
                                 var month = a.getMonth();
                                 var day = a.getDate();
                                 var formattedTime = new Date(year, month, day);
+                                var checkDuplicates = new Set();
 
                                 
                                 	if(status == 1 )
@@ -331,13 +333,15 @@
                                     	var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
                                 	if (status == 1  && new Date().getDate() > formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
-                                	               
                                     if(status == 2 )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
                                     if(status == 3 )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
                                     if (status == 4)
                                     	var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
+                                	if (status == 4  && new Date().getDate() == formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
+                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime};  
+                                    
 
                                    
                     			$scope.events.push(temp);
@@ -346,7 +350,7 @@
                     			console.log( 'topic name-> ' + title + 'dates-> '+ dates + 'today-> day' + new Date().getDate() + 'formatted day->'+ formattedTime.getDate() + 'today-> month' + new Date().getMonth() + 'formatted month->'+ formattedTime.getMonth() + 'today-> year' + new Date().getFullYear() + 'formatted time->'+ formattedTime.getFullYear()  );
                 		}
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
-                		
+         
                 		// $scope.renderCalendar('myCalendar');
                 	}).finally(function() {
                 		// Turn off loading indicator whether success or
@@ -381,7 +385,7 @@
             	
             	//UTC offset
             	//&& ! (  new Date().setHours(0, 0, 0, 0).getDate() == eventDate.getDate() &&  new Date().setHours(0, 0, 0, 0).getMonth() == eventDate.getMonth() && new Date().setHours(0, 0, 0, 0).getFullYear() == eventDate.getFullYear() )	
-            	if(event.start < new Date().setHours(0, 0, 0, 0) && ! (  new Date().getDate() == (eventDate.getDate() + 1) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() )	 ){
+            	if(event.start < new Date().setHours(0, 0, 0, 0) && ! (  new Date().getDate() == (eventDate.getDate() ) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() )	 ){
             		
             		if(event.className == 'topiccolorgreen'){
                   		event.className= 'topiccolorred';
@@ -408,7 +412,7 @@
                 		  // http for red to blue
                       $http({
                    		method : "GET",
-                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Pending"
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Missed"
                    	 }).then(function successCallback(response) {
                    		
                    	 });
@@ -487,6 +491,51 @@
             }
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
+            	 console.log('dropped classname: '+ event.className);
+            	 var eventDate= new Date(event.start);
+             	console.log('Event->'+ event.id);
+             	console.log('Date in event-> '+ eventDate.getDate() + ' Date now -day ' + new Date().getDate() + 'Date now - month ' + new Date().getMonth() + 'Date now -year ' + new Date().getFullYear());
+             	console.log('Date in event-> '+ eventDate.getDate() + ' Date event -day ' + (eventDate.getDate() + 1)  + 'Date event - month ' + eventDate.getMonth() + 'Date event -year ' + eventDate.getFullYear() );
+            	if(event.className == '' && event.start < new Date().setHours(0, 0, 0, 0) && ! (  new Date().getDate() == (eventDate.getDate() ) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() ) )
+            	{
+            		
+                		event.className= 'topiccoloryellow';
+                		console.log('topic blue dragged');
+                        uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
+                		  // http for blue to green
+                      $http({
+                   		method : "GET",
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Missed"
+                   	 }).then(function successCallback(response) {
+                   		
+
+                   	 });
+                     
+
+               
+            	}	
+            	
+              	if((event.className == 'topiccoloryellow' && event.start > new Date().setHours(0, 0, 0, 0) ) || ( event.className == 'topiccoloryellow' && new Date().getDate() == (eventDate.getDate() + 1) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() ) )
+            	{
+            		
+                		event.className= '';
+                		console.log('topic yellow dragged');
+                        uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
+                		  // http for blue to green
+                      $http({
+                   		method : "GET",
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Pending"
+                   	 }).then(function successCallback(response) {
+                   		
+
+                   	 });
+                     
+
+               
+            	}
+            	
+            	
+             	
             	 $http({
              		method : "GET",
              		url : "rest/api/v1/Calendar/DateUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&date="+event.start
