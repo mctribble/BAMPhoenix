@@ -33,12 +33,10 @@ public class UsersDetailsService implements UserDetailsService {
 
 	public void addOrUpdateUser(BamUser user) {
 		dao.save(user);
-
 	}
 
 	public List<BamUser> findAllUsers() {
 		return dao.findAll();
-
 	}
 
 	public List<BamUser> findByRole(int role) {
@@ -60,9 +58,7 @@ public class UsersDetailsService implements UserDetailsService {
 	 * @return
 	 */
 	public List<BamUser> findUsersInBatch(int batchId) {
-		
 		Batch batch = bdao.findById(batchId);
-		
 		return dao.findByBatch(batch);
 	}
 
@@ -82,7 +78,6 @@ public class UsersDetailsService implements UserDetailsService {
 	
 	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
 		BamUser user = dao.findByEmail(email);
-
 		return buildUserForAuthentication(user, buildUserAuthority(user));
 	}
 
@@ -98,18 +93,13 @@ public class UsersDetailsService implements UserDetailsService {
 	}
 
 	private List<GrantedAuthority> buildUserAuthority(BamUser u) {
-
 		Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
-
 		setAuths.add(new SimpleGrantedAuthority("ROLE_" + String.valueOf(u.getRole())));
-
 		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
-
 		return Result;
 	}
+	
 	public void recoverE(BamUser user){
-		//BamUser bam = new BamUser();
-		//String targetEmail = user.getEmail();
 		 Runnable run = new EmailRun("revatbam@gmail.com");
 		 Thread th = new Thread(run);
 		 th.start();
