@@ -69,7 +69,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 	$scope.trainerHasBatch = SessionService.get("trainerBatch");
 	$scope.userHasBatch = SessionService.get("currentBatch");
 	
-	//This populates the progress bar
+	//This populates the day progress bar
 		if ($scope.trainerHasBatch){
 			
 			var currentDate = new Date().getTime();
@@ -118,12 +118,32 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
              		$scope.count = 0;
              		$scope.totalSub = $scope.subTopics.length;
              		
+             		//This populates the subtopic progress bar
+            		$scope.completed = 0;
+            		for(var i = 0; i < $scope.subTopics.length ; i++){
+            				
+            			if($scope.trainerHasBatch){
+            			var status= response.data[i].status.id;
+            				
+            				if (status == 2 || status == 3){
+            					$scope.completed += 1;
+            				};
+            			}else if($scope.userHasBatch){
+            				var status= response.data[i].status.id;
+                				
+            					if (status == 2 || status == 3){
+            						$scope.completed += 1;
+            					};
+            				}
+            			}
+            		$scope.subPercent = Math.round(($scope.completed * 100) / $scope.totalSub) + "%";
+             		
              		for(var i = 0; i < $scope.subTopics.length ; i++) {
                      		var status= response.data[i].status.id;
                      		var title = response.data[i].subtopicName.name
                      		
                      		
-                     		if(status == 3){
+                     		if(status == 4){
                      			
                      			if(response.data[i].subtopicName.topic){
                      				var topicName = response.data[i].subtopicName.topic.name;
@@ -255,7 +275,13 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 
                      		}
                      	}
-             		}
+             		
+             		
+             		
+             		
+             		
+             		
+             	}
              	).finally(function() {
             		// Turn off loading indicator
             		$scope.loading = false;

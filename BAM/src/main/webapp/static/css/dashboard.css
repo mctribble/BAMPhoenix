@@ -29,6 +29,32 @@ li.listItem{
 	font-weight: normal;
 }
 
+ul {
+    padding-left: 15px;
+}
+
+ul.mainList{
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
+li {
+	list-style: none;
+}
+
+.listTitle{
+	text-decoration: underline;
+}
+
+.navbar{
+	margin-bottom: 10px!important;
+}
+
+.container{
+	margin-top:10px!important;
+}
+
 #pan2{
 	width: auto;
     background-color: rgba(50, 65, 118, .9);
@@ -110,4 +136,3 @@ ul.mainList{
 li {
 	list-style: none;
 }
-
