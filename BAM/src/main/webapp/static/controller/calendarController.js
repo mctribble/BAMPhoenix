@@ -1,4 +1,3 @@
-
 /*
 *  AngularJs Fullcalendar Wrapper for the JQuery FullCalendar
 *  API @ http://arshaw.com/fullcalendar/
@@ -19,8 +18,8 @@
   
 	  		
 	  		
-  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService', 'GetSubtopics',
-        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, GetSubtopics) {
+  app.controller('calendarController', ['$timeout', '$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService', 'GetSubtopics',
+        function ($timeout, $rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, GetSubtopics) {
 	  	$(".navbar").show();
 		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
@@ -293,88 +292,21 @@
                 return {};
             };
             
-          //pagination variables
-//            var pageNumber = 0;
-//            var pageSize = 20;
-//            
-//            	 var url;
-//	            if(SessionService.get("currentUser").role == 1){
-//	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("currentUser").batch.id;
-//	            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
-//	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
-//	            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
-//	            	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("trainerBatch").id + "&pageNumber=" + pageNumber + "&pageSize=" + pageSize;
-//	            }else{
-//	            }
-//            /* event source that contains custom events on the scope */
-//	            
-//            	$scope.events = [];
-            	if(!SessionService.get("gotSubtopics")) {
-            		SessionService.set("gotSubtopics", true); 
-            		
-//            		var getPages = true;
-            		var pageNumber = 0;
-            		while(true){
-            			var subtopicEvents = GetSubtopics.getPageOfSubtopics(pageNumber);
-            			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',subtopicEvents[0]);
-            			if(!subtopicEvents[1]){
-            				break;
-            			}else{
-            				pageNumber++;
-            			}
-            		}
-//            		$scope.loading = true;
-//            		var morePages = true;
-////            		//start of pagination
-////            		while(morePages){
-//            			console.log('inside while loop');
-//            			console.log('pageNumber: ' + pageNumber + '\npageSize: ' + pageSize + '\nurl: ' + url)
-//            		$http.get({
-//                		method : "GET",
-//                		url : url
-//                	}).then(function successCallback(response) {
-//                		for(var i = 0; i < response.data.length ; i++) {
-//                			console.log('response.data.length is : ' + response.data.length);
-//                    			var title = response.data[i].subtopicName.name;
-//                        		var dates = response.data[i].subtopicDate;
-//                        		var status= response.data[i].status.id;
-//                        		var a = new Date(dates);  
-//                                var year = a.getUTCFullYear();
-//                                var month = a.getMonth();
-//                                var day = a.getDate();
-//                                var formattedTime = new Date(year, month, day);
-//                                if(status == 1 ){
-//                            		var temp = {title: title, start: formattedTime, end: formattedTime};
-//                                }else if(status == 2 ){
-//                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
-//                                }else if(status == 3 ){
-//                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
-//                                }else if(status == 4){
-//                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
-//                                }   
-//                    			$scope.events.push(temp);
-//                		}
-//                			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
-//                			
-//                			$scope.events = [];
-//                			//test of end of pages
-//                			if(response.data.length < pageSize){
-//                				morePages = false;
-//                				console.log('no more pages');
-//                			}
-//                			pageNumber++;
-//        	             	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("trainerBatch").id + "&pageNumber=" + pageNumber + "&pageSize=" + pageSize;
-////        	             	$q.differ().promise;
-//                		
-//                		// $scope.renderCalendar('myCalendar');
-//                	}).finally(function() {
-//                		// Turn off loading indicator whether success or
-//						// failure.
-//                		$scope.loading = false;
-//                		SessionService.set("gotSubtopics", false);
-//                	});
-////            	} // end of while loop
-            	}
+            if(!SessionService.get("gotSubtopics")) {
+                SessionService.set("gotSubtopics", true); 
+                
+                var pageNumber = 0;
+//                while(true){
+                    var subtopicEvents = GetSubtopics.getPageOfSubtopics(pageNumber);
+                    console.log('subtopicEvents: ' + subtopicEvents);
+                    uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSources',subtopicEvents[0]);
+//                    if(!subtopicEvents[1]){
+//                        break;
+//                    }else{
+//                        pageNumber++;
+//                    }
+//                }
+            }
            // POST method to show subtopics on the calendar
             			// For showing and hiding the
 											// loading gif.
