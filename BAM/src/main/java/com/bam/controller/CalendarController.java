@@ -82,7 +82,7 @@ public class CalendarController {
 	
 	@RequestMapping(value = "Topics", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public List<TopicWeek> getTopicsByBatch(HttpServletRequest request) {
+	public List<TopicWeek> getTopicsByBatchPag(HttpServletRequest request) {
 
 		//Get the batch id from the request
 		int batchId = Integer.parseInt( request.getParameter(BATCHID) );

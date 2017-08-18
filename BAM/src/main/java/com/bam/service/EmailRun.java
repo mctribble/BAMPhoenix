@@ -1,6 +1,5 @@
 package com.bam.service;
 
-import com.bam.bean.BamUser;
 
 public class EmailRun implements Runnable{
 
@@ -11,6 +10,7 @@ public class EmailRun implements Runnable{
 	
 	@Override
 	public void run() {
+		//Empty Because of no args run method
 	}
 
 
