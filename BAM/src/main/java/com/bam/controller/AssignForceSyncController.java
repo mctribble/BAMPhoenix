@@ -18,7 +18,7 @@ public class AssignForceSyncController {
 		@Autowired
 		AssignForceSyncService service;
 		
-		@RequestMapping(value="/refreshBatches", method=RequestMethod.GET)
+		@RequestMapping(value="/assignforceSync", method=RequestMethod.GET)
 		public void refreshBatches() throws JsonParseException, JsonMappingException, IOException {
 		
 			service.assignForceSync();
