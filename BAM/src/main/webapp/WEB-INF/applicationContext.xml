@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -14,19 +11,24 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
-	
-	
-	<context:property-placeholder /><!--Local Host Environment Variables will be used -->
-	
-	
-	
-	
+
+
+	<context:property-placeholder /><!--Local Host Environment Variables will 
+		be used -->
+
+	<bean id="propertyPlaceholderConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="searchSystemEnvironment" value="true" />
+	</bean>
+
+
 	<context:component-scan base-package="com.bam"></context:component-scan>
 	<context:annotation-config />
-	<mvc:annotation-driven/>
-	<mvc:resources location="/static" mapping="/**"/>
+	<mvc:annotation-driven />
+	<mvc:resources location="/static" mapping="/**" />
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
-	
+
 	<bean id="myDataSource" name="myDataSource"
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
@@ -34,11 +36,12 @@
 		<property name="username" value="${DB_USERNAME}"></property>
 		<property name="password" value="${DB_PASSWORD}"></property>
 	</bean>    
+
 	<!-- Because we use Hibernate -->
 	<bean id="hibernateJpaVendorAdapter"
-		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>    
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>
 	<!-- Because Spring Data doesn't natively support Hibernate (But it does 
-	support JPA) -->
+		support JPA) -->
 	<bean id="entityManagerFactory" name="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="myDataSource" />
@@ -51,15 +54,15 @@
 				<prop key="hibernate.format_sql">true</prop>
 			</props>
 		</property>
-	</bean>    
+	</bean>
 	<!-- Because tx are cool -->
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>    
-	
+	</bean>
+
 	<!-- Find JPA Repositories -->
 	<jpa:repositories base-package="com.bam.repository" />
-	
+
 
 
 	<bean name="batchesService" class="com.bam.service.BatchService"></bean>
@@ -68,5 +71,5 @@
 	<bean name="mailService" class="com.bam.service.MailService"></bean>
 	<bean name="passwordGenerator" class="com.bam.service.PasswordGenerator"></bean>
 	<bean name="userDetailsService" class="com.bam.service.UsersDetailsService"></bean>
-	<bean name="curriculumService" class="com.bam.service.CurriculumService"></bean>	
+	<bean name="curriculumService" class="com.bam.service.CurriculumService"></bean>
 </beans>
