@@ -2,15 +2,6 @@ package com.bam.bean;
 
 import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,6 +12,7 @@ public class AssignForceBatch {
 		private Timestamp endDate;
 		private AssignForceTrainer trainer;
 		private Integer ID;
+		private AssignForceCurriculum curriculum;
 		
 		public AssignForceBatch() {}
 
@@ -71,6 +63,14 @@ public class AssignForceBatch {
 
 		public void setID(Integer iD) {
 			ID = iD;
+		}
+
+		public AssignForceCurriculum getCurriculum() {
+			return curriculum;
+		}
+
+		public void setCurriculum(AssignForceCurriculum curriculum) {
+			this.curriculum = curriculum;
 		}
 
 		@Override

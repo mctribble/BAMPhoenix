@@ -44,9 +44,10 @@ public class AssignForceSyncService {
 			
 			if(batch.getTrainer() != null) {
 			
-				type.setId(1);
+				type.setId(batches.getBody().get(i).getCurriculum().getCurrId());
 				type.setLength(10);
-				type.setName("Java");
+				type.setName(batches.getBody().get(i).getCurriculum().getName());
+				System.out.println(i+") Batch type is:  "+type);
 				// Current cycle's batch defined from batches Response Entity.
 				
 				curr_batch.setName(batch.getName());
