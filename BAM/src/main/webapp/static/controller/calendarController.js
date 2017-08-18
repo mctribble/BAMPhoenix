@@ -311,11 +311,15 @@
                     
                     //break out if ajax request fails
                     if(!subtopicEvents[0]){
+                    	console.log('There are no subtopics in array');
                     	continue;
                     }
+                	console.log('There are subtopics in array');
+
                     console.log('subtopicEvents: ' + subtopicEvents);
 //                    uiCal.fullCalendar('addEventSources',subtopicEvents[0]);
                     $scope.eventSources = [subtopicEvents[0]];
+                    console.log('subtopics from controller\n', subtopicEvents);
                     if(!subtopicEvents[1]){
                         break;
                     }else{

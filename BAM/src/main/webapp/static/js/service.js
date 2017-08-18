@@ -76,17 +76,13 @@ app.service('GetSubtopics', ['$http', 'SessionService',
 	        			events.push(temp);
 	    		}
 	    		
-	    		if(response.data.length >= pageSize){
+	    		if(response.data.length == pageSize){
 	    			console.log('There are more pages to get\npageSize: ' + pageSize + '\nresponse.data.length: ' + response.data.length);
 	    			morePages = true;
+	    			console.log('service: morePage: ' + morePages);
 	    		}
-	    	}).finally(function() {
-	    		console.log('Finishing ajax $http service');
-	    		// Turn off loading indicator whether success or
-				// failure.
-//	    		$scope.loading = false;
-	//    		SessionService.set("gotSubtopics", false);
 	    	});
+			console.log('service about to return: morePage: ' + morePages);
 			var returnValue = [];
 			returnValue.push(events);
 			returnValue.push(morePages);
