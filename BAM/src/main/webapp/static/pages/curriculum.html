@@ -93,9 +93,6 @@
 									<div class="card-block">
 										<!-- ***************************** Begin Subtopic List***************************************** -->
 										<ul class="list-group" dnd-list="day.subtopics" dnd-allowed-typed="['subtopic']">
-											<li class="list-group">
-												<input class="list-group-item" ng-model="search">
-											</li>
 											<li class="list-group-item day-list-item" 
 												ng-repeat="subtopic in day.subtopics" 
 												dnd-draggable="subtopic"
@@ -149,8 +146,12 @@
 					<div id="collapseTopic{{sanitizeString(topic.name)}}" class="collapse" role="tabpanel">
 						<div class="card-block">
 							<ul class="list-group">
+								<li class="list-group-item" dnd-nodrag>
+									<input placeholder="Search {{topic.name}}" type="text" class="form-control" ng-model="subtopicFilter">
+								</li>
+								
 								<li class="list-group-item" 
-									ng-repeat="sub in topic.subtopics"
+									ng-repeat="sub in topic.subtopics | filter:subtopicFilter"
 									dnd-draggable="sub" 
 									dnd-effect-allowed="copy" 
 									dnd-moved="topic.subtopics.splice($index, 1)">
