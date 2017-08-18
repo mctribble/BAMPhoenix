@@ -32,9 +32,9 @@
 	<bean id="myDataSource" name="myDataSource"
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
-		<property name="url" value="#{systemEnvironment['DB_URL']}"></property>
-		<property name="username" value="#{systemEnvironment['DB_USERNAME']}"></property>
-		<property name="password" value="#{systemEnvironment['DB_PASSWORD']}"></property>
+		<property name="url" value="jdbc:oracle:thin:@bamprod.cvoui7q38caj.us-east-2.rds.amazonaws.com:1521:orcl"></property>
+		<property name="username" value="bamproduser"></property>
+		<property name="password" value="revabam2017"></property>
 	</bean>
 	<!-- Because we use Hibernate -->
 	<bean id="hibernateJpaVendorAdapter"
