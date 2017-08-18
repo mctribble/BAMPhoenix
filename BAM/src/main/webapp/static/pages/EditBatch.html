@@ -2,8 +2,7 @@
 	<li class="nav-link"><a href="#/calendar">Calendar</a></li>
 	<li class="nav-link"><a href="#/associates">View Associates</a></li>
 	<li class="nav-link"><a href="#/editBatch"
-		ng-show="user.role==3 || (currentBatch.trainer.fName == user.fName && currentBatch.trainer.mName == user.mName && currentBatch.trainer.lName == user.lName) 
-		|| (!currentBatch && trainerBatch.trainer.fName == user.fName && trainerBatch.trainer.mName == user.mName && trainerBatch.trainer.lName == user.lName)">Edit Batch</a></li>
+		>Edit Batch</a></li>
 </ul>
 <br>
 
@@ -73,7 +72,7 @@
 		<span class="nav-item tab" ng-class="{active: isSet(2) }"><a
 			class="nav-link" ng-class="{active: isSet(2) }" ng-click="setTab(2)">Add</a></span>
 	</div>
-	<div id="inBatch" ng-show="isSet(1)">
+	<div id="inBatch" >
 		<table class="table">
 			<tr class="rm-header">
 				<td ng-click="order = 'fName'" class="head">First Name</td>
