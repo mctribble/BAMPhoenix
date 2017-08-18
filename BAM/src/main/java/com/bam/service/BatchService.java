@@ -22,7 +22,7 @@ public class BatchService {
 
 	public Batch getBatchById(Integer id) {
 		Logger.getLogger(BatchService.class).fatal(batchRepository);
-		System.out.println(batchRepository);
+	
 		return batchRepository.findById(id);
 	}
 
