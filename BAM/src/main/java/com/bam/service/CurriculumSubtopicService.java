@@ -19,4 +19,8 @@ public class CurriculumSubtopicService {
 		return curriculumSubtopic.findByCurriculum(c);
 	}
 	
+	public void saveCurriculumSubtopic(CurriculumSubtopic cs){
+		curriculumSubtopic.save(cs);
+	}
+	
 }
