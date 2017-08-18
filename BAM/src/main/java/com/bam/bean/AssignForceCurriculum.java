@@ -2,22 +2,22 @@ package com.bam.bean;
 
 public class AssignForceCurriculum {
 	
-	private int currId;
+	private Integer currId;
 	private String name;
 	
 	public AssignForceCurriculum() {}
 
-	public AssignForceCurriculum(int currId, String name) {
+	public AssignForceCurriculum(Integer currId, String name) {
 		super();
 		this.currId = currId;
 		this.name = name;
 	}
-
-	public int getCurrId() {
+	
+	public Integer getCurrId() {
 		return currId;
 	}
 
-	public void setCurrId(int currId) {
+	public void setCurrId(Integer currId) {
 		this.currId = currId;
 	}
 
@@ -34,5 +34,6 @@ public class AssignForceCurriculum {
 		return "AssignForceCurriculum [currId=" + currId + ", name=" + name + "]";
 	}
 	
-	
+
 }
+
