@@ -20,7 +20,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 	
 	$scope.getData = function() {
 			
-		if($rootScope.user){
+		if($scope.user){
 			var currentDate = new Date().getTime();
 			
 			if(SessionService.get("trainerBatch").endDate > currentDate){
@@ -49,10 +49,19 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 			}).then(function(response){
 				console.log(response.data);
 				$scope.usersInBatch = response.data
+				
+				$scope.listNames = {
+			    		firstNames: []
+			    };
+				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
 					$scope.batchUsers = $scope.usersInBatch[i];
 				    console.log($scope.batchUsers.fName);
+					$scope.listNames.firstNames.push($scope.batchUsers.fName);
+
 				}
+				
+			    console.log($scope.listNames.firstNames);
 			})
 		}
 	}

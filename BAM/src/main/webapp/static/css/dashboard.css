@@ -88,6 +88,14 @@ li.listItem{
 	text-decoration: underline;
 }
 
+.navbar{
+	margin-bottom: 10px!important;
+}
+
+.container{
+	margin-top:10px!important;
+}
+
 
 ul {
     padding-left: 15px;
