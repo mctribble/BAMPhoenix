@@ -1,0 +1,458 @@
+/*
+    TABLE OF CONTENTS
+    ---------------------------------------
+    1.0		LOGIN STYLING
+    2.0		NAVBAR STYLING
+    3.0		FONTS
+    4.0		TABLES
+*/
+
+/***** 1.0 LOGIN STYLING *****/
+.vertical-center {
+	/* 	min-height: 100%; Fallback for browsers do NOT support vh unit */
+	/* 	min-height: 100vh; */
+	/* These two lines are counted as one :slightly_smiling_face:       
+	padding: 15px 30px;
+	background-color: #ccc;*/
+	display: flex;
+	border-radius: 15px;
+}
+
+.login {
+	text-align: left;
+	/*font-family: 'Arial', sans-serif;*/
+	display: block;
+	margin: auto;
+}
+
+.well {
+	border-radius: 15px;
+}
+
+.login-vertical-align {
+	display: table-cell;
+	vertical-align: middle;
+	/*font-family: "Audimat";*/
+	font-size: 1.4em;
+}
+
+.revature-form {
+	/* 	font-family: "Audimat"; */
+	font-size: 1.5em;
+}
+
+#wrong-credentials {
+	text-align: center;
+}
+
+/*Buttons*/
+.login-btn-container {
+	text-align: center;
+	margin: auto;
+}
+
+.threeqtr-width {
+	width: 75%;
+	letter-spacing: 1.5px;
+}
+
+#login-btn {
+	color: #ffffff;
+	background-color: #303e74;
+}
+
+#create-acc-btn {
+	color: #ffffff;
+	background-color: #f26925;
+}
+
+/******** REGISTER STYLING *********/
+.input-group .form-control{
+	    width: 200px;
+}
+
+/***** 2.0 NAVBAR STYLING *****/
+.full-navbar {
+	width: 100%;
+	background-color: #3379b7;
+	height: 40px;
+	border-radius: 5px;
+}
+
+.full-navbar ul {
+	list-style: none;
+	display: inline-block;
+}
+
+.full-navbar ul li {
+	display: inline;
+	padding-right: 20px;
+	/* 	font-family: "Audimat"; */
+	font-size: 26px;
+}
+
+.full-navbar ul li a {
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.full-navbar ul li a:hover {
+	color: #c1d6e9;
+	/*text-shadow: 2px 2px #1e486d;*/
+}
+
+.full-navbar ul li a:active {
+	position: relative;
+	top: 2px;
+}
+
+#myNavbar {
+	color: #000000;
+	background-color: #3379b7;
+}
+
+#myNavbar ul li {
+	/* 	font-family: "Audimat"; */
+	border-top: 1px solid #5b93c5;
+	font-size: 1.4em;
+	padding: 0 10px;
+}
+
+#myNavbar ul li a {
+	color: white;
+}
+
+#navbarNavAltMarkup{
+	text-align: right;
+}
+
+.navbar-button {
+	/* 	font-family: "Audimat" !important; */
+	background-color: #3379b7;
+	border: 2px outset #5b93c5;
+	border-radius: 5px;
+	font-size: 1.4em;
+	/* 	font-family: bold; */
+	color: white;
+}
+
+a.nodec {
+	text-decoration: none;
+	color: black;
+}
+
+.lihover:hover{
+	background-color: #bdbfc7;
+}
+
+.navbar-right{
+	float: right;
+	text-align: right;
+}
+
+li.dropdown{
+	margin-right: 6%;
+	width: 100px;
+	text-align: right;
+    margin-top: 16px;	
+}
+
+ul.dropdown-menu{
+	text-align: center;
+	margin-left: auto;
+	right: 0px;
+}
+
+a:not([href]):not([tabindex]) {
+    color: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+li.expand{
+	width: 150px;
+	float: right;
+}
+
+.logoutli{
+	width: 100px;
+	margin: auto;
+}
+
+/******** 'FORGOT PASSWORD?' STYLING ********/
+.pw {
+  display: none;
+  visibility: hidden;
+}
+label {
+  display: block;
+  padding: 0.5em;
+  text-align: center;
+  border-bottom: 1px solid #CCC;
+  color: #666;
+}
+label:hover {
+  color: #000;
+}
+label::before {
+  font-family: Consolas, monaco, monospace;
+  font-weight: bold;
+  font-size: 15px;
+  content: "+";
+  vertical-align: text-top;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 3px;
+  background: radial-gradient(ellipse at center, #CCC 50%, transparent 50%);
+}
+
+/***** 3.0 FONTS *****/
+/*
+@font-face {
+   font-family: "Audimat";
+   src: url("audimat-regular.otf");
+}
+@font-face {
+   font-family: 'Audimat';
+   src: url('audimat-bold.otf');
+   font-weight: bold;
+}
+@font-face {
+   font-family: 'Audimat';
+   src: url('audimat-bolditalic.otf');
+   font-weight: bold;
+   font-style: italic;
+}
+@font-face {
+   font-family: 'Audimat';
+   src: url('audimat-italic.otf');
+   font-style: italic;
+}
+*/
+/***** 4.0 TABLES *****/
+
+/* Editor: Joseph Nguyen
+		Modified colors to be easier on the eyes.
+*/
+
+/* Planned */
+.topiccolorblue{
+background-color: #00689b !important;
+}
+
+/* Covered */
+.topiccolorgreen{
+background-color: #008400 !important;		
+}
+
+/* Cancelled */
+.topiccolorred{
+background-color: #b80d00 !important;	
+}
+
+/* Missed */
+.topiccoloryellow{
+background-color: #fea100 !important;    
+}
+
+.glyphicon-picture:hover{
+	color:blue;	
+}
+
+.gly-spin {
+  -webkit-animation: spin 2s infinite linear;
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg);
+  }
+  100% {
+    -o-transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+.gly-rotate-90 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.gly-rotate-180 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.gly-rotate-270 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+.gly-flip-horizontal {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+  -webkit-transform: scale(-1, 1);
+  -moz-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+.gly-flip-vertical {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
+  -webkit-transform: scale(1, -1);
+  -moz-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  -o-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+
+
+.searchbox-container {
+	/* 	font-family: "Audimat"; */
+	font-size: 1.2em;
+}
+
+.searchbox-container input {
+	background-color: #ddd;
+	/* 	font-family: "Audimat"; */
+	font-size: 1.2em;
+}
+
+.associates {
+	width: 100%;
+	border: 2px solid #333;
+	margin-top: 10px;
+	/* 	font-family: "Audimat"; */
+	font-size: 1.2em;
+}
+
+.associates-header {
+	font-weight: bold;
+}
+
+.associates tr:nth-child(odd) {
+	background-color: #ddd;
+}
+
+.associates td {
+	padding: 0 4px;
+}
+
+html {
+	min-height: 100%;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+	/* IE10+ */
+	background-image: -ms-radial-gradient(right bottom, ellipse farthest-corner, #FFE8FC 0%,
+		#142863 100vh);
+	/* Mozilla Firefox */
+	background-image: -moz-radial-gradient(right bottom, ellipse farthest-corner, #FFE8FC 0%,
+		#142863 100vh);
+	/* Opera */
+	background-image: -o-radial-gradient(right bottom, ellipse farthest-corner, #FFE8FC 0%,
+		#142863 100vh);
+	/* Webkit (Safari/Chrome 10) */
+	background-image: -webkit-gradient(radial, right bottom, 0, right bottom, 572, color-stop(0
+		, #FFE8FC), color-stop(100, #142863));
+	/* Webkit (Chrome 11+) */
+	background-image: -webkit-radial-gradient(right bottom, ellipse farthest-corner, #FFE8FC
+		0%, #142863 100vh);
+	/* W3C Markup */
+	background-image: radial-gradient(ellipse farthest-corner at right bottom, #FFE8FC 0%,
+		#142863 100vh);
+}
+
+
+#content{
+	margin-top: 50px;
+	background-color: #FFFFFF ;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	border-radius: 4px;
+	overflow-y: auto;
+	max-height: 85vh;
+	width: 90%;
+	height: -webkit-fill-available;
+}
+
+
+/***** Edit Batch Page *****/
+.nav-link {
+	cursor: pointer;
+}
+
+.input-tag {
+	width: 151px;
+}
+
+
+/***** Event Legend *****/
+#plannedEvent {
+	background-color: #00689b;
+	border: 3px;
+	font-size: 16px;
+	color: white;
+	font-weight: bold;
+}
+
+#completedEvent {
+	background-color: #008400;
+	border: 3px;
+	font-size: 16px;
+	color: white;
+	font-weight: bold;
+}
+
+#cancelledEvent {
+	background-color: #b80d00;
+	border: 3px;
+	font-size: 16px;
+	color: white;
+	font-weight: bold;
+}
+
+#missedEvent {
+	background-color: #fea100;
+	border: 3px;
+	font-size: 16px;
+	color: white;
+	font-weight: bold;
+}
