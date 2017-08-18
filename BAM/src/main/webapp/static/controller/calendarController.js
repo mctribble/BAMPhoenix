@@ -327,16 +327,16 @@
                                 	if(status == 1 )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime};	
                                 	if (status == 1  && new Date().getMonth() > formattedTime.getMonth() && new Date().getFullYear() >= formattedTime.getFullYear() )
-                                    	var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
+                                    	 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
                                 	if (status == 1  && new Date().getDate() > formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
-                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
+                                		 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
                                 	               
                                     if(status == 2 )
-                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
+                                		 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
                                     if(status == 3 )
-                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
+                                		 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
                                     if (status == 4)
-                                    	var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};             
+                                    	 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};             
 
                     			$scope.events.push(temp);
                     			id++;
@@ -552,17 +552,17 @@
             			return currentWeek.diff(SessionService.get("currentUser").batch.startDate, 'weeks') + 1;
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && !SessionService.get("currentBatch") && SessionService.get("trainerBatch")){
-            		var beginDate = moment(SessionService.get("trainerBatch").startDate);
+            		 beginDate = moment(SessionService.get("trainerBatch").startDate);
             		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
-            		var finishDate = moment(SessionService.get("trainerBatch").endDate);
+            		 finishDate = moment(SessionService.get("trainerBatch").endDate);
             		finishDate.add(finishDate.utcOffset(), 'minutes');
             		if(currentWeek >= beginDate && currentWeek < finishDate){
             			return currentWeek.diff(SessionService.get("trainerBatch").startDate, 'weeks') + 1;
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && SessionService.get("currentBatch")){
-            		var beginDate = moment(SessionService.get("currentBatch").startDate);
+            		 beginDate = moment(SessionService.get("currentBatch").startDate);
             		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
-            		var finishDate = moment(SessionService.get("currentBatch").endDate);
+            		 finishDate = moment(SessionService.get("currentBatch").endDate);
             		finishDate.add(finishDate.utcOffset(), 'minutes');
             		if(currentWeek >= beginDate && currentWeek < finishDate){
             			return currentWeek.diff(beginDate, 'weeks') + 1;

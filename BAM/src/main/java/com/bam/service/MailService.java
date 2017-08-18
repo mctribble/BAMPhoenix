@@ -10,6 +10,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.bam.bean.CustomException;
+
 public class MailService {
 
 	public static void sendMail(String email) {
@@ -46,10 +48,14 @@ public class MailService {
             
 
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+				try {
+					throw new CustomException(e);
+				} catch (CustomException e1) {
+					e1.printStackTrace();
+				}
+			} 
         }
 
 
     }
 
-}

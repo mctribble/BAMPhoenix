@@ -80,8 +80,7 @@ public class SubtopicService {
 		return subtopicStatusRepository.findByName(name);
 	}
 
-	public Page<Subtopic> findAll(Pageable pageable) {
-		// TODO Auto-generated method stub
+	public Page<Subtopic> findAll() {
 		return null;
 	}
 

@@ -1,5 +1,7 @@
 package com.bam.bean;
 
+import javax.mail.MessagingException;
+
 public class CustomException extends Exception {
 
 	/**
@@ -9,6 +11,11 @@ public class CustomException extends Exception {
 	public CustomException(String message){
 		super(message);
 	}
+	public CustomException(MessagingException e) {
+		e.printStackTrace();
+		
+	}
+		// TODO Auto-generated constructor stub
+	}
 	
-
-}
+	
