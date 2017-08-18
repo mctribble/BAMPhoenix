@@ -22,7 +22,6 @@
 		<property name="searchSystemEnvironment" value="true" />
 	</bean>
 
-
 	<context:component-scan base-package="com.bam"></context:component-scan>
 	<context:annotation-config />
 	<mvc:annotation-driven />
