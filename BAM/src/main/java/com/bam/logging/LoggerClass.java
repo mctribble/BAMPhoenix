@@ -84,6 +84,20 @@ public class LoggerClass {
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
+	
+	/**
+	 * Logging methods from the Curriculum Service Class
+	 * getAllCurriculum()
+	 * @author Jonathan Layssard
+	 */
+	@Around("execution(* com.bam.service.CurriculumService.getAllCurriculum(..))")
+	public void hijackGetAllCurriculum(ProceedingJoinPoint jp)throws Throwable{
+		logger.info(intercepted + jp.getSignature().getName());
+		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
+		logger.info(jp.proceed());
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
+	}
+	
 	/**
 	 * Logging methods from the MailService Class
 	 * sendMail()
@@ -265,7 +279,14 @@ public class LoggerClass {
 	}
 	
 	/**
-	 * Logging Methods from the UsersDetailsService class
+	 * Logging Methods from UsersDetailsService class
+	 * addOrUpdateUser()
+	 * findAllUsers()
+	 * findByRole()
+	 * findUserById()
+	 * findUserByEmail()
+	 * findUsersInBatch()
+	 * findUsersNotInBatch()
 	 * loadUserByUsername()
 	 * buildUserForAuthentication()
 	 * buildUserAuthority()
@@ -310,17 +331,6 @@ public class LoggerClass {
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
-	/**
-	 * Logging Methods from UsersService class
-	 * addOrUpdateUser()
-	 * findAllUsers()
-	 * findByRole()
-	 * findUserById()
-	 * findUserByEmail()
-	 * findUsersInBatch()
-	 * findUsersNotInBatch()
-	 * @author Jonathan Layssard
-	 */
 	@Around("execution(* com.bam.service.UsersService.addOrUpdateUser(..))")
 	public void hijackAddOrUpdateUser(ProceedingJoinPoint jp)throws CustomException{
 		logger.info(intercepted + jp.getSignature().getName());
@@ -347,8 +357,13 @@ public class LoggerClass {
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
+<<<<<<< HEAD
 	@Around("execution(* com.bam.service.UsersService.findByRole(..))")
 	public void hijackFindByRole(ProceedingJoinPoint jp)throws CustomException{
+=======
+	@Around("execution(* com.bam.service.UsersDetailsService.findByRole(..))")
+	public void hijackFindByRole(ProceedingJoinPoint jp)throws Throwable{
+>>>>>>> 0823efc5558c9d906e7d722946f28156c8a34a54
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
@@ -360,8 +375,13 @@ public class LoggerClass {
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
+<<<<<<< HEAD
 	@Around("execution(* com.bam.service.UsersService.findUserById(..))")
 	public void hijackFindUserById(ProceedingJoinPoint jp)throws CustomException{
+=======
+	@Around("execution(* com.bam.service.UsersDetailsService.findUserById(..))")
+	public void hijackFindUserById(ProceedingJoinPoint jp)throws Throwable{
+>>>>>>> 0823efc5558c9d906e7d722946f28156c8a34a54
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
@@ -373,8 +393,13 @@ public class LoggerClass {
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
+<<<<<<< HEAD
 	@Around("execution(* com.bam.service.UsersService.findUserByEmail(..))")
 	public void hijackFindUserByEmail(ProceedingJoinPoint jp)throws CustomException{
+=======
+	@Around("execution(* com.bam.service.UsersDetailsService.findUserByEmail(..))")
+	public void hijackFindUserByEmail(ProceedingJoinPoint jp)throws Throwable{
+>>>>>>> 0823efc5558c9d906e7d722946f28156c8a34a54
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
@@ -386,8 +411,13 @@ public class LoggerClass {
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
+<<<<<<< HEAD
 	@Around("execution(* com.bam.service.UsersService.findUserInBatch(..))")
 	public void hijackFindUserInBatch(ProceedingJoinPoint jp)throws CustomException{
+=======
+	@Around("execution(* com.bam.service.UsersDetailsService.findUserInBatch(..))")
+	public void hijackFindUserInBatch(ProceedingJoinPoint jp)throws Throwable{
+>>>>>>> 0823efc5558c9d906e7d722946f28156c8a34a54
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
@@ -399,8 +429,13 @@ public class LoggerClass {
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
   
+<<<<<<< HEAD
 	@Around("execution(* com.bam.service.UsersService.findUserNotInBatch(..))")
 	public void hijackFindUserNotInBatch(ProceedingJoinPoint jp)throws CustomException{
+=======
+	@Around("execution(* com.bam.service.UsersDetailsService.findUserNotInBatch(..))")
+	public void hijackFindUserNotInBatch(ProceedingJoinPoint jp)throws Throwable{
+>>>>>>> 0823efc5558c9d906e7d722946f28156c8a34a54
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {

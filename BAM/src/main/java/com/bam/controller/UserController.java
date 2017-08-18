@@ -167,7 +167,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "Recovery", method = RequestMethod.POST, produces = "application/json")
-    public void RecoverPassword(@RequestBody String email) {
+    public void recoverPassword(@RequestBody String email) {
     	String generate = PasswordGenerator.makePassword();
         // Lookup user in database by e-mail
         BamUser user = userService.findUserByEmail(email);
