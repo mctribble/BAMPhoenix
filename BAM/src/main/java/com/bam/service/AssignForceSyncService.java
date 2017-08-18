@@ -37,18 +37,19 @@ public class AssignForceSyncService {
 		BatchType type = new BatchType();
 		BamUser bammy = new BamUser();
 		
-		// Cycling through all batches.
+		// Cycling through all batches received from AssignForce.
 		for(int i = 0; i < batches.getBody().size(); i++) {
 			
+			// Current cycle's batch defined from batches Response Entity.
 			batch = (AssignForceBatch) batches.getBody().get(i);
 			
 			if(batch.getTrainer() != null) {
-			
-				type.setId(1);
-				type.setLength(10);
-				type.setName("Java");
-				// Current cycle's batch defined from batches Response Entity.
 				
+				if(batches.getBody().get(i).getCurriculum() != null) {
+					type.setId(batch.getCurriculum().getCurrId());
+					type.setLength(10);
+					type.setName(batches.getBody().get(i).getCurriculum().getName());
+				}
 				curr_batch.setName(batch.getName());
 				curr_batch.setStartDate(batch.getStartDate());
 				curr_batch.setEndDate(batch.getEndDate());
@@ -58,26 +59,19 @@ public class AssignForceSyncService {
 				String first_name = batch.getTrainer().getFirstName();
 				String last_name = batch.getTrainer().getLastName();
 				
-				System.out.println("Batch being taught by: " + first_name +" " + last_name);
-				
 				List<BamUser> BAMtrainers = uservice.getByFNameAndLName(first_name, last_name);
 	
 				
-				if(!BAMtrainers.isEmpty()) {
-					System.out.println(BAMtrainers.get(0) + " " + BAMtrainers.size());
-					System.out.println("Setting trainer.");
+				if(!BAMtrainers.isEmpty() && BAMtrainers.get(0).getRole() == 2) {
 					bammy = BAMtrainers.get(0);
 					bammy.setAssignForce_ID(batch.getTrainer().getTrainerId());
-					System.out.println(BAMtrainers.get(0).getAssignForce_ID());
 					curr_batch.setTrainer(bammy);
 				}else{
 					curr_batch.setTrainer(null);
 				}
+				
 				bservice.addOrUpdateBatch(curr_batch);
 				
-				System.out.println("Adding batch: " + curr_batch);
-			}else{
-				System.out.println("No trainer for batch.");
 			}
 		
 		}

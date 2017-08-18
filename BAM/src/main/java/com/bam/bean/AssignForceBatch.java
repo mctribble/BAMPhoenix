@@ -2,15 +2,6 @@ package com.bam.bean;
 
 import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,16 +10,19 @@ public class AssignForceBatch {
 		private String name;
 		private Timestamp startDate;
 		private Timestamp endDate;
+		private AssignForceCurriculum curriculum;
 		private AssignForceTrainer trainer;
 		private Integer ID;
 		
 		public AssignForceBatch() {}
 
-		public AssignForceBatch(String name, Timestamp startDate, Timestamp endDate, AssignForceTrainer trainer, Integer iD) {
+		public AssignForceBatch(String name, Timestamp startDate, Timestamp endDate, AssignForceCurriculum curriculum,
+				AssignForceTrainer trainer, Integer iD) {
 			super();
 			this.name = name;
 			this.startDate = startDate;
 			this.endDate = endDate;
+			this.curriculum = curriculum;
 			this.trainer = trainer;
 			ID = iD;
 		}
@@ -65,6 +59,14 @@ public class AssignForceBatch {
 			this.trainer = trainer;
 		}
 
+		public AssignForceCurriculum getCurriculum() {
+			return curriculum;
+		}
+
+		public void setCurriculum(AssignForceCurriculum curriculum) {
+			this.curriculum = curriculum;
+		}
+
 		public Integer getID() {
 			return ID;
 		}
@@ -75,9 +77,8 @@ public class AssignForceBatch {
 
 		@Override
 		public String toString() {
-			return "AssignForceBatch [name=" + name + ", startDate=" + startDate + ", endDate=" + endDate + ", trainer=" + trainer
-					+ ", ID=" + ID + "]";
+			return "AssignForceBatch [name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
+					+ ", curriculum=" + curriculum + ", trainer=" + trainer + ", ID=" + ID + "]";
 		}
 		
-
 }
