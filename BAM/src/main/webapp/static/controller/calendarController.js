@@ -682,7 +682,7 @@
             $scope.sources 			= "";
    			$scope.source 			= "";
 	            }
-  }
+  
   
 
 	         
