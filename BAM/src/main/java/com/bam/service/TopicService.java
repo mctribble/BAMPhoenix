@@ -26,8 +26,8 @@ public class TopicService {
 	
 	public void addTopic(int topicNameId, int batch, int weekNumber){
 		TopicWeek topic = new TopicWeek();
-		Batch b = new Batch();
-		TopicName topicName = new TopicName();
+		Batch b;
+		TopicName topicName;
 		
 		b = batchRepistory.findById(batch);
 		topicName = topicNameRepository.findById(topicNameId);
