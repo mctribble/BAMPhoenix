@@ -7,7 +7,7 @@
  		</div>
 		
 		<div class="row">
-		<div id="pan2" class="col-md-6">
+		<div id="pan2" class="col-md-6 pan2">
 		<ul  ng-model="getData">
 			<li>First Name: {{user.fName}}</li>
 			<li>Last Name: {{user.lName}}</li>
@@ -15,8 +15,9 @@
 			<li>Current Batch End Date: {{currentBatchEnd1 | date: 'MM-dd-yyyy'}}</li>
 		</ul>
 		</div>
+		
 				
-		<div id="pan3" class="col-md-5">
+		<div id="pan3" class="col-md-5 pan3">
 			<h2>Week: {{weekNum}}</h2>
 				<h3>Associates in batch:</h3>
 				<ul>
@@ -25,7 +26,9 @@
 		</div>
 		</div>
 		
-		<div id="progress" ng-show="user.batch || trainerBatch">
+		</div>
+		<!-- Progress bar that measures number of days complete -->
+		<div id="progress" ng-show="userHasBatch || trainerHasBatch">
 		Batch Progress:
 			<div id="batchProgress" class="progress" >
   				<div class="progress-bar progress-bar-striped active" role="progressbar"
@@ -34,5 +37,37 @@
   				</div>
 			</div>
 		</div>
+		
+		<!-- Returns a count and list of topics missed in the batch -->
+		<div class="col-md-12" id="pan4" ng-init="returnMissed()">
+			<h3>Topics Missed<img ng-show="loading" src="static/img/loading.gif" id="loadingPic"></img></h3>
+			<p id="missedCount" ng-hide="loading">{{ count }} / {{ totalSub }} missed</p>
+			<ul class="mainList" ng-hide="loading">
+				<li class="listTitle">Java:</li>
+					<ul id="java"></ul>
+				<li class="listTitle">Web Services:</li>
+					<ul id="webServices"></ul>
+				<li class="listTitle">SQL/JDBC:</li>
+					<ul id="sqlJDBC"></ul>
+				<li class="listTitle">HTML/CSS/Bootstrap:</li>
+					<ul id="html"></ul>
+				<li class="listTitle">Servlets/JSPs:</li>
+					<ul id="servlets"></ul>
+				<li class="listTitle">JavaScript/jQuery/AJAX:</li>
+					<ul id="js"></ul>
+				<li class="listTitle">Devops:</li>
+					<ul id="devops"></ul>
+				<li class="listTitle">Hibernate:</li>
+					<ul id="hibernate"></ul>
+				<li class="listTitle">Spring:</li>
+					<ul id="spring"></ul>
+				<li class="listTitle">Angular:</li>
+					<ul id="angular"></ul>
+				<li class="listTitle">Other:</li>
+					<ul id="other"></ul>
+			</ul>
+		</div>
+		
 
- 
+ </div>
+</div>
