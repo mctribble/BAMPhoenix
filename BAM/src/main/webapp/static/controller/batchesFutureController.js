@@ -1,10 +1,10 @@
-app.controller('batchesFutureController', function($scope, $rootScope, $location, $http)
+app.controller('batchesFutureController', function($scope, SessionService, $rootScope, $location, $http)
 {
 	$scope.msg;
 	$scope.batchesFuture;
 	$scope.getBatchesFuture = function(){
 		
-		var emailer = $rootScope.user.email;
+		var emailer = SessionService.get("currentUser").email;
 		$http({
 			url: 'rest/api/v1/Batches/Future',
 			method: 'GET',	
@@ -25,7 +25,7 @@ app.controller('batchesFutureController', function($scope, $rootScope, $location
 	}
 	
 	$scope.goToBatch = function(batch){
-		$rootScope.currentBatch = batch;
+		SessionService.set("currentBatch", batch);
 		$http({
 			
 			url: "rest/api/v1/Calendar/Topics?batchId=" + batch.id,
@@ -33,13 +33,13 @@ app.controller('batchesFutureController', function($scope, $rootScope, $location
 			
 		})
 		.then(function success(response){
-			$rootScope.gotSubtopics = false;
+			SessionService.set("gotSubtopics", false);
 			$location.path('/home');
 			$scope.message = true;
 			$scope.msg = 'batch retrieved';
 			
 		}, function error(response){
-			$rootScope.gotSubtopics = false;
+			SessionService.set("gotSubtopics", false);
 			$location.path('/home');
 			$scope.message = true;
 			$scope.msg = 'batch not retrieved';

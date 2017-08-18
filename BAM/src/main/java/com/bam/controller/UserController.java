@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.bean.BamUser;
 import com.bam.bean.Batch;
+import com.bam.bean.CustomException;
 import com.bam.service.BatchService;
 import com.bam.service.PasswordGenerator;
 import com.bam.service.UsersDetailsService;
@@ -22,8 +23,8 @@ import com.bam.service.UsersDetailsService;
 @RequestMapping(value = "/api/v1/Users/")
 public class UserController {
 	
-	private final String userID = "userId";
-	private final String batchID = "batchId";
+	private static final String userID = "userId";
+	private static final String batchID = "batchId";
 	
 	@Autowired
 	UsersDetailsService userService;
@@ -87,12 +88,12 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="Register", method=RequestMethod.POST, produces="application/json")
-	public void addUser(@RequestBody BamUser currentUser) throws Exception {
+	public void addUser(@RequestBody BamUser currentUser) throws CustomException {
 		if(userService.findUserByEmail(currentUser.getEmail())==null){
 			currentUser.setRole(1);
 			userService.addOrUpdateUser(currentUser);
 		} else {
-			throw new IllegalArgumentException("Email exists in database");
+			throw new CustomException("Email exists in database");
 		}	
 	}
 
@@ -112,14 +113,14 @@ public class UserController {
 	 */
 
 	@RequestMapping(value="Reset", method=RequestMethod.POST, produces="application/java")
-	public void resetPassword(@RequestBody BamUser userNewPass) throws Exception{
+	public void resetPassword(@RequestBody BamUser userNewPass) throws CustomException{
 		BamUser currentUser = userService.findUserByEmail(userNewPass.getEmail());
 		if (currentUser.getPwd().equals(userNewPass.getPwd())) {
 			currentUser.setPwd(userNewPass.getPwd2());
 			userService.addOrUpdateUser(currentUser);
 
 		}else{
-			throw new IllegalArgumentException("Wrong password, password not changed");
+			throw new CustomException("Wrong password, password not changed");
 		}
 	}
 
@@ -167,12 +168,9 @@ public class UserController {
 	
 	@RequestMapping(value = "Recovery", method = RequestMethod.POST, produces = "application/json")
     public void RecoverPassword(@RequestBody String email) {
-		System.out.println(email);
-		System.out.println(email.toString());
-    	
+      
         // Lookup user in database by e-mail
         BamUser user = userService.findUserByEmail(email);
-        System.out.println(user);
         if (user != null) {
         	String generate = PasswordGenerator.makePassword();
         	user.setPwd(generate);

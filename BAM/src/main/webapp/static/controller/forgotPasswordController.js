@@ -1,13 +1,9 @@
 /**
  * 
  */
-app.controller('forgotPasswordController', function ($rootScope, $scope, $location, $http){
-$rootScope.userRole;
-	
-	$rootScope.user;
-	$scope.msg;
+app.controller('forgotPasswordController', function ($rootScope, $scope, SessionService, $location, $http){
+
 	$scope.forgot = function() {
-		console.log('forgot pass fn');
 		var user = {
 			email : $scope.email,
 		};

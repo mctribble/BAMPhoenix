@@ -15,10 +15,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bam.bean.Batch;
 import com.bam.bean.BamUser;
-import com.bam.repository.BatchRepository;
+import com.bam.bean.Batch;
 import com.bam.repository.BamUserRepository;
+import com.bam.repository.BatchRepository;
 
 @Service("userDetailsService")
 @Transactional
@@ -107,10 +107,10 @@ public class UsersDetailsService implements UserDetailsService {
 		return Result;
 	}
 
+  /*
+      Author: Adeo Salam
+  */
 	public void recoverE(BamUser user) {
-		// BamUser bam = new BamUser();
-		// String targetEmail = user.getEmail();
-		System.out.println("user is " + user);
 		EmailRun er = new EmailRun();
 		//hard coded for testing purposes
 		//user.setEmail("revatbam@gmail.com"); use this user for functionality
