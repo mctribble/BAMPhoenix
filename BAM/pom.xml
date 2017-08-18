@@ -7,7 +7,6 @@
 	<packaging>war</packaging>
 
 	<dependencyManagement>
-
 		<dependencies>
 			<dependency>
 				<groupId>io.spring.platform</groupId>
@@ -23,15 +22,19 @@
 				<version>2.0.2-beta</version>
 				<scope>test</scope>
 			</dependency>
-
-
 		</dependencies>
 	</dependencyManagement>
 
+	<repositories>
+		<repository>
+			<id>splunk-artifactory</id>
+			<name>Splunk Releases</name>
+			<url>http://splunk.artifactoryonline.com/splunk/ext-releases-local</url>
+		</repository>
+	</repositories>
 
 
 	<build>
-
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -50,6 +53,8 @@
 			</plugin>
 		</plugins>
 	</build>
+
+
 	<!-- https://mvnrepository.com/artifact/org.jasypt/jasypt -->
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
@@ -64,15 +69,12 @@
 			<version>1.9.2</version>
 		</dependency>
 
-
-
 		<!-- https://mvnrepository.com/artifact/org.jasypt/jasypt-hibernate3 -->
 		<dependency>
 			<groupId>org.jasypt</groupId>
 			<artifactId>jasypt-hibernate3</artifactId>
 			<version>1.9.0</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -84,7 +86,11 @@
 			<artifactId>log4j-core</artifactId>
 			<version>2.3</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.splunk</groupId>
+			<artifactId>splunk</artifactId>
+			<version>1.6.0.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -96,11 +102,7 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.3.11.Final</version>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>1.6.4</version>
-		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-ehcache</artifactId>
@@ -218,7 +220,6 @@
 			<scope>test</scope>
 		</dependency>
 
-
 		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
 		<dependency>
 			<groupId>org.hamcrest</groupId>
@@ -249,7 +250,5 @@
 			<artifactId>json-path</artifactId>
 			<version>2.4.0</version>
 		</dependency>
-
 	</dependencies>
-
 </project>
