@@ -678,7 +678,7 @@
             };
             
             /* event sources array */
-            $scope.eventSources = [$scope.events];
+//            $scope.eventSources = [$scope.events];
             $scope.sources 			= "";
    			$scope.source 			= "";
 	            }
