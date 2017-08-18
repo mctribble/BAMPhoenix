@@ -291,21 +291,37 @@
 
                 return {};
             };
-            
+//            
+//            console.log('About to start the while loop for uiCal');
+//            while(true){
+//            	var uiCal = uiCalendarConfig.calendars['myCalendar'];
+//            	console.log('Inside while loop');
+//            	if(uiCal){
+//            		console.log('inside if');
+//            		break;
+////            		$scope.eventSources[]
+//            	}
+//            }
             if(!SessionService.get("gotSubtopics")) {
                 SessionService.set("gotSubtopics", true); 
                 
                 var pageNumber = 0;
-//                while(true){
+                while(true){
                     var subtopicEvents = GetSubtopics.getPageOfSubtopics(pageNumber);
+                    
+                    //break out if ajax request fails
+                    if(!subtopicEvents[0]){
+                    	continue;
+                    }
                     console.log('subtopicEvents: ' + subtopicEvents);
-                    uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSources',subtopicEvents[0]);
-//                    if(!subtopicEvents[1]){
-//                        break;
-//                    }else{
-//                        pageNumber++;
-//                    }
-//                }
+//                    uiCal.fullCalendar('addEventSources',subtopicEvents[0]);
+                    $scope.eventSources = [subtopicEvents[0]];
+                    if(!subtopicEvents[1]){
+                        break;
+                    }else{
+                        pageNumber++;
+                    }
+                }
             }
            // POST method to show subtopics on the calendar
             			// For showing and hiding the
@@ -542,7 +558,7 @@
             }
             
             /* event sources array */
-            $scope.eventSources = [$scope.events];
+//            $scope.eventSources = [$scope.events]; //this does duplicates
             $scope.sources 			= "";
    			$scope.source 			= "";
 

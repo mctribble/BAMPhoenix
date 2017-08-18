@@ -29,9 +29,11 @@ app.service('SessionService', function($window){
 
 app.service('GetSubtopics', ['$http', 'SessionService', 
 	function($http, SessionService){
-	var events = [];
-	var morePages = false;
+	
+	
 	this.getPageOfSubtopics = function(pageNumber){
+		var events = [];
+		var morePages = false;
 		console.log('Inside service getPageOfSubtopics');
 		var url;
 		
@@ -74,11 +76,12 @@ app.service('GetSubtopics', ['$http', 'SessionService',
 	        			events.push(temp);
 	    		}
 	    		
-	    		if(response.data.length < pageSize){
+	    		if(response.data.length >= pageSize){
+	    			console.log('There are more pages to get\npageSize: ' + pageSize + '\nresponse.data.length: ' + response.data.length);
 	    			morePages = true;
 	    		}
 	    	}).finally(function() {
-	    		console.log('failure');
+	    		console.log('Finishing ajax $http service');
 	    		// Turn off loading indicator whether success or
 				// failure.
 //	    		$scope.loading = false;
@@ -87,6 +90,7 @@ app.service('GetSubtopics', ['$http', 'SessionService',
 			var returnValue = [];
 			returnValue.push(events);
 			returnValue.push(morePages);
+			console.log('Service returnValue: ', returnValue);
 			
 			return returnValue;
 		}
