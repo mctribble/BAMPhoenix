@@ -380,7 +380,7 @@
             	
             	//UTC offset
             	//&& ! (  new Date().setHours(0, 0, 0, 0).getDate() == eventDate.getDate() &&  new Date().setHours(0, 0, 0, 0).getMonth() == eventDate.getMonth() && new Date().setHours(0, 0, 0, 0).getFullYear() == eventDate.getFullYear() )	
-            	if(event.start < new Date().setHours(0, 0, 0, 0) && ! (  new Date().getDate() == (eventDate.getDate() ) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() )	 ){
+            	if(event.start < new Date().setHours(0, 0, 0, 0) && ! (  new Date().getDate() == (eventDate.getDate() +1 ) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() )	 ){
             		
             		if(event.className == 'topiccolorgreen'){
                   		event.className= 'topiccolorred';
@@ -489,6 +489,7 @@
             	{
             		
                 		event.className= 'topiccoloryellow';
+                		
                 		console.log('topic blue dragged');
                         uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
                 		  // http for blue to green
@@ -503,6 +504,7 @@
 
                
             	}	
+            	
             	
               	if((event.className == 'topiccoloryellow' && event.start > new Date().setHours(0, 0, 0, 0) ) || ( event.className == 'topiccoloryellow' && new Date().getDate() == (eventDate.getDate() + 1) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() ) )
             	{
@@ -678,7 +680,6 @@
             };
             
             /* event sources array */
-
 
             $scope.sources 			= "";
    			$scope.source 			= "";
