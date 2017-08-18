@@ -36,11 +36,11 @@ public class SubtopicService {
 	@Autowired
 	SubtopicStatusRepository subtopicStatusRepository;
 	
-	public void addSubtopic(int subtopic, int batch, int lessonDate){
+	public void addSubtopic(int subtopic, int batch){
 		Subtopic s = new Subtopic();
-		Batch b = new Batch();
-		SubtopicName st = new SubtopicName();
-		SubtopicStatus ss = new SubtopicStatus();
+		Batch b;
+		SubtopicName st;
+		SubtopicStatus ss;
 		Date date = new Date();
 
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
