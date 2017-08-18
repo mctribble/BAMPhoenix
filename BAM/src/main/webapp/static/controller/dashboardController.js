@@ -1,30 +1,33 @@
 /**
  * 
  */
-app.controller('dashboardController', function($http, $scope, $rootScope) {
+app.controller('dashboardController', function($http, $scope, SessionService, $rootScope) {
 	$scope.user;
 	//set batchId with the id of the currentBatch if it exists else use the trainerBatch
 	var batchId;
-	$rootScope.currentBatchName;
-	if($rootScope.currentBatch)
+	if(SessionService.get("currentBatch"))
 	{
-		batchId = $rootScope.currentBatch.id;
-		$rootScope.currentBatchName = $rootScope.currentBatch.name;
+		batchId = SessionService.get("currentBatch").id;
+		SessionService.set("currentBatchName", SessionService.get("currentBatch").name);
+		
 	}else
 	{
-		batchId = $rootScope.trainerBatch.id; //if currentBatch is not set use the trainerBatch's id
-		$rootScope.currentBatchName = $rootScope.trainerBatch.name;
+		batchId = SessionService.get("trainerBatch").id; //if currentBatch is not set use the trainerBatch's id
+		SessionService.set("currentBatchName", SessionService.get("trainerBatch").name);
+		console.log(batchId);
 	}
+	
 	
 	$scope.getData = function() {
 			
 		if($scope.user){
 			var currentDate = new Date().getTime();
 			
-			if($scope.trainerBatch.endDate > currentDate){
-				$scope.message = $scope.trainerBatch.name;
-				$scope.currentBatchStart1 = $scope.trainerBatch.startDate;
-				$scope.currentBatchEnd1 = $scope.trainerBatch.endDate;
+			if(SessionService.get("trainerBatch").endDate > currentDate){
+				console.log(SessionService.get("trainerBatch").endDate);
+				$scope.message = SessionService.get("trainerBatch").name;
+				$scope.currentBatchStart1 = SessionService.get("trainerBatch").startDate;
+				$scope.currentBatchEnd1 = SessionService.get("trainerBatch").endDate;
 				
 				//Count difference between start date and currentDate
 				function weeksBetween(d1, d2) {
@@ -37,22 +40,7 @@ app.controller('dashboardController', function($http, $scope, $rootScope) {
 				
 		}else{
 			$scope.message = 'You have no current batches';
-		}
-			if(batchId) //Check if currentBatch is set before using it.
-			{
-				//get the batch from the server by the id.
-				$http({
-					url: "rest/api/v1/Batches/ById",
-					method: "GET",
-					params:{
-						batchId: batchId
-					}
-				}).then(function(response){
-					 $scope.batch = response.data //reponse.data is a javascript object (automatically parsed from the JSON from the server)
-					 $scope.batch.startDate = new Date($scope.batch.startDate); //get the JavaScript date object from the data sent from the server
-					 $scope.batch.endDate = new Date($scope.batch.endDate);
-				});
-			}
+		}			
 			$http({
 				url: "rest/api/v1/Users/InBatch",
 				method: 'GET',
@@ -60,15 +48,12 @@ app.controller('dashboardController', function($http, $scope, $rootScope) {
 					batchId: batchId
 				}
 			}).then(function(response){
-				$scope.batch.usersInBatch = response.data;
-				console.log($scope.batch.usersInBatch);
-				for(var i = 0; i < $scope.batch.usersInBatch.length; i++) {
-					$scope.batch.users = $scope.batch.usersInBatch[i];
-					
-					 console.log($scope.batch.users);
-				    console.log($scope.batch.users.fName);
+				console.log(response.data);
+				$scope.usersInBatch = response.data
+				for(var i = 0; i < $scope.usersInBatch.length; i++) {
+					$scope.batchUsers = $scope.usersInBatch[i];
+				    console.log($scope.batchUsers.fName);
 				}
-				
 			})
 		}
 	}

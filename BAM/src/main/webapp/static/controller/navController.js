@@ -16,12 +16,7 @@ app.controller('navController', function($rootScope, SessionService, $scope, $lo
 			}
 		}
 	});
-<<<<<<< HEAD
 
-=======
-	
-	
->>>>>>> b51621a5ca8bd9d0fb411bb91bb6513af1088ede
 	$scope.redirect = function (){
 		SessionService.set("gotSubtopics", false);
 		if(!SessionService.get("currentUser")){
