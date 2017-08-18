@@ -10,16 +10,17 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.bam.bean.BamUser;
+
 public class MailService {
 
-	public static void sendMail(String email) {
+	public static void sendMail(String email, String newPassword) {
 
 
+		//replace these with environtment vairables
         final String username = "revabam@gmail.com";
         final String password = "testing123";
         String receiver= email; //user.getemail
-        
-        PasswordGenerator pass = new PasswordGenerator();
         
         Properties pop = new Properties();
         Properties props = new Properties();
@@ -42,7 +43,7 @@ public class MailService {
                 InternetAddress.parse(receiver));
             message.setSubject("Recover Password");
   
-            message.setText("Your temporary password is " + pass + " " + " Feel free to click the following link login \n" + " "+
+            message.setText("Your temporary password is " + newPassword  + " " + " Feel free to click the following link login \n" + " "+
                     "Login Page: http://localhost:8085/BAM/#/");            
             
 //            + ", and your username is" +
