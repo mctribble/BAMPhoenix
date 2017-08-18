@@ -1,30 +1,30 @@
 /**
  * 
  */
-app.controller('dashboardController', function($http, $scope, $rootScope) {
-	$scope.user;
+app.controller('dashboardController', function($http, $scope, SessionService, $rootScope) {
+	$rootScope.user;
 	//set batchId with the id of the currentBatch if it exists else use the trainerBatch
 	var batchId;
 	$scope.currentBatchName;
-	if($scope.currentBatch)
+	if(SessionService.get("currentBatch"))
 	{
-		batchId = $scope.currentBatch.id;
-		$scope.currentBatchName = $scope.currentBatch.name;
+		batchId = SessionService.get("currentBatch").id;
+		SessionService.set("currentBatchName",SessionService.get("currentBatch").name)
 	}else
 	{
-		batchId = $scope.trainerBatch.id; //if currentBatch is not set use the trainerBatch's id
-		$scope.currentBatchName = $scope.trainerBatch.name;
+		batchId = SessionService.get("trainerBatch").id; //if currentBatch is not set use the trainerBatch's id
+		SessionService.set("currentBatchName",SessionService.get("trainerBatch").name);
 	}
 	
 	$scope.getData = function() {
 			
-		if($scope.user){
+		if($rootScope.user){
 			var currentDate = new Date().getTime();
 			
-			if($scope.trainerBatch.endDate > currentDate){
-				$scope.message = $scope.trainerBatch.name;
-				$scope.currentBatchStart1 = $scope.trainerBatch.startDate;
-				$scope.currentBatchEnd1 = $scope.trainerBatch.endDate;
+			if(SessionService.get("trainerBatch").endDate > currentDate){
+				$scope.message = SessionService.get("trainerBatch").name;
+				$scope.currentBatchStart1 = SessionService.get("trainerBatch").startDate;
+				$scope.currentBatchEnd1 = SessionService.get("trainerBatch").endDate;
 				
 				//Count difference between start date and currentDate
 				function weeksBetween(d1, d2) {
@@ -72,25 +72,26 @@ app.controller('dashboardController', function($http, $scope, $rootScope) {
 		}
 	}
 	
-		
+	$scope.trainerHasBatch = SessionService.get("trainerBatch");
+	$scope.userHasBatch = SessionService.get("currentBatch");
 	
 	//This populates the progress bar
-		if ($scope.trainerBatch){
+		if ($scope.trainerHasBatch){
 			
 			var currentDate = new Date().getTime();
-			var startDate = $scope.trainerBatch.startDate;
-			var endDate = $scope.trainerBatch.endDate;
+			var startDate = SessionService.get("trainerBatch").startDate;
+			var endDate = SessionService.get("trainerBatch").endDate;
 			
 			var daysComplete = currentDate - startDate;
 			var totalDays = endDate - startDate;
 			
 			$scope.percent = Math.round((daysComplete * 100) / totalDays) + "%";
 			
-		} else if ($scope.user.batch){
+		} else if ($scope.userHasBatch){
 			
 			var currentDate = new Date().getTime();
-			var startDate = $scope.user.batch.startDate;
-			var endDate = $scope.user.batch.endDate;
+			var startDate = SessionService.get("currentBatch").startDate;
+			var endDate = SessionService.get("currentBatch").endDate;
 			
 			var daysComplete = currentDate - startDate;
 			var totalDays = endDate - startDate;
@@ -105,14 +106,13 @@ app.controller('dashboardController', function($http, $scope, $rootScope) {
 		$scope.returnMissed = function(){
 
 			 	var url;
-	            if($scope.user.role == 1){
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$scope.user.batch.id;
-	            }else if($scope.user.role == 2 && $scope.trainerBatch){
-	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+$scope.trainerBatch.id;
-	            }else if (($scope.user.role == 3) && $scope.currentBatch) {
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+$scope.currentBatch.id;
-	            }else{
-	            }
+			 	 if(SessionService.get("currentUser").role == 1){
+		            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("currentUser").batch.id;
+		            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
+		            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
+		            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
+		             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
+		            }
 	            
 	            $scope.loading = true;
 	            
