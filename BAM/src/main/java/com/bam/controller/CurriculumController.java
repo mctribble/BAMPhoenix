@@ -50,7 +50,7 @@ public class CurriculumController {
 	@ResponseBody
 	public List<CurriculumSubtopic> getAllCurriculumSchedules(HttpServletRequest request){
 		Curriculum c = new Curriculum();
-		c.setCurriculum_Id(Integer.parseInt(request.getParameter("curriculumId")));
+		c.setCurriculumId(Integer.parseInt(request.getParameter("curriculumId")));
 		return curriculumSubtopicService.getCurriculumSubtopicForCurriculum(c);
 	}
 	
@@ -71,8 +71,8 @@ public class CurriculumController {
 				SubtopicName[] subtopic = days[j].getSubtopics();
 				for(int k = 0; k < subtopic.length; k++){
 					cs.setCurriculumSubtopic_Name_Id(subtopic[k]);
-					cs.setCurriculumSubtopic_Week(i + 1);
-					cs.setCurriculumSubtopic_Day(j + 1);
+					cs.setCurriculumSubtopicWeek(i + 1);
+					cs.setCurriculumSubtopicDay(j + 1);
 					curriculumSubtopicService.saveCurriculumSubtopic(cs);
 				}
 			}

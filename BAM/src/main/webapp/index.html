@@ -36,6 +36,7 @@
 
 <!-- import app -->
 <script src="static/js/app.js"></script>
+<script src="static/js/service.js"></script>
 
 <!-- import controllers -->
 <script src="static/controller/calendarController.js"></script>
@@ -51,6 +52,8 @@
 <script src="static/controller/passwordResetController.js"></script>
 <script src="static/controller/curriculumController.js"></script>
 <script src="static/controller/passwordResetController.js"></script>
+<script src="static/controller/forgotPasswordController.js"></script>
+
 
 <link rel="stylesheet" type="text/css"
 	href="static/css/fullcalendar.css" />
@@ -106,7 +109,7 @@
 </head>
 <body class="main">
 
-	<div ng-include="'static/pages/navbar.html'"></div>
+	<div class ="navbar" ng-include="'static/pages/navbar.html'"></div>
 	<div id="page-wrap">
 		<div id="content" class="container">
 			<div class="well contentwell" ng-view></div>

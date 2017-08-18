@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bam.bean.Batch;
@@ -33,12 +36,13 @@ public class SubtopicService {
 	@Autowired
 	SubtopicStatusRepository subtopicStatusRepository;
 	
-	public void addSubtopic(int subtopic, int batch, int lessonDate){
+	public void addSubtopic(int subtopic, int batch){
 		Subtopic s = new Subtopic();
-		Batch b = new Batch();
-		SubtopicName st = new SubtopicName();
-		SubtopicStatus ss = new SubtopicStatus();
-		Date date = null;
+
+		Batch b;
+		SubtopicName st;
+		SubtopicStatus ss;
+		Date date = new Date();
 
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		try {
@@ -81,4 +85,25 @@ public class SubtopicService {
 		return subtopicNameRepository.findAll();
 	}
 	
+	public Page<Subtopic> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * Service method to return the pages of json information to the FullCalendar API. 
+	 * This is hard coded until the FullCalendar API is set up for getting pages of 
+	 * json sub-topics.
+	 * 
+	 * @param batchId
+	 * @param pageRequest
+	 * @return
+	 * 
+	 * Authors: Michael Garza
+	 * 			Gary LaMountain
+	 */
+	public List<Subtopic> findByBatchId(int batchId, PageRequest pageRequest) {
+		return subtopicRepository.findByBatch(batchRepository.findById(batchId), pageRequest);
+    }
 }
+

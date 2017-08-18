@@ -7,10 +7,13 @@ app.controller(
 	
 	function($scope, $http) {
 		$scope.sanitizeString = function(str){
-			//replace spaces with underscores
-			str = str.replace(' ', '_');
-			//remove all non alphanumeric characters
-			str = str.replace(/\W/g, '');
+
+			if(str){
+				//replace spaces with underscores
+				str = str.replace(' ', '_');
+				//remove all non alphanumeric characters
+				str = str.replace(/\W/g, '');
+			}
 //			console.log("new string: " + str);
 			return str;
 		}
@@ -70,12 +73,12 @@ app.controller(
 				//attempt to look for curr in curricula object before doing http req (caching)
 				console.log($scope.curricula );
 				for(i in $scope.curricula){
-					if( $scope.curricula[i].type == curriculum.meta.curriculum_Name && 
-						$scope.curricula[i].versions[curriculum.meta.curriculum_Version - 1].weeks.length > 0){
+					if( $scope.curricula[i].type == curriculum.meta.curriculumName && 
+						$scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks.length > 0){
 						
 						console.log("already loaded, canceling request");
-						console.log($scope.curricula[i].versions[curriculum.meta.curriculum_Version - 1].weeks);
-						$scope.template = JSON.parse(JSON.stringify($scope.curricula[i].versions[curriculum.meta.curriculum_Version - 1]));
+						console.log($scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks);
+						$scope.template = JSON.parse(JSON.stringify($scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1]));
 						return;
 					}else{
 						console.log("not loaded yet, requesting curriculum");
@@ -88,13 +91,13 @@ app.controller(
 				$http({
 					url: "rest/api/v1/Curriculum/Schedule",
 					method: "GET",
-					params: {curriculumId: curriculum.meta.curriculum_Version}
+					params: {curriculumId: curriculum.meta.curriculumVersion}
 					
 				}).then(function(response){
 					var newCurriculum = JSON.parse(JSON.stringify(curriculum));
 					
 					//add the (empty) weeks:
-						for(var j = 0; j < newCurriculum.meta.curriculum_Number_Of_Weeks; j++){
+						for(var j = 0; j < newCurriculum.meta.curriculumNumberOf_Weeks; j++){
 							newCurriculum.weeks.push({
 								days:[
 									{subtopics:[]},
@@ -110,7 +113,9 @@ app.controller(
 					//loop through array of response objects adding subtopics to the correct week and day arrays.
 					for(i in response.data){
 						var topic = response.data[i];
-						newCurriculum.weeks[topic.curriculumSubtopic_Week - 1].days[topic.curriculumSubtopic_Day - 1].subtopics.push(topic.curriculumSubtopic_Name_Id);
+//						console.log("Topics in loop");
+//						console.log(topic);
+						newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopic_Name_Id);
 					}
 					
 					//TODO: make this a unique object (not a reference to the old one)
@@ -119,8 +124,8 @@ app.controller(
 //					console.log(newCurriculum);
 					//add newCurriculum as a version to the curricula type:
 					for(j in $scope.curricula){
-						if($scope.curricula[j].type == curriculum.curriculum_Name){
-							$scope.curricula[j].versions[newCurriculum.meta.curriculum_Version - 1] = JSON.parse(JSON.stringify(newCurriculum));
+						if($scope.curricula[j].type == curriculum.curriculumName){
+							$scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = JSON.parse(JSON.stringify(newCurriculum));
 						}
 					}
 					
@@ -142,14 +147,14 @@ app.controller(
 //			$scope.displayedCurriculum.meta.version = $scope.template.meta.version;
 //			$scope.displayedCurriculum.weeks = $scope.template.weeks;
 			console.log($scope.template);
-			console.log("creating version " + $scope.template.meta.curriculum_Version +" of " + $scope.template.meta.curriculum_Name);
+			console.log("creating version " + $scope.template.meta.curriculumVersion +" of " + $scope.template.meta.curriculumName);
 			
 			var curriculum = JSON.parse(JSON.stringify($scope.template));
 			console.log("in new curr: - after stringifying");
 			console.log(curriculum);
 			//loop through the curricula looking for the curriculum type, when found count number of versions and set this curr. object's version to it
 			for(item in $scope.curricula){
-				if($scope.curricula[item].type == $scope.template.meta.curriculum_Name){
+				if($scope.curricula[item].type == $scope.template.meta.curriculumName){
 					curriculum.meta.version = $scope.curricula[item].versions.length;
 				}
 			}
@@ -169,11 +174,11 @@ app.controller(
 		$scope.saveCurriculum = function(){
 			console.log("saving curriculum");
 			console.log($scope.displayedCurriculum);
-			if($scope.displayedCurriculum.meta.curriculum_Name){
-				console.log("type: " + $scope.displayedCurriculum.meta.curriculum_Name);
+			if($scope.displayedCurriculum.meta.curriculumName){
+				console.log("type: " + $scope.displayedCurriculum.meta.curriculumName);
 				for(item in $scope.curricula){
 					console.log("checking type: " + $scope.curricula[item]);
-					if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculum_Name){
+					if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculumName){
 						console.log("found match - adding curriculum")
 						$scope.curricula[item].versions.push(JSON.parse(JSON.stringify({weeks: $scope.displayedCurriculum.weeks})));
 					}
@@ -197,6 +202,7 @@ app.controller(
 				
 			}).then(function(response){
 				var curricula = response.data;
+				console.log(curricula);
 				//parse the response into the local (front end) json object format
 				
 				//for each curriculum in curricula:
@@ -209,7 +215,7 @@ app.controller(
 					for(j in $scope.curricula){
 						var localCurricula = $scope.curricula[j];
 						//perform the check mentioned above
-						if(localCurricula.type == curriculum.curriculum_Name){
+						if(localCurricula.type == curriculum.curriculumName){
 							//raise the flag
 							curriculumTypeExists = true;
 							//add an empty weeks array to the curriculum
@@ -220,26 +226,27 @@ app.controller(
 							
 							var metaData = curriculum;
 							delete metaData.weeks;
-//							console.log("meta");
-//							console.log(metaData)
-							$scope.curricula[j].versions.splice(curriculum.curriculum_Version - 1, 0, JSON.parse(JSON.stringify({meta:metaData, weeks:[]})));
-//							console.log("curriculum in for of getCurricula ");
-//							console.log({meta:metaData, weeks:[]});
-//							$scope.curricula[j].versions[curriculum.curriculum_Version - 1].meta = curriculum;
+							console.log("meta");
+							console.log(metaData)
+							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 0, JSON.parse(JSON.stringify({meta:metaData, weeks:[]})));
+							console.log("curriculum in for of getCurricula ");
+							console.log({meta:metaData, weeks:[]});
+							$scope.curricula[j].versions[curriculum.curriculumVersion - 1].meta = curriculum;
 							break;
 						}
 					}
 					
-					//if a curriculum of type curriculum.curriculum_Name does not exist, add it as a new base curriculum type
+					//if a curriculum of type curriculum.curriculumName does not exist, add it as a new base curriculum type
 					if(!curriculumTypeExists){
-//						console.log("new curr type")
-//						console.log(curriculum)
+						console.log("new curr type")
+						console.log(curriculum)
 						
 						var metaData = curriculum;
 						delete metaData.weeks;
-						
+						console.log("curriculum after delete");
+//						console.log(curriculum.curriculumName);
 						var newCurriculum = {
-								type: curriculum.curriculum_Name,
+								type: curriculum.curriculumName,
 								versions: [
 									{
 										meta: metaData,
@@ -275,7 +282,7 @@ app.controller(
 					//determine if $scope.topics has a type of topic.Name already. If so add the subtopic to the existing list
 					for(j in $scope.topics){
 						//perform the check mentioned above
-						if($scope.topics[j].name == topic.topic.name){
+						if($scope.topics[j] && topic.topic && $scope.topics[j].name == topic.topic.name){
 							//raise the flag
 							topicExists = true;
 							$scope.topics[j].subtopics.push(topic);
@@ -283,7 +290,7 @@ app.controller(
 						}
 					}
 					
-					//if a curriculum of type curriculum.curriculum_Name does not exist, add it as a new base curriculum type
+					//if a curriculum of type curriculum.curriculumName does not exist, add it as a new base curriculum type
 					if(!topicExists){
 						var newTopic = {
 								id: topic.topic.id,
