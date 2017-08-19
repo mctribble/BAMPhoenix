@@ -62,8 +62,18 @@ public class CurriculumController {
 	
 	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
 	public void addSchedule(@RequestBody CurriculumSubtopicDTO c){
+		//save curriculum object first
+		Curriculum curriculum = new Curriculum();
+		curriculum.setCurriculumCreator(c.getMeta().getCurriculum().getCurriculum_Creator());
+		curriculum.setCurriculumdateCreated(c.getMeta().getCurriculum().getCurriculumdateCreated());
+		curriculum.setCurriculumName(c.getMeta().getCurriculum().getCurriculumName());
+		curriculum.setCurriculumNumberOf_Weeks(c.getMeta().getCurriculum().getCurriculumNumberOf_Weeks());
+		curriculum.setCurriculumVersion(c.getMeta().getCurriculum().getCurriculumVersion());
+		
+		curriculumService.save(curriculum);
+		
 		CurriculumSubtopic cs = new CurriculumSubtopic();
-		cs.setCurriculumSubtopic_Curriculum_ID(c.getMeta().getCurriculum());
+		cs.setCurriculumSubtopic_Curriculum_ID(curriculum);
 		int numWeeks = c.getWeeks().length;
 		for(int i = 0; i < numWeeks; i++){
 			DaysDTO[] days = c.getWeeks()[i].getDays();
