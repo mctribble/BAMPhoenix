@@ -4,10 +4,13 @@
 	<li class="nav-link"><a href="#/batchesFuture">Future</a></li>
 </ul>
 <br>
+
 <h3 style="text-align: center;">All Batches</h3>
 <div class="input-group">
 	<span class="input-group-addon"> Search: </span> <input type="search" class="form-control" ng-model="searchBox">
 </div>
+
+
 <table class="table">
 	<tr>
 		<th>Name</th>
@@ -26,4 +29,6 @@
 		<td>{{batch.endDate}}</td>
 	</tr>
 </table>
-	
+
+<button class="btn btn-default" ng-click="syncAssignForceBatches()">Sync Batches</button>	
+<div id="overlay" ng-show="assignForceLoading"><div class="loader"></div></div>

@@ -20,7 +20,6 @@ import com.bam.bean.Batch;
 import com.bam.repository.BamUserRepository;
 import com.bam.repository.BatchRepository;
 
-@Service("userDetailsService")
 @Transactional
 public class UsersDetailsService implements UserDetailsService {
 
@@ -106,17 +105,18 @@ public class UsersDetailsService implements UserDetailsService {
 
 		return Result;
 	}
+	
+	public List<BamUser> getByFNameAndLName(String f, String l) {
+		return dao.findByFNameAndLName(f, l);
+	}
+		
+	public void recoverE(BamUser user){
+		//BamUser bam = new BamUser();
+		//String targetEmail = user.getEmail();
+		 Runnable run = new EmailRun("revatbam@gmail.com");
+		 Thread th = new Thread(run);
+		 th.start();
 
-  /*
-      Author: Adeo Salam
-  */
-	public void recoverE(BamUser user) {
-		EmailRun er = new EmailRun();
-		//hard coded for testing purposes
-		//user.setEmail("revatbam@gmail.com"); use this user for functionality
-		er.setUser(user);
-		Thread th = new Thread(er);
-		th.start();
 	}
 
 }

@@ -36,6 +36,7 @@
 		<property name="username" value="bamproduser"></property>
 		<property name="password" value="revabam2017"></property>
 	</bean>
+
 	<!-- Because we use Hibernate -->
 	<bean id="hibernateJpaVendorAdapter"
 		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>

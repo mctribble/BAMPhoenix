@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
+
 @Entity
 @Table(name = "USERS")
 @Component
@@ -62,7 +63,18 @@ public class BamUser {
 	@Column(name = "Password_Bak") // This is a backup password that will be
 									// used when
 	private String pwd2; // the user needs to reset their password.
+	
+	@Column(name="AssignForce_ID")
+	private Integer AssignForce_ID;
 
+
+	public Integer getAssignForce_ID() {
+		return AssignForce_ID;
+	}
+
+	public void setAssignForce_ID(Integer assignForce_ID) {
+		AssignForce_ID = assignForce_ID;
+	}
 
 	public BamUser() {
 		super();
@@ -200,8 +212,8 @@ public class BamUser {
 	@Override
 	public String toString() {
 		return "BamUser [userId=" + userId + ", fName=" + fName + ", mName=" + mName + ", lName=" + lName + ", email="
-				+ email + ", pwd=" + pwd + ", role=" + role + ", batch=" + batch + ", phone=" + phone + ", phone2="
-				+ phone2 + ", skype=" + skype + ", pwd2=" + pwd2 + "]";
+				+ email + ", pwd=" + pwd + ", role=" + role + ", batch=" + "batch" + ", phone=" + phone + ", phone2="
+				+ phone2 + ", skype=" + skype + ", pwd2=" + pwd2 + ", AssignForce_ID=" + AssignForce_ID + "]";
 	}
 
 
