@@ -57,12 +57,14 @@ app.controller(
 					]
 				};
 			$scope.displayedCurriculum.weeks.push(week);
+			$scope.displayedCurriculum.meta.curriculumNumberOf_Weeks += 1;
 			console.log($scope.displayedCurriculum);
 		}
 		
 		$scope.deleteWeek = function(index){
 			if(confirm("Are you sure you want to delete week #" + index + "?")){
 				$scope.displayedCurriculum.weeks.splice(index-1, 1);
+				$scope.displayedCurriculum.meta.curriculumNumberOf_Weeks -= 1;
 			}
 		}
 		
@@ -78,7 +80,7 @@ app.controller(
 						
 						console.log("already loaded, canceling request");
 						console.log($scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks);
-						$scope.template = JSON.parse(JSON.stringify($scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1]));
+						$scope.template = $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1];
 						return;
 					}else{
 						console.log("not loaded yet, requesting curriculum");
@@ -94,7 +96,7 @@ app.controller(
 					params: {curriculumId: curriculum.meta.curriculumVersion}
 					
 				}).then(function(response){
-					var newCurriculum = JSON.parse(JSON.stringify(curriculum));
+					var newCurriculum = curriculum;
 					
 					//add the (empty) weeks:
 						for(var j = 0; j < newCurriculum.meta.curriculumNumberOf_Weeks; j++){
@@ -125,13 +127,13 @@ app.controller(
 					//add newCurriculum as a version to the curricula type:
 					for(j in $scope.curricula){
 						if($scope.curricula[j].type == curriculum.curriculumName){
-							$scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = JSON.parse(JSON.stringify(newCurriculum));
+							$scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
 						}
 					}
 					
 					//set the newCurriculum object as the $scope.template
 					//TODO: need to make this unique instead of reference in the future.
-					$scope.template = JSON.parse(JSON.stringify(newCurriculum));
+					$scope.template = newCurriculum;
 //					console.log("adding unique newCurriculum object as a version: ")
 //					console.log(newCurriculum);
 				});
@@ -149,18 +151,21 @@ app.controller(
 			console.log($scope.template);
 			console.log("creating version " + $scope.template.meta.curriculumVersion +" of " + $scope.template.meta.curriculumName);
 			
-			var curriculum = JSON.parse(JSON.stringify($scope.template));
+//			var curriculum = JSON.parse(JSON.stringify($scope.template));
+			var curriculum = jQuery.extend(true, {}, $scope.template);
 			console.log("in new curr: - after stringifying");
 			console.log(curriculum);
 			//loop through the curricula looking for the curriculum type, when found count number of versions and set this curr. object's version to it
 			for(item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.template.meta.curriculumName){
-					curriculum.meta.version = $scope.curricula[item].versions.length;
+					console.log("next version is: ");
+					console.log($scope.curricula[item].versions.length);
+					curriculum.meta.curriculumVersion = $scope.curricula[item].versions.length;
+					console.log(curriculum.meta.curriculumVersion);
 				}
 			}
 			
-//			$scope.displayedCurriculum = curriculum;
-			$scope.displayedCurriculum = JSON.parse(JSON.stringify(curriculum));
+			$scope.displayedCurriculum = curriculum;
 			console.log($scope.displayedCurriculum);
 		}
 		
@@ -172,7 +177,7 @@ app.controller(
 		}
 		
 		$scope.saveCurriculum = function(){
-			console.log("saving curriculum");
+			console.log("********** entering saving curriculum ********** ");
 			console.log($scope.displayedCurriculum);
 			if($scope.displayedCurriculum.meta.curriculumName){
 				console.log("type: " + $scope.displayedCurriculum.meta.curriculumName);
@@ -180,7 +185,8 @@ app.controller(
 					console.log("checking type: " + $scope.curricula[item]);
 					if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculumName){
 						console.log("found match - adding curriculum")
-						$scope.curricula[item].versions.push(JSON.parse(JSON.stringify({weeks: $scope.displayedCurriculum.weeks})));
+//						$scope.curricula[item].versions.push({meta:$scope.displayedCurriculum.meta , weeks: $scope.displayedCurriculum.weeks});
+						$scope.curricula[item].versions.push($scope.displayedCurriculum);
 					}
 				}
 			}else{
@@ -226,9 +232,7 @@ app.controller(
 							
 							var metaData = curriculum;
 							delete metaData.weeks;
-							console.log("meta");
-							console.log(metaData)
-							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 0, JSON.parse(JSON.stringify({meta:metaData, weeks:[]})));
+							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 0, {meta:metaData, weeks:[]});
 							console.log("curriculum in for of getCurricula ");
 							console.log({meta:metaData, weeks:[]});
 							$scope.curricula[j].versions[curriculum.curriculumVersion - 1].meta = curriculum;
@@ -256,7 +260,7 @@ app.controller(
 						};
 						console.log("new curr: ")
 						console.log(newCurriculum);
-						$scope.curricula.push(JSON.parse(JSON.stringify(newCurriculum)));
+						$scope.curricula.push(newCurriculum);
 					}
 				}
 				
