@@ -72,7 +72,12 @@
 		<span class="nav-item tab" ng-class="{active: isSet(2) }"><a
 			class="nav-link" ng-class="{active: isSet(2) }" ng-click="setTab(2)">Add</a></span>
 	</div>
-	<div id="inBatch" >
+	
+	<!-- 
+			Author: Adeo Salam
+				Added ng-show="isSet(1)" so the remove users from batch functionality doesn't show up in the add tab.
+	 -->
+	<div id="inBatch" ng-show="isSet(1)">
 		<table class="table">
 			<tr class="rm-header">
 				<td ng-click="order = 'fName'" class="head">First Name</td>
