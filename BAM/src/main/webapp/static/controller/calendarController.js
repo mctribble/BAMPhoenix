@@ -495,6 +495,8 @@
            	}//end of else	
             };
             
+            
+            
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
             	 $http({
@@ -571,7 +573,8 @@
             		var finishDate = moment(SessionService.get("currentUser").batch.endDate);
             		finishDate.add(finishDate.utcOffset(), 'minutes');
             		if(currentWeek >= beginDate && currentWeek < finishDate){
-            			return currentWeek.diff(SessionService.get("currentUser").batch.startDate, 'weeks') + 1;
+            			console.log(currentWeek.diff(beginDate, 'weeks') + 1);
+            			return currentWeek.diff(beginDate, 'weeks') + 1;
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && !SessionService.get("currentBatch") && SessionService.get("trainerBatch")){
             		var beginDate = moment(SessionService.get("trainerBatch").startDate);
@@ -579,7 +582,8 @@
             		var finishDate = moment(SessionService.get("trainerBatch").endDate);
             		finishDate.add(finishDate.utcOffset(), 'minutes');
             		if(currentWeek >= beginDate && currentWeek < finishDate){
-            			return currentWeek.diff(SessionService.get("trainerBatch").startDate, 'weeks') + 1;
+            			console.log(currentWeek.diff(beginDate, 'weeks') + 1);
+            			return currentWeek.diff(beginDate, 'weeks') + 1;
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && SessionService.get("currentBatch")){
             		var beginDate = moment(SessionService.get("currentBatch").startDate);
@@ -587,6 +591,7 @@
             		var finishDate = moment(SessionService.get("currentBatch").endDate);
             		finishDate.add(finishDate.utcOffset(), 'minutes');
             		if(currentWeek >= beginDate && currentWeek < finishDate){
+            			console.log(currentWeek.diff(beginDate, 'weeks') + 1);
             			return currentWeek.diff(beginDate, 'weeks') + 1;
             		}
             	}
@@ -602,8 +607,9 @@
                           editable: true,
                           navLinks: true,
                           weekNumbers: true,
-                          weekNumberTitle: "Week in Batch",
+                          weekNumbersWithinDays: true,
                           weekNumberCalculation: calculateWeekNumber,
+                          //validRange: loadRange,
                           views:{
                           	month:{
                           		eventLimit: 5
@@ -621,7 +627,6 @@
                         		}
                       	};
             }
-            
             if(SessionService.get("currentUser").role == 1 || SessionService.get("currentBatch") != null){
             /* config object */
             $scope.uiConfig = {
@@ -630,8 +635,9 @@
                 editable: false,
                 navLinks: true,
                 weekNumbers: true,
-                weekNumberTitle: "Week in Batch",
+                weekNumbersWithinDays: true,
                 weekNumberCalculation: calculateWeekNumber,
+                //validRange: loadRange,
                 views:{
                 	month:{
                 		eventLimit: 5
