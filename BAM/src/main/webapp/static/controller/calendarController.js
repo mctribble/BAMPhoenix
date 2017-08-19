@@ -19,8 +19,8 @@
   
 	  		
 	  		
-  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService',
-        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService) {
+  app.controller('calendarController', ['$q', '$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService',
+        function ($q, $rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService) {
 	  	$(".navbar").show();
 		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
@@ -293,24 +293,41 @@
                 return {};
             };
             
+            var pageNumber = 0;
+            var pageSize = 10;
+            var numberOfPages = 1;
+//            $http({
+//            	method: 'GET',
+//            	url: 'rest/api/v1/Calendar/GetNumberOfSubtopics?batchId='+ SessionService.get("trainerBatch").id
+//            })
+//            .then(function successCallback(response){
+//            	console.log('response is ' + response.data);
+//            	numberOfPages = response.data;
+//            });
+//            console.log('number of pages is ' + numberOfPages);
             	 var url;
 	            if(SessionService.get("currentUser").role == 1){
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("currentUser").batch.id;
 	            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
 	            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
-	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
+	             	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("trainerBatch").id + "&pageSize=" + pageSize + "&pageNumber=";
 	            }
             /* event source that contains custom events on the scope */
-	            
+	            var chain = $q.when();
+	            var responses = [];
             	$scope.events = [];
             	if(!SessionService.get("gotSubtopics") && url) {
             		SessionService.set("gotSubtopics", true); 
             		$scope.loading = true;
-            		var promise = $http({
-                		method : "GET",
-                		url : url
-                	}).then(function successCallback(response) {
+            		
+            		
+            		for(var n = 0; n < 5; n++){
+            			
+            			(function(index) {
+            		chain = chain.then(function(){
+            			return $http.get(url+index++
+                	).then(function successCallback(response) {
                 		var id=0;
                 		for(var i = 0; i < response.data.length ; i++) {
                     			var title = response.data[i].subtopicName.name;
@@ -343,6 +360,13 @@
                     	
                 		}
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
+                			pageNumber++;
+        	             	
+//        	             	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("trainerBatch").id + "&pageSize=" + pageSize + "&pageNumber=";
+        	             	console.log('pageNumber is ' + pageNumber + '\nurl is ' + (url+n));
+//        	             	if(response.data.length == pageSize){
+//        	             		return $http.get(url);
+//        	             	}
                 		
                 		// $scope.renderCalendar('myCalendar');
                 	}).finally(function() {
@@ -350,7 +374,11 @@
 						// failure.
                 		$scope.loading = false;
                 		SessionService.set("gotSubtopics", false);
-                	});
+                		
+                	})
+                	})//end of chain
+                	})(n);
+            		} //end of for loop
             	}
            // POST method to show subtopics on the calendar
             			// For showing and hiding the
