@@ -12148,10 +12148,10 @@ Calendar.mixin({
 
 		this.el.off('.fc'); // unbind nav link handlers
 
-		/*if (this.windowResizeProxy) {
-			$(window).unbind('resize', this.windowResizeProxy);
+		if (this.windowResizeProxy) {
+			SessionService.unbind('resize', this.windowResizeProxy);
 			this.windowResizeProxy = null;
-		}*/
+		}
 
 		GlobalEmitter.unneeded();
 	},

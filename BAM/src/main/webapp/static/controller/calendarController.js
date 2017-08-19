@@ -27,21 +27,7 @@
 				$location.path('/noBatch');
 			}
 		  
-		if(!SessionService.get("currentBatch")){
-			$scope.myBatchButton = false;
-		}
-		  
-		//If trying to look at your current batch when looking at all batches, loads an editable version instead.
-	  	if(SessionService.get("trainerBatch") && SessionService.get("currentBatch")){
-	  		if(SessionService.get("trainerBatch").id == SessionService.get("currentBatch").id){
-	  			SessionService.unset("currentBatch");
-	  			$scope.myBatchButton = false;
-	  		}else{
-	  			$scope.myBatchButton = true;
-	  		}
-	  	}
 	  	
-		  
 	  	// Varibles set for the use of adding day,month,year,to the Date
 		// attribute of a calendar.
 		    var date = new Date();
@@ -84,33 +70,24 @@
           };
             
           /*
-			 * @Author: Tom Scheffer
-			 * Changes the view of the calendar so it shows the date inputed into the search bar
+			 * @Author: Tom Scheffer Changes the view of the calendar so it
+			 * shows the date inputed into the search bar
 			 */
           $scope.changeDate = function(){
         	  uiCalendarConfig.calendars["myCalendar"].fullCalendar('gotoDate', $scope.searchDate);
         	  $scope.searchDate = new Date();
           };
 
-          /*
-           * @Author: Tom Scheffer
-           * Changes the calendar to your batch when looking at another trainer's batch
-           */
           $scope.currentBatch = function(){
-        	  if(SessionService.get("currentBatch")){
-        		  SessionService.unset("currentBatch");
-        		  if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
-        			  url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
-        		  }
-        		  if(!SessionService.get("gotSubtopics") && url){
-        			  SessionService.set("gotSubtopics", true); 
-        			  $scope.events = [];
-        			  $scope.loading = true;
-        			  $scope.loadCalendarInfoTrainer();
-        			  $scope.loadCalendar(url);
-        			  $scope.myBatchButton = false;
-        		  }
+        	  /*SessionService.unset("currentBatch");
+        	  if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
+	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
         	  }
+        	  if(!SessionService.get("gotSubtopics") && url){
+            		SessionService.set("gotSubtopics", true); 
+	             	$scope.loading = true;
+              	    $scope.loadCalendar(url);
+        	  }*/
           };
             var eventSerialId = 1;
             // @return {String} fingerprint of the event object and its
@@ -327,8 +304,9 @@
             /* event source that contains custom events on the scope */
 	            
             	$scope.events = [];
-            	//function that loads the events for your batch
-            	$scope.loadCalendar = function(url){
+            	if(!SessionService.get("gotSubtopics") && url) {
+            		SessionService.set("gotSubtopics", true); 
+            		$scope.loading = true;
             		$http({
                 		method : "GET",
                 		url : url
@@ -371,17 +349,13 @@
                 		// Turn off loading indicator whether success or
 						// failure.
                 		$scope.loading = false;
-                		SessionService.set("gotSubtopics", false); 
+                		SessionService.set("gotSubtopics", false);
                 	});
             	}
            // POST method to show subtopics on the calendar
             			// For showing and hiding the
 											// loading gif.
-            if(!SessionService.get("gotSubtopics") && url) {           	
-            	SessionService.set("gotSubtopics", true);         		
-            	$scope.loading = true;		
-            	$scope.loadCalendar(url);		
-            }
+            	
             		
             
             $scope.calEventsExt = {
@@ -393,7 +367,9 @@
             	          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
             	        ]
             	    };
+            if(SessionService.get("currentUser").role == 2 && SessionService.get("currentBatch") == null){
             /* alert on eventClick */
+
             $scope.alertOnEventClick = function( event, date, jsEvent, view){
             	var eventDate= new Date(event.start);
             	
@@ -493,8 +469,10 @@
             	}
             	
            	}//end of else	
+
+            	
             };
-            
+            }
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
             	 $http({
@@ -594,34 +572,6 @@
             };
             //var now = fullCalendar.moment
             
-            //function that loads calendar info for trainer's batch
-            $scope.loadCalendarInfoTrainer = function(){
-            	$scope.uiConfig = {
-                        calendar:{
-                          contentHeight: 'auto',
-                          editable: true,
-                          navLinks: true,
-                          weekNumbers: true,
-                          weekNumberTitle: "Week in Batch",
-                          weekNumberCalculation: calculateWeekNumber,
-                          views:{
-                          	month:{
-                          		eventLimit: 5
-                          	}
-                          },
-                          header:{
-                            left: 'title',
-                            center: 'month,basicWeek,basicDay',
-                            right: 'today prev,next'
-                          },
-                          eventClick: $scope.alertOnEventClick,
-                          eventDrop: $scope.alertOnDrop,
-                          eventResize: $scope.alertOnResize,
-                          eventMouseover: $scope.eventRender
-                        		}
-                      	};
-            }
-            
             if(SessionService.get("currentUser").role == 1 || SessionService.get("currentBatch") != null){
             /* config object */
             $scope.uiConfig = {
@@ -642,6 +592,7 @@
                   center: 'month,basicWeek,basicDay',
                   right: 'today prev,next'
                 },
+                eventClick: $scope.alertOnEventClick,
                 eventDrop: $scope.alertOnDrop,
                 eventResize: $scope.alertOnResize,
 //                eventMouseover: $scope.eventRender
@@ -650,9 +601,31 @@
             };
             }else {
             /* config object */
-            	$scope.loadCalendarInfoTrainer();
-            }
-
+            $scope.uiConfig = {
+              calendar:{
+                contentHeight: 'auto',
+                editable: true,
+                navLinks: true,
+                weekNumbers: true,
+                weekNumberTitle: "Week in Batch",
+                weekNumberCalculation: calculateWeekNumber,
+                views:{
+                	month:{
+                		eventLimit: 5
+                	}
+                },
+                header:{
+                  left: 'title',
+                  center: 'month,basicWeek,basicDay',
+                  right: 'today prev,next'
+                },
+                eventClick: $scope.alertOnEventClick,
+                eventDrop: $scope.alertOnDrop,
+                eventResize: $scope.alertOnResize,
+                eventMouseover: $scope.eventRender
+              		}
+            	};
+            };
             
             /* event sources array */
             $scope.eventSources = [$scope.events];
