@@ -472,15 +472,13 @@
             }
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
-            	 console.log('dropped classname: '+ event.className);
             	 var eventDate= new Date(event.start);
              
             	if(event.className == '' && event.start < new Date().setHours(0, 0, 0, 0) && ! (  new Date().getDate() == (eventDate.getDate() ) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() ) )
             	{
             		
                 		event.className= 'topiccoloryellow';
-                		
-                		console.log('topic blue dragged');
+            
                         uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
                 		  // http for blue to green
                       $http({
@@ -500,7 +498,6 @@
             	{
             		
                 		event.className= '';
-                		console.log('topic yellow dragged');
                         uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
                 		  // http for blue to green
                       $http({
