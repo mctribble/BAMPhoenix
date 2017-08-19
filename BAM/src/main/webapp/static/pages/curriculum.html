@@ -23,8 +23,8 @@
 						<div id="collapseCurriculum{{sanitizeString(curriculum.type)}}" class="collapse" role="tabpanel">
 							<div class="card-block">
 								<div class="list-group">
-									<a ng-class="{'active': active === true}" class="list-group-item" ng-repeat="version in curriculum.versions | orderBy:'-'" ng-click="setTemplate(version); deselectItems(); active = !active;">
-										Version #{{$index}}
+									<a ng-class="{'active': active === true}" class="list-group-item" ng-repeat="version in curriculum.versions track by version.meta.curriculumVersion" ng-click="setTemplate(version); deselectItems(); active = !active;">
+										Version #{{$index + 1}}
 									</a>
 								</div>
 							</div>

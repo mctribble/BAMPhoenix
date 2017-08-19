@@ -6,6 +6,7 @@ app.controller(
 	"curriculumController",
 	
 	function($scope, $http) {
+		/* UTILITY FUNCTIONS */
 		$scope.sanitizeString = function(str){
 
 			if(str){
@@ -16,6 +17,43 @@ app.controller(
 			}
 //			console.log("new string: " + str);
 			return str;
+		}
+		
+		$scope.deselectItems = function(){
+			var activeItems = document.getElementsByClassName("active");
+			for (var i = 0; i < activeItems.length; i++) {
+				   activeItems[i].classList.remove('active');
+			}
+		}
+
+		var CLONE = {
+				  'Array': function(clone) {
+				    return Array.prototype.map.call(this, clone);
+				  },
+				  'Date': function() {
+				    return new Date(this.valueOf());
+				  },
+				  'String': String.prototype.valueOf,
+				  'Number': Number.prototype.valueOf,
+				  'Boolean': Boolean.prototype.valueOf
+				};
+		
+		$scope.clone = function(obj) {
+			  if (Object(obj) !== obj) return obj;
+			  if (typeof obj.toJSON == 'function') {
+			    return obj.toJSON();
+			  }
+			  var type = toString.call(obj).slice(8, -1);
+			  if (type in CLONE) {
+			    return CLONE[type].call(obj, clone);
+			  }
+			  var copy = {};
+			  var keys = Object.keys(obj);
+			  for (var i = 0, len = keys.length; i < len; i++) {
+			    var key = keys[i];
+			    copy[key] = clone(obj[key]);
+			  }
+			  return copy;
 		}
 		
 		//constant array defining valid days of the week 
@@ -145,35 +183,21 @@ app.controller(
 			
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
 		$scope.newCurriculum = function(){
-//			$scope.displayedCurriculum.meta.type = $scope.template.meta.type;
-//			$scope.displayedCurriculum.meta.version = $scope.template.meta.version;
-//			$scope.displayedCurriculum.weeks = $scope.template.weeks;
-			console.log($scope.template);
-			console.log("creating version " + $scope.template.meta.curriculumVersion +" of " + $scope.template.meta.curriculumName);
+			console.log("--------------------- IN NEW CURRICULUM ---------------------");
 			
-//			var curriculum = JSON.parse(JSON.stringify($scope.template));
+			//create a unique object from the template (not a reference to template)
 			var curriculum = jQuery.extend(true, {}, $scope.template);
-			console.log("in new curr: - after stringifying");
-			console.log(curriculum);
+			
 			//loop through the curricula looking for the curriculum type, when found count number of versions and set this curr. object's version to it
 			for(item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.template.meta.curriculumName){
-					console.log("next version is: ");
-					console.log($scope.curricula[item].versions.length);
-					curriculum.meta.curriculumVersion = $scope.curricula[item].versions.length;
-					console.log(curriculum.meta.curriculumVersion);
+					console.log("creating version " + ($scope.curricula[item].versions.length + 1) + " of : " + curriculum.meta.curriculumName + " curriculum.");
+					curriculum.meta.curriculumVersion = $scope.curricula[item].versions.length + 1;
 				}
 			}
 			
 			$scope.displayedCurriculum = curriculum;
 			console.log($scope.displayedCurriculum);
-		}
-		
-		$scope.deselectItems = function(){
-			var activeItems = document.getElementsByClassName("active");
-			for (var i = 0; i < activeItems.length; i++) {
-				   activeItems[i].classList.remove('active');
-			}
 		}
 		
 		$scope.saveCurriculum = function(){
@@ -182,11 +206,14 @@ app.controller(
 			if($scope.displayedCurriculum.meta.curriculumName){
 				console.log("type: " + $scope.displayedCurriculum.meta.curriculumName);
 				for(item in $scope.curricula){
-					console.log("checking type: " + $scope.curricula[item]);
+					console.log("checking type: " + $scope.curricula[item].type);
 					if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculumName){
 						console.log("found match - adding curriculum")
 //						$scope.curricula[item].versions.push({meta:$scope.displayedCurriculum.meta , weeks: $scope.displayedCurriculum.weeks});
 						$scope.curricula[item].versions.push($scope.displayedCurriculum);
+						console.log("updated curricula - after pushign new version");
+						console.log($scope.curricula);
+						
 					}
 				}
 			}else{
