@@ -50,7 +50,7 @@ public class CurriculumController {
 	@ResponseBody
 	public List<CurriculumSubtopic> getAllCurriculumSchedules(HttpServletRequest request){
 		Curriculum c = new Curriculum();
-		c.setCurriculum_Id(Integer.parseInt(request.getParameter("curriculumId")));
+		c.setCurriculumId(Integer.parseInt(request.getParameter("curriculumId")));
 		return curriculumSubtopicService.getCurriculumSubtopicForCurriculum(c);
 	}
 	
@@ -64,11 +64,11 @@ public class CurriculumController {
 	public void addSchedule(@RequestBody CurriculumSubtopicDTO c){
 		//save curriculum object first
 		Curriculum curriculum = new Curriculum();
-		curriculum.setCurriculum_Creator(c.getMeta().getCurriculum().getCurriculum_Creator());
-		curriculum.setCurriculum_dateCreated(c.getMeta().getCurriculum().getCurriculum_dateCreated());
-		curriculum.setCurriculum_Name(c.getMeta().getCurriculum().getCurriculum_Name());
-		curriculum.setCurriculum_Number_Of_Weeks(c.getMeta().getCurriculum().getCurriculum_Number_Of_Weeks());
-		curriculum.setCurriculum_Version(c.getMeta().getCurriculum().getCurriculum_Version());
+		curriculum.setCurriculumCreator(c.getMeta().getCurriculum().getCurriculum_Creator());
+		curriculum.setCurriculumdateCreated(c.getMeta().getCurriculum().getCurriculumdateCreated());
+		curriculum.setCurriculumName(c.getMeta().getCurriculum().getCurriculumName());
+		curriculum.setCurriculumNumberOf_Weeks(c.getMeta().getCurriculum().getCurriculumNumberOf_Weeks());
+		curriculum.setCurriculumVersion(c.getMeta().getCurriculum().getCurriculumVersion());
 		
 		curriculumService.save(curriculum);
 		
@@ -81,8 +81,8 @@ public class CurriculumController {
 				SubtopicName[] subtopic = days[j].getSubtopics();
 				for(int k = 0; k < subtopic.length; k++){
 					cs.setCurriculumSubtopic_Name_Id(subtopic[k]);
-					cs.setCurriculumSubtopic_Week(i + 1);
-					cs.setCurriculumSubtopic_Day(j + 1);
+					cs.setCurriculumSubtopicWeek(i + 1);
+					cs.setCurriculumSubtopicDay(j + 1);
 					curriculumSubtopicService.saveCurriculumSubtopic(cs);
 				}
 			}
