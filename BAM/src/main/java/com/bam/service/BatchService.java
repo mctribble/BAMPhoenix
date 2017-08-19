@@ -12,7 +12,6 @@ import com.bam.bean.BamUser;
 
 @Transactional
 public class BatchService {
-	
 	@Autowired
 	BatchRepository batchRepository;
 

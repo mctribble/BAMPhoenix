@@ -9,23 +9,6 @@ var fixedstart=[];
 
 app.controller('batchesAllController', function($scope, SessionService, $rootScope, $location, $http,$filter)
 {	
-	$scope.assignForceLoading = false;
-	
-	$scope.syncAssignForceBatches = function(){
-		$scope.assignForceLoading = true;
-		console.log("I'm loading now")
-		$http({
-			url: 'rest/assignforceSync',
-			method: 'GET'
-		})
-		.then(function success(response){
-					console.log('update success updated version');
-				},
-				function error(response){
-					console.log('update failed');
-		}).finally(function(){$scope.assignForceLoading = false})
-	}
-	
 	$scope.msg;
 	$scope.getBatchesAll = function(){
 		

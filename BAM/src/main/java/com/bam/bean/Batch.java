@@ -13,10 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +25,8 @@ public class Batch {
 
 	@Id
 	@Column(name = "Batch_ID")
+	@SequenceGenerator(name = "BATCH_ID_SEQ", sequenceName = "BATCH_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BATCH_ID_SEQ")
 	private Integer id;
 
 	@Column(name = "Batch_Name")
@@ -36,11 +34,11 @@ public class Batch {
 	private String name;
 
 	@Column(name = "Start_Date")
-	@NotNull(message = "Start date cannot be empty")
+	@NotEmpty(message = "Start date cannot be empty")
 	private Timestamp startDate;
-	
+
 	@Column(name = "End_Date")
-	@NotNull(message = "End date cannot be empty")
+	@NotEmpty(message = "End date cannot be empty")
 	private Timestamp endDate;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -133,8 +131,8 @@ public class Batch {
 
 	@Override
 	public String toString() {
-		return "Batch [id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate + ", trainer="
-				+ trainer + ", type=" + type + "]";
+		return "Batches [id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", trainer=" + trainer + ", type=" + type + "]";
 	}
 
 }
