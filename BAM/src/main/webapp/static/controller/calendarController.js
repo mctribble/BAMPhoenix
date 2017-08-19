@@ -556,12 +556,12 @@
             };
             
             /* Render Tooltip */
-//            $scope.eventRender = function( event, element, view ) { 
-//            	
-//            	     $(element).tooltip({title: event.title});
-//            	 
-//                $compile(element)($scope);
-//            };
+            $scope.eventRender = function( event, element, view ) { 
+            	$('.tooltip').remove();
+            	     $(element).tooltip({title: event.title});
+            	 
+                $compile(element)($scope);
+            };
             
             /* Change View */
             $scope.changeView = function(view,calendar) {
@@ -631,10 +631,11 @@
                   center: 'month,basicWeek,basicDay',
                   right: 'today prev,next'
                 },
+                //all the events are initialized here
                 eventClick: $scope.alertOnEventClick,
                 eventDrop: $scope.alertOnDrop,
                 eventResize: $scope.alertOnResize,
-//                eventMouseover: $scope.eventRender
+                eventRender: $scope.eventRender
               }
             
             };
@@ -661,7 +662,7 @@
                 eventClick: $scope.alertOnEventClick,
                 eventDrop: $scope.alertOnDrop,
                 eventResize: $scope.alertOnResize,
-                eventMouseover: $scope.eventRender
+                eventRender: $scope.eventRender
               		}
             	};
             };
