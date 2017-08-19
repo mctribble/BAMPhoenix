@@ -50,7 +50,7 @@ public class CurriculumController {
 	@ResponseBody
 	public List<CurriculumSubtopic> getAllCurriculumSchedules(HttpServletRequest request){
 		Curriculum c = new Curriculum();
-		c.setCurriculumId(Integer.parseInt(request.getParameter("curriculumId")));
+		c.setCurriculum_Id(Integer.parseInt(request.getParameter("curriculumId")));
 		return curriculumSubtopicService.getCurriculumSubtopicForCurriculum(c);
 	}
 	
@@ -62,8 +62,18 @@ public class CurriculumController {
 	
 	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
 	public void addSchedule(@RequestBody CurriculumSubtopicDTO c){
+		//save curriculum object first
+		Curriculum curriculum = new Curriculum();
+		curriculum.setCurriculum_Creator(c.getMeta().getCurriculum().getCurriculum_Creator());
+		curriculum.setCurriculum_dateCreated(c.getMeta().getCurriculum().getCurriculum_dateCreated());
+		curriculum.setCurriculum_Name(c.getMeta().getCurriculum().getCurriculum_Name());
+		curriculum.setCurriculum_Number_Of_Weeks(c.getMeta().getCurriculum().getCurriculum_Number_Of_Weeks());
+		curriculum.setCurriculum_Version(c.getMeta().getCurriculum().getCurriculum_Version());
+		
+		curriculumService.save(curriculum);
+		
 		CurriculumSubtopic cs = new CurriculumSubtopic();
-		cs.setCurriculumSubtopic_Curriculum_ID(c.getMeta().getCurriculum());
+		cs.setCurriculumSubtopic_Curriculum_ID(curriculum);
 		int numWeeks = c.getWeeks().length;
 		for(int i = 0; i < numWeeks; i++){
 			DaysDTO[] days = c.getWeeks()[i].getDays();
@@ -71,8 +81,8 @@ public class CurriculumController {
 				SubtopicName[] subtopic = days[j].getSubtopics();
 				for(int k = 0; k < subtopic.length; k++){
 					cs.setCurriculumSubtopic_Name_Id(subtopic[k]);
-					cs.setCurriculumSubtopicWeek(i + 1);
-					cs.setCurriculumSubtopicDay(j + 1);
+					cs.setCurriculumSubtopic_Week(i + 1);
+					cs.setCurriculumSubtopic_Day(j + 1);
 					curriculumSubtopicService.saveCurriculumSubtopic(cs);
 				}
 			}
