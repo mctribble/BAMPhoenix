@@ -311,7 +311,7 @@
 	            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
 	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
 	            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
-	             	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("trainerBatch").id + "&pageSize=" + pageSize + "&pageNumber=";
+	             	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("trainerBatch").id + "&pageSize=" + pageSize + "&pageNumber=0";
 	            }
             /* event source that contains custom events on the scope */
 	            var chain = $q.when();
@@ -321,13 +321,18 @@
             		SessionService.set("gotSubtopics", true); 
             		$scope.loading = true;
             		
-            		
-            		for(var n = 0; n < 5; n++){
-            			
+            		var z = 0;
+            		for(var n = 0; n < 2; n++){
+//            			url += n;
             			(function(index) {
+//            				url += index;
+            				
             		chain = chain.then(function(){
-            			return $http.get(url+index++
+            			url = url.substring(0, url.length - 1) + index;
+//            			url += index;
+            			return $http.get(url
                 	).then(function successCallback(response) {
+                		console.log('response: ', response.data)
                 		var id=0;
                 		for(var i = 0; i < response.data.length ; i++) {
                     			var title = response.data[i].subtopicName.name;
@@ -362,8 +367,8 @@
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
                 			pageNumber++;
         	             	
-//        	             	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("trainerBatch").id + "&pageSize=" + pageSize + "&pageNumber=";
-        	             	console.log('pageNumber is ' + pageNumber + '\nurl is ' + (url+n));
+//        	             	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("trainerBatch").id + "&pageSize=" + pageSize + "&pageNumber=" + index;
+        	             	console.log('pageNumber is ' + pageNumber + '\nurl is ' + (url));
 //        	             	if(response.data.length == pageSize){
 //        	             		return $http.get(url);
 //        	             	}
