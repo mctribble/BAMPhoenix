@@ -346,39 +346,26 @@
                                 var month = a.getMonth();
                                 var day = a.getDate();
                                 var formattedTime = new Date(year, month, day);
-                                var checkDuplicates = new Set();
+                                
 
 
                                 
                                 	if(status == 1 )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime};	
-<<<<<<< HEAD
                                 	if (status == 1  && new Date().getMonth() > formattedTime.getMonth() && new Date().getFullYear() >= formattedTime.getFullYear() )
                                     	 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
                                 	if (status == 1  && new Date().getDate() > formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
                                 		 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
                                 	               
-=======
-                                	if(status == 1  && new Date().getMonth() > formattedTime.getMonth() && new Date().getFullYear() >= formattedTime.getFullYear() )
-                                    	var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
-                                	if(status == 1  && new Date().getDate() > formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
-                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
->>>>>>> 2220584cbc57f69ec51688b7e290250e3c8a8f50
+
                                     if(status == 2 )
                                 		 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
                                     if(status == 3 )
-<<<<<<< HEAD
                                 		 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
                                     if (status == 4)
                                     	 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};             
-=======
-                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
-                                    if(status == 4)
-                                    	var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
-                                	if(status == 4  && new Date().getDate() == formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
-                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime};  
-                                    
->>>>>>> 2220584cbc57f69ec51688b7e290250e3c8a8f50
+
+                                	
 
                     			$scope.events.push(temp);
                     			id++;
