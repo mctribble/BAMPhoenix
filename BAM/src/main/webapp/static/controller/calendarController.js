@@ -40,7 +40,6 @@
 	  			$scope.myBatchButton = true;
 	  		}
 	  	}
-	  	
 		  
 	  	// Varibles set for the use of adding day,month,year,to the Date
 		// attribute of a calendar.
@@ -592,6 +591,10 @@
             /* Change View */
             $scope.changeView = function(view,calendar) {
               uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
+      	  	
+      	  		$('a').each(function () {
+      	  			console.log(this.textContent);
+      	  		});
             };
             /* Change View */
             $scope.renderCalendar = function(calendar) {
@@ -614,8 +617,7 @@
             		var finishDate = moment(SessionService.get("currentUser").batch.endDate);
             		finishDate.add(finishDate.utcOffset(), 'minutes');
             		if(currentWeek >= beginDate && currentWeek < finishDate){
-            			console.log(currentWeek.diff(beginDate, 'weeks') + 1);
-            			return currentWeek.diff(beginDate, 'weeks') + 1;
+            			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && !SessionService.get("currentBatch") && SessionService.get("trainerBatch")){
             		var beginDate = moment(SessionService.get("trainerBatch").startDate);
@@ -623,8 +625,7 @@
             		var finishDate = moment(SessionService.get("trainerBatch").endDate);
             		finishDate.add(finishDate.utcOffset(), 'minutes');
             		if(currentWeek >= beginDate && currentWeek < finishDate){
-            			console.log(currentWeek.diff(beginDate, 'weeks') + 1);
-            			return currentWeek.diff(beginDate, 'weeks') + 1;
+            			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && SessionService.get("currentBatch")){
             		var beginDate = moment(SessionService.get("currentBatch").startDate);
@@ -632,8 +633,7 @@
             		var finishDate = moment(SessionService.get("currentBatch").endDate);
             		finishDate.add(finishDate.utcOffset(), 'minutes');
             		if(currentWeek >= beginDate && currentWeek < finishDate){
-            			console.log(currentWeek.diff(beginDate, 'weeks') + 1);
-            			return currentWeek.diff(beginDate, 'weeks') + 1;
+            			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}
             	}
             	return 0;
@@ -647,12 +647,11 @@
                           contentHeight: 'auto',
                           editable: true,
                           navLinks: true,
-                          weekNumbers: true,
                           weekNumbersWithinDays: true,
                           weekNumberCalculation: calculateWeekNumber,
-                          //validRange: loadRange,
                           views:{
                           	month:{
+                                weekNumbers: true,
                           		eventLimit: 5
                           	}
                           },
@@ -675,12 +674,11 @@
                 contentHeight: 'auto',
                 editable: false,
                 navLinks: true,
-                weekNumbers: true,
                 weekNumbersWithinDays: true,
                 weekNumberCalculation: calculateWeekNumber,
-                //validRange: loadRange,
                 views:{
                 	month:{
+                        weekNumbers: true,
                 		eventLimit: 5
                 	}
                 },
