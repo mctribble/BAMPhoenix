@@ -5,7 +5,7 @@
 app.controller(
 	"curriculumController",
 	
-	function($scope, $http) {
+	function($scope, $http, SessionService) {
 		/* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
 		
 		//constant array defining valid days of the week 
@@ -52,6 +52,16 @@ app.controller(
 			for (var i = 0; i < activeItems.length; i++) {
 				   activeItems[i].classList.remove('active');
 			}
+		}
+		
+		$scope.getDate = function(){
+			var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth() + 1;
+			var yyyy = today.getFullYear();
+			if(dd < 10) dd = '0' + dd;
+			if(mm < 10) mm = '0' + mm;
+			return mm + '/' + dd + '/' + yyyy;
 		}
 		
 		$scope.requestCurriculum = function(curriculum){
@@ -164,8 +174,8 @@ app.controller(
 										curriculumName: type,
 										curriculumNumberOf_Weeks: 0,
 										curriculumVersion: 1,
-										curriculum_Creator: null, //set this to the currently logged in user eventually
-										curriculumdateCreated: null //set this to the current date as mm/dd/yy eventually
+										curriculum_Creator: SessionService.get("currentUser"),
+										curriculumdateCreated: $scope.getDate() //set this to the current date as mm/dd/yy eventually
 									},
 									weeks:[]
 								}
@@ -180,6 +190,8 @@ app.controller(
 			//we can now guarantee that the template is set appropriately, and can load it into the displayedCurriculum
 			//create a unique object from the template (not a reference to template)
 			var curriculum = jQuery.extend(true, {}, $scope.template);
+			curriculum.meta.curriculum_Creator = SessionService.get("currentUser");
+			curriculum.meta.curriculumdateCreated = $scope.getDate();
 			//loop through the curricula looking for the curriculum type, if found, count the number of versions and set this curr. object's version to it + 1
 			for(item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.template.meta.curriculumName){
@@ -209,6 +221,26 @@ app.controller(
 				};
 				$scope.curricula.push(newType);
 			}
+			console.log("Displayed Curriculum before saving: ");
+			console.log($scope.displayedCurriculum);
+			var curriculumDTO = {
+					meta:{
+						curriculum: $scope.displayedCurriculum.meta
+					},
+					weeks:$scope.displayedCurriculum.weeks
+			}
+			//persist to the DB
+			$http({
+				method: 'POST',
+				url: 'rest/api/v1/Curriculum/AddCurriculum',
+				headers: {
+			        'Content-Type': 'application/json', 
+			        'Accept': 'application/json' 
+			    },
+				data: curriculumDTO
+			}).then(function(){
+				console.log("successfully persisted curriculum")
+			});
 			
 			$scope.displayedCurriculum = null;
 			$scope.template = null;

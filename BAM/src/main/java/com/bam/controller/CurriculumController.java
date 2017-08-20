@@ -63,6 +63,7 @@ public class CurriculumController {
 	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
 	public void addSchedule(@RequestBody CurriculumSubtopicDTO c){
 		//save curriculum object first
+		System.out.println(c);
 		Curriculum curriculum = new Curriculum();
 		curriculum.setCurriculumCreator(c.getMeta().getCurriculum().getCurriculum_Creator());
 		curriculum.setCurriculumdateCreated(c.getMeta().getCurriculum().getCurriculumdateCreated());
