@@ -36,13 +36,11 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				$scope.currentBatchStart1 = SessionService.get("trainerBatch").startDate;
 				$scope.currentBatchEnd1 = SessionService.get("trainerBatch").endDate;
 				
-				//Count difference between start date and currentDate
 				function weeksBetween(d1, d2) {
 				    return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
 				}
 				
 				var dif = weeksBetween($scope.currentBatchStart1, currentDate);
-				//Current week number
 				$scope.weekNum = dif;
 				
 		}else{
@@ -135,7 +133,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 	
 
 	/**
-	 * Populates the progress bar
+	 * Populates the day progress bar by days completed
 	 */
 		if ($scope.trainerHasBatch){
 			
@@ -189,8 +187,10 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
              		$scope.count = 0;
              		$scope.totalSub = $scope.subTopics.length;
              		
-             		//This populates the subtopic progress bar
-            		$scope.completed = 0;
+             		/**
+             		 * Populates the subtopic progress bar by topics completed
+             		 */
+             		$scope.completed = 0;
             		for(var i = 0; i < $scope.subTopics.length ; i++){
             				
             			if($scope.trainerHasBatch){
@@ -212,6 +212,10 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
             		
             		
             		$scope.topicArray = []; 
+            		
+            		/**
+            		 * Populates dynamic list of missed subtopics and their respective topics
+            		 */
 
              		for(var i = 0; i < $scope.subTopics.length ; i++) {
                 		var status= response.data[i].status.id;
@@ -261,7 +265,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
              			createLI.appendChild(createUL);
              		}
              		
-             		//Append subtopics to related topics
+             		
              		for(var k = 0; k < $scope.subTopics.length ; k++) {
                 		var status= response.data[k].status.id;
                  		var title = response.data[k].subtopicName.name
@@ -300,7 +304,6 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
                      		}
              		}
              	}).finally(function() {
-            		// Turn off loading indicator
             		$scope.loading = false;
             	});}
                      	
