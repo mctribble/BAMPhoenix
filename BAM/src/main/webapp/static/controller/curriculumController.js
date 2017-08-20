@@ -54,6 +54,38 @@ app.controller(
 			}
 		}
 		
+		$scope.requestCurriculum = function(curriculum){
+			//do request
+			return $http({
+				url: "rest/api/v1/Curriculum/Schedule",
+				method: "GET",
+				params: {curriculumId: curriculum.meta.curriculumVersion}
+				
+			})
+			.then(function(response){
+				var newCurriculum = curriculum;
+				//add the (empty) weeks:
+					for(var j = 0; j < newCurriculum.meta.curriculumNumberOf_Weeks; j++){
+						newCurriculum.weeks.push({
+							days:[
+								{subtopics:[]},
+								{subtopics:[]},
+								{subtopics:[]},
+								{subtopics:[]},
+								{subtopics:[]}
+							]
+						});
+				}
+				//loop through array of response objects adding subtopics to the correct week and day arrays.
+				for(i in response.data){
+					var topic = response.data[i];
+					newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopic_Name_Id);
+				}
+				return newCurriculum;
+			})
+		}
+		
+		
 		/* END UTILITY FUNCTIONS */
 		
 		/* BEGIN CURRICULUM MANIPULATION FUNCTION DEFINITIONS */
@@ -83,50 +115,24 @@ app.controller(
 			if(curriculum){
 				//attempt to look for curr in curricula object before doing http req (caching)
 				for(i in $scope.curricula){
-					if( $scope.curricula[i].type == curriculum.meta.curriculumName && 
-						$scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks.length > 0){
+					if( $scope.curricula[i].type == curriculum.meta.curriculumName && $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks.length > 0){
 						$scope.template = $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1];
 						return;
 					}
 				}
 				
-				//do request
-				$http({
-					url: "rest/api/v1/Curriculum/Schedule",
-					method: "GET",
-					params: {curriculumId: curriculum.meta.curriculumVersion}
-					
-				}).then(function(response){
-					var newCurriculum = curriculum;
-					
-					//add the (empty) weeks:
-						for(var j = 0; j < newCurriculum.meta.curriculumNumberOf_Weeks; j++){
-							newCurriculum.weeks.push({
-								days:[
-									{subtopics:[]},
-									{subtopics:[]},
-									{subtopics:[]},
-									{subtopics:[]},
-									{subtopics:[]}
-								]
-							});
-					}
-					//loop through array of response objects adding subtopics to the correct week and day arrays.
-					for(i in response.data){
-						var topic = response.data[i];
-						newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopic_Name_Id);
-					}
-					
+				$scope.requestCurriculum(curriculum)
+				.then(function(newCurriculum){
+					//set the newCurriculum object as the $scope.template
+					$scope.template = newCurriculum;
 					//add newCurriculum as a version to the curricula type:
 					for(j in $scope.curricula){
 						if($scope.curricula[j].type == curriculum.curriculumName){
 							$scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
 						}
 					}
-					
-					//set the newCurriculum object as the $scope.template
-					$scope.template = newCurriculum;
 				});
+
 			}else{
 				//show the modal
 				$('#newCurriculumType').modal('show');
@@ -210,7 +216,7 @@ app.controller(
 		}
 		
 		$scope.getCurricula = function(){
-			$http({
+			return $http({
 				url: "rest/api/v1/Curriculum/All",
 				method: "GET",
 				
@@ -241,6 +247,7 @@ app.controller(
 							delete metaData.weeks;
 							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 0, {meta:metaData, weeks:[]});
 							$scope.curricula[j].versions[curriculum.curriculumVersion - 1].meta = curriculum;
+							
 							break;
 						}
 					}
@@ -309,12 +316,28 @@ app.controller(
 		/* END  TOPIC POOL FUNCTION DEFINITIONS */
 		
 		/* BEGIN CONTROLLER BODY - EXECUTED ON PAGE LOAD */
-		
-		//get the curricula meta data on page load
-		$scope.getCurricula();
+
 		//load the topic pool on page load
 		$scope.getTopicPool();
 		
+		//get the curricula meta data on page load
+		$scope.getCurricula()
+		//then load the first version of each curriculum type
+		.then(function(){
+			for(i in $scope.curricula){
+				var latestVersion = $scope.curricula[i].versions.slice(-1)[0];
+				$scope.requestCurriculum(latestVersion)
+				.then(function(newCurriculum){
+					//add newCurriculum as a version to the curricula type:
+					for(j in $scope.curricula){
+						if($scope.curricula[j].type == newCurriculum.curriculumName){
+							$scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
+						}
+					}
+				});
+			}
+		});
+
 		/* END CONTROLLER BODY - EXECUTED ON PAGE LOAD */
 	}
 );
