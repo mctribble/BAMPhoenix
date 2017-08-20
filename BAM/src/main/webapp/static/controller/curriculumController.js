@@ -6,60 +6,12 @@ app.controller(
 	"curriculumController",
 	
 	function($scope, $http) {
-		/* UTILITY FUNCTIONS */
-		$scope.sanitizeString = function(str){
-
-			if(str){
-				//replace spaces with underscores
-				str = str.replace(' ', '_');
-				//remove all non alphanumeric characters
-				str = str.replace(/\W/g, '');
-			}
-//			console.log("new string: " + str);
-			return str;
-		}
-		
-		$scope.deselectItems = function(){
-			var activeItems = document.getElementsByClassName("active");
-			for (var i = 0; i < activeItems.length; i++) {
-				   activeItems[i].classList.remove('active');
-			}
-		}
-
-		var CLONE = {
-				  'Array': function(clone) {
-				    return Array.prototype.map.call(this, clone);
-				  },
-				  'Date': function() {
-				    return new Date(this.valueOf());
-				  },
-				  'String': String.prototype.valueOf,
-				  'Number': Number.prototype.valueOf,
-				  'Boolean': Boolean.prototype.valueOf
-				};
-		
-		$scope.clone = function(obj) {
-			  if (Object(obj) !== obj) return obj;
-			  if (typeof obj.toJSON == 'function') {
-			    return obj.toJSON();
-			  }
-			  var type = toString.call(obj).slice(8, -1);
-			  if (type in CLONE) {
-			    return CLONE[type].call(obj, clone);
-			  }
-			  var copy = {};
-			  var keys = Object.keys(obj);
-			  for (var i = 0, len = keys.length; i < len; i++) {
-			    var key = keys[i];
-			    copy[key] = clone(obj[key]);
-			  }
-			  return copy;
-		}
+		/* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
 		
 		//constant array defining valid days of the week 
 		$scope.weekdays = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" ];
 		
-		//list of available topics in the topic pool. this will eventually be loaded through  a get request
+		//list of available topics in the topic pool.
 		$scope.topics = [];
 		
 		//template object that will be used to create new curriculums. Populated based on selection in curricula left side panel
@@ -84,6 +36,30 @@ app.controller(
 		//this object holds all curricula, which is an array of curriculum. Each has a type (eg java) and an array of versions. This will eventually be loaded via HTTP Get
 		$scope.curricula = [];
 		
+		/* END OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
+		
+		/* BEGIN UTILITY FUNCTIONS */
+		$scope.sanitizeString = function(str){
+
+			if(str){
+				//replace spaces with underscores
+				str = str.replace(' ', '_');
+				//remove all non alphanumeric characters
+				str = str.replace(/\W/g, '');
+			}
+			return str;
+		}
+		
+		$scope.deselectItems = function(){
+			var activeItems = document.getElementsByClassName("active");
+			for (var i = 0; i < activeItems.length; i++) {
+				   activeItems[i].classList.remove('active');
+			}
+		}
+		
+		/* END UTILITY FUNCTIONS */
+		
+		/* BEGIN CURRICULUM MANIPULATION FUNCTION DEFINITIONS */
 		$scope.addWeek = function(){
 			var week = {
 				days:[
@@ -96,7 +72,6 @@ app.controller(
 				};
 			$scope.displayedCurriculum.weeks.push(week);
 			$scope.displayedCurriculum.meta.curriculumNumberOf_Weeks += 1;
-			console.log($scope.displayedCurriculum);
 		}
 		
 		$scope.deleteWeek = function(index){
@@ -108,28 +83,17 @@ app.controller(
 		
 		//when an existing curriculum is selected, it will be loaded into the template
 		$scope.setTemplate = function(curriculum){
-			console.log("setting template")
 			if(curriculum){
 				//attempt to look for curr in curricula object before doing http req (caching)
-				console.log($scope.curricula);
 				for(i in $scope.curricula){
 					if( $scope.curricula[i].type == curriculum.meta.curriculumName && 
 						$scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks.length > 0){
-						
-						console.log("already loaded, canceling request");
-						console.log($scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks);
 						$scope.template = $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1];
-						console.log("template:");
-						console.log($scope.template);
 						return;
-					}else{
-						console.log("not loaded yet, requesting curriculum");
 					}
 				}
 				
 				//do request
-				console.log("curriculum in setTemplate")
-				console.log(curriculum);
 				$http({
 					url: "rest/api/v1/Curriculum/Schedule",
 					method: "GET",
@@ -150,20 +114,12 @@ app.controller(
 								]
 							});
 					}
-//					console.log("weeks: ");
-//					console.log(newCurriculum);
 					//loop through array of response objects adding subtopics to the correct week and day arrays.
 					for(i in response.data){
 						var topic = response.data[i];
-//						console.log("Topics in loop");
-//						console.log(topic);
 						newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopic_Name_Id);
 					}
 					
-					//TODO: make this a unique object (not a reference to the old one)
-//					newCurriculum = Object.create(newCurriculum);
-//					console.log("newCurr after uniquification: ")
-//					console.log(newCurriculum);
 					//add newCurriculum as a version to the curricula type:
 					for(j in $scope.curricula){
 						if($scope.curricula[j].type == curriculum.curriculumName){
@@ -172,24 +128,18 @@ app.controller(
 					}
 					
 					//set the newCurriculum object as the $scope.template
-					//TODO: need to make this unique instead of reference in the future.
 					$scope.template = newCurriculum;
-//					console.log("adding unique newCurriculum object as a version: ")
-//					console.log(newCurriculum);
 				});
 			}else{
-				//TODO: modal to create new topic type
-				console.log("new type");
+				//show the modal
 				$('#newCurriculumType').modal('show');
 			}
 		}
 			
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
 		$scope.newCurriculum = function(type){
-			console.log("--------------------- IN NEW CURRICULUM ---------------------");
 			//if the user provides a type, either they are ceating a new version with the latest version of an existing type, or creating a new type
 			if(type && $scope.template.meta.curriculumName != type){
-				console.log("type is defined: " + type);
 				var typeExists = false;
 				//set the template to the latest version of the curriculum if it exists. otherwise create a new type
 				for(i in $scope.curricula){
@@ -222,41 +172,26 @@ app.controller(
 					//set the template to the new type's first version
 					$scope.template = newType.versions[0];
 				}
-			}else{
-				console.log("type not defined");
 			}
 			
 			//we can now guarantee that the template is set appropriately, and can load it into the displayedCurriculum
 			//create a unique object from the template (not a reference to template)
-			console.log("template - before copy")
-			console.log($scope.template);
 			var curriculum = jQuery.extend(true, {}, $scope.template);
-			console.log("curriculum - copied:");
-			console.log(curriculum);
 			//loop through the curricula looking for the curriculum type, if found, count the number of versions and set this curr. object's version to it + 1
 			for(item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.template.meta.curriculumName){
-					console.log("creating version " + ($scope.curricula[item].versions.length + 1) + " of : " + curriculum.meta.curriculumName + " curriculum.");
 					curriculum.meta.curriculumVersion = $scope.curricula[item].versions.length + 1;
 				}
 			}
-			
 			$scope.displayedCurriculum = curriculum;
-			console.log($scope.displayedCurriculum);
 		}
 		
 		$scope.saveCurriculum = function(){
-			console.log("********** entering saving curriculum ********** ");
-			console.log($scope.displayedCurriculum);
-
-			console.log("type: " + $scope.displayedCurriculum.meta.curriculumName);
 			//loop through curricula looking for an existing type. if found, append to versions.
 			var typeExists = false;
 			for(item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculumName){
 					$scope.curricula[item].versions.push($scope.displayedCurriculum);
-					console.log("updated curricula - after pushign new version");
-					console.log($scope.curricula);
 					typeExists = true;
 				}
 			}
@@ -280,7 +215,6 @@ app.controller(
 				
 			}).then(function(response){
 				var curricula = response.data;
-				console.log(curricula);
 				//parse the response into the local (front end) json object format
 				
 				//for each curriculum in curricula:
@@ -305,8 +239,6 @@ app.controller(
 							var metaData = curriculum;
 							delete metaData.weeks;
 							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 0, {meta:metaData, weeks:[]});
-							console.log("curriculum in for of getCurricula ");
-							console.log({meta:metaData, weeks:[]});
 							$scope.curricula[j].versions[curriculum.curriculumVersion - 1].meta = curriculum;
 							break;
 						}
@@ -314,13 +246,8 @@ app.controller(
 					
 					//if a curriculum of type curriculum.curriculumName does not exist, add it as a new base curriculum type
 					if(!curriculumTypeExists){
-						console.log("new curr type")
-						console.log(curriculum)
-						
 						var metaData = curriculum;
 						delete metaData.weeks;
-						console.log("curriculum after delete");
-//						console.log(curriculum.curriculumName);
 						var newCurriculum = {
 								type: curriculum.curriculumName,
 								versions: [
@@ -330,17 +257,17 @@ app.controller(
 									}
 								]
 						};
-						console.log("new curr: ")
-						console.log(newCurriculum);
 						$scope.curricula.push(newCurriculum);
 					}
 				}
-				
 			});
 		}
 		
+		/* END CURRICULUM MANIPULATION FUNCTION DEFINITIONS */
+		
+		/* BEGIN TOPIC POOL FUNCTION DEFINITIONS */
+		
 		$scope.getTopicPool = function(){
-			console.log("Getting all topics");
 			$http({
 				url: "rest/api/v1/Curriculum/TopicPool",
 				method: "GET",
@@ -348,8 +275,6 @@ app.controller(
 			}).then(function(response){
 				var topics = response.data;
 				//parse the response into the local (front end) json object format
-				
-				//for each topic in topics:
 				for(i in topics){
 					var topic = topics[i];
 
@@ -380,9 +305,15 @@ app.controller(
 			});
 		};	
 		
+		/* END  TOPIC POOL FUNCTION DEFINITIONS */
+		
+		/* BEGIN CONTROLLER BODY - EXECUTED ON PAGE LOAD */
+		
 		//get the curricula meta data on page load
 		$scope.getCurricula();
 		//load the topic pool on page load
 		$scope.getTopicPool();
+		
+		/* END CONTROLLER BODY - EXECUTED ON PAGE LOAD */
 	}
 );
