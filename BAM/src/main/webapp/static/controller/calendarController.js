@@ -322,7 +322,7 @@
             		$scope.loading = true;
             		
             		var z = 0;
-            		for(var n = 0; n < 2; n++){
+            		for(var n = 0; n < 5; n++){
 //            			url += n;
             			(function(index) {
 //            				url += index;
@@ -335,6 +335,7 @@
                 		console.log('response: ', response.data)
                 		var id=0;
                 		for(var i = 0; i < response.data.length ; i++) {
+                			
                     			var title = response.data[i].subtopicName.name;
                         		var dates = response.data[i].subtopicDate;
                         		var status= response.data[i].status.id;
@@ -366,13 +367,13 @@
                 		}
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
                 			pageNumber++;
-        	             	
+        	             	$scope.events = [];
 //        	             	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("trainerBatch").id + "&pageSize=" + pageSize + "&pageNumber=" + index;
         	             	console.log('pageNumber is ' + pageNumber + '\nurl is ' + (url));
 //        	             	if(response.data.length == pageSize){
 //        	             		return $http.get(url);
 //        	             	}
-                		
+        	             	response = null;
                 		// $scope.renderCalendar('myCalendar');
                 	}).finally(function() {
                 		// Turn off loading indicator whether success or
