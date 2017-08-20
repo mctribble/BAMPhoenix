@@ -472,3 +472,10 @@ body {
 	color: white;
 	font-weight: bold;
 }
+
+/* Week numbers outside of batch */
+.outOfBatch{
+	background-color: transparent !important;
+	color: transparent !important;
+	cursor: default !important;
+}
