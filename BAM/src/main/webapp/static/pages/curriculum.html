@@ -6,16 +6,18 @@
 		<div id="curriculaLoaderView" class="col col-md-2">
 			<div class="columnHeader text-center">
 				<h2>Curricula</h2>
-				<button class="btn btn-lg btn-primary btn-block" ng-click="deselectItems(); newCurriculum()">New Curriculum</button>
-				<button class="btn btn-lg btn-warning btn-block" ng-click="deselectItems(); setTemplate()">Clear Template</button>
+				
+				<button class="btn btn-lg btn-warning btn-block" ng-click="deselectItems(); setTemplate()">New Curriculum Type</button>
 			</div>
 				<!-- ***************************** Begin Curricula Accordion***************************************** -->
 				<div id="curriculaAccordion" role="tablist">
 					<div class="card" ng-repeat="curriculum in curricula">
 						<div class="card-header" role="tab">
 							<h5 class="mb-0">
+								<button class="btn btn-md btn-success" ng-click="deselectItems(); newCurriculum(curriculum.type)">+</button>
 								<a data-toggle="collapse" data-parent="#curriculaAccordion"
-									data-target="#collapseCurriculum{{sanitizeString(curriculum.type)}}"> {{curriculum.type}}
+									data-target="#collapseCurriculum{{sanitizeString(curriculum.type)}}"> 
+									{{curriculum.type}}
 								</a>
 							</h5>
 						</div>
@@ -40,20 +42,28 @@
 		<div id="curriculumView" class="col col-md-8">
 			<div class="columnHeader">
 				<div class="row">
-					<div class="col col-md-9">
-						<h3 ng-if="displayedCurriculum.meta.curriculumName">{{displayedCurriculum.meta.curriculumName}} Curriculum - Version #{{displayedCurriculum.meta.curriculumVersion}}</h3>
+					<div class="col col-md-6">
+						<div class="page-header">
+							<h1 ng-if="displayedCurriculum.meta.curriculumName">
+								{{displayedCurriculum.meta.curriculumName}} Curriculum
+								<small id="curriculumSubheader">Version #{{displayedCurriculum.meta.curriculumVersion}}</small>
+							</h1>
+						</div>
+						
 					</div>
+					
 					<div class="col col-md-3">
-						<button class="btn btn-md btn-success btn-block" ng-if="displayedCurriculum.weeks.length > 0" ng-click="saveCurriculum()">Save Curriculum</button>
+						<button class="btn btn-md btn-primary btn-block" ng-disabled="!displayedCurriculum.meta.curriculumName" ng-click="addWeek()">Add Week</button>
+					</div>
+					
+					<div class="col col-md-3">
+						<button class="btn btn-md btn-success btn-block" ng-disabled="displayedCurriculum.weeks.length <= 0" ng-click="saveCurriculum()">Save Curriculum</button>
 
 					</div>
 				</div>
 				
-				<div id="addWeekHeader" class="row">
-					<div class="col col-md-9"></div>
-					<div class="col col-md-3">
-						<button class="btn btn-md btn-primary btn-block" ng-if="displayedCurriculum.meta.curriculum_Creator" ng-click="addWeek()">Add Week</button>
-					</div>
+				<div id="" class="row">
+					<div class="col col-md-12"></div>
 				</div>
 			</div>
 			
@@ -165,4 +175,28 @@
 			<!-- ***************************** End Topic Accordion***************************************** -->
 		</div>
 	</div>
+	
+	<!-- MODALS -->
+	
+	<!-- begin new curriculum type modal -->
+	<div id="newCurriculumType" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">New Curriculum Type</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	      <div class="modal-body">
+	        	<form class="row form-group center-block">
+	        		<div class="col col-md-9"><input id="newCurriculumTypeNameInput" class="form-control" type="text" placeholder="Name" ng-model="newCurriculumTypeName" autofocus ></div>
+	        		<div class="col col-md-3"><input type="submit" class="btn btn-primary" ng-click="newCurriculum(newCurriculumTypeName);" data-dismiss="modal" value="Create"></div>
+	        	</form>
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
+	<!-- end new curriculum type modal -->
 </div>

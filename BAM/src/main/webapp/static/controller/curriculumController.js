@@ -111,7 +111,7 @@ app.controller(
 			console.log("setting template")
 			if(curriculum){
 				//attempt to look for curr in curricula object before doing http req (caching)
-				console.log($scope.curricula );
+				console.log($scope.curricula);
 				for(i in $scope.curricula){
 					if( $scope.curricula[i].type == curriculum.meta.curriculumName && 
 						$scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks.length > 0){
@@ -119,6 +119,8 @@ app.controller(
 						console.log("already loaded, canceling request");
 						console.log($scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks);
 						$scope.template = $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1];
+						console.log("template:");
+						console.log($scope.template);
 						return;
 					}else{
 						console.log("not loaded yet, requesting curriculum");
@@ -178,17 +180,60 @@ app.controller(
 			}else{
 				//TODO: modal to create new topic type
 				console.log("new type");
+				$('#newCurriculumType').modal('show');
 			}
 		}
 			
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
-		$scope.newCurriculum = function(){
+		$scope.newCurriculum = function(type){
 			console.log("--------------------- IN NEW CURRICULUM ---------------------");
+			//if the user provides a type, either they are ceating a new version with the latest version of an existing type, or creating a new type
+			if(type && $scope.template.meta.curriculumName != type){
+				console.log("type is defined: " + type);
+				var typeExists = false;
+				//set the template to the latest version of the curriculum if it exists. otherwise create a new type
+				for(i in $scope.curricula){
+					if($scope.curricula[i].type == type){
+						//get the last version in the array and set it equal to9 the template
+						$scope.template = $scope.curricula[i].versions.slice(-1)[0];
+						typeExists = true;
+					}
+				}
+				if(!typeExists){
+					//define a new type
+					var newType = {
+							type: type,
+							versions: [
+								{
+									meta:{
+										curriculumId: null,
+										curriculumModifier: null,
+										curriculumName: type,
+										curriculumNumberOf_Weeks: 0,
+										curriculumVersion: 1,
+										curriculum_Creator: null, //set this to the currently logged in user eventually
+										curriculumdateCreated: null //set this to the current date as mm/dd/yy eventually
+									},
+									weeks:[]
+								}
+							]
+					};
+					
+					//set the template to the new type's first version
+					$scope.template = newType.versions[0];
+				}
+			}else{
+				console.log("type not defined");
+			}
 			
+			//we can now guarantee that the template is set appropriately, and can load it into the displayedCurriculum
 			//create a unique object from the template (not a reference to template)
+			console.log("template - before copy")
+			console.log($scope.template);
 			var curriculum = jQuery.extend(true, {}, $scope.template);
-			
-			//loop through the curricula looking for the curriculum type, when found count number of versions and set this curr. object's version to it
+			console.log("curriculum - copied:");
+			console.log(curriculum);
+			//loop through the curricula looking for the curriculum type, if found, count the number of versions and set this curr. object's version to it + 1
 			for(item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.template.meta.curriculumName){
 					console.log("creating version " + ($scope.curricula[item].versions.length + 1) + " of : " + curriculum.meta.curriculumName + " curriculum.");
@@ -203,29 +248,29 @@ app.controller(
 		$scope.saveCurriculum = function(){
 			console.log("********** entering saving curriculum ********** ");
 			console.log($scope.displayedCurriculum);
-			if($scope.displayedCurriculum.meta.curriculumName){
-				console.log("type: " + $scope.displayedCurriculum.meta.curriculumName);
-				for(item in $scope.curricula){
-					console.log("checking type: " + $scope.curricula[item].type);
-					if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculumName){
-						console.log("found match - adding curriculum")
-//						$scope.curricula[item].versions.push({meta:$scope.displayedCurriculum.meta , weeks: $scope.displayedCurriculum.weeks});
-						$scope.curricula[item].versions.push($scope.displayedCurriculum);
-						console.log("updated curricula - after pushign new version");
-						console.log($scope.curricula);
-						
-					}
+
+			console.log("type: " + $scope.displayedCurriculum.meta.curriculumName);
+			//loop through curricula looking for an existing type. if found, append to versions.
+			var typeExists = false;
+			for(item in $scope.curricula){
+				if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculumName){
+					$scope.curricula[item].versions.push($scope.displayedCurriculum);
+					console.log("updated curricula - after pushign new version");
+					console.log($scope.curricula);
+					typeExists = true;
 				}
-			}else{
-//				var curriculum = {
-//					type:'',
-//					versions: []
-//				};
-//				//TODO: modal
-//				curriculum.type = "foo";
-//				curriculum.versions.push({weeks:$scope.displayedCurriculum.weeks});
-//				$scope.curricula.push(JSON.parse(JSON.stringify(curriculum)));
 			}
+			
+			//if type doesn't exist, add a new type and append the curriculum as the first version of it.
+			if(!typeExists){
+				var newType = {
+						type: $scope.displayedCurriculum.meta.curriculumName,
+						versions: [$scope.displayedCurriculum]
+				};
+				$scope.curricula.push(newType);
+			}
+			
+			$scope.displayedCurriculum = null;
 		}
 		
 		$scope.getCurricula = function(){

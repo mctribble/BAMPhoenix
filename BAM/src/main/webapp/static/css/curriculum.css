@@ -90,6 +90,11 @@
 	border-radius 6px;
 }
 
+#curriculumSubheader{
+	font-size:50%;
+	color:#ff9b00;
+}
+
 /* RIGHT SIDEBAR */
 #poolView{
 	padding:0px;

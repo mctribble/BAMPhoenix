@@ -19,8 +19,8 @@ public class CurriculumService {
 		//obfuscate password
 		for(Curriculum element : curriculumList){
 			element.getCurriculum_Creator().setPwd("");
-			if(element.getCurriculum_Modifier() != null)
-				element.getCurriculum_Modifier().setPwd("");
+			if(element.getCurriculumModifier() != null)
+				element.getCurriculumModifier().setPwd("");
 		}
 		return curriculumList;
 	}
@@ -29,8 +29,8 @@ public class CurriculumService {
 		//obfuscate password
 		Curriculum curriculum = curriculumRepository.findById(id);
 		curriculum.getCurriculum_Creator().setPwd("");
-		if(curriculum.getCurriculum_Modifier() != null)
-			curriculum.getCurriculum_Modifier().setPwd("");
+		if(curriculum.getCurriculumModifier() != null)
+			curriculum.getCurriculumModifier().setPwd("");
 		return curriculum;
 	}
 	
