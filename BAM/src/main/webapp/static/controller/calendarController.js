@@ -97,6 +97,7 @@
            * Changes the calendar to your batch when looking at another trainer's batch
            */
           $scope.currentBatch = function(){
+
         	  if(SessionService.get("currentBatch")){
         		  SessionService.unset("currentBatch");
         		  if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
@@ -111,6 +112,7 @@
         			  $scope.myBatchButton = false;
         		  }
         	  }
+
           };
             var eventSerialId = 1;
             // @return {String} fingerprint of the event object and its
@@ -656,7 +658,7 @@
                           eventClick: $scope.alertOnEventClick,
                           eventDrop: $scope.alertOnDrop,
                           eventResize: $scope.alertOnResize,
-                          eventMouseover: $scope.eventRender
+                          eventRender: $scope.eventRender
                         		}
                       	};
             }
