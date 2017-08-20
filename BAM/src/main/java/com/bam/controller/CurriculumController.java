@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.bean.Curriculum;
 import com.bam.bean.CurriculumSubtopic;
+import com.bam.bean.CustomException;
 import com.bam.bean.SubtopicName;
 import com.bam.dto.CurriculumSubtopicDTO;
 import com.bam.dto.DaysDTO;
@@ -61,7 +62,7 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
-	public void addSchedule(@RequestBody CurriculumSubtopicDTO c){
+	public void addSchedule(@RequestBody CurriculumSubtopicDTO c) throws CustomException{
 		//save curriculum object first
 		System.out.println(c);
 		Curriculum curriculum = new Curriculum();
@@ -70,6 +71,11 @@ public class CurriculumController {
 		curriculum.setCurriculumName(c.getMeta().getCurriculum().getCurriculumName());
 		curriculum.setCurriculumNumberOf_Weeks(c.getMeta().getCurriculum().getCurriculumNumberOf_Weeks());
 		curriculum.setCurriculumVersion(c.getMeta().getCurriculum().getCurriculumVersion());
+		
+		//check if creator is null
+		if(curriculum.getCurriculum_Creator() == null){
+			throw new CustomException("Creator cannot be null");
+		}
 		
 		curriculumService.save(curriculum);
 		
