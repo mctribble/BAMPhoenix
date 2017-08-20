@@ -127,6 +127,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				$scope.currentBatchEnd1 = 'N/A';
 				$scope.weekNum = 'N/A';
 				$scope.listNames = 'N/A';
+				$scope.percent = 'N/A';
 			}	
 		}
 	}
