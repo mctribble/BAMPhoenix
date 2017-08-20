@@ -1,4 +1,3 @@
-
 app.controller('navController', function($rootScope, SessionService, $scope, $location, $http) {
 
 	$rootScope.user = SessionService.get("currentUser");
