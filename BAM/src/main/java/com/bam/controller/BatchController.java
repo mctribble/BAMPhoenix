@@ -26,7 +26,7 @@ import com.bam.logging.*;
 public class BatchController {
 
 	private static final Logger logger = Logger.getLogger(LoggerClass.class);
-	private final static String EMAIL = "email";
+	private static final String EMAIL = "email";
 	
 	@Autowired
 	BatchService batchService;
