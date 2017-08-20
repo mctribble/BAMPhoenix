@@ -383,7 +383,7 @@
                 		
                 	})
                 	})//end of chain
-                	})(n);
+                	})(n); // safe way to update the page number of the url
             		} //end of for loop
             	}
            // POST method to show subtopics on the calendar
