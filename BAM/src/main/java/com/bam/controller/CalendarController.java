@@ -30,8 +30,8 @@ import com.bam.service.TopicService;
 public class CalendarController {
 	
 	private final static String BATCHID = "batchId";
-	private final static String pageNumber = "pageNumber";
-	private final static String pageSize = "pageSize";
+	private final static String PAGENUMBER = "pageNumber";
+	private final static String PAGESIZE = "pageSize";
 
 	
 	@Autowired
@@ -74,10 +74,10 @@ public class CalendarController {
 	@ResponseBody
 	public List<Subtopic> getSubTopicsByBatch(HttpServletRequest request){
 		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
-		int pageNum = Integer.parseInt( request.getParameter(pageNumber) );
-		int pageSiz = Integer.parseInt( request.getParameter(pageSize) );
+		int pageNum = Integer.parseInt( request.getParameter(PAGENUMBER) );
+		int pageSiz = Integer.parseInt( request.getParameter(PAGESIZE) );
 		
-		return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz));
+		return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz, Direction.DESC, "subtopicDate"));
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class CalendarController {
 	@RequestMapping(value="GetNumberOfSubtopics", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public Long getNumberOfSubTopicsByBatch(HttpServletRequest request){
-		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		
 		return subtopicService.getNumberOfSubtopics(batchId);
 	}
