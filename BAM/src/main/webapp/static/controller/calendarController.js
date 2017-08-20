@@ -658,7 +658,7 @@
                           eventClick: $scope.alertOnEventClick,
                           eventDrop: $scope.alertOnDrop,
                           eventResize: $scope.alertOnResize,
-                          eventMouseover: $scope.eventRender
+                          eventRender: $scope.eventRender
                         		}
                       	};
             }
