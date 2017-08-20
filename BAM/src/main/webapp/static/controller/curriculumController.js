@@ -312,6 +312,33 @@ app.controller(
 			});
 		};	
 		
+		$scope.newTopic = function(input, parentTopic){
+			console.log("Input: " + input)
+			console.log("parentTopic: " + parentTopic);
+			if(parentTopic){
+				//search topics for the matching type passed
+				for(i in $scope.topics){
+					if($scope.topics[i].name == parentTopic){
+						console.log("Adding " + input + " to " + parentTopic);
+						$scope.topics[i].subtopics.push(
+								{
+									id: $scope.topics[i].subtopics.length,
+									name: input
+								}
+						)
+					}
+				}
+			}else{
+				console.log("adding " + input + "as new parent topic");
+				var newTopic = {
+						id: $scope.topics.length,
+						name: input,
+						subtopic: []
+				}
+				$scope.topics.push(newTopic);
+			}
+		};
+		
 		/* END  TOPIC POOL FUNCTION DEFINITIONS */
 		
 		/* BEGIN CONTROLLER BODY - EXECUTED ON PAGE LOAD */

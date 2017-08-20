@@ -148,15 +148,25 @@
 		<div id="poolView" class="col col-md-2">
 			<div class="columnHeader text-center">
 				<h1>Topic Pool</h1>
-				<button class="btn btn-md btn-success" ng-click="newTopic()">New Topic</button>
 			</div>
 			
 
 			<!-- ***************************** Begin Topic Accordion***************************************** -->
 			<div id="topicAccordion" role="tablist">
 
-				
-				<div class="card" ng-repeat="topic in topics">
+				<div class="card">
+					<div class="card-header">
+						<div class="row">
+							<div class="col col-md-10">
+								<input placeholder="Search Topics" type="text" class="form-control" ng-model="topicFilter">
+							</div>
+							<div class="col col-md-2">
+								<button class="btn btn-md btn-success" ng-click="newTopic(topicFilter)" ng-disabled="filteredTopics.length">+</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card" ng-repeat="topic in filteredTopics = (topics | filter:topicFilter)">
 					<div class="card-header"
 						 role="tab">
 						<h5 data-toggle="collapse" data-parent="#topicAccordion" data-target="#collapseTopic{{sanitizeString(topic.name)}}">
@@ -168,11 +178,18 @@
 						<div class="card-block">
 							<ul class="list-group">
 								<li class="list-group-item" dnd-nodrag>
-									<input placeholder="Search {{topic.name}}" type="text" class="form-control" ng-model="subtopicFilter">
+									<div class="row">
+										<div class="col col-md-10">
+											<input placeholder="Search {{topic.name}}" type="text" class="form-control" ng-model="subtopicFilter">
+										</div>
+										<div class="col col-md-2">
+											<button class="btn btn-md btn-success" ng-click="newTopic(subtopicFilter, topic.name)" ng-disabled="filteredSubtopics.length">+</button>
+										</div>
+									</div>
 								</li>
 								
 								<li class="list-group-item" 
-									ng-repeat="sub in topic.subtopics | filter:subtopicFilter"
+									ng-repeat="sub in filteredSubtopics = (topic.subtopics | filter:subtopicFilter)"
 									dnd-draggable="sub" 
 									dnd-effect-allowed="copy" 
 									dnd-moved="topic.subtopics.splice($index, 1)">
