@@ -81,10 +81,10 @@ public class CalendarController {
 	
 	@RequestMapping(value="GetNumberOfSubtopics", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
-	public int getNumberOfSubTopicsByBatch(HttpServletRequest request){
+	public Long getNumberOfSubTopicsByBatch(HttpServletRequest request){
 		int batchId = Integer.parseInt( request.getParameter(batchID) );
 		
-		return subtopicService.getSubtopicByBatchId(batchId).size();
+		return subtopicService.getNumberOfSubtopics(batchId);
 	}
 	
 	@RequestMapping(value = "Topics", method = RequestMethod.GET, produces = "application/json")

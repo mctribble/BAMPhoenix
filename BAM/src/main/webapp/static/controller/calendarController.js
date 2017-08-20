@@ -294,38 +294,32 @@
             };
             
             var pageNumber = 0;
-            var pageSize = 10;
-            var numberOfPages = 1;
-//            $http({
-//            	method: 'GET',
-//            	url: 'rest/api/v1/Calendar/GetNumberOfSubtopics?batchId='+ SessionService.get("trainerBatch").id
-//            })
-//            .then(function successCallback(response){
-//            	console.log('response is ' + response.data);
-//            	numberOfPages = response.data;
-//            });
-//            console.log('number of pages is ' + numberOfPages);
+            var pageSize = 20;
+            var morePages = false;
+            var numberOfPages = Math.ceil(SessionService.get("numberOfSubtopics")/pageSize);
+            
             	 var url;
 	            if(SessionService.get("currentUser").role == 1){
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("currentUser").batch.id;
+	            	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("currentUser").batch.id + "&pageSize=" + pageSize + "&pageNumber=0";
 	            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
+	            	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+SessionService.get("currentBatch").id+ "&pageSize=" + pageSize + "&pageNumber=0";
 	            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
 	             	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("trainerBatch").id + "&pageSize=" + pageSize + "&pageNumber=0";
+	            
 	            }
             /* event source that contains custom events on the scope */
 	            var chain = $q.when();
 	            var responses = [];
             	$scope.events = [];
+            	
             	if(!SessionService.get("gotSubtopics") && url) {
             		SessionService.set("gotSubtopics", true); 
             		$scope.loading = true;
-            		
+//            		$http.get('rest/api/v1/Calendar/GetNumberOfSubtopics?batchId='+ SessionService.get("trainerBatch").id, numberOfPages)
             		var z = 0;
-            		for(var n = 0; n < 5; n++){
-//            			url += n;
+            		console.log('numOfPages: ' + numberOfPages)
+            		for(var n = 0; n < numberOfPages; n++){
             			(function(index) {
-//            				url += index;
             				
             		chain = chain.then(function(){
             			url = url.substring(0, url.length - 1) + index;
@@ -368,11 +362,7 @@
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
                 			pageNumber++;
         	             	$scope.events = [];
-//        	             	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("trainerBatch").id + "&pageSize=" + pageSize + "&pageNumber=" + index;
         	             	console.log('pageNumber is ' + pageNumber + '\nurl is ' + (url));
-//        	             	if(response.data.length == pageSize){
-//        	             		return $http.get(url);
-//        	             	}
         	             	response = null;
                 		// $scope.renderCalendar('myCalendar');
                 	}).finally(function() {
@@ -385,6 +375,7 @@
                 	})//end of chain
                 	})(n); // safe way to update the page number of the url
             		} //end of for loop
+//            		$scope.loading = false;
             	}
            // POST method to show subtopics on the calendar
             			// For showing and hiding the
@@ -662,7 +653,7 @@
             };
             
             /* event sources array */
-            $scope.eventSources = [$scope.events];
+//            $scope.eventSources = [$scope.events];
             $scope.sources 	= "";
    	    $scope.source 	= "";
 	            

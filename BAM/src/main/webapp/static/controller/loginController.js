@@ -45,6 +45,15 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 					SessionService.set("trainerBatch", progResponse.data);
 					SessionService.set("gotSubtopics", false);
 					$location.path('/home');
+					
+					//sets the number of subtopics
+					 $http({
+			            	method: 'GET',
+			            	url: 'rest/api/v1/Calendar/GetNumberOfSubtopics?batchId='+ progResponse.data.id
+			            })
+			            .then(function successCallback(response){
+			            	SessionService.set("numberOfSubtopics", response.data);
+			            });
 				}, function error(progResponse){
 					$scope.msg = 'Batch Acquisition failed';
 				});
@@ -56,7 +65,18 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 				}else{
 					SessionService.set("gotSubtopics", false);
 					$location.path('/home');
+					
+					//sets the number of subtopics
+					$http({
+		            	method: 'GET',
+		            	url: 'rest/api/v1/Calendar/GetNumberOfSubtopics?batchId='+ SessionService.get("currentUser").batch.id
+		            })
+		            .then(function successCallback(response){
+		            	SessionService.set("numberOfSubtopics", response.data);
+		            });
+					
 				}
+				
 				
 			}else{
 				$location.path('/batchesAll');

@@ -13,6 +13,8 @@ import java.util.List;
 public interface SubtopicRepository extends JpaRepository<Subtopic, Integer> {
 	List<Subtopic> findByBatch(Batch batch);
 	
+	
+	Long countSubtopicsByBatchId(int batchId);
 	/**
 	 * This repository will most likely need the @Query to do get specific dates.
 	 * 
