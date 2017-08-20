@@ -25,10 +25,7 @@ app.controller(
 		
 		//curriculum that is currently displayed in the main curriculum view of the page. This will be loaded from the curricula left side panel
 		$scope.displayedCurriculum = {
-			meta: {
-				type: '',
-				version: ''
-			},
+			meta: {},
 			//weeks which contain days which contain subtopics for the curriculum. in the future this will be loaded from the selected curriculum
 			weeks: []
 		}
@@ -139,13 +136,13 @@ app.controller(
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
 		$scope.newCurriculum = function(type){
 			//if the user provides a type, either they are ceating a new version with the latest version of an existing type, or creating a new type
-			if(type && $scope.template.meta.curriculumName != type){
+			if(type /*&& $scope.template.meta.curriculumName != type*/){
 				var typeExists = false;
 				//set the template to the latest version of the curriculum if it exists. otherwise create a new type
 				for(i in $scope.curricula){
 					if($scope.curricula[i].type == type){
-						//get the last version in the array and set it equal to9 the template
-						$scope.template = $scope.curricula[i].versions.slice(-1)[0];
+						//get the last version in the array and set it equal to the template
+						$scope.setTemplate($scope.curricula[i].versions.slice(-1)[0]);
 						typeExists = true;
 					}
 				}
@@ -184,6 +181,9 @@ app.controller(
 				}
 			}
 			$scope.displayedCurriculum = curriculum;
+			
+			//clear the modal box if it's got a value in it
+			document.getElementById("newCurriculumTypeNameInput").value = "";
 		}
 		
 		$scope.saveCurriculum = function(){
@@ -206,6 +206,7 @@ app.controller(
 			}
 			
 			$scope.displayedCurriculum = null;
+			$scope.template = null;
 		}
 		
 		$scope.getCurricula = function(){

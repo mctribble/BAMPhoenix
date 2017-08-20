@@ -117,3 +117,12 @@
 	list-style-type:none;
 }
 
+#topicAccordion .card-header{
+	color:rgb(2,117,216);
+	font-weight:bold;
+}
+
+/* MODAL */
+.modal-title{
+	color: rgb(2,117,216);
+}
