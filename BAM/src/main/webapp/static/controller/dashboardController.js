@@ -61,11 +61,8 @@ app.controller('dashboardController', function($http, $scope, SessionService, $r
 				}
 			}).then(function(response) {
 				$scope.batch.usersInBatch = response.data 
-				console.log($scope.batch.usersInBatch);
 				for(var i = 0; i < $scope.batch.usersInBatch.length; i++) {
 					$scope.batch.users = $scope.batch.usersInBatch[i];
-				    console.log($scope.batch.users.fName);
-				    
 				}
 				
 			})
@@ -144,151 +141,97 @@ app.controller('dashboardController', function($http, $scope, SessionService, $r
             			}
             		$scope.subPercent = Math.round(($scope.completed * 100) / $scope.totalSub) + "%";
              		
+            		
+            		
+            		$scope.topicArray = []; 
+
              		for(var i = 0; i < $scope.subTopics.length ; i++) {
-                     		var status= response.data[i].status.id;
-                     		var title = response.data[i].subtopicName.name
-                     		
-                     		
+                		var status= response.data[i].status.id;
+                 		var title = response.data[i].subtopicName.name
+                 		
+                 		
                      		if(status == 4){
-                     			
                      			if(response.data[i].subtopicName.topic){
-                     				var topicName = response.data[i].subtopicName.topic.name;
+                        			var topicName = response.data[i].subtopicName.topic.name;
+                     				var topicNameExists = false;
                      				
-                     				if(topicName == "Java"){
-                     					var docElement = document.getElementById("java");
-                     					var createLI = document.createElement("LI");
-                                 		var textNode = document.createTextNode(title);
-                                 		
-                                 		createLI.className += "listItem";
-                     					
-                                 		createLI.appendChild(textNode);
-                     					docElement.appendChild(createLI);
-                     					
-                     					$scope.count += 1;
-                     					
-                     					
-                     				}else if(topicName == "Web Services"){
-                     					var docElement = document.getElementById("webServices");
-                     					var createLI = document.createElement("LI")
-                                 		var textNode = document.createTextNode(title);
-                     					
-                                 		createLI.className += "listItem";
-                     					
-                                 		createLI.appendChild(textNode);
-                     					docElement.appendChild(createLI);
-                     					$scope.count += 1;
-                     					
-                     				}else if(topicName == "SQL/JDBC"){
-                     					var docElement = document.getElementById("sqlJDBC");
-                     					var createLI = document.createElement("LI")
-                                 		var textNode = document.createTextNode(title);
-                     					
-                                 		createLI.className += "listItem";
-                     					
-                                 		createLI.appendChild(textNode);
-                     					docElement.appendChild(createLI);
-                     					$scope.count += 1;
-                     					
-                     				}else if(topicName == "HTML/CSS/Bootstrap"){
-                     					var docElement = document.getElementById("html");
-                     					var createLI = document.createElement("LI")
-                                 		var textNode = document.createTextNode(title);
-                     					
-                                 		createLI.className += "listItem";
-                     					
-                                 		createLI.appendChild(textNode);
-                     					docElement.appendChild(createLI);
-                     					$scope.count += 1;
-                     					
-                     				}else if(topicName == "Servlets/JSPs"){
-                     					var docElement = document.getElementById("servlets");
-                     					var createLI = document.createElement("LI")
-                                 		var textNode = document.createTextNode(title);
-                     					
-                                 		createLI.className += "listItem";
-                     					
-                                 		createLI.appendChild(textNode);
-                     					docElement.appendChild(createLI);
-                     					$scope.count += 1;
-                     					
-                     				}else if(topicName == "Javascript/jQuery/AJAX"){
-                     					var docElement = document.getElementById("js");
-                     					var createLI = document.createElement("LI")
-                                 		var textNode = document.createTextNode(title);
-                     					
-                                 		createLI.className += "listItem";
-                     					
-                                 		createLI.appendChild(textNode);
-                     					docElement.appendChild(createLI);
-                     					$scope.count += 1;
-                     					
-                     				}else if(topicName == "DevOps"){
-                     					var docElement = document.getElementById("devops");
-                     					var createLI = document.createElement("LI");                                 		var textNode = document.createTextNode(title);
-
-                                 		createLI.className += "listItem";
-                     					
-                                 		createLI.appendChild(textNode);
-                     					docElement.appendChild(createLI);
-                     					$scope.count += 1;
-                     					
-                     				}else if(topicName == "Hibernate"){
-                     					var docElement = document.getElementById("hibernate");
-                     					var createLI = document.createElement("LI")
-                     					var textNode = document.createTextNode(title);
-                     					
-                                 		createLI.className += "listItem";
-                     					
-                                 		createLI.appendChild(textNode);
-                     					docElement.appendChild(createLI);
-                     					$scope.count += 1;
-                     					
-                     				}else if(topicName == "Spring"){
-                     					var docElement = document.getElementById("spring");
-                     					var createLI = document.createElement("LI")
-                                 		var textNode = document.createTextNode(title);
-                     					
-                                 		createLI.className += "listItem";
-                     					
-                                 		createLI.appendChild(textNode);
-                     					docElement.appendChild(createLI);
-                     					$scope.count += 1;
-                     					
-                     				}else if(topicName == "Angular"){
-                     					var docElement = document.getElementById("angular");
-                     					var createLI = document.createElement("LI")
-                     					var textNode = document.createTextNode(title);
-                     					
-                                 		createLI.className += "listItem";
-                     					
-                                 		createLI.appendChild(textNode);
-                     					docElement.appendChild(createLI);
-                     					$scope.count += 1;
-                     					
+                     				for(k in $scope.topicArray){
+                     					if($scope.topicArray[k] == topicName){
+                     						topicNameExists = true;
+                     					}
                      				}
+                     				if(!topicNameExists){
+                     					$scope.topicArray.push(topicName);
+                     				}
+                     			
                      			}else if(!topicName){
-                     				var docElement = document.getElementById("other");
-                     				var createLI = document.createElement("LI")
-                                 	var textNode = document.createTextNode(title);
-                     				
-                                 	createLI.className += "listItem";
-                     					
-                                 	createLI.appendChild(textNode);
-                 					docElement.appendChild(createLI);
-                                 	$scope.count += 1;
-                     				
+                     				var topicNameExists = false;
+                                 	
+                                 	for(k in $scope.topicArray){
+                     					if($scope.topicArray[k] == "Other"){
+                     						topicNameExists = true;
+                     					}
+                     				}
+                     				if(!topicNameExists){
+                     					$scope.topicArray.push("Other");
+                     				}
                      			}
-
                      		}
-                     	}
+             		}
              		
+             		for(var j = 0; j < $scope.topicArray.length ; j++){
+             			var docElement = document.getElementById("mainList");
+             			var createLI = document.createElement("LI");
+             			var createUL = document.createElement("UL");
+             			var textNode = document.createTextNode($scope.topicArray[j]);
+             			
+             			createLI.className += "listTitle";
+             			createUL.id = $scope.topicArray[j];
+             			
+             			docElement.appendChild(createLI);
+             			createLI.appendChild(textNode);
+             			createLI.appendChild(createUL);
+             		}
              		
-             		
-             		
-             		
-             		
-             	}
-             	).finally(function() {
+             		//Append subtopics to related topics
+             		for(var k = 0; k < $scope.subTopics.length ; k++) {
+                		var status= response.data[k].status.id;
+                 		var title = response.data[k].subtopicName.name
+                 		
+                     		if(status == 4){
+                     			if(response.data[k].subtopicName.topic){
+                     				var topicName = response.data[k].subtopicName.topic.name;
+                     				
+                     					for(var l = 0; l < $scope.topicArray.length ; l++){
+                     						if(topicName == $scope.topicArray[l]){
+                     	     					var docElement = document.getElementById(topicName);
+                     	     					var createLI = document.createElement("LI");
+                     	                 		var textNode = document.createTextNode(title);
+                     	                 		
+                     	                 		createLI.className += "listItem";
+                     	     					
+                     	                 		createLI.appendChild(textNode);
+                     	     					docElement.appendChild(createLI);
+                     	     					
+                     	     					$scope.count += 1;
+                     						}
+                     					}
+                     					
+                     			}else if(!response.data[k].subtopicName.topic){
+                 	     			var docElement = document.getElementById("Other");
+                 	     			var createLI = document.createElement("LI");
+                 	     			var textNode = document.createTextNode(title);
+                 	                 		
+                 	     			createLI.className += "listItem";
+                 	     					
+                 	     			createLI.appendChild(textNode);
+                 	     			docElement.appendChild(createLI);
+                 	     					
+                 	     			$scope.count += 1;
+                     			}
+                     		}
+             		}
+             	}).finally(function() {
             		// Turn off loading indicator
             		$scope.loading = false;
             	});}
