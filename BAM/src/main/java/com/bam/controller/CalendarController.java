@@ -76,9 +76,18 @@ public class CalendarController {
 		int pageNum = Integer.parseInt( request.getParameter(pageNumber) );
 		int pageSiz = Integer.parseInt( request.getParameter(pageSize) );
 		
-		return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz, Direction.DESC, "subtopicDate"));
+		return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz));
 	}
 	
+	/**
+	 * Counts the number of Subtopics by matching their ids with the batchId.
+	 * 
+	 * 
+	 * @param HttpServletRequest object
+	 * @return number(Long) of Subtopics 
+	 * 
+	 * @author Michael Garza, Gary LaMountain
+	 */
 	@RequestMapping(value="GetNumberOfSubtopics", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public Long getNumberOfSubTopicsByBatch(HttpServletRequest request){

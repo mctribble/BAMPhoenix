@@ -78,6 +78,15 @@ public class SubtopicService {
 		return subtopicStatusRepository.findByName(name);
 	}
 
+	/**
+	 * Service method to return the number of Subtopics by matching their ids with
+	 * the batchId.
+	 * 
+	 * @param batchId(int)
+	 * @return number(long) of Subtopics
+	 * 
+	 * @author Michael Garza, Gary LaMountain
+	 */
 	public Long getNumberOfSubtopics(int batchId){
 		return subtopicRepository.countSubtopicsByBatchId(batchId);
 	}
