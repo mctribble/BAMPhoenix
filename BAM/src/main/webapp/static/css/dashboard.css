@@ -1,6 +1,6 @@
 @CHARSET "ISO-8859-1";
 
-.jumbotron{
+.container1 {
 	
 	background-image: url('https://ak3.picdn.net/shutterstock/videos/12450170/thumb/1.jpg');
 	background-blend-mode: luminosity;
@@ -107,3 +107,25 @@ li {
 }
 
 
+.navbar{
+	margin-bottom: 10px!important;
+}
+
+.container{
+	margin-top:10px!important;
+}
+
+
+ul {
+    padding-left: 15px;
+}
+
+ul.mainList{
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
+li {
+	list-style: none;
+}

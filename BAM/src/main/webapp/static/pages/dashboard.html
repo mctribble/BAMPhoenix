@@ -1,5 +1,5 @@
-<div class="jumbotron" ng-controller="dashboardController">
-	<div class="container" ng-init = "getData()"  ng-model="getData">
+<div class="jumbotron container1" ng-controller="dashboardController">
+	<div ng-init = "getData()"  ng-model="getData">
 		<div class="pan">
 		<h1 class="display-3">Welcome, {{user.fName}}</h1>
 		<p class="lead"> Pick up where you left off</p>
@@ -18,14 +18,15 @@
 		
 				
 		<div id="pan3" class="col-md-5 pan3">
-			<h2>Week: {{weekNum}}</h2>
+			<h2>Batch Week: {{weekNum}}</h2>
 				<h3>Associates in batch:</h3>
-				 <p ng-repeat="user in usersInBatch">{{batch.users.fName}}</p>
+				<ul>
+				 <li ng-repeat="list in listNames">{{list.firstName}}&nbsp{{list.lastName}}</li>
+				</ul>
+		</div>
 		</div>
 		
-		</div>
 		
-		<!-- Returns a count and list of topics missed in the batch -->
 		<div class="col-md-12" id="pan4" ng-init="returnMissed()">
 			<!-- Progress completed by day -->
 			<div ng-show="userHasBatch || trainerHasBatch && !loading">
@@ -37,7 +38,6 @@
   					</div>
 				</div>
 			</div>
-			<!-- Progress completed by subtopic -->
 			<div ng-show="userHasBatch || trainerHasBatch && !loading">
 				Batch Progress By Subtopic:
 				<div class="progress" >
