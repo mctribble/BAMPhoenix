@@ -6,7 +6,7 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 
 	$rootScope.user;
 	$scope.msg;
-	$rootScope.trainerBatch;
+	$rootScope.currentBatch;
 	$scope.logIn = function() {
 		var user = {
 			email : $scope.email,

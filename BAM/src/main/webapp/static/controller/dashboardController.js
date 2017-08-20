@@ -1,26 +1,34 @@
 /**
- * 
+ * @author Sarah Kummerfeldt 
+ * @author Kosiba Oshodi-Glover
  */
 app.controller('dashboardController', function($http, $scope, SessionService) {
 	$scope.user;
-	//set batchId with the id of the currentBatch if it exists else use the trainerBatch
 	var batchId;
-	if(SessionService.get("currentBatch"))
+	/**
+	 * Sets the batch id to retrieve batch info for current user or trainer.
+	 */
+	if(SessionService.get("currentUser").batch)
 	{
-		batchId = SessionService.get("currentBatch").id;
-		SessionService.set("currentBatchName", SessionService.get("currentBatch").name);
+		batchId = SessionService.get("currentUser").batch.id;
+		SessionService.set("currentBatchName", SessionService.get("currentUser").batch.name);
 		
 	}else
 	{
-		batchId = SessionService.get("trainerBatch").id; //if currentBatch is not set use the trainerBatch's id
+		batchId = SessionService.get("trainerBatch").id;
 		SessionService.set("currentBatchName", SessionService.get("trainerBatch").name);
-		console.log(batchId);
+		
 	}
+		
+	$scope.trainerHasBatch = SessionService.get("trainerBatch");
+	$scope.userHasBatch = SessionService.get("currentUser").batch;
 	
-	
+	/**
+	 * function that will return dates, list of associates, status, and name of current batch
+	 */
 	$scope.getData = function() {
 			
-		if($scope.user){
+		if($scope.trainerHasBatch){
 			var currentDate = new Date().getTime();
 			
 			if(SessionService.get("trainerBatch").endDate > currentDate){
@@ -39,6 +47,8 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				
 		}else{
 			$scope.message = 'You have no current batches';
+			$scope.currentBatchStart1 = 'N/A';
+			$scope.currentBatchEnd1 = 'N/A';
 		}			
 			$http({
 				url: "rest/api/v1/Users/InBatch",
@@ -47,29 +57,86 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				batchId: batchId
 				}
 			}).then(function(response){
-				console.log(response.data);
 				$scope.usersInBatch = response.data
 				
-				$scope.listNames = {
-			    		firstNames: []
-			    };
+				$scope.listNames = [];
+			    		firstNames= [];
+						lastNames= [];
+			    
 				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
 					$scope.batchUsers = $scope.usersInBatch[i];
-				    console.log($scope.batchUsers.fName);
-					$scope.listNames.firstNames.push($scope.batchUsers.fName);
-
+				    
+				    firstNames.push($scope.batchUsers.fName);
+					lastNames.push($scope.batchUsers.lName);
+					
+					$scope.listNames[i] = {
+				    		"firstName": firstNames[i],
+				    		"lastName": lastNames[i]
+				    };
+				}
+			})
+		}else if($scope.userHasBatch){
+			var currentDate = new Date().getTime();
+			
+			if(SessionService.get("currentUser").batch.endDate > currentDate){
+				console.log(SessionService.get("currentUser").batch	.endDate);
+				$scope.message = SessionService.get("currentUser").batch.name;
+				$scope.currentBatchStart1 = SessionService.get("currentUser").batch.startDate;
+				$scope.currentBatchEnd1 = SessionService.get("currentUser").batch.endDate;
+				
+				/**
+				 * Counts the difference in weeks between the current batch start date and today's date
+				 * @return current batch week number
+				 */
+				function weeksBetween(d1, d2) {
+				    return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
 				}
 				
-			    console.log($scope.listNames.firstNames);
+				var dif = weeksBetween($scope.currentBatchStart1, currentDate);
+				$scope.weekNum = dif;
+				console.log(dif);
+						
+			$http({
+				url: "rest/api/v1/Users/InBatch",
+				method: 'GET',
+				params: {
+				batchId: batchId
+				}
+			}).then(function(response){
+				$scope.usersInBatch = response.data
+				
+				$scope.listNames = [];
+			    		firstNames= [];
+						lastNames= [];
+			    
+				
+				for(var i = 0; i < $scope.usersInBatch.length; i++) {
+					$scope.batchUsers = $scope.usersInBatch[i];
+				    
+				    firstNames.push($scope.batchUsers.fName);
+					lastNames.push($scope.batchUsers.lName);
+					
+					$scope.listNames[i] = {
+				    		"firstName": firstNames[i],
+				    		"lastName": lastNames[i]
+				    };
+				}
 			})
+			}else{
+				$scope.message = 'You have no current batches';
+				$scope.currentBatchStart1 = 'N/A';
+				$scope.currentBatchEnd1 = 'N/A';
+				$scope.weekNum = 'N/A';
+				$scope.listNames = 'N/A';
+			}	
 		}
 	}
 	
-	$scope.trainerHasBatch = SessionService.get("trainerBatch");
-	$scope.userHasBatch = SessionService.get("currentBatch");
-	
-	//This populates the day progress bar
+
+	/**
+	 * Populates the progress bar
+	 */
 		if ($scope.trainerHasBatch){
 			
 			var currentDate = new Date().getTime();
@@ -84,8 +151,8 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 		} else if ($scope.userHasBatch){
 			
 			var currentDate = new Date().getTime();
-			var startDate = SessionService.get("currentBatch").startDate;
-			var endDate = SessionService.get("currentBatch").endDate;
+			var startDate = SessionService.get("currentUser").batch.startDate;
+			var endDate = SessionService.get("currentUser").batch.endDate;
 			
 			var daysComplete = currentDate - startDate;
 			var totalDays = endDate - startDate;
@@ -96,14 +163,18 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 		
 		
 		
-		
+		/**
+		 * Will return all of the missed subtopics out of the total subtopics
+		 * Will also categorize those subtopics in their respective topic category 
+		 * @return A list of missed subtopics/total subtopics
+		 */
 		$scope.returnMissed = function(){
 
 			 	var url;
 			 	 if(SessionService.get("currentUser").role == 1){
 		            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("currentUser").batch.id;
-		            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
-		            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
+		            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2) && SessionService.get("currentUser").batch) {
+		            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
 		            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
 		             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
 		            }
