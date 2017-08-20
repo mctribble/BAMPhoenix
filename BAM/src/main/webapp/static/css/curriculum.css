@@ -10,6 +10,7 @@
 	white-space: normal;
 	word-wrap: break-word;
 	overflow: hidden;
+	cursor:pointer;
 }
 
 .columnHeader{

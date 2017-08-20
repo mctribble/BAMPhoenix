@@ -142,7 +142,7 @@ app.controller(
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
 		$scope.newCurriculum = function(type){
 			//if the user provides a type, either they are ceating a new version with the latest version of an existing type, or creating a new type
-			if(type /*&& $scope.template.meta.curriculumName != type*/){
+			if(type && $scope.template.meta.curriculumName != type){
 				var typeExists = false;
 				//set the template to the latest version of the curriculum if it exists. otherwise create a new type
 				for(i in $scope.curricula){
@@ -187,7 +187,6 @@ app.controller(
 				}
 			}
 			$scope.displayedCurriculum = curriculum;
-			
 			//clear the modal box if it's got a value in it
 			document.getElementById("newCurriculumTypeNameInput").value = "";
 		}
@@ -336,7 +335,8 @@ app.controller(
 					}
 				});
 			}
-		});
+		})
+		;
 
 		/* END CONTROLLER BODY - EXECUTED ON PAGE LOAD */
 	}
