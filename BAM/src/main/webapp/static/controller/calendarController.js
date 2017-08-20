@@ -72,9 +72,21 @@
                 };
             };
             
+            /*
+             * @Author Tom Scheffer
+             * Hides the week numbers for week not in the batch
+             */
+           var hideZeroWeekNumbers = function(view, element){
+        	   $('.fc-week-number').each(function () {
+        		   if(this.textContent == 0){
+        			   $(this).addClass("outOfBatch");
+        		   }
+        	   });
+           }
+            
           /*
-			 * @Author: Tom Scheffer Calls the function changeDate if enter is
-			 * pressed when in the scope of the date search bar
+			 * @Author: Tom Scheffer
+			 * Calls the function changeDate if enter is pressed when in the scope of the date search bar
 			 */
           $scope.changeDateKeyPress = function(keyEvent){
         	  if(keyEvent.which === 13){
@@ -345,10 +357,6 @@
                                 var month = a.getMonth();
                                 var day = a.getDate();
                                 var formattedTime = new Date(year, month, day);
-                                var checkDuplicates = new Set();
-
-
-                                
                                 	if(status == 1 )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime};	
                                 	if(status == 1  && new Date().getMonth() > formattedTime.getMonth() && new Date().getFullYear() >= formattedTime.getFullYear() )
@@ -379,9 +387,6 @@
                 		SessionService.set("gotSubtopics", false); 
                 	});
             	}
-           // POST method to show subtopics on the calendar
-            			// For showing and hiding the
-											// loading gif.
             if(!SessionService.get("gotSubtopics") && url) {           	
             	SessionService.set("gotSubtopics", true);         		
             	$scope.loading = true;		
@@ -437,16 +442,9 @@
                    		method : "GET",
                    		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Completed"
                    	 }).then(function successCallback(response) {
-                   		
-
                    	 });
-                     
-
                 	}
-            		
-            		
             	}
-       
             	// if event date is not pass the current-date   	
             	else{
       
@@ -491,10 +489,7 @@
             	}
             	
            	}//end of else	
-            };
-            
-            
-            
+            }
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
             	 var eventDate= new Date(event.start);
@@ -510,18 +505,10 @@
                    		method : "GET",
                    		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Missed"
                    	 }).then(function successCallback(response) {
-                   		
-
                    	 });
-                     
-
-               
             	}	
-            	
-            	
               	if((event.className == 'topiccoloryellow' && event.start > new Date().setHours(0, 0, 0, 0) ) || ( event.className == 'topiccoloryellow' && new Date().getDate() == (eventDate.getDate() + 1) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() ) )
             	{
-            		
                 		event.className= '';
                         uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
                 		  // http for blue to green
@@ -529,16 +516,8 @@
                    		method : "GET",
                    		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Pending"
                    	 }).then(function successCallback(response) {
-                   		
-
                    	 });
-                     
-
-               
             	}
-            	
-            	
-             	
             	 $http({
              		method : "GET",
              		url : "rest/api/v1/Calendar/DateUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&date="+event.start
@@ -591,10 +570,6 @@
             /* Change View */
             $scope.changeView = function(view,calendar) {
               uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
-      	  	
-      	  		$('a').each(function () {
-      	  			console.log(this.textContent);
-      	  		});
             };
             /* Change View */
             $scope.renderCalendar = function(calendar) {
@@ -663,7 +638,8 @@
                           eventClick: $scope.alertOnEventClick,
                           eventDrop: $scope.alertOnDrop,
                           eventResize: $scope.alertOnResize,
-                          eventRender: $scope.eventRender
+                          eventRender: $scope.eventRender,
+                          viewRender: hideZeroWeekNumbers
                         		}
                       	};
             }
@@ -689,7 +665,8 @@
                 },
                 eventDrop: $scope.alertOnDrop,
                 eventResize: $scope.alertOnResize,
-                eventRender: $scope.eventRender
+                eventRender: $scope.eventRender,
+                viewRender: hideZeroWeekNumbers
               }
             
             };
@@ -702,12 +679,7 @@
 
             $scope.sources 			= "";
    			$scope.source 			= "";
-	            }
-  
-
-  
-
-	         
+	            }	         
   ])
     .directive('uiCalendar', ['uiCalendarConfig',
         function (uiCalendarConfig) {
