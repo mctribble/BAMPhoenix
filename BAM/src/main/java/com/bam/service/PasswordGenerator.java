@@ -5,25 +5,25 @@ public class PasswordGenerator {
 
 	
 	public static String makePassword() {
-		String pass = "";
+		StringBuilder pass = new StringBuilder();
 
 		for (int i = 0; i < 8; i++) {
 			char x = (char) (Math.random() * 62);
 
 			if (x < 26) {
 				char v = (char) (x + 65);
-				pass += Character.toString(v);
+				pass.append(v); 
 			} else if (x > 25 && x < 52) {
 				 char m = (char) (x + 71);
-				 pass += Character.toString(m);
+				 pass.append(m);
 			} else {
 				char k= (char) (x - 4);
-				pass += Character.toString(k);
+				pass.append(k);
 			}
 
 		}
 
-		return pass;
+		return pass.toString();
 	}
 
 }

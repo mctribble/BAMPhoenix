@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Component
 @Entity
 @Table(name = "Curriculum_Subtopic")
@@ -27,21 +29,22 @@ public class CurriculumSubtopic {
 	private int curriculumSubtopicId;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "Subtopic_Name_Id", referencedColumnName = "Subtopic_Name_Id")
+	@JoinColumn(name = "curriculum_Subtopic_Name_Id", referencedColumnName = "Subtopic_Name_Id")
 	@NotEmpty(message="Curriculum Subtopic Name cannot be empty")
-	private SubtopicName curriculumSubtopicNameId;
+	private SubtopicName curriculum_Subtopic_Name_Id;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "Curriculum_Id", referencedColumnName = "Curriculum_Id")
-	@NotEmpty(message="Curriculum cannot be empty")
-	private Curriculum curriculumSubtopicCurriculumID;
+	@JoinColumn(name = "curriculum_Subtopic_Cur_Id", referencedColumnName = "Curriculum_Id")
+	@NotEmpty(message ="Curriculum cannot be empty")
+	private Curriculum curriculum;
+
 	
-	@Column(name= "Curriculum_Week")
+	@Column(name = "Curriculum_Week")
 	@NotEmpty(message="Curriculum Week cannot be empty")
 	private int curriculumSubtopicWeek;
 	
-	@Column(name= "Curriculum_Day")
-	@NotEmpty(message="Curriculum Dawy cannot be empty")
+	@Column(name = "Curriculum_Day")
+	@NotEmpty(message ="Curriculum Day cannot be empty")
 	private int curriculumSubtopicDay;
 	
 	public CurriculumSubtopic(){}
@@ -50,8 +53,8 @@ public class CurriculumSubtopic {
 			Curriculum curriculumSubtopicCurriculumID, int curriculumSubtopicWeek, int curriculumSubtopicDay) {
 		super();
 		this.curriculumSubtopicId = curriculumSubtopicId;
-		this.curriculumSubtopicNameId = curriculumSubtopicNameId;
-		this.curriculumSubtopicCurriculumID = curriculumSubtopicCurriculumID;
+		this.curriculum_Subtopic_Name_Id = curriculumSubtopicNameId;
+		this.curriculum = curriculumSubtopicCurriculumID;
 		this.curriculumSubtopicWeek = curriculumSubtopicWeek;
 		this.curriculumSubtopicDay = curriculumSubtopicDay;
 	}
@@ -64,20 +67,21 @@ public class CurriculumSubtopic {
 		this.curriculumSubtopicId = curriculumSubtopicId;
 	}
 
-	public SubtopicName getCurriculumSubtopicNameId() {
-		return curriculumSubtopicNameId;
+	public SubtopicName getCurriculumSubtopic_Name_Id() {
+		return curriculum_Subtopic_Name_Id;
 	}
 
-	public void setCurriculumSubtopicNameId(SubtopicName curriculumSubtopicNameId) {
-		this.curriculumSubtopicNameId = curriculumSubtopicNameId;
+	public void setCurriculumSubtopic_Name_Id(SubtopicName curriculumSubtopic_Name_Id) {
+		this.curriculum_Subtopic_Name_Id = curriculumSubtopic_Name_Id;
 	}
 
-	public Curriculum getCurriculumSubtopicCurriculumID() {
-		return curriculumSubtopicCurriculumID;
+	@JsonIgnore
+	public Curriculum getCurriculumSubtopic_Curriculum_ID() {
+		return curriculum;
 	}
 
-	public void setCurriculumSubtopicCurriculumID(Curriculum curriculumSubtopicCurriculumID) {
-		this.curriculumSubtopicCurriculumID = curriculumSubtopicCurriculumID;
+	public void setCurriculumSubtopic_Curriculum_ID(Curriculum curriculumSubtopic_Curriculum_ID) {
+		this.curriculum = curriculumSubtopic_Curriculum_ID;
 	}
 
 	public int getCurriculumSubtopicWeek() {
@@ -98,9 +102,9 @@ public class CurriculumSubtopic {
 
 	@Override
 	public String toString() {
-		return "CurriculumSubtopic [curriculumSubtopicId=" + curriculumSubtopicId + ", curriculumSubtopicNameId="
-				+ curriculumSubtopicNameId + ", curriculumSubtopicCurriculumID=" + curriculumSubtopicCurriculumID
-				+ ", curriculumSubtopicWeek=" + curriculumSubtopicWeek + ", curriculumSubtopicDay="
+		return "CurriculumSubtopic [curriculumSubtopic_Id=" + curriculumSubtopicId + ", curriculumSubtopic_Name_Id="
+				+ curriculum_Subtopic_Name_Id + ", curriculumSubtopic_Curriculum_ID=" + curriculum
+				+ ", curriculumSubtopic_Week=" + curriculumSubtopicWeek + ", curriculumSubtopic_Day="
 				+ curriculumSubtopicDay + "]";
 	}
 
