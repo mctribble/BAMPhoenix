@@ -127,7 +127,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				    };
 				}
 			})
-			}else if($scope.noBatch){
+			}/*else if($scope.noBatch){
 				$http({
 					url: "/api/v1/Users/",
 					method: 'GET',
@@ -144,7 +144,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 					$scope.listNames = 'N/A';
 					$scope.percent = 'N/A';	
 			});
-			}else{
+			}else*/{
 				$scope.message = 'You have no current batches';
 				$scope.currentBatchStart1 = 'N/A';
 				$scope.currentBatchEnd1 = 'N/A';
