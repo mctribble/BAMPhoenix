@@ -152,8 +152,6 @@ app.controller(
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
 		$scope.newCurriculum = function(type){
 			//if the user provides a type, either they are ceating a new version with the latest version of an existing type, or creating a new type
-			console.log("in new curr: ");
-			console.log($scope.template);
 			if(type && $scope.template.meta.curriculumName != type){
 				var typeExists = false;
 				//set the template to the latest version of the curriculum if it exists. otherwise create a new type
@@ -231,8 +229,6 @@ app.controller(
 					},
 					weeks:$scope.displayedCurriculum.weeks
 			}
-			console.log("before persist - dto: ");
-			console.log(curriculumDTO);
 			//persist to the DB
 			$http({
 				method: 'POST',
@@ -243,7 +239,6 @@ app.controller(
 			    },
 				data: curriculumDTO
 			}).then(function(){
-				console.log("successfully persisted curriculum");
 			});
 			
 			$scope.displayedCurriculum = null;
@@ -349,13 +344,10 @@ app.controller(
 		};	
 		
 		$scope.newTopic = function(input, parentTopic){
-			console.log("Input: " + input)
-			console.log("parentTopic: " + parentTopic);
 			if(parentTopic){
 				//search topics for the matching type passed
 				for(i in $scope.topics){
 					if($scope.topics[i].name == parentTopic){
-						console.log("Adding " + input + " to " + $scope.topics[i].name);
 						$scope.topics[i].subtopics.push(
 								{
 									id: $scope.topics[i].subtopics.length,
@@ -365,7 +357,6 @@ app.controller(
 					}
 				}
 			}else{
-				console.log("adding " + input + "as new parent topic");
 				var newTopic = {
 						id: $scope.topics.length,
 						name: input,
