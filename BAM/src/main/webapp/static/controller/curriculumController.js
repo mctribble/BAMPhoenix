@@ -355,7 +355,7 @@ app.controller(
 				//search topics for the matching type passed
 				for(i in $scope.topics){
 					if($scope.topics[i].name == parentTopic){
-						console.log("Adding " + input + " to " + parentTopic);
+						console.log("Adding " + input + " to " + $scope.topics[i].name);
 						$scope.topics[i].subtopics.push(
 								{
 									id: $scope.topics[i].subtopics.length,
@@ -369,7 +369,7 @@ app.controller(
 				var newTopic = {
 						id: $scope.topics.length,
 						name: input,
-						subtopic: []
+						subtopics: []
 				}
 				$scope.topics.push(newTopic);
 			}
