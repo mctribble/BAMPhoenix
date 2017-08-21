@@ -1,5 +1,6 @@
 package com.bam.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,9 @@ import com.bam.dto.DaysDTO;
 import com.bam.service.CurriculumService;
 import com.bam.service.CurriculumSubtopicService;
 import com.bam.service.SubtopicService;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping(value = "/api/v1/Curriculum/")
@@ -62,20 +66,18 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
-	public void addSchedule(@RequestBody CurriculumSubtopicDTO c) throws CustomException{
+	public void addSchedule(@RequestBody String json) throws CustomException, JsonParseException, JsonMappingException, IOException{
+		ObjectMapper mapper = new ObjectMapper();
+		CurriculumSubtopicDTO c = mapper.readValue(json, CurriculumSubtopicDTO.class);
+		
 		//save curriculum object first
 		System.out.println(c);
 		Curriculum curriculum = new Curriculum();
-		curriculum.setCurriculumCreator(c.getMeta().getCurriculum().getCurriculum_Creator());
+		curriculum.setCurriculumCreator(c.getMeta().getCurriculum().getCurriculumCreator());
 		curriculum.setCurriculumdateCreated(c.getMeta().getCurriculum().getCurriculumdateCreated());
 		curriculum.setCurriculumName(c.getMeta().getCurriculum().getCurriculumName());
 		curriculum.setCurriculumNumberOf_Weeks(c.getMeta().getCurriculum().getCurriculumNumberOf_Weeks());
 		curriculum.setCurriculumVersion(c.getMeta().getCurriculum().getCurriculumVersion());
-		
-		//check if creator is null
-		if(curriculum.getCurriculum_Creator() == null){
-			throw new CustomException("Creator cannot be null");
-		}
 		
 		curriculumService.save(curriculum);
 		
