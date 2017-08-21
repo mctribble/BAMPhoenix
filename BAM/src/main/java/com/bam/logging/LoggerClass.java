@@ -99,6 +99,28 @@ public class LoggerClass {
 	}
 	
 	/**
+	 * Logging methods from the EmailRun Class
+	 * getUser()
+	 * setUser()
+	 * @author Jonathan Layssard
+	 */
+	@Around("execution(* com.bam.service.EmailRun.getUser(..))")
+	public void hijackGetUser(ProceedingJoinPoint jp)throws Throwable{
+		logger.info(intercepted + jp.getSignature().getName());
+		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
+		logger.info(jp.proceed());
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
+	}
+	
+	@Around("execution(* com.bam.service.EmailRun.setUser(..))")
+	public void hijackSetUser(ProceedingJoinPoint jp)throws Throwable{
+		logger.info(intercepted + jp.getSignature().getName());
+		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
+		logger.info(jp.proceed());
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
+	}
+	
+	/**
 	 * Logging methods from the MailService Class
 	 * sendMail()
 	 * @author Jonathan Layssard
