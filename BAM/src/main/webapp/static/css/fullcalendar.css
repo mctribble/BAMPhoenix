@@ -754,9 +754,17 @@ tr:first-child > td > .fc-day-grid-event {
 	opacity: .25;
 }
 
+/*	Editor: Joseph Nguyen
+		Modify tooltip for greater legibility.
+*/
 .tooltip-inner {
-    color: #fff;
-    background: #FF9900;
+    color: #000000;
+    background: #ffffff;
+    border: 2px solid #18cae6;
+    border-style: inset;
+    font-size: 22px;
+    font-weight: bold;
+    max-width: 500px !important;
 }
 
 .fc-day-grid-event .fc-content { /* force events to be one-line tall */
@@ -764,8 +772,12 @@ tr:first-child > td > .fc-day-grid-event {
     white-space: nowrap;
     overflow: hidden;
     color: white;
-    border-style: outset;	/* Outset borders for easier reading division between topics (and looks nice) */
-    font-size: 16px;	/* Make topic font larger for easier legibility */
+    border: 2px outset;	/* Outset borders for easier reading division between topics (and looks nice) */
+    border-color: #708090;
+    font-size: 20px;	/* Make topic font larger for easier legibility */
+    font-weight: bold;	/* Bold font for further legibility */
+    padding-left: 4px;
+    text-overflow: ellipsis;
 }
 
 .fc-day-grid-event .fc-time {
@@ -904,11 +916,6 @@ a.fc-more:hover {
 	
 .fc-toolbar .fc-state-down {
 	z-index: 3;
-}
-
-.fc-toolbar .fc-state-active,
-.fc-toolbar .ui-state-active {
-	z-index: 4;
 }
 
 .fc-toolbar button:focus {

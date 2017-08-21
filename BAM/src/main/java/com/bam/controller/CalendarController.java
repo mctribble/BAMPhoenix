@@ -8,8 +8,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +23,7 @@ import com.bam.bean.Subtopic;
 import com.bam.bean.SubtopicStatus;
 import com.bam.bean.TopicName;
 import com.bam.bean.TopicWeek;
+import com.bam.logging.LoggerClass;
 import com.bam.service.SubtopicService;
 import com.bam.service.TopicService;
 
@@ -27,7 +31,12 @@ import com.bam.service.TopicService;
 @RequestMapping(value = "/api/v1/Calendar/")
 public class CalendarController {
 	
-	private final static String batchID = "batchId";
+	private static final String BATCHID = "batchId";
+	private static final String PAGENUMBER = "pageNumber";
+	private static final String PAGESIZE = "pageSize";
+	private static final Logger logger = Logger.getLogger(LoggerClass.class);
+
+
 	
 	@Autowired
 	SubtopicService subtopicService;
@@ -40,18 +49,47 @@ public class CalendarController {
 	public List<Subtopic> getSubtopicsByBatch(HttpServletRequest request) {
 
 		//Get the batch id from the request
-		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		
 		//Retrieve and return users in a batch from the database
+
 		return subtopicService.getSubtopicByBatchId(batchId);
 	}
-
+	
+	/**
+	 * 
+	 * This uses pagination.
+	 * Will return a list of subtopics depending on what page and how many
+	 * per page of subtopics you want. The page number and size is determined
+	 * by the parameters.
+	 * 
+	 * Depending on how the FullCalendar API is setup to take pages of json
+	 * data, this method may need to change.
+	 * 
+	 * @param request
+	 * 		- HttpServletRequest
+	 * @return
+	 * 		List<Stubtopic>
+	 * 
+	 * Authors: Michael Garza
+	 * 			Gary LaMountain
+	 */
+	@RequestMapping(value="SubtopicsPagination", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public List<Subtopic> getSubTopicsByBatch(HttpServletRequest request){
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
+		int pageNum = Integer.parseInt( request.getParameter(PAGENUMBER) );
+		int pageSiz = Integer.parseInt( request.getParameter(PAGESIZE) );
+		
+		return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz, Direction.DESC, "subtopicDate"));
+	}
+	
 	@RequestMapping(value = "Topics", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public List<TopicWeek> getTopicsByBatch(HttpServletRequest request) {
+	public List<TopicWeek> getTopicsByBatchPag(HttpServletRequest request) {
 
 		//Get the batch id from the request
-		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		
 		//Retrieve and return users in a batch from the database
 		return topicService.getTopicByBatchId(batchId);
@@ -62,7 +100,7 @@ public class CalendarController {
 		// Get the batch id from the request
 		String subtopicName = request.getParameter("subtopicId");
 
-		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		List<Subtopic> topics = subtopicService.getSubtopicByBatchId(batchId);
 		Subtopic sub;
 		for (int i = 0; i < topics.size(); i++) {
@@ -84,7 +122,7 @@ public class CalendarController {
 		// Get the batch id from the request
 		String subtopicName = request.getParameter("subtopicId");
 
-		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		List<Subtopic> topics = subtopicService.getSubtopicByBatchId(batchId);
 		Subtopic sub;
 		SubtopicStatus status = subtopicService.getStatus(request.getParameter("status"));
@@ -92,7 +130,6 @@ public class CalendarController {
 			if (topics.get(i).getSubtopicName().getName().equals(subtopicName)) {
 				sub = topics.get(i);
 				sub.setStatus(status);
-
 				// Update topic in the database
 				subtopicService.updateSubtopic(sub);
 				break;
@@ -109,7 +146,7 @@ public class CalendarController {
 
 			topicsFromStub = mapper.readValue(jsonObject, mapper.getTypeFactory().constructCollectionType(List.class, TopicName.class));
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e);;
 		}
 		List<TopicName> allTopicsInBAM = topicService.getTopics();
 		for (int i = 0; i < topicsFromStub.size(); i++) {

@@ -71,6 +71,15 @@
 	    width: 200px;
 }
 
+.navbar{
+	margin-bottom:-50px;
+	position: fixed;
+    top: 0;
+    width: -webkit-fill-available;
+    margin-left: 18px;
+    margin-right: 79px;
+    z-index: 9999;
+}
 /***** 2.0 NAVBAR STYLING *****/
 .full-navbar {
 	width: 100%;
@@ -162,6 +171,10 @@ ul.dropdown-menu{
 	text-align: center;
 	margin-left: auto;
 	right: 0px;
+	overflow: visible;
+    visibility: visible;
+    position: absolute;
+    z-index: 9999;
 }
 
 a:not([href]):not([tabindex]) {
@@ -236,20 +249,112 @@ label::before {
 /* Editor: Joseph Nguyen
 		Modified colors to be easier on the eyes.
 */
-/* Missed */
-.topiccolorred{
-background-color: #fd4234 !important;	
-}
 
 /* Planned */
 .topiccolorblue{
-background-color: #0275d8 !important;
+background-color: #00689b !important;
 }
 
 /* Covered */
 .topiccolorgreen{
-background-color: #32cd32 !important;		
+background-color: #008400 !important;		
 }
+
+/* Cancelled */
+.topiccolorred{
+background-color: #b80d00 !important;	
+}
+
+/* Missed */
+.topiccoloryellow{
+background-color: #fea100 !important;    
+}
+
+.glyphicon-picture:hover{
+	color:blue;	
+}
+
+.gly-spin {
+  -webkit-animation: spin 2s infinite linear;
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg);
+  }
+  100% {
+    -o-transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+.gly-rotate-90 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.gly-rotate-180 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.gly-rotate-270 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+.gly-flip-horizontal {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+  -webkit-transform: scale(-1, 1);
+  -moz-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+.gly-flip-vertical {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
+  -webkit-transform: scale(1, -1);
+  -moz-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  -o-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+
 
 .searchbox-container {
 	/* 	font-family: "Audimat"; */
@@ -283,9 +388,11 @@ background-color: #32cd32 !important;
 }
 
 html {
-	min-height: 100%;
+	    height: -webkit-fill-available;
 }
-
+#page-wrap{
+	
+}
 body {
 	font-family: 'Roboto', sans-serif;
 	/* IE10+ */
@@ -306,19 +413,20 @@ body {
 	/* W3C Markup */
 	background-image: radial-gradient(ellipse farthest-corner at right bottom, #FFE8FC 0%,
 		#142863 100vh);
+	padding-top: 70px;
 }
 
 
 #content{
-	margin-top: 50px;
-	background-color: #FFFFFF ;
-	padding-top: 8px;
-	padding-bottom: 8px;
-	border-radius: 4px;
-	overflow-y: auto;
-	max-height: 85vh;
-	width: 90%;
-	height: -webkit-fill-available;
+	position:reltive;
+    margin-top: 30px;
+    background-color: #FFFFFF;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 4px;
+    overflow-y: auto;
+    max-height: 85vh;
+    width: 90%;
 }
 
 
@@ -328,6 +436,46 @@ body {
 }
 
 .input-tag {
-	width: 125px;
+	width: 151px;
 }
 
+
+/***** Event Legend *****/
+#plannedEvent {
+	background-color: #00689b;
+	border: 3px;
+	font-size: 16px;
+	color: white;
+	font-weight: bold;
+}
+
+#completedEvent {
+	background-color: #008400;
+	border: 3px;
+	font-size: 16px;
+	color: white;
+	font-weight: bold;
+}
+
+#cancelledEvent {
+	background-color: #b80d00;
+	border: 3px;
+	font-size: 16px;
+	color: white;
+	font-weight: bold;
+}
+
+#missedEvent {
+	background-color: #fea100;
+	border: 3px;
+	font-size: 16px;
+	color: white;
+	font-weight: bold;
+}
+
+/* Week numbers outside of batch */
+.outOfBatch{
+	background-color: transparent !important;
+	color: transparent !important;
+	cursor: default !important;
+}

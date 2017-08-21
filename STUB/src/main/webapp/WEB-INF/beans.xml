@@ -6,20 +6,30 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:repository="http://www.springframework.org/schema/data/repository"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
-		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+		http://www.springframework.org/schema/data/repository http://www.springframework.org/schema/data/repository/spring-repository-1.11.xsd">
 
 	<context:component-scan base-package="com.revature" />
 
     <!--Enable MVC annotations -->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+    	<mvc:argument-resolvers>
+
+  <bean class='org.springframework.data.web.PageableArgumentResolver'></bean>
+
+ </mvc:argument-resolvers>
+    </mvc:annotation-driven>
 
     <!-- Enable @Transactional annotation -->
     <tx:annotation-driven/>
+
+
 
 
     <bean id="myDataSource" name="myDataSource" class="org.apache.commons.dbcp.BasicDataSource">

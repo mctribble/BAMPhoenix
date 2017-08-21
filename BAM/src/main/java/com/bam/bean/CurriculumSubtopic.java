@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -24,85 +24,87 @@ public class CurriculumSubtopic {
 	@Column(name = "Curriculum_Subtopic_Id")
 	@SequenceGenerator(name = "Curriculum_Subtopic_ID_SEQ", sequenceName = "Curriculum_Subtopic_ID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Curriculum_Subtopic_ID_SEQ")
-	private int curriculumSubtopic_Id;
+	private int curriculumSubtopicId;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Subtopic_Name_Id", referencedColumnName = "Subtopic_Name_Id")
 	@NotEmpty(message="Curriculum Subtopic Name cannot be empty")
-	private SubtopicName curriculumSubtopic_Name_Id;
+	private SubtopicName curriculumSubtopicNameId;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Curriculum_Id", referencedColumnName = "Curriculum_Id")
 	@NotEmpty(message="Curriculum cannot be empty")
-	private Curriculum curriculumSubtopic_Curriculum_ID;
+	private Curriculum curriculumSubtopicCurriculumID;
 	
 	@Column(name= "Curriculum_Week")
 	@NotEmpty(message="Curriculum Week cannot be empty")
-	private int curriculumSubtopic_Week;
+	private int curriculumSubtopicWeek;
 	
 	@Column(name= "Curriculum_Day")
 	@NotEmpty(message="Curriculum Dawy cannot be empty")
-	private int curriculumSubtopic_Day;
+	private int curriculumSubtopicDay;
 	
 	public CurriculumSubtopic(){}
 
-	public CurriculumSubtopic(int curriculumSubtopic_Id, SubtopicName curriculumSubtopic_Name_Id,
-			Curriculum curriculumSubtopic_Curriculum_ID, int curriculumSubtopic_Week, int curriculumSubtopic_Day) {
+	public CurriculumSubtopic(int curriculumSubtopicId, SubtopicName curriculumSubtopicNameId,
+			Curriculum curriculumSubtopicCurriculumID, int curriculumSubtopicWeek, int curriculumSubtopicDay) {
 		super();
-		this.curriculumSubtopic_Id = curriculumSubtopic_Id;
-		this.curriculumSubtopic_Name_Id = curriculumSubtopic_Name_Id;
-		this.curriculumSubtopic_Curriculum_ID = curriculumSubtopic_Curriculum_ID;
-		this.curriculumSubtopic_Week = curriculumSubtopic_Week;
-		this.curriculumSubtopic_Day = curriculumSubtopic_Day;
+		this.curriculumSubtopicId = curriculumSubtopicId;
+		this.curriculumSubtopicNameId = curriculumSubtopicNameId;
+		this.curriculumSubtopicCurriculumID = curriculumSubtopicCurriculumID;
+		this.curriculumSubtopicWeek = curriculumSubtopicWeek;
+		this.curriculumSubtopicDay = curriculumSubtopicDay;
 	}
 
-	public int getCurriculumSubtopic_Id() {
-		return curriculumSubtopic_Id;
+	public int getCurriculumSubtopicId() {
+		return curriculumSubtopicId;
 	}
 
-	public void setCurriculumSubtopic_Id(int curriculumSubtopic_Id) {
-		this.curriculumSubtopic_Id = curriculumSubtopic_Id;
+	public void setCurriculumSubtopicId(int curriculumSubtopicId) {
+		this.curriculumSubtopicId = curriculumSubtopicId;
 	}
 
-	public SubtopicName getCurriculumSubtopic_Name_Id() {
-		return curriculumSubtopic_Name_Id;
+	public SubtopicName getCurriculumSubtopicNameId() {
+		return curriculumSubtopicNameId;
 	}
 
-	public void setCurriculumSubtopic_Name_Id(SubtopicName curriculumSubtopic_Name_Id) {
-		this.curriculumSubtopic_Name_Id = curriculumSubtopic_Name_Id;
+	public void setCurriculumSubtopicNameId(SubtopicName curriculumSubtopicNameId) {
+		this.curriculumSubtopicNameId = curriculumSubtopicNameId;
 	}
 
-	public Curriculum getCurriculumSubtopic_Curriculum_ID() {
-		return curriculumSubtopic_Curriculum_ID;
+	public Curriculum getCurriculumSubtopicCurriculumID() {
+		return curriculumSubtopicCurriculumID;
 	}
 
-	public void setCurriculumSubtopic_Curriculum_ID(Curriculum curriculumSubtopic_Curriculum_ID) {
-		this.curriculumSubtopic_Curriculum_ID = curriculumSubtopic_Curriculum_ID;
+	public void setCurriculumSubtopicCurriculumID(Curriculum curriculumSubtopicCurriculumID) {
+		this.curriculumSubtopicCurriculumID = curriculumSubtopicCurriculumID;
 	}
 
-	public int getCurriculumSubtopic_Week() {
-		return curriculumSubtopic_Week;
+	public int getCurriculumSubtopicWeek() {
+		return curriculumSubtopicWeek;
 	}
 
-	public void setCurriculumSubtopic_Week(int curriculumSubtopic_Week) {
-		this.curriculumSubtopic_Week = curriculumSubtopic_Week;
+	public void setCurriculumSubtopicWeek(int curriculumSubtopicWeek) {
+		this.curriculumSubtopicWeek = curriculumSubtopicWeek;
 	}
 
-	public int getCurriculumSubtopic_Day() {
-		return curriculumSubtopic_Day;
+	public int getCurriculumSubtopicDay() {
+		return curriculumSubtopicDay;
 	}
 
-	public void setCurriculumSubtopic_Day(int curriculumSubtopic_Day) {
-		this.curriculumSubtopic_Day = curriculumSubtopic_Day;
+	public void setCurriculumSubtopicDay(int curriculumSubtopicDay) {
+		this.curriculumSubtopicDay = curriculumSubtopicDay;
 	}
 
 	@Override
 	public String toString() {
-		return "CurriculumSubtopic [curriculumSubtopic_Id=" + curriculumSubtopic_Id + ", curriculumSubtopic_Name_Id="
-				+ curriculumSubtopic_Name_Id + ", curriculumSubtopic_Curriculum_ID=" + curriculumSubtopic_Curriculum_ID
-				+ ", curriculumSubtopic_Week=" + curriculumSubtopic_Week + ", curriculumSubtopic_Day="
-				+ curriculumSubtopic_Day + "]";
+		return "CurriculumSubtopic [curriculumSubtopicId=" + curriculumSubtopicId + ", curriculumSubtopicNameId="
+				+ curriculumSubtopicNameId + ", curriculumSubtopicCurriculumID=" + curriculumSubtopicCurriculumID
+				+ ", curriculumSubtopicWeek=" + curriculumSubtopicWeek + ", curriculumSubtopicDay="
+				+ curriculumSubtopicDay + "]";
 	}
+
+	
 	
 	
 	

@@ -1,6 +1,9 @@
-app.controller('loginController', function($rootScope, $scope, $location, $http) {
+
+app.controller('loginController', function($rootScope, $window, $scope, $location, $http, SessionService) {
+	$(".navbar").hide();
 	$rootScope.userRole;
-	
+	$scope.msg;
+
 	$rootScope.user;
 	$scope.msg;
 	$rootScope.trainerBatch;
@@ -20,29 +23,42 @@ app.controller('loginController', function($rootScope, $scope, $location, $http)
 	        }
 		})
 		.then(function success(response){
-			$rootScope.user = response.data;
-			if($rootScope.user.role == 3){
-				$rootScope.userRole = '(Quality Control)';
+			
+//			SessionService.set("currentUser", angular.toJson(response.data));
+//			console.log('Current user object role->'+ JSON.parse(SessionService.get("currentUser")).role);
+		
+			
+			SessionService.set("currentUser", response.data);
+			$rootScope.user = SessionService.get("currentUser");
+			if(SessionService.get("currentUser").role == 3){
+				SessionService.set("userRole", '(Quality Control)');
+
+				$rootScope.userRole = SessionService.get("userRole");
 				$location.path('/home');
-			} else if($rootScope.user.role == 2){
-				$rootScope.userRole = '(Trainer)';
+			} else if(SessionService.get("currentUser").role == 2){
+				SessionService.set("userRole", '(Trainer)');
+				$rootScope.userRole = SessionService.get("userRole");
+
 				$http({
 					url: 'rest/api/v1/Batches/InProgress',
 					method: 'GET',
-					params: {email : $rootScope.user.email}
+					params: {email : SessionService.get("currentUser").email}
 				}).then(function success (progResponse){
-					$rootScope.trainerBatch = progResponse.data;
-					$rootScope.gotSubtopics = false;
+					SessionService.set("trainerBatch", progResponse.data);
+					SessionService.set("gotSubtopics", false);
 					$location.path('/home');
 				}, function error(progResponse){
 					$scope.msg = 'Batch Acquisition failed';
 				});
-			} else if($rootScope.user.role == 1) {
-				$rootScope.userRole = '(Associate)';
-				if(!$rootScope.user.batch){
+			} else if(SessionService.get("currentUser").role == 1) {
+				SessionService.set("userRole", '(Associate)');
+
+				$rootScope.userRole = SessionService.get("userRole");
+
+				if(!SessionService.get("currentUser").batch){
 					$location.path('/noBatch');
 				}else{
-					$rootScope.gotSubtopics = false;
+					SessionService.set("gotSubtopics", false);
 					$location.path('/home');
 				}
 				
