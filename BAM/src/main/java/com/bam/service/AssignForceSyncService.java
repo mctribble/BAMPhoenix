@@ -94,8 +94,6 @@ public class AssignForceSyncService {
 				bservice.addOrUpdateBatch(curr_batch);
 				
 			}
-		
 		}
 	}
-
 }
