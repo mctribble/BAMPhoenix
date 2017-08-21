@@ -117,34 +117,21 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
 					$scope.batchUsers = $scope.usersInBatch[i];
-				    
-				    firstNames.push($scope.batchUsers.fName);
-					lastNames.push($scope.batchUsers.lName);
 					
-					$scope.listNames[i] = {
-				    		"firstName": firstNames[i],
-				    		"lastName": lastNames[i]
-				    };
+				    if(SessionService.get("currentUser").batch.endDate > currentDate){
+					    firstNames.push($scope.batchUsers.fName);
+						lastNames.push($scope.batchUsers.lName);
+						
+						$scope.listNames[i] = {
+					    		"firstName": firstNames[i],
+					    		"lastName": lastNames[i]
+					    };
+				    }else{
+				    	$scope.listNames = 'N/A';
+				    }
 				}
 			})
-			}/*else if($scope.noBatch){
-				$http({
-					url: "/api/v1/Users/",
-					method: 'GET',
-					params: {
-					batchId: batchId
-					}
-				}).then(function(response){
-					$scope.userInfo = response.data;
-					
-					$scope.message = 'You have no current batches';
-					$scope.currentBatchStart1 = 'N/A';
-					$scope.currentBatchEnd1 = 'N/A';
-					$scope.weekNum = 'N/A';
-					$scope.listNames = 'N/A';
-					$scope.percent = 'N/A';	
-			});
-			}else*/{
+			}else{
 				$scope.message = 'You have no current batches';
 				$scope.currentBatchStart1 = 'N/A';
 				$scope.currentBatchEnd1 = 'N/A';
