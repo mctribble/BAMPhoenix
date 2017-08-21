@@ -16,7 +16,8 @@ import com.bam.bean.CustomException;
 public class MailService {
 
 	public static void sendMail(String email, String newPassword) {
-
+		
+		
 
         final String USERNAME = "revabam@gmail.com";
         final String PASSWORD = "testing123";
@@ -54,7 +55,7 @@ public class MailService {
 				try {
 					throw new CustomException(e);
 				} catch (CustomException e1) {
-					e1.printStackTrace();
+					;
 				}
 			} 
         }
