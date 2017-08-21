@@ -10,9 +10,11 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 	        window.location.reload();
 	    }
 	}
-	
+
+	$(".navbar").show();
 	$scope.user;
 	var batchId;
+	console.log(SessionService.get("currentUser").userId);
 	/**
 	 * Sets the batch id to retrieve batch info for current user or trainer.
 	 */
@@ -21,13 +23,17 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 		batchId = SessionService.get("currentUser").batch.id;
 		SessionService.set("currentBatchName", SessionService.get("currentUser").batch.name);
 		
-	}else
+	}else if(SessionService.get("trainerBatch"))
 	{
 		batchId = SessionService.get("trainerBatch").id;
 		SessionService.set("currentBatchName", SessionService.get("trainerBatch").name);
 		
-	}
-		
+	}else
+	{
+		batchId = 3;
+	} 
+	
+	$scope.noBatch = SessionService.get("currentUser").userId;
 	$scope.trainerHasBatch = SessionService.get("trainerBatch");
 	$scope.userHasBatch = SessionService.get("currentUser").batch;
 	
@@ -129,13 +135,31 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				    };
 				}
 			})
-			}else{
+			}/*else if($scope.noBatch){
+				$http({
+					url: "/api/v1/Users/",
+					method: 'GET',
+					params: {
+					batchId: batchId
+					}
+				}).then(function(response){
+					$scope.userInfo = response.data;
+					
+					$scope.message = 'You have no current batches';
+					$scope.currentBatchStart1 = 'N/A';
+					$scope.currentBatchEnd1 = 'N/A';
+					$scope.weekNum = 'N/A';
+					$scope.listNames = 'N/A';
+					$scope.percent = 'N/A';	
+			});
+			}else*/{
 				$scope.message = 'You have no current batches';
 				$scope.currentBatchStart1 = 'N/A';
 				$scope.currentBatchEnd1 = 'N/A';
 				$scope.weekNum = 'N/A';
 				$scope.listNames = 'N/A';
-			}	
+				$scope.percent = 'N/A';
+			}
 		}
 	}
 	

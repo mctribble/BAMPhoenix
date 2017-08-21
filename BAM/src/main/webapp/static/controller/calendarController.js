@@ -21,7 +21,6 @@
 	  		
   app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService',
         function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService) {
-	  	$(".navbar").show();
 		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
 				$location.path('/noBatch');
@@ -40,7 +39,6 @@
 	  			$scope.myBatchButton = true;
 	  		}
 	  	}
-	  	
 		  
 	  	// Varibles set for the use of adding day,month,year,to the Date
 		// attribute of a calendar.
@@ -73,9 +71,21 @@
                 };
             };
             
+            /*
+             * @Author Tom Scheffer
+             * Hides the week numbers for week not in the batch
+             */
+           var hideZeroWeekNumbers = function(view, element){
+        	   $('.fc-week-number').each(function () {
+        		   if(this.textContent == 0){
+        			   $(this).addClass("outOfBatch");
+        		   }
+        	   });
+           }
+            
           /*
-			 * @Author: Tom Scheffer Calls the function changeDate if enter is
-			 * pressed when in the scope of the date search bar
+			 * @Author: Tom Scheffer
+			 * Calls the function changeDate if enter is pressed when in the scope of the date search bar
 			 */
           $scope.changeDateKeyPress = function(keyEvent){
         	  if(keyEvent.which === 13){
@@ -346,10 +356,6 @@
                                 var month = a.getMonth();
                                 var day = a.getDate();
                                 var formattedTime = new Date(year, month, day);
-                                var checkDuplicates = new Set();
-
-
-                                
                                 	if(status == 1 )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime};	
                                 	if(status == 1  && new Date().getMonth() > formattedTime.getMonth() && new Date().getFullYear() >= formattedTime.getFullYear() )
@@ -380,9 +386,6 @@
                 		SessionService.set("gotSubtopics", false); 
                 	});
             	}
-           // POST method to show subtopics on the calendar
-            			// For showing and hiding the
-											// loading gif.
             if(!SessionService.get("gotSubtopics") && url) {           	
             	SessionService.set("gotSubtopics", true);         		
             	$scope.loading = true;		
@@ -438,16 +441,9 @@
                    		method : "GET",
                    		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Completed"
                    	 }).then(function successCallback(response) {
-                   		
-
                    	 });
-                     
-
                 	}
-            		
-            		
             	}
-       
             	// if event date is not pass the current-date   	
             	else{
       
@@ -492,8 +488,7 @@
             	}
             	
            	}//end of else	
-            };
-            
+            }
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
             	 var eventDate= new Date(event.start);
@@ -509,18 +504,10 @@
                    		method : "GET",
                    		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Missed"
                    	 }).then(function successCallback(response) {
-                   		
-
                    	 });
-                     
-
-               
             	}	
-            	
-            	
               	if((event.className == 'topiccoloryellow' && event.start > new Date().setHours(0, 0, 0, 0) ) || ( event.className == 'topiccoloryellow' && new Date().getDate() == (eventDate.getDate() + 1) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() ) )
             	{
-            		
                 		event.className= '';
                         uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
                 		  // http for blue to green
@@ -528,16 +515,8 @@
                    		method : "GET",
                    		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Pending"
                    	 }).then(function successCallback(response) {
-                   		
-
                    	 });
-                     
-
-               
             	}
-            	
-            	
-             	
             	 $http({
              		method : "GET",
              		url : "rest/api/v1/Calendar/DateUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&date="+event.start
@@ -612,7 +591,7 @@
             		var finishDate = moment(SessionService.get("currentUser").batch.endDate);
             		finishDate.add(finishDate.utcOffset(), 'minutes');
             		if(currentWeek >= beginDate && currentWeek < finishDate){
-            			return currentWeek.diff(SessionService.get("currentUser").batch.startDate, 'weeks') + 1;
+            			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && !SessionService.get("currentBatch") && SessionService.get("trainerBatch")){
             		var beginDate = moment(SessionService.get("trainerBatch").startDate);
@@ -620,7 +599,7 @@
             		var finishDate = moment(SessionService.get("trainerBatch").endDate);
             		finishDate.add(finishDate.utcOffset(), 'minutes');
             		if(currentWeek >= beginDate && currentWeek < finishDate){
-            			return currentWeek.diff(SessionService.get("trainerBatch").startDate, 'weeks') + 1;
+            			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && SessionService.get("currentBatch")){
             		var beginDate = moment(SessionService.get("currentBatch").startDate);
@@ -628,7 +607,7 @@
             		var finishDate = moment(SessionService.get("currentBatch").endDate);
             		finishDate.add(finishDate.utcOffset(), 'minutes');
             		if(currentWeek >= beginDate && currentWeek < finishDate){
-            			return currentWeek.diff(beginDate, 'weeks') + 1;
+            			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}
             	}
             	return 0;
@@ -642,11 +621,11 @@
                           contentHeight: 'auto',
                           editable: true,
                           navLinks: true,
-                          weekNumbers: true,
-                          weekNumberTitle: "Week in Batch",
+                          weekNumbersWithinDays: true,
                           weekNumberCalculation: calculateWeekNumber,
                           views:{
                           	month:{
+                                weekNumbers: true,
                           		eventLimit: 5
                           	}
                           },
@@ -658,11 +637,11 @@
                           eventClick: $scope.alertOnEventClick,
                           eventDrop: $scope.alertOnDrop,
                           eventResize: $scope.alertOnResize,
-                          eventRender: $scope.eventRender
+                          eventRender: $scope.eventRender,
+                          viewRender: hideZeroWeekNumbers
                         		}
                       	};
             }
-            
             if(SessionService.get("currentUser").role == 1 || SessionService.get("currentBatch") != null){
             /* config object */
             $scope.uiConfig = {
@@ -670,11 +649,11 @@
                 contentHeight: 'auto',
                 editable: false,
                 navLinks: true,
-                weekNumbers: true,
-                weekNumberTitle: "Week in Batch",
+                weekNumbersWithinDays: true,
                 weekNumberCalculation: calculateWeekNumber,
                 views:{
                 	month:{
+                        weekNumbers: true,
                 		eventLimit: 5
                 	}
                 },
@@ -685,7 +664,8 @@
                 },
                 eventDrop: $scope.alertOnDrop,
                 eventResize: $scope.alertOnResize,
-                eventRender: $scope.eventRender
+                eventRender: $scope.eventRender,
+                viewRender: hideZeroWeekNumbers
               }
             
             };
@@ -698,12 +678,7 @@
 
             $scope.sources 			= "";
    			$scope.source 			= "";
-	            }
-  
-
-  
-
-	         
+	            }	         
   ])
     .directive('uiCalendar', ['uiCalendarConfig',
         function (uiCalendarConfig) {
