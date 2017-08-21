@@ -3,6 +3,14 @@
  * @author Kosiba Oshodi-Glover
  */
 app.controller('dashboardController', function($http, $scope, SessionService) {
+	
+	window.onload = function() {
+	    if(!window.location.hash) {
+	        window.location = window.location + '#loaded';
+	        window.location.reload();
+	    }
+	}
+
 	$(".navbar").show();
 	$scope.user;
 	var batchId;

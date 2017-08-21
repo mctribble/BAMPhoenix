@@ -10,7 +10,7 @@
 	<a class="navbar-brand" href="#/home">Dashboard</a>
 	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		<div class="navbar-nav">
-			<a class="nav-item nav-link" href="#/calendar">Calendar</a>
+			<a class="nav-item nav-link" href="#/calendar" ng-init="refresh()">Calendar</a>
 			<a class="nav-item nav-link" href="#/batchesAll"
 				ng-show="user.role>=2" >All Batches</a>
 			<a class="nav-item nav-link" href="#/curriculum" ng-show="user.role>=2">Curriculum</a>
