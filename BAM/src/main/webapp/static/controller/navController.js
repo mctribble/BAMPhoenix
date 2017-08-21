@@ -29,4 +29,5 @@ app.controller('navController', function($rootScope, SessionService, $scope, $lo
 		
         SessionService.remove();
     }
+	
 });
