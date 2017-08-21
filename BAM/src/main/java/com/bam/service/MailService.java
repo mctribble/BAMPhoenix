@@ -10,18 +10,21 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+
+import com.bam.bean.CustomException;
+
 public class MailService {
 
-	public static void sendMail(String email) {
+	public static void sendMail(String email, String newPassword) {
 
 
-        final String username = "revabam@gmail.com";
-        final String password = "testing123";
+        final String USERNAME = "revabam@gmail.com";
+        final String PASSWORD = "testing123";
         String receiver= email; //user.getemail
         
         PasswordGenerator pass = new PasswordGenerator();
         
-        Properties pop = new Properties();
+
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -31,32 +34,32 @@ public class MailService {
         Session session = Session.getInstance(props,
                   new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(USERNAME, PASSWORD);
                     }
                   });
         try {
 
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
+            message.setFrom(new InternetAddress(USERNAME));
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(receiver));
             message.setSubject("Recover Password");
             message.setText("Your temporary password is " + pass);   
-//            message.setText("Your temporary password is " + pass + " " + " Feel free to click the following link login \n" + " "+
-//                    "Login Page: http://localhost:8085/BAM/#/");            
-            
-//            + ", and your username is" +
-//            " " + email + ". Feel free to click the following link to set your own! \n"
-//                + "Password Reset: http://localhost:7001/PeekABooERS/initiallogin.html"
+
 
             Transport.send(message);
             
 
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+				try {
+					throw new CustomException(e);
+				} catch (CustomException e1) {
+					e1.printStackTrace();
+				}
+			} 
         }
 
 
     }
 
-}
+

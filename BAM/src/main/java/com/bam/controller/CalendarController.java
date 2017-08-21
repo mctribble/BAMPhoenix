@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,7 @@ import com.bam.bean.Subtopic;
 import com.bam.bean.SubtopicStatus;
 import com.bam.bean.TopicName;
 import com.bam.bean.TopicWeek;
+import com.bam.logging.LoggerClass;
 import com.bam.service.SubtopicService;
 import com.bam.service.TopicService;
 
@@ -29,9 +31,11 @@ import com.bam.service.TopicService;
 @RequestMapping(value = "/api/v1/Calendar/")
 public class CalendarController {
 	
-	private final static String BATCHID = "batchId";
-	private final static String pageNumber = "pageNumber";
-	private final static String pageSize = "pageSize";
+	private static final String BATCHID = "batchId";
+	private static final String PAGENUMBER = "pageNumber";
+	private static final String PAGESIZE = "pageSize";
+	private static final Logger logger = Logger.getLogger(LoggerClass.class);
+
 
 	
 	@Autowired
@@ -74,15 +78,15 @@ public class CalendarController {
 	@ResponseBody
 	public List<Subtopic> getSubTopicsByBatch(HttpServletRequest request){
 		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
-		int pageNum = Integer.parseInt( request.getParameter(pageNumber) );
-		int pageSiz = Integer.parseInt( request.getParameter(pageSize) );
+		int pageNum = Integer.parseInt( request.getParameter(PAGENUMBER) );
+		int pageSiz = Integer.parseInt( request.getParameter(PAGESIZE) );
 		
 		return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz, Direction.DESC, "subtopicDate"));
 	}
 	
 	@RequestMapping(value = "Topics", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public List<TopicWeek> getTopicsByBatch(HttpServletRequest request) {
+	public List<TopicWeek> getTopicsByBatchPag(HttpServletRequest request) {
 
 		//Get the batch id from the request
 		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
@@ -142,7 +146,7 @@ public class CalendarController {
 
 			topicsFromStub = mapper.readValue(jsonObject, mapper.getTypeFactory().constructCollectionType(List.class, TopicName.class));
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e);;
 		}
 		List<TopicName> allTopicsInBAM = topicService.getTopics();
 		for (int i = 0; i < topicsFromStub.size(); i++) {
