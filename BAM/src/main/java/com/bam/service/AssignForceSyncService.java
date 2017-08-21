@@ -85,11 +85,7 @@ public class AssignForceSyncService {
 					bammy = BAMtrainers.get(0);
 					bammy.setAssignForce_ID(batch.getTrainer().getTrainerId());
 					curr_batch.setTrainer(bammy);
-				}else{
-					// If no trainer found, trainer set to null in batch.
-					curr_batch.setTrainer(null);
 				}
-				
 				// Batch is persisted, either added or updated.
 				bservice.addOrUpdateBatch(curr_batch);
 				
