@@ -339,7 +339,8 @@
             	myDataPromise = SubtopicService.getTotalNumberOfSubtopics(SessionService.get("currentUser").batch.id);
             	
             }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
-            	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+SessionService.get("currentBatch").id+ "&pageSize=" + pageSize + "&pageNumber=0";
+            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
+            	//url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+SessionService.get("currentBatch").id+ "&pageSize=" + pageSize + "&pageNumber=0";
             	myDataPromise = SubtopicService.getTotalNumberOfSubtopics(SessionService.get("currentBatch").id);
 
             }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
@@ -363,16 +364,14 @@
             			// this is only run after getTotalNumberOfSubtopics() resolves
              	       numberOfPages = Math.ceil(result / pageSize);
              	       
-//             	      var id=0;
+//             	      
              	      for(var n = 0; n < numberOfPages; n++){
               			(function(index) {
-            		chain = chain.then(function(){
             			url = url.substring(0, url.length - 1) + index;
-            		return $http({
+            		$http({
                 		method : "GET",
                 		url : url
                 	}).then(function successCallback(response) {
-                		
                 		for(var i = 0; i < response.data.length ; i++) {
                 				$scope.eventSources = [{}];
                 				var id = response.data[i].subtopicId;
@@ -401,7 +400,6 @@
                                     
 
                     			$scope.events.push(temp);
-//                    			id++;
                     	
                 		}
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
@@ -414,7 +412,6 @@
                 		$scope.loading = false;
                 		SessionService.set("gotSubtopics", false); 
                 	});
-            		}); // end of chain
               			})(n)
               			}; // end of for loop
             		}); // end of promise

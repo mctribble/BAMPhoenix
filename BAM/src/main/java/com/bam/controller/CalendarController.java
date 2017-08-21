@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -69,6 +68,11 @@ public class CalendarController {
 	 * 
 	 * Authors: Michael Garza
 	 * 			Gary LaMountain
+	 * 
+	 * note: It will be better to sort by subtopicDate because it will load the most
+	 * 		 recent subtopics. However, since the subtopics have the sames dates, it's
+	 * 		 causing duplications on the calendar.
+	 * return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz, Direction.DESC, "subtopicDate"));
 	 */
 	@RequestMapping(value="SubtopicsPagination", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
@@ -77,7 +81,7 @@ public class CalendarController {
 		int pageNum = Integer.parseInt( request.getParameter(PAGENUMBER) );
 		int pageSiz = Integer.parseInt( request.getParameter(PAGESIZE) );
 		
-		return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz, Direction.DESC, "subtopicDate"));
+		return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz));
 	}
 	
 	/**
