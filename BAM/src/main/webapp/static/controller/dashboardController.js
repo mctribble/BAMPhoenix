@@ -14,7 +14,6 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 	$(".navbar").show();
 	$scope.user;
 	var batchId;
-	console.log(SessionService.get("currentUser").userId);
 	/**
 	 * Sets the batch id to retrieve batch info for current user or trainer.
 	 */
@@ -39,6 +38,8 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 	
 	/**
 	 * function that will return dates, list of associates, status, and name of current batch
+	 * @param getData
+	 * @return weekNum returns an int 
 	 */
 	$scope.getData = function() {
 			
