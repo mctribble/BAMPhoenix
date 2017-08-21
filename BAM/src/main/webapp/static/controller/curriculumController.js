@@ -176,7 +176,7 @@ app.controller(
 										curriculumName: type,
 										curriculumNumberOf_Weeks: 0,
 										curriculumVersion: 1,
-										curriculum_Creator: SessionService.get("currentUser"),
+										curriculumCreator: SessionService.get("currentUser"),
 										curriculumdateCreated: $scope.getDate() //set this to the current date as mm/dd/yy eventually
 									},
 									weeks:[]
@@ -192,7 +192,7 @@ app.controller(
 			//we can now guarantee that the template is set appropriately, and can load it into the displayedCurriculum
 			//create a unique object from the template (not a reference to template)
 			var curriculum = jQuery.extend(true, {}, $scope.template);
-			curriculum.meta.curriculum_Creator = SessionService.get("currentUser");
+			curriculum.meta.curriculumCreator = SessionService.get("currentUser");
 			curriculum.meta.curriculumdateCreated = $scope.getDate();
 			//loop through the curricula looking for the curriculum type, if found, count the number of versions and set this curr. object's version to it + 1
 			for(item in $scope.curricula){
