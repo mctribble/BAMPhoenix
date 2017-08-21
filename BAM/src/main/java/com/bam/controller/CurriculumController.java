@@ -76,7 +76,7 @@ public class CurriculumController {
 		curriculum.setCurriculumCreator(c.getMeta().getCurriculum().getCurriculumCreator());
 		curriculum.setCurriculumdateCreated(c.getMeta().getCurriculum().getCurriculumdateCreated());
 		curriculum.setCurriculumName(c.getMeta().getCurriculum().getCurriculumName());
-		curriculum.setCurriculumNumberOf_Weeks(c.getMeta().getCurriculum().getCurriculumNumberOf_Weeks());
+		curriculum.setCurriculumNumberOfWeeks(c.getMeta().getCurriculum().getCurriculumNumberOfWeeks());
 		curriculum.setCurriculumVersion(c.getMeta().getCurriculum().getCurriculumVersion());
 		
 		curriculumService.save(curriculum);

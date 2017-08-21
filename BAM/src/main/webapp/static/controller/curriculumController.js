@@ -75,7 +75,7 @@ app.controller(
 			.then(function(response){
 				var newCurriculum = curriculum;
 				//add the (empty) weeks:
-					for(var j = 0; j < newCurriculum.meta.curriculumNumberOf_Weeks; j++){
+					for(var j = 0; j < newCurriculum.meta.curriculumNumberOfWeeks; j++){
 						newCurriculum.weeks.push({
 							days:[
 								{subtopics:[]},
@@ -110,13 +110,13 @@ app.controller(
 					]
 				};
 			$scope.displayedCurriculum.weeks.push(week);
-			$scope.displayedCurriculum.meta.curriculumNumberOf_Weeks += 1;
+			$scope.displayedCurriculum.meta.curriculumNumberOfWeeks += 1;
 		}
 		
 		$scope.deleteWeek = function(index){
 			if(confirm("Are you sure you want to delete week #" + index + "?")){
 				$scope.displayedCurriculum.weeks.splice(index-1, 1);
-				$scope.displayedCurriculum.meta.curriculumNumberOf_Weeks -= 1;
+				$scope.displayedCurriculum.meta.curriculumNumberOfWeeks -= 1;
 			}
 		}
 		
@@ -172,7 +172,7 @@ app.controller(
 										curriculumId: null,
 										curriculumModifier: null,
 										curriculumName: type,
-										curriculumNumberOf_Weeks: 0,
+										curriculumNumberOfWeeks: 0,
 										curriculumVersion: 1,
 										curriculumCreator: SessionService.get("currentUser"),
 										curriculumdateCreated: $scope.getDate() //set this to the current date as mm/dd/yy eventually
