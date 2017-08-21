@@ -77,7 +77,7 @@ public class Curriculum {
 		this.curriculumVersion = curriculumVersion;
 	}
 
-	public BamUser getCurriculum_Creator() {
+	public BamUser getCurriculumCreator() {
 		return curriculumCreator;
 	}
 
