@@ -21,7 +21,6 @@
 	  		
   app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService',
         function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService) {
-	  	$(".navbar").show();
 		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
 				$location.path('/noBatch');
