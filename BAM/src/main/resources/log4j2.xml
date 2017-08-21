@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
 	<Appenders>
-		<File name="FILE" fileName="/log4j_logs/BAM_Phoenix_log.html"
-			append="false">
-			<!-- <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss ZZZ} %F.%L level:%-5p%m" /> -->
-			<HTMLLayout charset="UTF-8" />
-		</File>
+		<Http name="HTTP"
+			url="https://prd-p-9hp2hbcv2cnv.cloud.splunk.com:8088/services/collector"
+			token="32C0F7FA-FAF9-4394-86A9-04900224EEE5"
+			disableCertificateValidation="true" index="main">
+			<PatternLayout pattern="%m" />
+		</Http>
 	</Appenders>
 	<Loggers>
 		<Root level="INFO">
-			<AppenderRef ref="FILE" />
+			<AppenderRef ref="HTTP" />
 		</Root>
 	</Loggers>
 </Configuration>
