@@ -90,6 +90,7 @@ public class SubtopicService {
 	public Long getNumberOfSubtopics(int batchId){
 		return subtopicRepository.countSubtopicsByBatchId(batchId);
 	}
+
 	/**
 	 * Service method to return the pages of json information to the FullCalendar API. 
 	 * This is hard coded until the FullCalendar API is set up for getting pages of 
