@@ -38,6 +38,7 @@ public class SubtopicService {
 	
 	public void addSubtopic(int subtopic, int batch){
 		Subtopic s = new Subtopic();
+
 		Batch b;
 		SubtopicName st;
 		SubtopicStatus ss;
@@ -80,7 +81,12 @@ public class SubtopicService {
 		return subtopicStatusRepository.findByName(name);
 	}
 
-	public Page<Subtopic> findAll() {
+	public List<SubtopicName> getAllSubtopics(){
+		return subtopicNameRepository.findAll();
+	}
+	
+	public Page<Subtopic> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -100,3 +106,4 @@ public class SubtopicService {
 		return subtopicRepository.findByBatch(batchRepository.findById(batchId), pageRequest);
     }
 }
+
