@@ -107,12 +107,9 @@ public class UsersDetailsService implements UserDetailsService {
 		return Result;
 	}
 
-  /*
-      Author: Adeo Salam
-  */
+
 	public void recoverE(BamUser user) {
 		EmailRun er = new EmailRun();
-		
 		er.setUser(user);
 		Thread th = new Thread(er);
 		th.start();
