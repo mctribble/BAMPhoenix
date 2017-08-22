@@ -7,9 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bam.bean.Batch;
@@ -81,13 +79,21 @@ public class SubtopicService {
 		return subtopicStatusRepository.findByName(name);
 	}
 
+	/**
+	 * Service method to return the number of Subtopics by matching their ids with
+	 * the batchId.
+	 * 
+	 * @param batchId(int)
+	 * @return number(long) of Subtopics
+	 * 
+	 * @author Michael Garza, Gary LaMountain
+	 */
+	public Long getNumberOfSubtopics(int batchId){
+		return subtopicRepository.countSubtopicsByBatchId(batchId);
+  }
+
 	public List<SubtopicName> getAllSubtopics(){
 		return subtopicNameRepository.findAll();
-	}
-	
-	public Page<Subtopic> findAll(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
