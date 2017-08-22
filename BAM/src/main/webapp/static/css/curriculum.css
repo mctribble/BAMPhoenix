@@ -1,6 +1,16 @@
 /* PARENT ELEMENT */
 #curriculumManager{
-	height: 100vh;
+	width:100%;
+	margin:0px;
+	overflow: hidden;
+}
+
+.card-header{
+	color:rgb(2,117,216);
+	white-space: normal;
+	word-wrap: break-word;
+	overflow: hidden;
+	cursor:pointer;
 }
 
 .columnHeader{
@@ -14,63 +24,92 @@
 
 /* LEFT SIDEBAR */
 #curriculaLoaderView{
-	border: 1px solid #333;
+	border: 1px solid #ccc;
 	border-radius: 3px;
 	padding:0px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	max-height: 900px;
+	height: 900px;
+}
+
+#curriculaLoaderView .columnHeader{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+#curriculaLoaderView #curriculaAccordion .card{
+	padding: 0px;
+}
+
+.card-block{
+	padding: 0px;
+}
+
+#dayList .card-block .row .col .card-header{
+	color: blue;
+	background-color: #fff;
 }
 
 /* MIDDLE */
+#weekAccordion .card-header .weekCardText{
+	color:black;
+}
+
 #curriculumView{
-	border: 1px solid #333;
+	border: 1px solid #ccc;
 	border-radius: 3px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	max-height: 900px;
+	height: 900px;
+}
+
+.list-group{
+	min-height: 50px;
+}
+
+.list-group-item:hover{
+	background-color: #b5d1ff;
+	cursor: pointer;
+}
+
+.col-md-2 {
+	padding: 0px;
+}
+
+.day-list{
+	margin:0px;
+}
+
+.day-list-item{
+	/* padding: 0px; */
+	
+}
+
+.day-header{
+	background-color: #0275d8;
+	color: white;
+	border-right: 1px solid white;
+	border-left: 1px solid white;
+	border-bottom: 2px solid #555;
+	border-radius 6px;
+}
+
+#curriculumSubheader{
+	font-size:50%;
+	color:#ff9b00;
 }
 
 /* RIGHT SIDEBAR */
 #poolView{
 	padding:0px;
-	border: 1px solid #333;
+	border: 1px solid #ccc;
 	border-radius: 3px;
-}
-
-.topicFilter{
-	-webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    padding: 5px;
-    width:100%;
-	text-align-last:center;
-}
-
-/* FOR ACCORDIAN */
-.accordion {
-  .expander {
-    margin-bottom: 0;
-    
-    &:not(:last-child) {
-      border-bottom: 0;
-    }
-  }
-}
-
-.expander {
-  margin-bottom: 20px;
-  list-style: none;
-  border: 1px solid #888;  
-  
-  .title {
-    text-indent: 5px;
-    background: #ddd;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-  
-  .content {
-    padding: 5px;
-  }
+	overflow-x:hidden;
+	overflow-y:auto;
+	max-height: 900px;
+	height: 900px;
 }
 
 .dndDraggingSource{
@@ -84,3 +123,7 @@
 	list-style-type:none;
 }
 
+/* MODAL */
+.modal-title{
+	color: rgb(2,117,216);
+}

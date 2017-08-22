@@ -23,8 +23,7 @@ import com.bam.repository.BatchRepository;
 @Service("userDetailsService")
 @Transactional
 public class UsersDetailsService implements UserDetailsService {
-	
-	
+
 	@Autowired
 	BamUserRepository dao;
 
@@ -52,8 +51,8 @@ public class UsersDetailsService implements UserDetailsService {
 	}
 
 	/**
-	 * Get batch object by the id
-	 * Return users in the batch
+	 * Get batch object by the id Return users in the batch
+	 * 
 	 * @param batchId
 	 * @return
 	 */
@@ -75,7 +74,7 @@ public class UsersDetailsService implements UserDetailsService {
 		}
 		return users;
 	}
-	
+
 	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
 		BamUser user = dao.findByEmail(email);
 		return buildUserForAuthentication(user, buildUserAuthority(user));
@@ -85,8 +84,8 @@ public class UsersDetailsService implements UserDetailsService {
 	 * 
 	 * @param user
 	 * @param authorities
-	 * @return
-	 * Converts Users user to org.springframework.security.core.userdetails.User
+	 * @return Converts Users user to
+	 *         org.springframework.security.core.userdetails.User
 	 */
 	private User buildUserForAuthentication(BamUser user, List<GrantedAuthority> authorities) {
 		return new User(user.getEmail(), user.getPwd(), true, true, true, true, authorities);
@@ -98,11 +97,16 @@ public class UsersDetailsService implements UserDetailsService {
 		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
 		return Result;
 	}
-	
-	public void recoverE(BamUser user){
-		 Runnable run = new EmailRun("revatbam@gmail.com");
-		 Thread th = new Thread(run);
-		 th.start();
+
+  /*
+      Author: Adeo Salam
+  */
+	public void recoverE(BamUser user) {
+		EmailRun er = new EmailRun();
+		
+		er.setUser(user);
+		Thread th = new Thread(er);
+		th.start();
 	}
 
 }
