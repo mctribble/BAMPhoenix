@@ -17,7 +17,9 @@ public class EmailRun implements Runnable{
 
 	@Override
 	public void run() {
+
 		MailService.sendMail(user.getEmail(), user.getPwd());
+		
 	}
 
 
