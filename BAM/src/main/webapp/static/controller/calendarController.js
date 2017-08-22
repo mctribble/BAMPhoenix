@@ -417,7 +417,7 @@
                 	}).finally(function() {
                 		// Turn off loading indicator whether success or
 						// failure.
-                		if(index == numberOfPages-1){
+                		if(index == numberOfPages){
                 			$scope.loading = false;
                 		}
                 		SessionService.set("gotSubtopics", false); 
