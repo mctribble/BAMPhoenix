@@ -36,6 +36,7 @@ public class SubtopicService {
 	
 	public void addSubtopic(int subtopic, int batch){
 		Subtopic s = new Subtopic();
+
 		Batch b;
 		SubtopicName st;
 		SubtopicStatus ss;
@@ -89,6 +90,10 @@ public class SubtopicService {
 	 */
 	public Long getNumberOfSubtopics(int batchId){
 		return subtopicRepository.countSubtopicsByBatchId(batchId);
+  }
+
+	public List<SubtopicName> getAllSubtopics(){
+		return subtopicNameRepository.findAll();
 	}
 
 	/**
@@ -107,3 +112,4 @@ public class SubtopicService {
 		return subtopicRepository.findByBatch(batchRepository.findById(batchId), pageRequest);
     }
 }
+
