@@ -145,7 +145,6 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				
 				var dif = weeksBetween($scope.currentBatchStart1, currentDate);
 				$scope.weekNum = dif;
-				console.log(dif);
 						
 			$http({
 				url: "rest/api/v1/Users/InBatch",
@@ -346,7 +345,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 			 
 		
 		/**
-		 * this function controls what the user sees when they have multiple current batches
+		 * this function controls what the user sees when they have multiple current batches, updating the currently loaded script
 		 */
 		$scope.hitCount = 0;
 		var startDate;
