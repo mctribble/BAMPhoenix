@@ -353,7 +353,7 @@
             var responses = [];
         	$scope.events = [];
         	var numberOfPages;
-        	
+        	 
         	
             	//function that loads the events for your batch
             	$scope.loadCalendar = function(url){
@@ -363,6 +363,11 @@
             			
             			// this is only run after getTotalNumberOfSubtopics() resolves
              	       numberOfPages = Math.ceil(result / pageSize);
+             	       
+             	       if(numberOfPages == 0){
+             	    	   $scope.loading = false;
+             	    	  SessionService.set("gotSubtopics", false);
+             	       }
              	       
 //             	      
              	      for(var n = 0; n < numberOfPages; n++){
