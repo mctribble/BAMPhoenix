@@ -69,7 +69,7 @@ app.controller(
 			return $http({
 				url: "rest/api/v1/Curriculum/Schedule",
 				method: "GET",
-				params: {curriculumId: curriculum.meta.curriculumVersion}
+				params: {curriculumId: curriculum.meta.curriculumId}
 				
 			})
 			.then(function(response){
@@ -86,6 +86,7 @@ app.controller(
 							]
 						});
 				}
+				
 				//loop through array of response objects adding subtopics to the correct week and day arrays.
 				for(var i in response.data){
 					var topic = response.data[i];
@@ -253,8 +254,6 @@ app.controller(
 			}).then(function(response){
 				var curricula = response.data;
 				//parse the response into the local (front end) json object format
-				
-				//for each curriculum in curricula:
 				for(i in curricula){
 					var curriculum = curricula[i];
 
@@ -267,16 +266,11 @@ app.controller(
 						if(localCurricula.type == curriculum.curriculumName){
 							//raise the flag
 							curriculumTypeExists = true;
-							//add an empty weeks array to the curriculum
-							curriculum.weeks = [];
 							
 							//insert the curriculum into the existing curr type as a version of that type (as specified by the received object) 
-
-							
-							var metaData = curriculum;
-							delete metaData.weeks;
-							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 0, {meta:metaData, weeks:[]});
-							$scope.curricula[j].versions[curriculum.curriculumVersion - 1].meta = curriculum;
+							delete curriculum.weeks;
+							var newCurriculum = {meta:curriculum, weeks:[]};
+							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 0, newCurriculum);
 							
 							break;
 						}
@@ -288,17 +282,19 @@ app.controller(
 						delete metaData.weeks;
 						var newCurriculum = {
 								type: curriculum.curriculumName,
-								versions: [
-									{
-										meta: metaData,
-										weeks: []
-									}
-								]
+								versions: [{meta:metaData, weeks:[]}]
 						};
 						$scope.curricula.push(newCurriculum);
 					}
 				}
 			});
+		}
+		
+		$scope.clearCurriculumView = function(){
+			if(confirm("Are you sure you want to clear the current template?")){
+				$scope.displayedCurriculum = null;
+//				$scope.template = null;
+			}
 		}
 		
 		/* END CURRICULUM MANIPULATION FUNCTION DEFINITIONS */

@@ -28,23 +28,24 @@ public class CurriculumSubtopic {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Curriculum_Subtopic_ID_SEQ")
 	private int curriculumSubtopicId;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "curriculum_Subtopic_Name_Id", referencedColumnName = "Subtopic_Name_Id")
+<<<<<<< HEAD
 	@NotEmpty(message="Curriculum Subtopic Name cannot be empty")
 	private SubtopicName curriculumSubtopicNameId;
+=======
+	private SubtopicName curriculum_Subtopic_Name_Id;
+>>>>>>> ce2f44a7310591e00d9e8c3b7f128becca565908
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "curriculum_Subtopic_Cur_Id", referencedColumnName = "Curriculum_Id")
-	@NotEmpty(message ="Curriculum cannot be empty")
 	private Curriculum curriculum;
 
 	
 	@Column(name = "Curriculum_Week")
-	@NotEmpty(message="Curriculum Week cannot be empty")
 	private int curriculumSubtopicWeek;
 	
 	@Column(name = "Curriculum_Day")
-	@NotEmpty(message ="Curriculum Day cannot be empty")
 	private int curriculumSubtopicDay;
 	
 	public CurriculumSubtopic(){}
