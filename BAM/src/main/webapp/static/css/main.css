@@ -78,7 +78,7 @@
     width: -webkit-fill-available;
     margin-left: 18px;
     margin-right: 79px;
-    z-index: 9999;
+    z-index: 1000;
 }
 /***** 2.0 NAVBAR STYLING *****/
 .full-navbar {
