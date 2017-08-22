@@ -364,6 +364,10 @@
             			// this is only run after getTotalNumberOfSubtopics() resolves
              	       numberOfPages = Math.ceil(result / pageSize);
              	       
+             	       if(numberOfPages == 0){
+             	    	   $scope.loading = false;
+             	       }
+             	       
 //             	      
              	      for(var n = 0; n < numberOfPages; n++){
               			(function(index) {
