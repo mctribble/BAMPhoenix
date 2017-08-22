@@ -4,13 +4,17 @@
 		<Http name="HTTP"
 			url="https://prd-p-9hp2hbcv2cnv.cloud.splunk.com:8088/services/collector"
 			token="32C0F7FA-FAF9-4394-86A9-04900224EEE5"
-			disableCertificateValidation="true" index="main">
+			disableCertificateValidation="true">
 			<PatternLayout pattern="%m" />
 		</Http>
+		<File name="FILE" fileName="/log4j_logs/BAM_Phoenix_log.html">
+			<HTMLLayout charset="UTF-8" title="BAM Phoenix Log" />
+		</File>
 	</Appenders>
 	<Loggers>
 		<Root level="INFO">
 			<AppenderRef ref="HTTP" />
+			<AppenderRef ref="FILE" />
 		</Root>
 	</Loggers>
 </Configuration>

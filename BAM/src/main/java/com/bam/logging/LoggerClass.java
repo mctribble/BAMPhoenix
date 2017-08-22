@@ -15,7 +15,7 @@ public class LoggerClass {
 
   // Created Logger for Intercepting Methods and logging that Information
 
-  private final static Logger logger = LogManager.getLogger(LoggerClass.class);
+  private final static Logger logger = LogManager.getRootLogger();
   private String intercepted = "intercepted method : ";
   private String interceptedArg = "intercepted arguments : ";
   private String dataRequest = "data request made at ";
