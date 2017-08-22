@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,6 +61,11 @@ public class CalendarController {
 	 * 
 	 * Authors: Michael Garza
 	 * 			Gary LaMountain
+	 * 
+	 * note: It will be better to sort by subtopicDate because it will load the most
+	 * 		 recent subtopics. However, since the subtopics have the sames dates, it's
+	 * 		 causing duplications on the calendar.
+	 * return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz, Direction.DESC, "subtopicDate"));
 	 */
 	@RequestMapping(value="SubtopicsPagination", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
@@ -70,7 +74,24 @@ public class CalendarController {
 		int pageNum = Integer.parseInt( request.getParameter(PAGENUMBER) );
 		int pageSiz = Integer.parseInt( request.getParameter(PAGESIZE) );
 		
-		return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz, Direction.DESC, "subtopicDate"));
+		return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz));
+	}
+	
+	/**
+	 * Counts the number of Subtopics by matching their ids with the batchId.
+	 * 
+	 * 
+	 * @param HttpServletRequest object
+	 * @return number(Long) of Subtopics 
+	 * 
+	 * @author Michael Garza, Gary LaMountain
+	 */
+	@RequestMapping(value="GetNumberOfSubtopics", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public Long getNumberOfSubTopicsByBatch(HttpServletRequest request){
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
+		
+		return subtopicService.getNumberOfSubtopics(batchId);
 	}
 	
 	@RequestMapping(value = "Topics", method = RequestMethod.GET, produces = "application/json")

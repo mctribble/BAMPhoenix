@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,11 +85,28 @@ public class SubtopicService {
 		return subtopicStatusRepository.findByName(name);
 	}
 
+	/**
+	 * Service method to return the number of Subtopics by matching their ids with
+	 * the batchId.
+	 * 
+	 * @param batchId(int)
+	 * @return number(long) of Subtopics
+	 * 
+	 * @author Michael Garza, Gary LaMountain
+	 */
+	public Long getNumberOfSubtopics(int batchId){
+		return subtopicRepository.countSubtopicsByBatchId(batchId);
+  }
+
 	public List<SubtopicName> getAllSubtopics(){
 		return subtopicNameRepository.findAll();
 	}
+<<<<<<< HEAD
 	
 	
+=======
+
+>>>>>>> 99202ea0d3deaa9b6e9ab6ab2f6b3ae222dc3283
 	/**
 	 * Service method to return the pages of json information to the FullCalendar API. 
 	 * This is hard coded until the FullCalendar API is set up for getting pages of 
