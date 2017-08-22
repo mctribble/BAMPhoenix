@@ -34,11 +34,9 @@ public class Batch {
 	private String name;
 
 	@Column(name = "Start_Date")
-	@NotEmpty(message = "Start date cannot be empty")
 	private Timestamp startDate;
 
 	@Column(name = "End_Date")
-	@NotEmpty(message = "End date cannot be empty")
 	private Timestamp endDate;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

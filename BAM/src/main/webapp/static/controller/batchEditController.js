@@ -54,6 +54,24 @@ app.controller("batchEditController",function($rootScope, $scope, SessionService
 		});
 	}	
 	
+	$scope.updateBatch = function(){
+		console.log("Inside updateBatch()");
+		console.log(SessionService.get("currentBatch"));
+		console.log($scope.batch);
+		$http({
+			url: "rest/api/v1/Batches/UpdateBatch",
+			method: 'POST',
+			headers: {
+		        'Content-Type': 'application/json', 
+		        'Accept': 'application/json' 
+		    },
+			data: $scope.batch
+		}).then(function(){
+			//put success here
+		});
+	}
+	
+	
 	/* 
 	 * Tabbing Functionality created from example: https://codepen.io/jasoncluck/pen/iDcbh
 	 */

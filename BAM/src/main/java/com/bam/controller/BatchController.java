@@ -32,7 +32,6 @@ public class BatchController {
 	BatchService batchService;
 
 	@Autowired
-
 	UsersDetailsService bamUserService;
 
 
@@ -44,7 +43,6 @@ public class BatchController {
 
 	@RequestMapping(value = "Past", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-
 	public List<Batch> getPastBatches(HttpServletRequest request)
 	{
 		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
@@ -60,7 +58,6 @@ public class BatchController {
 
 	@RequestMapping(value = "Future", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-
 	public List<Batch> getFutureBatches(HttpServletRequest request)
 	{
 		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
@@ -76,7 +73,6 @@ public class BatchController {
 
 	@RequestMapping(value = "InProgress", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-
 	public Batch getBatchInProgress(HttpServletRequest request)
 	{
 		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
@@ -108,8 +104,11 @@ public class BatchController {
 	@RequestMapping(value = "ById", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public Batch getBatchById(HttpServletRequest request) {
-
 		return batchService.getBatchById( Integer.parseInt(request.getParameter("batchId")) );
-
+	}
+	
+	@RequestMapping(value = "UpdateBatch", method = RequestMethod.POST)
+	public void updateBatch(@RequestBody Batch batch){
+		batchService.addOrUpdateBatch(batch);
 	}
 }

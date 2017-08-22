@@ -16,17 +16,15 @@ public class BatchService {
 	BatchRepository batchRepository;
 
 	public void addOrUpdateBatch(Batch b) {
-	  batchRepository.save(b);
+		batchRepository.save(b);
 	}
 
 	public Batch getBatchById(Integer id) {
 		Logger.getLogger(BatchService.class).fatal(batchRepository);
-	
 		return batchRepository.findById(id);
 	}
 
 	public List<Batch> getBatchAll() {
-
 		return batchRepository.findAll();
 	}
 
