@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.bean.BamUser;
 import com.bam.bean.Batch;
+import com.bam.bean.CustomException;
 import com.bam.service.BatchService;
 import com.bam.service.PasswordGenerator;
 import com.bam.service.UsersDetailsService;
@@ -25,7 +25,7 @@ public class UserController {
 	
 	private static final String USERID = "userId";
 	private static final String BATCHID = "batchId";
-
+	
 	@Autowired
 	UsersDetailsService userService;
 
@@ -91,9 +91,6 @@ public class UserController {
 	public void addUser(@RequestBody BamUser currentUser) throws CustomException {
 		if(userService.findUserByEmail(currentUser.getEmail())==null){
 			currentUser.setRole(1);
-			String password = currentUser.getPwd();
-			String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
-			currentUser.setPwd(hashed);
 			userService.addOrUpdateUser(currentUser);
 		} else {
 			throw new CustomException("Email exists in database");
@@ -118,10 +115,10 @@ public class UserController {
 	@RequestMapping(value="Reset", method=RequestMethod.POST, produces="application/java")
 	public void resetPassword(@RequestBody BamUser userNewPass) throws CustomException{
 		BamUser currentUser = userService.findUserByEmail(userNewPass.getEmail());
-		if(BCrypt.checkpw(userNewPass.getPwd(), currentUser.getPwd())){
-			String hashed =  BCrypt.hashpw(userNewPass.getPwd2(), BCrypt.gensalt());
-			currentUser.setPwd(hashed);
+		if (currentUser.getPwd().equals(userNewPass.getPwd())) {
+			currentUser.setPwd(userNewPass.getPwd2());
 			userService.addOrUpdateUser(currentUser);
+
 		}else{
 			throw new CustomException("Wrong password, password not changed");
 		}
@@ -148,14 +145,18 @@ public class UserController {
 	@RequestMapping(value = "Add", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public List<BamUser> addUserToBatch(HttpServletRequest request) {
+
 		//Get the user id from the request
 		int userId = Integer.parseInt( request.getParameter(USERID) );
 		//Get the batch to add the user to from the request
 		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		
 		BamUser user = userService.findUserById( userId );
+		
 		user.setBatch(batchService.getBatchById(batchId));
+
 		userService.addOrUpdateUser(user);
+
 		return userService.findUsersNotInBatch();
 	}
 
@@ -166,18 +167,23 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "Recovery", method = RequestMethod.POST, produces = "application/json")
+
     public void recoverPassword(@RequestBody String email) {
+    	String generate = PasswordGenerator.makePassword();
+
         // Lookup user in database by e-mail
         BamUser user = userService.findUserByEmail(email);
         if (user != null) {
-        	String generate = PasswordGenerator.makePassword();
-        	String hashed =  BCrypt.hashpw(generate, BCrypt.gensalt());
-        	user.setPwd(hashed);
+        	generate = PasswordGenerator.makePassword();
+        	user.setPwd(generate);
         	userService.addOrUpdateUser(user);
-        	userService.recoverE(user, generate);
+        	userService.recoverE(user);
+            
         } else {
         	throw new IllegalArgumentException("password not changed");
+
         }
+
     }
 
 }
