@@ -353,7 +353,7 @@
             var responses = [];
         	$scope.events = [];
         	var numberOfPages;
-        	
+        	 
         	
             	//function that loads the events for your batch
             	$scope.loadCalendar = function(url){
