@@ -366,6 +366,7 @@
              	       
              	       if(numberOfPages == 0){
              	    	   $scope.loading = false;
+             	    	  SessionService.set("gotSubtopics", false);
              	       }
              	       
 //             	      
