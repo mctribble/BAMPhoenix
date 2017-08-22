@@ -29,6 +29,7 @@ import com.bam.bean.BatchType;
 @Transactional
 public class AssignForceSyncService {
 	
+	
 	@Resource(name="batchesService")
 	BatchService bservice;
 	
@@ -37,6 +38,7 @@ public class AssignForceSyncService {
 	
 	static RestTemplate restTemplate = new RestTemplate();
 	static String baseUrl = "http://assignforce.revaturelabs.com/api/v2/";
+	
 	// Makes a call to the AssignForce API and builds POJOs from the returned JSON String.
 	static ResponseEntity<List<AssignForceBatch>> batches = restTemplate.exchange(baseUrl + "batch/",HttpMethod.GET,null, new ParameterizedTypeReference<List<AssignForceBatch>>(){});
 	
@@ -44,12 +46,15 @@ public class AssignForceSyncService {
 		
 		// Object to hold data from AssignForce
 		AssignForceBatch batch = new AssignForceBatch();
+		
 		// Object which will be persisted; populated with AssignForceBatch data.
-		Batch curr_batch = new Batch();
+		Batch currentBatch = new Batch();
+		
 		// Object necessary for creation of batch; populated with AssignForceBatch data.
 		BatchType type = new BatchType();
+		
 		// Object necessary for creation of batch; populated with AssignForceBatch data.
-		BamUser bammy = new BamUser();
+		BamUser bamUser = new BamUser();
 		
 		// Cycling through all batches received from AssignForce.
 		for(int i = 0; i < batches.getBody().size(); i++) {
@@ -67,11 +72,11 @@ public class AssignForceSyncService {
 					type.setName(batches.getBody().get(i).getCurriculum().getName());
 				}
 				// Batch populated with data from AssignForceBatch
-				curr_batch.setName(batch.getName());
-				curr_batch.setStartDate(batch.getStartDate());
-				curr_batch.setEndDate(batch.getEndDate());
-				curr_batch.setId(batch.getID());
-				curr_batch.setType(type);
+				currentBatch.setName(batch.getName());
+				currentBatch.setStartDate(batch.getStartDate());
+				currentBatch.setEndDate(batch.getEndDate());
+				currentBatch.setId(batch.getID());
+				currentBatch.setType(type);
 				
 				// First and last names pulled from AssignForce trainer to search for current trainers.
 				String first_name = batch.getTrainer().getFirstName();
@@ -82,12 +87,12 @@ public class AssignForceSyncService {
 	
 				// If List is not empty and user is a trainer, trainer is assigned to batch.
 				if(!BAMtrainers.isEmpty() && BAMtrainers.get(0).getRole() == 2) {
-					bammy = BAMtrainers.get(0);
-					bammy.setAssignForce_ID(batch.getTrainer().getTrainerId());
-					curr_batch.setTrainer(bammy);
+					bamUser = BAMtrainers.get(0);
+					bamUser.setAssignForce_ID(batch.getTrainer().getTrainerId());
+					currentBatch.setTrainer(bamUser);
 				}
 				// Batch is persisted, either added or updated.
-				bservice.addOrUpdateBatch(curr_batch);
+				bservice.addOrUpdateBatch(currentBatch);
 				
 			}
 		}

@@ -39,6 +39,7 @@ public class AssignForceBatch {
 			return startDate;
 		}
 
+		
 		public void setStartDate(Timestamp startDate) {
 			this.startDate = startDate;
 		}

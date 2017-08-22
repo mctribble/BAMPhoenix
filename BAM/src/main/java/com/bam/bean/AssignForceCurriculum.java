@@ -13,6 +13,7 @@ public class AssignForceCurriculum {
 		this.name = name;
 	}
 	
+	
 	public Integer getCurrId() {
 		return currId;
 	}

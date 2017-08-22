@@ -11,6 +11,7 @@ public class AssignForceTrainer {
 	
 	public AssignForceTrainer() {}
 
+	
 	public AssignForceTrainer(Integer trainerId, String firstName, String lastName) {
 		super();
 		this.trainerId = trainerId;
