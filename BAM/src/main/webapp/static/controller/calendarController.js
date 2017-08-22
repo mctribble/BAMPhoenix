@@ -623,27 +623,26 @@
              *  Used to calculate week number of batch, assumes batch doesn't have set starting time
              */
             var calculateWeekNumber = function(currentWeek){
+            	var beginDate;
+            	var finishDate;
             	if(SessionService.get("currentUser").role == 1){
-            		var beginDate = moment(SessionService.get("currentUser").batch.startDate);
-            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
-            		var finishDate = moment(SessionService.get("currentUser").batch.endDate);
-            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		beginDate = moment.utc(SessionService.get("currentUser").batch.startDate);
+            		beginDate.weekday(0).stripZone().stripTime();
+            		finishDate = moment.utc(SessionService.get("currentUser").batch.endDate).stripZone().stripTime();
             		if(currentWeek >= beginDate && currentWeek < finishDate){
             			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && !SessionService.get("currentBatch") && SessionService.get("trainerBatch")){
-            		 beginDate = moment(SessionService.get("trainerBatch").startDate);
-            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
-            		 finishDate = moment(SessionService.get("trainerBatch").endDate);
-            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		beginDate = moment.utc(SessionService.get("trainerBatch").startDate);
+            		beginDate.weekday(0).stripZone().stripTime();
+            		finishDate = moment.utc(SessionService.get("trainerBatch").endDate).stripZone().stripTime();
             		if(currentWeek >= beginDate && currentWeek < finishDate){
             			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && SessionService.get("currentBatch")){
-            		 beginDate = moment(SessionService.get("currentBatch").startDate);
-            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
-            		 finishDate = moment(SessionService.get("currentBatch").endDate);
-            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		beginDate = moment.utc(SessionService.get("currentBatch").startDate);
+            		beginDate.weekday(0).stripZone().stripTime();
+            		finishDate = moment.utc(SessionService.get("currentBatch").endDate).stripZone().stripTime();
             		if(currentWeek >= beginDate && currentWeek < finishDate){
             			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}

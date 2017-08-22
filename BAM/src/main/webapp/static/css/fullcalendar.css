@@ -918,11 +918,6 @@ a.fc-more:hover {
 	z-index: 3;
 }
 
-.fc-toolbar .fc-state-active,
-.fc-toolbar .ui-state-active {
-	z-index: 4;
-}
-
 .fc-toolbar button:focus {
 	z-index: 5;
 }
