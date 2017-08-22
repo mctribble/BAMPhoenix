@@ -12,13 +12,15 @@ app.controller('batchesAllController', function($scope, SessionService, $rootSco
 	
 	$scope.syncBatchesWithAssignForce = function(){
 		
+		$scope.currentlyLoading = true;
+		
 		$http({
 			url: 'rest/refreshBatches',
 			method: 'GET'
 		}).then(function success(response){
-			console.log("batches have been updated");
+			$scope.currentlyLoading = false;
 		}, function error(response){
-			console.log("batches failed to update");
+			$scope.currentlyLoading = false;
 		})
 	}
 	
