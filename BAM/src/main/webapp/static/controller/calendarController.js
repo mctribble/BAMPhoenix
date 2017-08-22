@@ -357,21 +357,25 @@
                                 var month = a.getMonth();
                                 var day = a.getDate();
                                 var formattedTime = new Date(year, month, day);
-                                	if(status == 1 )
+                                
+
+
+                                   	if(status == 1 )
                                 		var temp = {id: id, title: title, start: formattedTime, end: formattedTime};	
-                                	if(status == 1  && new Date().getMonth() > formattedTime.getMonth() && new Date().getFullYear() >= formattedTime.getFullYear() )
-                                    	var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
-                                	if(status == 1  && new Date().getDate() > formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
-                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
+                                	if (status == 1  && new Date().getMonth() > formattedTime.getMonth() && new Date().getFullYear() >= formattedTime.getFullYear() )
+                                    	 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
+                                	if (status == 1  && new Date().getDate() > formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
+                                		 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
+                                	               
+
                                     if(status == 2 )
-                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
+                                		 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
                                     if(status == 3 )
-                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
-                                    if(status == 4)
-                                    	var temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
-                                	if(status == 4  && new Date().getDate() == formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
-                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime};  
-                                    
+                                		 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
+                                    if (status == 4)
+                                    	 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};             
+
+                                	
 
                     			$scope.events.push(temp);
                     			id++;
@@ -586,27 +590,26 @@
              *  Used to calculate week number of batch, assumes batch doesn't have set starting time
              */
             var calculateWeekNumber = function(currentWeek){
+            	var beginDate;
+            	var finishDate;
             	if(SessionService.get("currentUser").role == 1){
-            		var beginDate = moment(SessionService.get("currentUser").batch.startDate);
-            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
-            		var finishDate = moment(SessionService.get("currentUser").batch.endDate);
-            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		beginDate = moment.utc(SessionService.get("currentUser").batch.startDate);
+            		beginDate.weekday(0).stripZone().stripTime();
+            		finishDate = moment.utc(SessionService.get("currentUser").batch.endDate).stripZone().stripTime();
             		if(currentWeek >= beginDate && currentWeek < finishDate){
             			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && !SessionService.get("currentBatch") && SessionService.get("trainerBatch")){
-            		var beginDate = moment(SessionService.get("trainerBatch").startDate);
-            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
-            		var finishDate = moment(SessionService.get("trainerBatch").endDate);
-            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		beginDate = moment.utc(SessionService.get("trainerBatch").startDate);
+            		beginDate.weekday(0).stripZone().stripTime();
+            		finishDate = moment.utc(SessionService.get("trainerBatch").endDate).stripZone().stripTime();
             		if(currentWeek >= beginDate && currentWeek < finishDate){
             			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && SessionService.get("currentBatch")){
-            		var beginDate = moment(SessionService.get("currentBatch").startDate);
-            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
-            		var finishDate = moment(SessionService.get("currentBatch").endDate);
-            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		beginDate = moment.utc(SessionService.get("currentBatch").startDate);
+            		beginDate.weekday(0).stripZone().stripTime();
+            		finishDate = moment.utc(SessionService.get("currentBatch").endDate).stripZone().stripTime();
             		if(currentWeek >= beginDate && currentWeek < finishDate){
             			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}

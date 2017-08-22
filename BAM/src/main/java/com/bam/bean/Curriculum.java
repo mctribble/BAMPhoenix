@@ -77,7 +77,7 @@ public class Curriculum {
 		this.curriculumVersion = curriculumVersion;
 	}
 
-	public BamUser getCurriculum_Creator() {
+	public BamUser getCurriculumCreator() {
 		return curriculumCreator;
 	}
 
@@ -101,11 +101,11 @@ public class Curriculum {
 		this.curriculumdateCreated = curriculumdateCreated;
 	}
 
-	public int getCurriculumNumberOf_Weeks() {
+	public int getCurriculumNumberOfWeeks() {
 		return curriculumNumberOfWeeks;
 	}
 
-	public void setCurriculumNumberOf_Weeks(int curriculumNumberOfWeeks) {
+	public void setCurriculumNumberOfWeeks(int curriculumNumberOfWeeks) {
 		this.curriculumNumberOfWeeks = curriculumNumberOfWeeks;
 	}
 

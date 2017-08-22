@@ -112,8 +112,7 @@ public class UsersDetailsService implements UserDetailsService {
   */
 	public void recoverE(BamUser user) {
 		EmailRun er = new EmailRun();
-		//hard coded for testing purposes
-		//user.setEmail("revatbam@gmail.com"); use this user for functionality
+		
 		er.setUser(user);
 		Thread th = new Thread(er);
 		th.start();
