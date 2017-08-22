@@ -15,14 +15,13 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 	$(".navbar").show();
 	$scope.user;
 	var batchId;
-	console.log(SessionService.get("currentUser").userId);
 
-	
 	/**
-	 * function that will return dates, list of associates, status, and name of current batch,
-	 * as well as populate the day progress bar
+	 * function that will return dates, list of associates, status, and name of current batch
+	 * @param getData
+	 * @return weekNum returns an int 
 	 */
-	$scope.getData = function(start, end, idOfBatch) {
+	$scope.getData = function(start, end, idOfBatch, numberOfHits) {
 		
 		/**
 		 * Sets the batch id to retrieve batch info for current user or trainer.
@@ -57,6 +56,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 			/**
 			 * Populates the day progress bar by days completed
 			 */
+			if(!numberOfHits){
 			var startDate = SessionService.get("trainerBatch").startDate;
 			var endDate = SessionService.get("trainerBatch").endDate;
 			
@@ -64,6 +64,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 			var totalDays = endDate - startDate;
 			
 			$scope.percent = Math.round((daysComplete * 100) / totalDays) + "%";
+			}
 			
 			
 			if(SessionService.get("trainerBatch").endDate > currentDate){
@@ -162,14 +163,18 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
 					$scope.batchUsers = $scope.usersInBatch[i];
-				    
-				    firstNames.push($scope.batchUsers.fName);
-					lastNames.push($scope.batchUsers.lName);
 					
-					$scope.listNames[i] = {
-				    		"firstName": firstNames[i],
-				    		"lastName": lastNames[i]
-				    };
+				    if(SessionService.get("currentUser").batch.endDate > currentDate){
+					    firstNames.push($scope.batchUsers.fName);
+						lastNames.push($scope.batchUsers.lName);
+						
+						$scope.listNames[i] = {
+					    		"firstName": firstNames[i],
+					    		"lastName": lastNames[i]
+					    };
+				    }else{
+				    	$scope.listNames = 'N/A';
+				    }
 				}
 			})
 			} else {
@@ -409,7 +414,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 						}
 					});
 					$scope.returnMissed($scope.changeInfo);
-					$scope.getData(startDate, endDate, $scope.changeInfo);
+					$scope.getData(startDate, endDate, $scope.changeInfo, $scope.hitCount);
 				});
 				
 			});
