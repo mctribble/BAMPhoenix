@@ -66,12 +66,11 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
-	public void addSchedule(@RequestBody String json) throws CustomException, JsonParseException, JsonMappingException, IOException{
+	public void addSchedule(@RequestBody String json) throws JsonParseException, JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
 		CurriculumSubtopicDTO c = mapper.readValue(json, CurriculumSubtopicDTO.class);
 		
 		//save curriculum object first
-		System.out.println(c);
 		Curriculum curriculum = new Curriculum();
 		curriculum.setCurriculumCreator(c.getMeta().getCurriculum().getCurriculumCreator());
 		curriculum.setCurriculumdateCreated(c.getMeta().getCurriculum().getCurriculumdateCreated());
