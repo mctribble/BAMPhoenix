@@ -82,14 +82,14 @@ public class CurriculumController {
 		curriculumService.save(curriculum);
 		
 		CurriculumSubtopic cs = new CurriculumSubtopic();
-		cs.setCurriculumSubtopic_Curriculum_ID(curriculum);
+		cs.setCurriculumSubtopicCurriculumID(curriculum);
 		int numWeeks = c.getWeeks().length;
 		for(int i = 0; i < numWeeks; i++){
 			DaysDTO[] days = c.getWeeks()[i].getDays();
 			for(int j = 0; j < days.length; j++){
 				SubtopicName[] subtopic = days[j].getSubtopics();
 				for(int k = 0; k < subtopic.length; k++){
-					cs.setCurriculumSubtopic_Name_Id(subtopic[k]);
+					cs.setCurriculumSubtopicNameId(subtopic[k]);
 					cs.setCurriculumSubtopicWeek(i + 1);
 					cs.setCurriculumSubtopicDay(j + 1);
 					curriculumSubtopicService.saveCurriculumSubtopic(cs);

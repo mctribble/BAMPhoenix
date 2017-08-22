@@ -15,7 +15,7 @@ import com.bam.bean.CustomException;
 
 public class MailService {
 
-	public static void sendMail(String email, String newPassword) {
+	public static void sendMail(String email) {
 		
 		
 

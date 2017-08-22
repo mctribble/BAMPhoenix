@@ -90,11 +90,7 @@ public class SubtopicService {
 		return subtopicNameRepository.findAll();
 	}
 	
-	public Page<Subtopic> findAll(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	/**
 	 * Service method to return the pages of json information to the FullCalendar API. 
 	 * This is hard coded until the FullCalendar API is set up for getting pages of 
