@@ -33,11 +33,11 @@ public class Curriculum {
 	@Column(name ="Curriculum_version")
 	private int curriculumVersion;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Curriculum_Creator", referencedColumnName = "User_Id")
 	private BamUser curriculumCreator;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Curriculum_Modifier", referencedColumnName = "User_Id")
 	private BamUser curriculumModifier;
 	
@@ -46,7 +46,6 @@ public class Curriculum {
 	private String curriculumdateCreated;
 	
 	@Column(name = "Curriculum_Number_Of_Weeks")
-	@NotEmpty(message = "Curriculum Number of weeks cannot be empty")
 	private int curriculumNumberOfWeeks;
 	
 	public Curriculum(){
