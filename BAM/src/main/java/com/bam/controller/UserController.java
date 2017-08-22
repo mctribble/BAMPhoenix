@@ -166,17 +166,15 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "Recovery", method = RequestMethod.POST, produces = "application/json")
-
     public void recoverPassword(@RequestBody String email) {
-    	String generate = PasswordGenerator.makePassword();
-
         // Lookup user in database by e-mail
         BamUser user = userService.findUserByEmail(email);
         if (user != null) {
-        	generate = PasswordGenerator.makePassword();
-        	user.setPwd(generate);
+        	String generate = PasswordGenerator.makePassword();
+        	String hashed =  BCrypt.hashpw(generate, BCrypt.gensalt());
+        	user.setPwd(hashed);
         	userService.addOrUpdateUser(user);
-        	userService.recoverE(user);
+        	userService.recoverE(user, generate);
         } else {
         	throw new IllegalArgumentException("password not changed");
         }

@@ -51,11 +51,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	}
 	
+	/***
+	 * @author Nam Mai
+	 * Configure the passwordEncoder to use the BCrypt hashing algorithm
+	 */
 	@Bean
 	public PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
 	
+	/***
+	 * @author Nam Mai
+	 * This method encodes the password upon authentication
+	 */
 	@Bean
 	public DaoAuthenticationProvider authProvider(){
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -64,14 +72,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return authProvider;
 	}
 
-	@Override
+	 @Override
 	 public void configure(WebSecurity web) throws Exception {
-
 		// Ignore certain URLs.
-	  web.ignoring().antMatchers("/index.html", "/static/**", "/");
+		web.ignoring().antMatchers("/index.html", "/static/**", "/");
 	 }
 
 
+	/***
+	 * @author Nam Mai
+	 * References the authProvider to enable hashing
+	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth){
 		auth.authenticationProvider(authProvider());
