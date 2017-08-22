@@ -17,10 +17,8 @@
         calendars : {}
     })
   
-	  		
-	  		
-  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService',
-        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService) {
+  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService', 'SubtopicService', '$q',
+        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, SubtopicService, $q) {
 		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
 				$location.path('/noBatch');
@@ -328,26 +326,52 @@
                 return {};
             };
             
-            	 var url;
-	            if(SessionService.get("currentUser").role == 1){
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("currentUser").batch.id;
-	            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
-	            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
-	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
-	            }
+            var pageNumber = 0;
+            var pageSize = 20;
+            var url;
+    		var myDataPromise;//have to get the total number of subtopics first before we can start pagination
+    		
+            if(SessionService.get("currentUser").role == 1){
+            	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("currentUser").batch.id + "&pageSize=" + pageSize + "&pageNumber=0";
+            	myDataPromise = SubtopicService.getTotalNumberOfSubtopics(SessionService.get("currentUser").batch.id);
+            	
+            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
+            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
+            	//url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+SessionService.get("currentBatch").id+ "&pageSize=" + pageSize + "&pageNumber=0";
+            	myDataPromise = SubtopicService.getTotalNumberOfSubtopics(SessionService.get("currentBatch").id);
+
+            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
+             	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("trainerBatch").id + "&pageSize=" + pageSize + "&pageNumber=0";
+            	myDataPromise = SubtopicService.getTotalNumberOfSubtopics(SessionService.get("trainerBatch").id);
+            
+            }
             /* event source that contains custom events on the scope */
-	            
-            	$scope.events = [];
+            var chain = $q.when();
+            var responses = [];
+        	$scope.events = [];
+        	var numberOfPages;
+        	
+        	
             	//function that loads the events for your batch
             	$scope.loadCalendar = function(url){
+            		
+            		//pagination will start here once the promise of getting the number of subtopics finishes
+            		myDataPromise.then(function(result) {  
+            			
+            			// this is only run after getTotalNumberOfSubtopics() resolves
+             	       numberOfPages = Math.ceil(result / pageSize);
+             	       
+//             	      
+             	      for(var n = 0; n < numberOfPages; n++){
+              			(function(index) {
+            			url = url.substring(0, url.length - 1) + index;
             		$http({
                 		method : "GET",
                 		url : url
                 	}).then(function successCallback(response) {
-                		var id=0;
                 		for(var i = 0; i < response.data.length ; i++) {
                 				$scope.eventSources = [{}];
+                				var id = response.data[i].subtopicId;
                     			var title = response.data[i].subtopicName.name;
                         		var dates = response.data[i].subtopicDate;
                         		var status= response.data[i].status.id;
@@ -377,11 +401,11 @@
                                 	
 
                     			$scope.events.push(temp);
-                    			id++;
                     	
                 		}
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
-         
+                			$scope.events = [];
+                			response = null;
                 		// $scope.renderCalendar('myCalendar');
                 	}).finally(function() {
                 		// Turn off loading indicator whether success or
@@ -389,7 +413,10 @@
                 		$scope.loading = false;
                 		SessionService.set("gotSubtopics", false); 
                 	});
-            	}
+              			})(n)
+              			}; // end of for loop
+            		}); // end of promise
+            	} // end of load calendar
             if(!SessionService.get("gotSubtopics") && url) {           	
             	SessionService.set("gotSubtopics", true);         		
             	$scope.loading = true;		
