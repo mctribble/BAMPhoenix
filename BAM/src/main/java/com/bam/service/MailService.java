@@ -41,7 +41,7 @@ public class MailService {
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(receiver));
             message.setSubject("Revature Team: Your new Recovery Password");
-            message.setText("Hi! Your New temporary password is: \n " + "newPassword \n"  + "" + " "+
+            message.setText("Hi! Your New temporary password is: \n " + newPassword + "\n"  + "" + " "+
 
                      "\n" + "Upon Logging in, please click the dropdown menu where your name is located and select reset password to set" + " "
                     		+ "your password to your convience. \n" + "" + "\n Never show or give your password to anyone to avoid your account from being compromised. \n" + ""+ "\n Regards, \n Revature Team");   
