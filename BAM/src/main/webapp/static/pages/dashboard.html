@@ -4,11 +4,13 @@
 		<h1 class="display-3">Welcome, {{user.fName}}</h1>
 		<p class="lead"> Pick up where you left off</p>
 		
-		Batch Status: <br>
-  			<select id="batchDropdown" ng-init="currentBatch(this)" class="styled-select blue semi-square" 
-  				ng-show="trainerHasBatch && batchCount > 1">
-  			</select>
-		<div ng-show="userHasBatch || batchCount == 1">{{message}}</div>	
+		<div ng-show="trainerHasBatch && batchCount > 1" class="row">
+		Select Batch: <br>
+  			<select id="batchDropdown" ng-init="currentBatch(this)" class="styled-select blue semi-square">
+  			</select>&nbsp&nbsp&nbsp
+  			<button href="#/calendar">View Calendar</button>
+  		</div>
+		<div ng-show="userHasBatch || batchCount == 1 || !trainerHasBatch">{{message}}</div>	
 		
  		</div>
 		
@@ -24,8 +26,9 @@
 		
 				
 		<div id="pan3" class="col-md-5 pan3">
-			<h2>Batch Week: {{weekNum + 1}}</h2>
-				<h3>Associates in batch:</h3>
+			<h2 ng-hide="!trainerHasBatch">Batch Week: {{weekNum + 1}}</h2>
+			<h2 ng-show=!trainerHasBatch>Batch Week: {{weekNum}}</h2>
+				<h3 ng-hide="!trainerHasBatch">Associates in batch:</h3>
 				<ul>
 				 <li ng-repeat="list in listNames">{{list.firstName}}&nbsp{{list.lastName}}</li>
 				</ul>
@@ -33,7 +36,7 @@
 		</div>
 		
 		
-		<div class="col-md-12" id="pan4" ng-init="returnMissed()">
+		<div class="col-md-12" id="pan4" ng-init="returnMissed()" ng-show="trainerHasBatch || userHasBatch">
 			<!-- Progress completed by day -->
 			<div ng-show="userHasBatch || trainerHasBatch && !loading">
 				Batch Progress By Day:

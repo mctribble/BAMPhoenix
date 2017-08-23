@@ -184,8 +184,19 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				$scope.listNames = 'N/A';
 				$scope.percent = 'N/A';
 			}
+		} else if (!$scope.trainerHasBatch || !scope.userHasBatch){
+			$scope.message = 'You have no current batches';
+			$scope.currentBatchStart1 = 'N/A';
+			$scope.currentBatchEnd1 = 'N/A';
+			$scope.weekNum = 'N/A';
+			$scope.listNames = 'N/A';
+			$scope.percent = 'N/A';
 		}
 	}
+	
+	
+		
+	
 	
 		var currentDate = new Date().getTime();
 		
@@ -211,10 +222,14 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 		             	
 		            }
 			 	 	
-	
-
-	            $scope.loading = true;
+			 	 
+			 	if($scope.trainerHasBatch){
+			 		$scope.loading = true;
+			 	} else {
+			 		$scope.loading = false;
+			 	};
 	            
+			 	if($scope.loading){
          		$http({
              		method : "GET",
              		url : url
@@ -339,7 +354,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
              	}).finally(function() {
             		$scope.loading = false;
             	});
-         	
+			 }
 		}
 		
 			 
