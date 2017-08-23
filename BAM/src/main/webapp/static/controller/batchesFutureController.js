@@ -34,13 +34,13 @@ app.controller('batchesFutureController', function($scope, SessionService, $root
 		})
 		.then(function success(response){
 			SessionService.set("gotSubtopics", false);
-			$location.path('/home');
+			$location.path('/calendar');
 			$scope.message = true;
 			$scope.msg = 'batch retrieved';
 			
 		}, function error(response){
 			SessionService.set("gotSubtopics", false);
-			$location.path('/home');
+			$location.path('/calendar');
 			$scope.message = true;
 			$scope.msg = 'batch not retrieved';
 		});
