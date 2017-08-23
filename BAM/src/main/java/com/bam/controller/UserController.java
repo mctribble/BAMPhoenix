@@ -169,11 +169,12 @@ public class UserController {
 	@RequestMapping(value = "Recovery", method = RequestMethod.POST, produces = "application/json")
 
     public void recoverPassword(@RequestBody String email) {
+    	String generate = PasswordGenerator.makePassword();
 
         // Lookup user in database by e-mail
         BamUser user = userService.findUserByEmail(email);
         if (user != null) {
-        	String generate = PasswordGenerator.makePassword();
+        	generate = PasswordGenerator.makePassword();
         	user.setPwd(generate);
         	userService.addOrUpdateUser(user);
         	userService.recoverE(user);

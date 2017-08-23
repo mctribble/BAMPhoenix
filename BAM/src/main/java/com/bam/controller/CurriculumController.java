@@ -66,15 +66,7 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
-
-
-	public void addSchedule(@RequestBody String json) throws JsonParseException, JsonMappingException, IOException{
-		ObjectMapper mapper = new ObjectMapper();
-		CurriculumSubtopicDTO c = mapper.readValue(json, CurriculumSubtopicDTO.class);
-		
-		//save curriculum object first
-
-
+	public void addSchedule(@RequestBody CurriculumSubtopicDTO c) throws CustomException, JsonParseException, JsonMappingException, IOException{
 		Curriculum curriculum = new Curriculum();
 		curriculum.setCurriculumCreator(c.getMeta().getCurriculum().getCurriculumCreator());
 		curriculum.setCurriculumdateCreated(c.getMeta().getCurriculum().getCurriculumdateCreated());
@@ -83,15 +75,16 @@ public class CurriculumController {
 		curriculum.setCurriculumVersion(c.getMeta().getCurriculum().getCurriculumVersion());
 		
 		curriculumService.save(curriculum);
-		CurriculumSubtopic cs = new CurriculumSubtopic();
-		cs.setCurriculumSubtopicCurriculumID(curriculum);
+		
 		int numWeeks = c.getWeeks().length;
 		for(int i = 0; i < numWeeks; i++){
 			DaysDTO[] days = c.getWeeks()[i].getDays();
 			for(int j = 0; j < days.length; j++){
 				SubtopicName[] subtopic = days[j].getSubtopics();
 				for(int k = 0; k < subtopic.length; k++){
-					cs.setCurriculumSubtopicNameId(subtopic[k]);
+					CurriculumSubtopic cs = new CurriculumSubtopic();
+					cs.setCurriculumSubtopic_Curriculum_ID(curriculum);
+					cs.setCurriculumSubtopic_Name_Id(subtopic[k]);
 					cs.setCurriculumSubtopicWeek(i + 1);
 					cs.setCurriculumSubtopicDay(j + 1);
 					curriculumSubtopicService.saveCurriculumSubtopic(cs);
