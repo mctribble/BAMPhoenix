@@ -7,7 +7,7 @@ import com.bam.bean.SubtopicType;
 @Repository
 public interface SubtopicTypeRepository extends JpaRepository<SubtopicType, Integer> {
 
-	public SubtopicType findById(int type);
+	public SubtopicType findById(Integer type);
 
 
 
