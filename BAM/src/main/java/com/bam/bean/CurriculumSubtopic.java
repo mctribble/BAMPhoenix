@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,7 +30,11 @@ public class CurriculumSubtopic {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "curriculum_Subtopic_Name_Id", referencedColumnName = "Subtopic_Name_Id")
-	private SubtopicName curriculum_Subtopic_Name_Id;
+
+
+	@NotNull(message="Curriculum Subtopic Name cannot be empty")
+	private SubtopicName curriculumSubtopicNameId;
+
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "curriculum_Subtopic_Cur_Id", referencedColumnName = "Curriculum_Id")
@@ -49,7 +53,7 @@ public class CurriculumSubtopic {
 			Curriculum curriculumSubtopicCurriculumID, int curriculumSubtopicWeek, int curriculumSubtopicDay) {
 		super();
 		this.curriculumSubtopicId = curriculumSubtopicId;
-		this.curriculum_Subtopic_Name_Id = curriculumSubtopicNameId;
+		this.curriculumSubtopicNameId = curriculumSubtopicNameId;
 		this.curriculum = curriculumSubtopicCurriculumID;
 		this.curriculumSubtopicWeek = curriculumSubtopicWeek;
 		this.curriculumSubtopicDay = curriculumSubtopicDay;
@@ -63,21 +67,21 @@ public class CurriculumSubtopic {
 		this.curriculumSubtopicId = curriculumSubtopicId;
 	}
 
-	public SubtopicName getCurriculumSubtopic_Name_Id() {
-		return curriculum_Subtopic_Name_Id;
+	public SubtopicName getCurriculumSubtopicNameId() {
+		return curriculumSubtopicNameId;
 	}
 
-	public void setCurriculumSubtopic_Name_Id(SubtopicName curriculumSubtopic_Name_Id) {
-		this.curriculum_Subtopic_Name_Id = curriculumSubtopic_Name_Id;
+	public void setCurriculumSubtopicNameId(SubtopicName curriculumSubtopicNameId) {
+		this.curriculumSubtopicNameId = curriculumSubtopicNameId;
 	}
 
 	@JsonIgnore
-	public Curriculum getCurriculumSubtopic_Curriculum_ID() {
+	public Curriculum getCurriculumSubtopicCurriculumID() {
 		return curriculum;
 	}
 
-	public void setCurriculumSubtopic_Curriculum_ID(Curriculum curriculumSubtopic_Curriculum_ID) {
-		this.curriculum = curriculumSubtopic_Curriculum_ID;
+	public void setCurriculumSubtopicCurriculumID(Curriculum curriculumSubtopicCurriculumID) {
+		this.curriculum = curriculumSubtopicCurriculumID;
 	}
 
 	public int getCurriculumSubtopicWeek() {
@@ -98,9 +102,9 @@ public class CurriculumSubtopic {
 
 	@Override
 	public String toString() {
-		return "CurriculumSubtopic [curriculumSubtopic_Id=" + curriculumSubtopicId + ", curriculumSubtopic_Name_Id="
-				+ curriculum_Subtopic_Name_Id + ", curriculumSubtopic_Curriculum_ID=" + curriculum
-				+ ", curriculumSubtopic_Week=" + curriculumSubtopicWeek + ", curriculumSubtopic_Day="
+		return "CurriculumSubtopic [curriculumSubtopic_Id=" + curriculumSubtopicId + ", curriculumSubtopicNameId="
+				+ curriculumSubtopicNameId + ", curriculumSubtopicCurriculumID=" + curriculum
+				+ ", curriculumSubtopicWeek=" + curriculumSubtopicWeek + ", curriculumSubtopicDay="
 				+ curriculumSubtopicDay + "]";
 	}
 
