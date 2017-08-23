@@ -314,7 +314,7 @@
             };
             
             var pageNumber = 0;
-            var pageSize = 20;
+            var pageSize = 34;
             var url;
     		var myDataPromise;//have to get the total number of subtopics first before we can start pagination
     		
@@ -399,10 +399,12 @@
                 			response = null;
                 		// $scope.renderCalendar('myCalendar');
                 	}).finally(function() {
-                		// Turn off loading indicator whether success or
-						// failure.
-                		$scope.loading = false;
-                		SessionService.set("gotSubtopics", false); 
+                		// Turn off loading indicator when the last page is processing
+                		if(index == numberOfPages - 1){
+                			$scope.loading = false;
+                			SessionService.set("gotSubtopics", false);
+                		}
+                		 
                 	});
               			})(n)
               			}; // end of for loop
@@ -411,7 +413,7 @@
             if(!SessionService.get("gotSubtopics") && url) {           	
             	SessionService.set("gotSubtopics", true);         		
             	$scope.loading = true;		
-            	$scope.loadCalendar(url);		
+            	$scope.loadCalendar(url);
             }
             		
             
