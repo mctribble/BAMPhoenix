@@ -27,30 +27,30 @@ public class AssignForceBatch {
 			id = iD;
 		}
 
-		public String getName() {
+		public String getName() {//NOSONAR
 			return name;
 		}
 
-		public void setName(String name) {
+		public void setName(String name) {//NOSONAR
 			this.name = name;
 		}
 
-		public Timestamp getStartDate() {
+		public Timestamp getStartDate() {//NOSONAR
 			return startDate;
 		}
 
 		
-		public void setStartDate(Timestamp startDate) {
+		public void setStartDate(Timestamp startDate) {//NOSONAR
 			this.startDate = startDate;
 		}
 
-		public Timestamp getEndDate() {
+		public Timestamp getEndDate() {//NOSONAR
 			return endDate;
 		}
 
 		public void setEndDate(Timestamp endDate) {
 			this.endDate = endDate;
-		}
+		}//NOSONAR
 
 		public AssignForceTrainer getTrainer() {
 			return trainer;

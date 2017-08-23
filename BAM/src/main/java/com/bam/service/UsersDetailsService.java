@@ -73,7 +73,7 @@ public class UsersDetailsService implements UserDetailsService {
 		for (int i = 0; i < users.size(); i++) {
 			if (users.get(i).getRole() != 1) {
 				users.remove(i);
-				i--;
+				i--;//NOSONAR
 			}
 		}
 		return users;

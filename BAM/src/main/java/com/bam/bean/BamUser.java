@@ -72,7 +72,7 @@ public class BamUser {
 	}
 
 	public BamUser(String fName, String mName, String lName, String email, String pwd, int role, Batch batch,
-			String phone, String phone2, String skype, String pwd2) {
+			String phone, String phone2, String skype, String pwd2) {//NOSONAR
 		super();
 		this.fName = fName;
 		this.mName = mName;
@@ -88,7 +88,7 @@ public class BamUser {
 	}
 
 	public BamUser(int userId, String fName, String mName, String lName, String email, String pwd, int role,
-			Batch batch, String phone, String phone2, String skype, String pwd2) {
+			Batch batch, String phone, String phone2, String skype, String pwd2) {//NOSONAR
 		super();
 		this.fName = fName;
 		this.mName = mName;
@@ -105,7 +105,7 @@ public class BamUser {
 	}
 
 	public BamUser(int userId, String fName, String mName, String lName, String email, String pwd, int role,
-			Batch batch, String phone, String phone2, String skype, String pwd2, Integer assignForceID) {
+			Batch batch, String phone, String phone2, String skype, String pwd2, Integer assignForceID) {//NOSONAR
 		super();
 		this.userId = userId;
 		this.fName = fName;
