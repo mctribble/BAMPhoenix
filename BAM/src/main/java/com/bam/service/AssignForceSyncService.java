@@ -33,8 +33,8 @@ public class AssignForceSyncService {
 	@Resource(name="batchesService")
 	BatchService bservice;
 	
-	@Resource(name="userDetailsService")
-	UsersDetailsService uservice;
+	@Resource(name="bamUserService")
+	BamUserService uservice;
 	
 	static RestTemplate restTemplate = new RestTemplate();
 	static String baseUrl = "http://assignforce.revaturelabs.com/api/v2/";
