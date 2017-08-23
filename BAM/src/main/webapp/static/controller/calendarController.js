@@ -330,7 +330,7 @@
             };
             
             var pageNumber = 0;
-            var pageSize = 30;
+            var pageSize = 36;
             var url;
     		var myDataPromise;//have to get the total number of subtopics first before we can start pagination
     		
