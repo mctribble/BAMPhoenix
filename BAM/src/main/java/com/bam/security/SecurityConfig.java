@@ -61,8 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	   .headers().disable()
 	   .csrf().disable()
 	   .authorizeRequests()
-	   	.antMatchers("/rest/api/v1/Users/Register").permitAll()
-	    .anyRequest().authenticated()
+	   	.antMatchers("/login").permitAll()
+	    .antMatchers("/","/*rest*/**").authenticated()
 	    .and()
 	    .formLogin()
 	   	.loginPage("/")
@@ -76,8 +76,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    .logout()
 	    .logoutUrl("/logout")
 	    .deleteCookies("JSESSIONID")
-	    .permitAll()
-	    .and();
-	  http.authorizeRequests().antMatchers("/login*").permitAll();
+	    .permitAll();
 	 }
 }

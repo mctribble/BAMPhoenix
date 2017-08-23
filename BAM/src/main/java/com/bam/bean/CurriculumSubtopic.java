@@ -31,6 +31,7 @@ public class CurriculumSubtopic {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "curriculum_Subtopic_Name_Id", referencedColumnName = "Subtopic_Name_Id")
 
+
 	@NotEmpty(message="Curriculum Subtopic Name cannot be empty")
 	private SubtopicName curriculumSubtopicNameId;
 
