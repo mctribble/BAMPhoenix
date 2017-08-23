@@ -153,7 +153,7 @@ app.controller(
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
 		$scope.newCurriculum = function(type){
 			//if the user provides a type, either they are ceating a new version with the latest version of an existing type, or creating a new type
-			if(type && $scope.template.meta.curriculumName != type){
+			if(type && ($scope.template.meta && $scope.template.meta.curriculumName != type)){
 				var typeExists = false;
 				//set the template to the latest version of the curriculum if it exists. otherwise create a new type
 				for(i in $scope.curricula){
@@ -210,6 +210,7 @@ app.controller(
 			for(item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculumName){
 					$scope.curricula[item].versions.push($scope.displayedCurriculum);
+					
 					typeExists = true;
 				}
 			}
@@ -254,40 +255,68 @@ app.controller(
 			}).then(function(response){
 				var curricula = response.data;
 				//parse the response into the local (front end) json object format
+				
+				console.log("--------------------Begin adding curricula-----------------------");
+				console.log("curricula: ");
+				console.log(curricula);
 				for(i in curricula){
+//					if(curricula[i].type != "Java") continue;
+					
 					var curriculum = curricula[i];
 
 					//raise flag if there exists a a curriculum of this type already
 					var curriculumTypeExists = false;
 					//determine if $scope.curricula has a type of curriculum.Name already. If so add it as an additional version of the type
 					for(j in $scope.curricula){
-						var localCurricula = $scope.curricula[j];
+//						console.log("version: " + curriculum.curriculumVersion);
 						//perform the check mentioned above
-						if(localCurricula.type == curriculum.curriculumName){
+						if($scope.curricula[j].type == curriculum.curriculumName){
+							//ensure the object at the required index exists before trying to overwrite it
+							while($scope.curricula[j].versions.length < (curriculum.curriculumVersion - 1)){
+								$scope.curricula[j].versions.push({});
+							}
+							
 							//raise the flag
 							curriculumTypeExists = true;
 							
 							//insert the curriculum into the existing curr type as a version of that type (as specified by the received object) 
 							delete curriculum.weeks;
 							var newCurriculum = {meta:curriculum, weeks:[]};
-							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 0, newCurriculum);
-							
+							console.log("splicing " + newCurriculum.meta.curriculumName + " version " + newCurriculum.meta.curriculumVersion + " into index: " + (curriculum.curriculumVersion - 1))
+							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 1, newCurriculum);
+//							$scope.curricula[j].versions.push(newCurriculum);
+//							console.log($scope.curricula[j].versions[curriculum.curriculumVersion - 1]);
 							break;
 						}
 					}
 					
 					//if a curriculum of type curriculum.curriculumName does not exist, add it as a new base curriculum type
 					if(!curriculumTypeExists){
+						console.log("curriculum version- " + curriculum.curriculumVersion);
 						var metaData = curriculum;
 						delete metaData.weeks;
 						var newCurriculum = {
 								type: curriculum.curriculumName,
-								versions: [{meta:metaData, weeks:[]}]
+								versions: []
 						};
+						
+						//ensure the object at the required index exists before trying to overwrite it
+						for(var i = 0; i < curriculum.curriculumVersion - 1; i++){
+							newCurriculum.versions.push({});
+							console.log("adding index: " + i);
+						}
+						
+						newCurriculum.versions.splice(curriculum.curriculumVersion - 1, 1, {meta: metaData, weeks:[]});
+						
 						$scope.curricula.push(newCurriculum);
+						
+						console.log("Adding new type: " + curriculum.curriculumName);
+						console.log($scope.curricula[$scope.curricula.length - 1]);
 					}
 				}
-			});
+				console.log($scope.curricula);
+			}
+			);
 		}
 		
 		$scope.clearCurriculumView = function(){
@@ -389,7 +418,7 @@ app.controller(
 
 		//load the topic pool on page load
 		$scope.getTopicPool();
-		
+
 		//get the curricula meta data on page load
 		$scope.getCurricula()
 		//then load the first version of each curriculum type
@@ -408,6 +437,7 @@ app.controller(
 			}
 		})
 		;
+
 
 		/* END CONTROLLER BODY - EXECUTED ON PAGE LOAD */
 	}
