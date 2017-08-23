@@ -6,10 +6,9 @@ public class CurriculumSubtopicDTO {
 
 	private MetaDTO meta;
 	
-	private WeeksDTO [] weeks;
+	private WeeksDTO weeks[];
 	
 	public CurriculumSubtopicDTO(){
-		//Empty Because of No Args.
 		
 	}
 

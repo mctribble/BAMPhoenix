@@ -4,10 +4,9 @@ import java.util.Arrays;
 
 public class WeeksDTO {
 
-	private DaysDTO[] days;
+	private DaysDTO days[];
 	
 	public WeeksDTO(){
-		//Empty because of NoArgs.
 		
 	}
 

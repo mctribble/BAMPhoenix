@@ -88,7 +88,7 @@ app.controller(
 				}
 				
 				//loop through array of response objects adding subtopics to the correct week and day arrays.
-				for(var i in response.data){
+				for(i in response.data){
 					var topic = response.data[i];
 					newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopic_Name_Id);
 				}
@@ -137,7 +137,7 @@ app.controller(
 					//set the newCurriculum object as the $scope.template
 					$scope.template = newCurriculum;
 					//add newCurriculum as a version to the curricula type:
-					for(var j in $scope.curricula){
+					for(j in $scope.curricula){
 						if($scope.curricula[j].type == curriculum.curriculumName){
 							$scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
 						}
@@ -194,7 +194,7 @@ app.controller(
 			curriculum.meta.curriculumCreator = SessionService.get("currentUser");
 			curriculum.meta.curriculumdateCreated = $scope.getDate();
 			//loop through the curricula looking for the curriculum type, if found, count the number of versions and set this curr. object's version to it + 1
-			for(var item in $scope.curricula){
+			for(item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.template.meta.curriculumName){
 					curriculum.meta.curriculumVersion = $scope.curricula[item].versions.length + 1;
 				}
@@ -278,7 +278,7 @@ app.controller(
 					
 					//if a curriculum of type curriculum.curriculumName does not exist, add it as a new base curriculum type
 					if(!curriculumTypeExists){
-						metaData = curriculum;
+						var metaData = curriculum;
 						delete metaData.weeks;
 						var newCurriculum = {
 								type: curriculum.curriculumName,

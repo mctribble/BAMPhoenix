@@ -43,6 +43,17 @@ public class CalendarController {
 	@Autowired
 	TopicService topicService;
 
+	@RequestMapping(value = "Subtopics", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public List<Subtopic> getSubtopicsByBatch(HttpServletRequest request) {
+
+		//Get the batch id from the request
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
+		
+		//Retrieve and return users in a batch from the database
+
+		return subtopicService.getSubtopicByBatchId(batchId);
+	}
 	
 	/**
 	 * 
@@ -156,7 +167,7 @@ public class CalendarController {
 
 			topicsFromStub = mapper.readValue(jsonObject, mapper.getTypeFactory().constructCollectionType(List.class, TopicName.class));
 		} catch (IOException e) {
-			logger.error(e);
+			logger.error(e);;
 		}
 		List<TopicName> allTopicsInBAM = topicService.getTopics();
 		for (int i = 0; i < topicsFromStub.size(); i++) {
