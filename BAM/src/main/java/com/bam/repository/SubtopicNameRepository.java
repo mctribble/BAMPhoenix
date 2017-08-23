@@ -10,6 +10,7 @@ import com.bam.bean.SubtopicName;
 
 @Repository
 public interface SubtopicNameRepository extends JpaRepository<SubtopicName, Integer> {
+	
 	public SubtopicName findById(Integer id);
 	
 	public List<SubtopicName> findAll();
