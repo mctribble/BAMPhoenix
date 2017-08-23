@@ -10,7 +10,7 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/register",{
 		templateUrl: "static/pages/register.html",
 		controller: "bamUserRegisterController"
-	}).when("/home",{
+	}).when("/calendar",{
 		templateUrl: "static/pages/calendar.html",
 		controller: "calendarController"
 	}).when("/associates",{
@@ -39,5 +39,8 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/logout", {
 	    templateUrl: "static/pages/login.html", 
 	    controller: 'loginController'
+	}).when("/home", {
+	    templateUrl: "static/pages/dashboard.html", 
+	    controller: 'dashboardController'
 	}).otherwise({redirectTo: '/'});
 });

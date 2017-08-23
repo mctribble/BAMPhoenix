@@ -6,7 +6,7 @@
 		<div id="curriculaLoaderView" class="col col-md-2">
 			<div class="columnHeader text-center">
 				<h1>Curricula</h1>
-				<button class="btn btn-lg btn-primary" ng-click="deselectItems(); setTemplate()">New Curriculum Type</button>
+				<button class="btn btn-md btn-primary" ng-click="deselectItems(); setTemplate()">New Curriculum Type</button>
 			</div>
 				<!-- ***************************** Begin Curricula Accordion***************************************** -->
 				<div id="curriculaAccordion" role="tablist">
@@ -58,13 +58,12 @@
 						
 					</div>
 					
-					<div class="col col-md-2">
-						<button class="btn btn-md btn-primary" ng-disabled="!displayedCurriculum.meta.curriculumName" ng-click="addWeek()">Add New Week</button>
-					</div>
-					
-					<div class="col col-md-2">
-						<button class="btn btn-md btn-success btn-block" ng-disabled="!displayedCurriculum.meta.curriculumNumberOfWeeks" ng-click="saveCurriculum()">Save Curriculum</button>
-
+					<div class="col col-md-4 pull-right">
+						<button type="button" class="btn btn-md btn-primary" ng-disabled="!displayedCurriculum.meta.curriculumName" ng-click="addWeek()">Add Week</button>
+						<div class="btn-group">
+							<button type="button" class="btn btn-md btn-success" ng-disabled="!displayedCurriculum.meta.curriculumNumberOfWeeks" ng-click="saveCurriculum()">Save Curriculum</button>
+							<button type="button" class="btn btn-md btn-danger" ng-click="clearCurriculumView()">X</button>
+						</div>
 					</div>
 				</div>
 				
@@ -76,23 +75,22 @@
 			<!-- ***************************** Begin Week Accordion***************************************** -->
 			<div id="weekAccordion" role="tablist">
 				<div class="card" ng-repeat="week in displayedCurriculum.weeks">
+				<a data-toggle="collapse" data-target="#collapseWeek{{$index+1}}">
 					<div class="card-header" role="tab">
 						<div class="row">
 							<div class="col col-md-11">
-								<h5 class="mb-0">
-									<a 	class="weekCardText"
-										data-toggle="collapse"
-										data-target="#collapseWeek{{$index+1}}"> 
-										Week {{$index+1}} 
-									</a>
-								</h5>
+								
+									<h5 class="mb-0 weekCardText">
+										Week {{$index+1}}
+									</h5>
+								
 							</div>
 							<div class="col col-md-1">
 								<button class="btn btn-sm btn-danger text-right" ng-click="deleteWeek($index+1)"> X </button>
 							</div>
 						</div>
 					</div>
-
+				</a>
 					<div id="collapseWeek{{$index+1}}" class="collapse" role="tabpanel">
 						<div class="card-block">
 							<!-- ***************************** Begin Day List***************************************** -->
