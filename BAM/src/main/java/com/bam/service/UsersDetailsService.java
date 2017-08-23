@@ -98,13 +98,13 @@ public class UsersDetailsService implements UserDetailsService {
 
 	private List<GrantedAuthority> buildUserAuthority(BamUser u) {
 
-		Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
+		Set<GrantedAuthority> setAuths = new HashSet<>();
 
 		setAuths.add(new SimpleGrantedAuthority("ROLE_" + String.valueOf(u.getRole())));
 
-		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
+		return new ArrayList<>(setAuths);
 
-		return Result;
+		
 	}
 
   /*
@@ -116,6 +116,20 @@ public class UsersDetailsService implements UserDetailsService {
 		er.setUser(user);
 		Thread th = new Thread(er);
 		th.start();
+	}
+
+	
+	/**
+	 * Service method for calling spring data repository method. Finds user with given firstname and lastname.
+	 * 
+	 * 
+	 * @author DillonT, GilB
+	 * @param f
+	 * @param l
+	 * @return
+	 */
+	public List<BamUser> getByFNameAndLName(String f, String l) {
+		return dao.findByFNameAndLName(f, l);
 	}
 
 }

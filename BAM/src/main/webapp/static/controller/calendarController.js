@@ -24,19 +24,6 @@
 				$location.path('/noBatch');
 			}
 		  
-		if(!SessionService.get("currentBatch")){
-			$scope.myBatchButton = false;
-		}
-		  
-		//If trying to look at your current batch when looking at all batches, loads an editable version instead.
-	  	if(SessionService.get("trainerBatch") && SessionService.get("currentBatch")){
-	  		if(SessionService.get("trainerBatch").id == SessionService.get("currentBatch").id){
-	  			SessionService.unset("currentBatch");
-	  			$scope.myBatchButton = false;
-	  		}else{
-	  			$scope.myBatchButton = true;
-	  		}
-	  	}
 		  
 	  	// Varibles set for the use of adding day,month,year,to the Date
 		// attribute of a calendar.
@@ -103,6 +90,7 @@
           /*
            * @Author: Tom Scheffer
            * Changes the calendar to your batch when looking at another trainer's batch
+           * Currently not in use
            */
           $scope.currentBatch = function(){
 
@@ -117,7 +105,6 @@
         			  $scope.loading = true;
         			  $scope.loadCalendarInfoTrainer();
         			  $scope.loadCalendar(url);
-        			  $scope.myBatchButton = false;
         		  }
         	  }
 
@@ -350,7 +337,7 @@
             var responses = [];
         	$scope.events = [];
         	var numberOfPages;
-        	
+        	 
         	
             	//function that loads the events for your batch
             	$scope.loadCalendar = function(url){
@@ -360,6 +347,11 @@
             			
             			// this is only run after getTotalNumberOfSubtopics() resolves
              	       numberOfPages = Math.ceil(result / pageSize);
+             	       
+             	       if(numberOfPages == 0){
+             	    	   $scope.loading = false;
+             	    	  SessionService.set("gotSubtopics", false);
+             	       }
              	       
 //             	      
              	      for(var n = 0; n < numberOfPages; n++){
