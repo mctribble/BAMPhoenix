@@ -344,12 +344,25 @@ app.controller(
 				//search topics for the matching type passed
 				for(i in $scope.topics){
 					if($scope.topics[i].name == parentTopic){
-						$scope.topics[i].subtopics.push(
-								{
-									id: $scope.topics[i].subtopics.length,
-									name: input
-								}
-						)
+						var newTopic = {
+								id: $scope.topics[i].subtopics.length,
+								name: input,
+								topic: {id:$scope.topics[i].id, name:parentTopic},
+								type: {id:1, name:"Lesson"}
+							}
+						//addthe subtopic locally
+						$scope.topics[i].subtopics.push(newTopic);
+						
+						//persist the subtopic to the db
+						$http({
+							method:'POST',
+							url: 'rest/api/v1/Subtopic/Add',
+							params:{
+								subtopicName: input,
+								topic: $scope.topics[i].id,
+								type: 1
+							}
+						});
 					}
 				}
 			}else{
@@ -359,6 +372,14 @@ app.controller(
 						subtopics: []
 				}
 				$scope.topics.push(newTopic);
+				console.log(newTopic);
+				$http({
+					method: 'POST',
+					url: 'rest/api/v1/Topic/Add',
+					params: {
+						topic:newTopic.name
+					}
+				});
 			}
 		};
 		

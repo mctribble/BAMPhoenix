@@ -87,10 +87,6 @@ public class CurriculumController {
 					cs.setCurriculumSubtopic_Name_Id(subtopic[k]);
 					cs.setCurriculumSubtopicWeek(i + 1);
 					cs.setCurriculumSubtopicDay(j + 1);
-//					System.out.println("--------");
-//					System.out.println("Week: " + j + " Day: " + k);
-//					System.out.println(cs);
-//					System.out.println("--------");
 					curriculumSubtopicService.saveCurriculumSubtopic(cs);
 				}
 			}
