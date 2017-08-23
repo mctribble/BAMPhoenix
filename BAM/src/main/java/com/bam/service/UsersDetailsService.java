@@ -98,13 +98,13 @@ public class UsersDetailsService implements UserDetailsService {
 
 	private List<GrantedAuthority> buildUserAuthority(BamUser u) {
 
-		Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
+		Set<GrantedAuthority> setAuths = new HashSet<>();
 
 		setAuths.add(new SimpleGrantedAuthority("ROLE_" + String.valueOf(u.getRole())));
 
-		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
+		return new ArrayList<>(setAuths);
 
-		return Result;
+		
 	}
 
   /*
