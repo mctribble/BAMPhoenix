@@ -38,13 +38,13 @@ app.controller('batchesPastController', function($scope, SessionService, $rootSc
 		})
 		.then(function success(response){
 			SessionService.set("gotSubtopics", false);
-			$location.path('/home');
+			$location.path('/calendar');
 			$scope.message = true;
 			$scope.msg = 'batch retrieved';
 			
 		}, function error(response){
 			SessionService.set("gotSubtopics", false);
-			$location.path('/home');
+			$location.path('/calendar');
 			$scope.message = true;
 			$scope.msg = 'batch not retrieved';
 		});
