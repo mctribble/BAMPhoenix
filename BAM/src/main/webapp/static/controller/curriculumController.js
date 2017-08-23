@@ -88,7 +88,7 @@ app.controller(
 				}
 				
 				//loop through array of response objects adding subtopics to the correct week and day arrays.
-				for(i in response.data){
+				for(var i in response.data){
 					var topic = response.data[i];
 					newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopic_Name_Id);
 				}
@@ -125,7 +125,7 @@ app.controller(
 		$scope.setTemplate = function(curriculum){
 			if(curriculum){
 				//attempt to look for curr in curricula object before doing http req (caching)
-				for(i in $scope.curricula){
+				for(var i in $scope.curricula){
 					if( $scope.curricula[i].type == curriculum.meta.curriculumName && $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks.length > 0){
 						$scope.template = $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1];
 						return;
@@ -137,7 +137,7 @@ app.controller(
 					//set the newCurriculum object as the $scope.template
 					$scope.template = newCurriculum;
 					//add newCurriculum as a version to the curricula type:
-					for(j in $scope.curricula){
+					for(var j in $scope.curricula){
 						if($scope.curricula[j].type == curriculum.curriculumName){
 							$scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
 						}
@@ -194,7 +194,7 @@ app.controller(
 			curriculum.meta.curriculumCreator = SessionService.get("currentUser");
 			curriculum.meta.curriculumdateCreated = $scope.getDate();
 			//loop through the curricula looking for the curriculum type, if found, count the number of versions and set this curr. object's version to it + 1
-			for(item in $scope.curricula){
+			for(var item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.template.meta.curriculumName){
 					curriculum.meta.curriculumVersion = $scope.curricula[item].versions.length + 1;
 				}
@@ -207,7 +207,7 @@ app.controller(
 		$scope.saveCurriculum = function(){
 			//loop through curricula looking for an existing type. if found, append to versions.
 			var typeExists = false;
-			for(item in $scope.curricula){
+			for(var item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculumName){
 					$scope.curricula[item].versions.push($scope.displayedCurriculum);
 					
@@ -256,19 +256,14 @@ app.controller(
 				var curricula = response.data;
 				//parse the response into the local (front end) json object format
 				
-				console.log("--------------------Begin adding curricula-----------------------");
-				console.log("curricula: ");
-				console.log(curricula);
-				for(i in curricula){
-//					if(curricula[i].type != "Java") continue;
-					
+				for(var i in curricula){
 					var curriculum = curricula[i];
 
 					//raise flag if there exists a a curriculum of this type already
 					var curriculumTypeExists = false;
 					//determine if $scope.curricula has a type of curriculum.Name already. If so add it as an additional version of the type
-					for(j in $scope.curricula){
-//						console.log("version: " + curriculum.curriculumVersion);
+					for(var j in $scope.curricula){
+						var localCurricula = $scope.curricula[j];
 						//perform the check mentioned above
 						if($scope.curricula[j].type == curriculum.curriculumName){
 							//ensure the object at the required index exists before trying to overwrite it
@@ -282,17 +277,13 @@ app.controller(
 							//insert the curriculum into the existing curr type as a version of that type (as specified by the received object) 
 							delete curriculum.weeks;
 							var newCurriculum = {meta:curriculum, weeks:[]};
-							console.log("splicing " + newCurriculum.meta.curriculumName + " version " + newCurriculum.meta.curriculumVersion + " into index: " + (curriculum.curriculumVersion - 1))
 							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 1, newCurriculum);
-//							$scope.curricula[j].versions.push(newCurriculum);
-//							console.log($scope.curricula[j].versions[curriculum.curriculumVersion - 1]);
 							break;
 						}
 					}
 					
 					//if a curriculum of type curriculum.curriculumName does not exist, add it as a new base curriculum type
 					if(!curriculumTypeExists){
-						console.log("curriculum version- " + curriculum.curriculumVersion);
 						var metaData = curriculum;
 						delete metaData.weeks;
 						var newCurriculum = {
@@ -303,15 +294,10 @@ app.controller(
 						//ensure the object at the required index exists before trying to overwrite it
 						for(var i = 0; i < curriculum.curriculumVersion - 1; i++){
 							newCurriculum.versions.push({});
-							console.log("adding index: " + i);
 						}
 						
 						newCurriculum.versions.splice(curriculum.curriculumVersion - 1, 1, {meta: metaData, weeks:[]});
-						
 						$scope.curricula.push(newCurriculum);
-						
-						console.log("Adding new type: " + curriculum.curriculumName);
-						console.log($scope.curricula[$scope.curricula.length - 1]);
 					}
 				}
 				console.log($scope.curricula);
