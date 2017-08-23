@@ -8,7 +8,7 @@
 			<PatternLayout pattern="%m" />
 		</Http>
 		<File name="FILE" fileName="/log4j_logs/BAM_Phoenix_log.html">
-			<HTMLLayout charset="UTF-8" title="BAM Phoenix Log" />
+			<HTMLLayout charset="UTF-8" title="BAM Phoenix Log" locationInfo="true" />
 		</File>
 	</Appenders>
 	<Loggers>
