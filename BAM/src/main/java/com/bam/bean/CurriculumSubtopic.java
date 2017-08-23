@@ -1,6 +1,5 @@
 package com.bam.bean;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,8 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,7 +31,7 @@ public class CurriculumSubtopic {
 	@JoinColumn(name = "curriculum_Subtopic_Name_Id", referencedColumnName = "Subtopic_Name_Id")
 
 
-	@NotNull(message="Curriculum Subtopic Name cannot be empty")
+	@NotNull(message="Curriculum Subtopic Name cannot be null")
 	private SubtopicName curriculumSubtopicNameId;
 
 	
