@@ -1,6 +1,7 @@
-
 app.controller('loginController', function($rootScope, $window, $scope, $location, $http, SessionService) {
-	$(".navbar").hide();
+	$(document).ready(function(){
+		$(".navbar").hide();
+	});
 	$rootScope.userRole;
 	$scope.msg;
 
@@ -24,8 +25,6 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 		})
 		.then(function success(response){
 			
-//			SessionService.set("currentUser", angular.toJson(response.data));
-//			console.log('Current user object role->'+ JSON.parse(SessionService.get("currentUser")).role);
 		
 			
 			SessionService.set("currentUser", response.data);
@@ -60,7 +59,18 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 				}else{
 					SessionService.set("gotSubtopics", false);
 					$location.path('/home');
+					
+					//sets the number of subtopics
+					$http({
+		            	method: 'GET',
+		            	url: 'rest/api/v1/Calendar/GetNumberOfSubtopics?batchId='+ SessionService.get("currentUser").batch.id
+		            })
+		            .then(function successCallback(response){
+		            	SessionService.set("numberOfSubtopics", response.data);
+		            });
+					
 				}
+				
 				
 			}else{
 				$location.path('/batchesAll');
