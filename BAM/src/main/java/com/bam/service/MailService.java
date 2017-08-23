@@ -17,13 +17,11 @@ import com.bam.logging.LoggerClass;
 
 public class MailService {
 
-<<<<<<< HEAD
+
 	public static void sendMail(String email) {
 		Logger logger = Logger.getLogger(LoggerClass.class);
 
-=======
-	public static void sendMail(String email, String newPassword) {
->>>>>>> 8c4d8a8cccf5040e910de10c3e9bc8f385bfa48e
+
 		
 		
 
@@ -50,7 +48,7 @@ public class MailService {
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(receiver));
             message.setSubject("Recover Password");
-            message.setText("Hi! Your New temporary password is: \n " + newPassword + "\n"  + "" + " "+
+            message.setText("Hi! Your New temporary password is: \n " + PASSWORD + "\n"  + "" + " "+
                     "\n" + "Upon Logging in, please click the dropdown menu where your name is located and select reset password to set" + " "
                             + "your password to your convience. \n" + "" + "\n Never show or give your password to anyone to avoid your account from being compromised. \n" + ""+ "\n Regards, \n Revature Team");
 

@@ -251,14 +251,10 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
             		 * Populates dynamic list of missed subtopics and their respective topics
             		 */
 
-<<<<<<< HEAD
+
              		for(var j = 0; i < $scope.subTopics.length ; i++) {
                 		status= response.data[i].status.id;
-                 		
-=======
-             		for(var i = 0; i < $scope.subTopics.length ; i++) {
-                		var status= response.data[i].status.id;
->>>>>>> 8c4d8a8cccf5040e910de10c3e9bc8f385bfa48e
+
                  		
                  		
                      		if(status == 4){
@@ -364,11 +360,9 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 			})
 			.then(function success(response){
 				$scope.batchCount = 0;
-<<<<<<< HEAD
+
 				for(var m=0; m < response.data.length; m++){
-=======
-				for(var m = 0; m < response.data.length; m++){
->>>>>>> 8c4d8a8cccf5040e910de10c3e9bc8f385bfa48e
+
 					if(response.data[m].trainer.userId == SessionService.get("currentUser").userId){
 						if(currentDate < response.data[m].endDate && currentDate > response.data[m].startDate){
 							var batchDropdown = document.getElementById("batchDropdown");
@@ -393,11 +387,9 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 					
 					$scope.$apply(function(){ 
 						
-<<<<<<< HEAD
+
 						for(var n=0; n < response.data.length; n++){
-=======
-						for(var n = 0; n < response.data.length; n++){
->>>>>>> 8c4d8a8cccf5040e910de10c3e9bc8f385bfa48e
+
 							if(response.data[n].id == $scope.changeInfo){
 						/**
 	            		 * Populates the day progress bar by days completed when new option selected
