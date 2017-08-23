@@ -22,9 +22,6 @@ public class MailService {
         final String PASSWORD = "testing123";
         String receiver= email; //user.getemail
         
-        PasswordGenerator pass = new PasswordGenerator();
-        
-
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -44,7 +41,7 @@ public class MailService {
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(receiver));
             message.setSubject("Recover Password");
-            message.setText("Your temporary password is " + pass);   
+            message.setText("Your temporary password is " + newPassword);   
 
 
             Transport.send(message);
