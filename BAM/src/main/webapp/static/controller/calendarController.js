@@ -313,13 +313,10 @@
                 return {};
             };
             
-<<<<<<< HEAD
-            
-            var pageSize = 20;
-=======
+
             var pageNumber = 0;
             var pageSize = 34;
->>>>>>> 3f61ca1428e613c9003f6384de9b031986bdce3a
+
             var url;
     		var myDataPromise;//have to get the total number of subtopics first before we can start pagination
     		
