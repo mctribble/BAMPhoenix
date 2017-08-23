@@ -7,9 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bam.bean.Batch;
@@ -36,11 +34,12 @@ public class SubtopicService {
 	@Autowired
 	SubtopicStatusRepository subtopicStatusRepository;
 	
-	public void addSubtopic(int subtopic, int batch, int lessonDate){
+	public void addSubtopic(int subtopic, int batch){
 		Subtopic s = new Subtopic();
-		Batch b = new Batch();
-		SubtopicName st = new SubtopicName();
-		SubtopicStatus ss = new SubtopicStatus();
+
+		Batch b;
+		SubtopicName st;
+		SubtopicStatus ss;
 		Date date = new Date();
 
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -80,9 +79,21 @@ public class SubtopicService {
 		return subtopicStatusRepository.findByName(name);
 	}
 
-	public Page<Subtopic> findAll(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * Service method to return the number of Subtopics by matching their ids with
+	 * the batchId.
+	 * 
+	 * @param batchId(int)
+	 * @return number(long) of Subtopics
+	 * 
+	 * @author Michael Garza, Gary LaMountain
+	 */
+	public Long getNumberOfSubtopics(int batchId){
+		return subtopicRepository.countSubtopicsByBatchId(batchId);
+  }
+
+	public List<SubtopicName> getAllSubtopics(){
+		return subtopicNameRepository.findAll();
 	}
 
 	/**
@@ -101,3 +112,4 @@ public class SubtopicService {
 		return subtopicRepository.findByBatch(batchRepository.findById(batchId), pageRequest);
     }
 }
+

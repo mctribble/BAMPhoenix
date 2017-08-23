@@ -1,20 +1,12 @@
 package com.bam.bean;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 
 @Entity
 @Table(name = "USERS")
@@ -70,18 +62,7 @@ public class BamUser {
 	@Column(name = "Password_Bak") // This is a backup password that will be
 									// used when
 	private String pwd2; // the user needs to reset their password.
-	
-	@Column(name="AssignForce_ID")
-	private Integer AssignForce_ID;
 
-
-	public Integer getAssignForce_ID() {
-		return AssignForce_ID;
-	}
-
-	public void setAssignForce_ID(Integer assignForce_ID) {
-		AssignForce_ID = assignForce_ID;
-	}
 
 	public BamUser() {
 		super();
@@ -106,11 +87,11 @@ public class BamUser {
 	public BamUser(int userId, String fName, String mName, String lName, String email, String pwd, int role,
 			Batch batch, String phone, String phone2, String skype, String pwd2) {
 		super();
-		this.userId = userId;
 		this.fName = fName;
 		this.mName = mName;
 		this.lName = lName;
 		this.email = email;
+		this.userId = userId;
 		this.pwd = pwd;
 		this.role = role;
 		this.batch = batch;
@@ -219,8 +200,8 @@ public class BamUser {
 	@Override
 	public String toString() {
 		return "BamUser [userId=" + userId + ", fName=" + fName + ", mName=" + mName + ", lName=" + lName + ", email="
-				+ email + ", pwd=" + pwd + ", role=" + role + ", batch=" + "batch" + ", phone=" + phone + ", phone2="
-				+ phone2 + ", skype=" + skype + ", pwd2=" + pwd2 + ", AssignForce_ID=" + AssignForce_ID + "]";
+				+ email + ", pwd=" + pwd + ", role=" + role + ", batch=" + batch + ", phone=" + phone + ", phone2="
+				+ phone2 + ", skype=" + skype + ", pwd2=" + pwd2 + "]";
 	}
 
 

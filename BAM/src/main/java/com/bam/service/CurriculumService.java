@@ -15,7 +15,27 @@ public class CurriculumService {
 	CurriculumRepository curriculumRepository;
 	
 	public List<Curriculum> getAllCurriculum(){
-		return curriculumRepository.findAll();
+		List<Curriculum> curriculumList =  curriculumRepository.findAll();
+		//obfuscate password
+		for(Curriculum element : curriculumList){
+			element.getCurriculumCreator().setPwd("");
+			if(element.getCurriculumModifier() != null)
+				element.getCurriculumModifier().setPwd("");
+		}
+		return curriculumList;
+	}
+	
+	public Curriculum getCuricullumById(Integer id){
+		//obfuscate password
+		Curriculum curriculum = curriculumRepository.findById(id);
+		curriculum.getCurriculumCreator().setPwd("");
+		if(curriculum.getCurriculumModifier() != null)
+			curriculum.getCurriculumModifier().setPwd("");
+		return curriculum;
+	}
+	
+	public void save(Curriculum c){
+		curriculumRepository.save(c);
 	}
 	
 }

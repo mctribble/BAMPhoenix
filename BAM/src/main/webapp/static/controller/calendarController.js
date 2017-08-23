@@ -19,15 +19,15 @@
   
 	  		
 	  		
-  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService',
-        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService) {
+  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService', 'SubtopicService', '$q',
+        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, SubtopicService, $q) {
 	  	$(".navbar").show();
 		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
 				$location.path('/noBatch');
 			}
 		  
-	  	
+		  
 	  	// Varibles set for the use of adding day,month,year,to the Date
 		// attribute of a calendar.
 		    var date = new Date();
@@ -59,9 +59,21 @@
                 };
             };
             
+            /*
+             * @Author Tom Scheffer
+             * Hides the week numbers for week not in the batch
+             */
+           var hideZeroWeekNumbers = function(view, element){
+        	   $('.fc-week-number').each(function () {
+        		   if(this.textContent == 0){
+        			   $(this).addClass("outOfBatch");
+        		   }
+        	   });
+           }
+            
           /*
-			 * @Author: Tom Scheffer Calls the function changeDate if enter is
-			 * pressed when in the scope of the date search bar
+			 * @Author: Tom Scheffer
+			 * Calls the function changeDate if enter is pressed when in the scope of the date search bar
 			 */
           $scope.changeDateKeyPress = function(keyEvent){
         	  if(keyEvent.which === 13){
@@ -70,24 +82,35 @@
           };
             
           /*
-			 * @Author: Tom Scheffer Changes the view of the calendar so it
-			 * shows the date inputed into the search bar
+			 * @Author: Tom Scheffer
+			 * Changes the view of the calendar so it shows the date inputed into the search bar
 			 */
           $scope.changeDate = function(){
         	  uiCalendarConfig.calendars["myCalendar"].fullCalendar('gotoDate', $scope.searchDate);
         	  $scope.searchDate = new Date();
           };
 
+          /*
+           * @Author: Tom Scheffer
+           * Changes the calendar to your batch when looking at another trainer's batch
+           * Currently not in use
+           */
           $scope.currentBatch = function(){
-        	  /*SessionService.unset("currentBatch");
-        	  if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
-	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
+
+        	  if(SessionService.get("currentBatch")){
+        		  SessionService.unset("currentBatch");
+        		  if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
+        			  url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
+        		  }
+        		  if(!SessionService.get("gotSubtopics") && url){
+        			  SessionService.set("gotSubtopics", true); 
+        			  $scope.events = [];
+        			  $scope.loading = true;
+        			  $scope.loadCalendarInfoTrainer();
+        			  $scope.loadCalendar(url);
+        		  }
         	  }
-        	  if(!SessionService.get("gotSubtopics") && url){
-            		SessionService.set("gotSubtopics", true); 
-	             	$scope.loading = true;
-              	    $scope.loadCalendar(url);
-        	  }*/
+
           };
             var eventSerialId = 1;
             // @return {String} fingerprint of the event object and its
@@ -272,7 +295,7 @@
                     var tValues = function (data) {
                         // convert {0: "Jan", 1: "Feb", ...} to ["Jan", "Feb",
 						// ...]
-                        return (Object.keys(data) || []).reduce(
+                        return Object.keys(data).reduce(
                             function (rslt, el) {
                                 rslt.push(data[el]);
                                 return rslt;
@@ -293,26 +316,57 @@
                 return {};
             };
             
-            	 var url;
-	            if(SessionService.get("currentUser").role == 1){
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("currentUser").batch.id;
-	            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
-	            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
-	            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
-	             	url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
-	            }else{
-	            }
+            var pageNumber = 0;
+            var pageSize = 20;
+            var url;
+    		var myDataPromise;//have to get the total number of subtopics first before we can start pagination
+    		
+            if(SessionService.get("currentUser").role == 1){
+            	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("currentUser").batch.id + "&pageSize=" + pageSize + "&pageNumber=0";
+            	myDataPromise = SubtopicService.getTotalNumberOfSubtopics(SessionService.get("currentUser").batch.id);
+            	
+            }else if ((SessionService.get("currentUser").role == 3 || SessionService.get("currentUser").role == 2 ) && SessionService.get("currentBatch")) {
+            	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
+            	//url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+SessionService.get("currentBatch").id+ "&pageSize=" + pageSize + "&pageNumber=0";
+            	myDataPromise = SubtopicService.getTotalNumberOfSubtopics(SessionService.get("currentBatch").id);
+
+            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
+             	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ SessionService.get("trainerBatch").id + "&pageSize=" + pageSize + "&pageNumber=0";
+            	myDataPromise = SubtopicService.getTotalNumberOfSubtopics(SessionService.get("trainerBatch").id);
+            
+            }
             /* event source that contains custom events on the scope */
-	            
-            	$scope.events = [];
-            	if(!SessionService.get("gotSubtopics") && url) {
-            		SessionService.set("gotSubtopics", true); 
-            		$scope.loading = true;
+            var chain = $q.when();
+            var responses = [];
+        	$scope.events = [];
+        	var numberOfPages;
+        	 
+        	
+            	//function that loads the events for your batch
+            	$scope.loadCalendar = function(url){
+            		
+            		//pagination will start here once the promise of getting the number of subtopics finishes
+            		myDataPromise.then(function(result) {  
+            			
+            			// this is only run after getTotalNumberOfSubtopics() resolves
+             	       numberOfPages = Math.ceil(result / pageSize);
+             	       
+             	       if(numberOfPages == 0){
+             	    	   $scope.loading = false;
+             	    	  SessionService.set("gotSubtopics", false);
+             	       }
+             	       
+//             	      
+             	      for(var n = 0; n < numberOfPages; n++){
+              			(function(index) {
+            			url = url.substring(0, url.length - 1) + index;
             		$http({
                 		method : "GET",
                 		url : url
                 	}).then(function successCallback(response) {
                 		for(var i = 0; i < response.data.length ; i++) {
+                				$scope.eventSources = [{}];
+                				var id = response.data[i].subtopicId;
                     			var title = response.data[i].subtopicName.name;
                         		var dates = response.data[i].subtopicDate;
                         		var status= response.data[i].status.id;
@@ -321,31 +375,48 @@
                                 var month = a.getMonth();
                                 var day = a.getDate();
                                 var formattedTime = new Date(year, month, day);
-                                if(status == 1 ){
-                            		var temp = {title: title, start: formattedTime, end: formattedTime};
-                                }else if(status == 2 ){
-                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
-                                }else if(status == 3 ){
-                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
-                                }else if(status == 4){
-                                	var temp = {title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
-                                }   
+                                
+
+
+                                   	if(status == 1 )
+                                		var temp = {id: id, title: title, start: formattedTime, end: formattedTime};	
+                                	if (status == 1  && new Date().getMonth() > formattedTime.getMonth() && new Date().getFullYear() >= formattedTime.getFullYear() )
+                                    	 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
+                                	if (status == 1  && new Date().getDate() > formattedTime.getDate() && new Date().getMonth() == formattedTime.getMonth() && new Date().getFullYear() == formattedTime.getFullYear() )
+                                		 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};
+                                	               
+
+                                    if(status == 2 )
+                                		 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorgreen']};
+                                    if(status == 3 )
+                                		 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccolorred']};
+                                    if (status == 4)
+                                    	 temp = {id: id, title: title, start: formattedTime, end: formattedTime, className:['topiccoloryellow']};             
+
+                                	
+
                     			$scope.events.push(temp);
+                    	
                 		}
                 			uiCalendarConfig.calendars['myCalendar'].fullCalendar('addEventSource',$scope.events);
-                		
+                			$scope.events = [];
+                			response = null;
                 		// $scope.renderCalendar('myCalendar');
                 	}).finally(function() {
                 		// Turn off loading indicator whether success or
 						// failure.
                 		$scope.loading = false;
-                		SessionService.set("gotSubtopics", false);
+                		SessionService.set("gotSubtopics", false); 
                 	});
-            	}
-           // POST method to show subtopics on the calendar
-            			// For showing and hiding the
-											// loading gif.
-            	
+              			})(n)
+              			}; // end of for loop
+            		}); // end of promise
+            	} // end of load calendar
+            if(!SessionService.get("gotSubtopics") && url) {           	
+            	SessionService.set("gotSubtopics", true);         		
+            	$scope.loading = true;		
+            	$scope.loadCalendar(url);		
+            }
             		
             
             $scope.calEventsExt = {
@@ -357,73 +428,121 @@
             	          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
             	        ]
             	    };
-            if(SessionService.get("currentUser").role == 2 && SessionService.get("currentBatch") == null){
             /* alert on eventClick */
-            $scope.alertOnEventClick = function( date, jsEvent, view){
-            	var name = jsEvent.target.parentNode.parentNode.getAttribute("class");
-            	if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorgreen fc-draggable ng-scope fc-allow-mouse-resize") {
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove
-																							// green
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add
-																							// red
-                    // http for green to red
-                    $http({
-                 		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Canceled"
-                 	 }).then(function successCallback(response) {
-                 	 });
-                }  else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end topiccolorred fc-draggable ng-scope fc-allow-mouse-resize"){
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
-																							// red
-                    // http for red to blue
-                    $http({
-                 		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Pending/Missed"
-                 	 }).then(function successCallback(response) {
-                 	 });
-                } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize") {
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // add
-																							// green
-                    // http for blue to green
-                    $http({
-                 		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Completed"
-                 	 }).then(function successCallback(response) {
-                 	 });
-                }    else  if (name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorgreen") {
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorgreen"); // remove
-																							// green
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // add
-																							// red
-                    // http for green to red
-                    $http({
-                 		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Canceled"
-                 	 }).then(function successCallback(response) {
-                 	 });
-                } else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope fc-allow-mouse-resize topiccolorred"){
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
-																							// red
-                    // http for red to blue
-                    $http({
-                 		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Pending/Missed"
-                 	 }).then(function successCallback(response) {
-                 	 });
-                }else if(name == "fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable ng-scope topiccolorred fc-allow-mouse-resize"){
-                    $(jsEvent.target.parentNode.parentNode).toggleClass("topiccolorred"); // remove
-																							// red
-                    // http for red to blue
-                    $http({
-                 		method : "GET",
-                 		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+date.title+"&status=Pending/Missed"
-                 	 }).then(function successCallback(response) {
-                 	 });
-                }
-            };
+            $scope.alertOnEventClick = function( event, date, jsEvent, view){
+            	var eventDate= new Date(event.start);
+            	
+            // if date is pass the current-date		
+            	if(event.start < new Date().setHours(0, 0, 0, 0) && ! (  new Date().getDate() == (eventDate.getDate() +1 ) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() )	 ){
+            		
+            		if(event.className == 'topiccolorgreen'){
+                  		event.className= 'topiccolorred';
+                		 uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
+                		 // http for green to red
+                      $http({
+                   		method : "GET",
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Canceled"
+                   		
+                   	 }).then(function successCallback(response) {
+                 
+                   	 });
+
+                	}else if(event.className == 'topiccolorred'){
+                		event.className= 'topiccoloryellow';
+                        uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
+
+                		  // http for red to yellow
+                      $http({
+                   		method : "GET",
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Missed"
+                   	 }).then(function successCallback(response) {
+                   		
+                   	 });
+                		
+                	}else {
+                		event.className= 'topiccolorgreen';
+                        uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
+                		  // http for yellow to green
+                      $http({
+                   		method : "GET",
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Completed"
+                   	 }).then(function successCallback(response) {
+                   	 });
+                	}
+            	}
+            	// if event date is not pass the current-date   	
+            	else{
+      
+            	if(event.className == 'topiccolorgreen'){
+              		event.className= 'topiccolorred';
+            		 uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
+            		 // http for green to red
+                  $http({
+               		method : "GET",
+               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Canceled"
+               		
+               	 }).then(function successCallback(response) {
+             
+               	 });
+                 
+
+            	}else if(event.className == 'topiccolorred'){
+            		event.className= '';
+                    uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
+
+            		  // http for red to blue
+                  $http({
+               		method : "GET",
+               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Pending"
+               	 }).then(function successCallback(response) {
+               		
+               	 });
+            		
+            	}else {
+            		event.className= 'topiccolorgreen';
+                    uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
+            		  // http for blue to green
+                  $http({
+               		method : "GET",
+               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Completed"
+               	 }).then(function successCallback(response) {
+               		
+
+               	 });
+                 
+
+            	}
+            	
+           	}//end of else	
             }
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
+            	 var eventDate= new Date(event.start);
+             
+            	if(event.className == '' && event.start < new Date().setHours(0, 0, 0, 0) && ! (  new Date().getDate() == (eventDate.getDate() ) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() ) )
+            	{
+            		
+                		event.className= 'topiccoloryellow';
+            
+                        uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
+                		  // http for blue to green
+                      $http({
+                   		method : "GET",
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Missed"
+                   	 }).then(function successCallback(response) {
+                   	 });
+            	}	
+              	if((event.className == 'topiccoloryellow' && event.start > new Date().setHours(0, 0, 0, 0) ) || ( event.className == 'topiccoloryellow' && new Date().getDate() == (eventDate.getDate() + 1) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() ) )
+            	{
+                		event.className= '';
+                        uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
+                		  // http for blue to green
+                      $http({
+                   		method : "GET",
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&status=Pending"
+                   	 }).then(function successCallback(response) {
+                   	 });
+            	}
             	 $http({
              		method : "GET",
              		url : "rest/api/v1/Calendar/DateUpdate?batchId="+SessionService.get("trainerBatch").id+"&subtopicId="+event.title+"&date="+event.start
@@ -467,7 +586,7 @@
             
             /* Render Tooltip */
             $scope.eventRender = function( event, element, view ) { 
-            	
+            	$('.tooltip').remove();
             	     $(element).tooltip({title: event.title});
             	 
                 $compile(element)($scope);
@@ -492,35 +611,62 @@
              *  Used to calculate week number of batch, assumes batch doesn't have set starting time
              */
             var calculateWeekNumber = function(currentWeek){
+            	var beginDate;
+            	var finishDate;
             	if(SessionService.get("currentUser").role == 1){
-            		var beginDate = moment(SessionService.get("currentUser").batch.startDate);
-            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
-            		var finishDate = moment(SessionService.get("currentUser").batch.endDate);
-            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		beginDate = moment.utc(SessionService.get("currentUser").batch.startDate);
+            		beginDate.weekday(0).stripZone().stripTime();
+            		finishDate = moment.utc(SessionService.get("currentUser").batch.endDate).stripZone().stripTime();
             		if(currentWeek >= beginDate && currentWeek < finishDate){
-            			return currentWeek.diff(SessionService.get("currentUser").batch.startDate, 'weeks') + 1;
+            			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && !SessionService.get("currentBatch") && SessionService.get("trainerBatch")){
-            		var beginDate = moment(SessionService.get("trainerBatch").startDate);
-            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
-            		var finishDate = moment(SessionService.get("trainerBatch").endDate);
-            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		beginDate = moment.utc(SessionService.get("trainerBatch").startDate);
+            		beginDate.weekday(0).stripZone().stripTime();
+            		finishDate = moment.utc(SessionService.get("trainerBatch").endDate).stripZone().stripTime();
             		if(currentWeek >= beginDate && currentWeek < finishDate){
-            			return currentWeek.diff(SessionService.get("trainerBatch").startDate, 'weeks') + 1;
+            			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}
             	}else if(SessionService.get("currentUser").role >= 2 && SessionService.get("currentBatch")){
-            		var beginDate = moment(SessionService.get("currentBatch").startDate);
-            		beginDate.weekday(0).add(beginDate.utcOffset(), 'minutes');
-            		var finishDate = moment(SessionService.get("currentBatch").endDate);
-            		finishDate.add(finishDate.utcOffset(), 'minutes');
+            		beginDate = moment.utc(SessionService.get("currentBatch").startDate);
+            		beginDate.weekday(0).stripZone().stripTime();
+            		finishDate = moment.utc(SessionService.get("currentBatch").endDate).stripZone().stripTime();
             		if(currentWeek >= beginDate && currentWeek < finishDate){
-            			return currentWeek.diff(beginDate, 'weeks') + 1;
+            			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}
             	}
             	return 0;
             };
             //var now = fullCalendar.moment
             
+            //function that loads calendar info for trainer's batch
+            $scope.loadCalendarInfoTrainer = function(){
+            	$scope.uiConfig = {
+                        calendar:{
+                          contentHeight: 'auto',
+                          editable: true,
+                          navLinks: true,
+                          weekNumbersWithinDays: true,
+                          weekNumberCalculation: calculateWeekNumber,
+                          views:{
+                          	month:{
+                                weekNumbers: true,
+                          		eventLimit: 5
+                          	}
+                          },
+                          header:{
+                            left: 'title',
+                            center: 'month,basicWeek,basicDay',
+                            right: 'today prev,next'
+                          },
+                          eventClick: $scope.alertOnEventClick,
+                          eventDrop: $scope.alertOnDrop,
+                          eventResize: $scope.alertOnResize,
+                          eventRender: $scope.eventRender,
+                          viewRender: hideZeroWeekNumbers
+                        		}
+                      	};
+            }
             if(SessionService.get("currentUser").role == 1 || SessionService.get("currentBatch") != null){
             /* config object */
             $scope.uiConfig = {
@@ -528,11 +674,11 @@
                 contentHeight: 'auto',
                 editable: false,
                 navLinks: true,
-                weekNumbers: true,
-                weekNumberTitle: "Week in Batch",
+                weekNumbersWithinDays: true,
                 weekNumberCalculation: calculateWeekNumber,
                 views:{
                 	month:{
+                        weekNumbers: true,
                 		eventLimit: 5
                 	}
                 },
@@ -541,48 +687,24 @@
                   center: 'month,basicWeek,basicDay',
                   right: 'today prev,next'
                 },
-                eventClick: $scope.alertOnEventClick,
                 eventDrop: $scope.alertOnDrop,
                 eventResize: $scope.alertOnResize,
-                eventRender: $scope.eventRender
+                eventRender: $scope.eventRender,
+                viewRender: hideZeroWeekNumbers
               }
             
             };
             }else {
             /* config object */
-            $scope.uiConfig = {
-              calendar:{
-                contentHeight: 'auto',
-                editable: true,
-                navLinks: true,
-                weekNumbers: true,
-                weekNumberTitle: "Week in Batch",
-                weekNumberCalculation: calculateWeekNumber,
-                views:{
-                	month:{
-                		eventLimit: 5
-                	}
-                },
-                header:{
-                  left: 'title',
-                  center: 'month,basicWeek,basicDay',
-                  right: 'today prev,next'
-                },
-                eventClick: $scope.alertOnEventClick,
-                eventDrop: $scope.alertOnDrop,
-                eventResize: $scope.alertOnResize,
-                eventRender: $scope.eventRender
-              		}
-            	};
+            	$scope.loadCalendarInfoTrainer();
             }
             
             /* event sources array */
-            $scope.eventSources = [$scope.events];
+
             $scope.sources 			= "";
    			$scope.source 			= "";
-
-        }
-    ])
+	            }	         
+  ])
     .directive('uiCalendar', ['uiCalendarConfig',
         function (uiCalendarConfig) {
 
@@ -717,6 +839,4 @@
             };
         }
     ]
-
-
 );

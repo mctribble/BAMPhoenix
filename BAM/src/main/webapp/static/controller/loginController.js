@@ -1,6 +1,7 @@
-
 app.controller('loginController', function($rootScope, $window, $scope, $location, $http, SessionService) {
-	$(".navbar").hide();
+	$(document).ready(function(){
+		$(".navbar").hide();
+	});
 	$rootScope.userRole;
 	$scope.msg;
 
@@ -24,19 +25,19 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 		})
 		.then(function success(response){
 			
-//			SessionService.set("currentUser", angular.toJson(response.data));
-//			console.log('Current user object role->'+ JSON.parse(SessionService.get("currentUser")).role);
 		
 			
 			SessionService.set("currentUser", response.data);
 			$rootScope.user = SessionService.get("currentUser");
 			if(SessionService.get("currentUser").role == 3){
 				SessionService.set("userRole", '(Quality Control)');
+
 				$rootScope.userRole = SessionService.get("userRole");
 				$location.path('/home');
 			} else if(SessionService.get("currentUser").role == 2){
 				SessionService.set("userRole", '(Trainer)');
 				$rootScope.userRole = SessionService.get("userRole");
+
 				$http({
 					url: 'rest/api/v1/Batches/InProgress',
 					method: 'GET',
@@ -50,13 +51,26 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 				});
 			} else if(SessionService.get("currentUser").role == 1) {
 				SessionService.set("userRole", '(Associate)');
+
 				$rootScope.userRole = SessionService.get("userRole");
+
 				if(!SessionService.get("currentUser").batch){
 					$location.path('/noBatch');
 				}else{
 					SessionService.set("gotSubtopics", false);
 					$location.path('/home');
+					
+					//sets the number of subtopics
+					$http({
+		            	method: 'GET',
+		            	url: 'rest/api/v1/Calendar/GetNumberOfSubtopics?batchId='+ SessionService.get("currentUser").batch.id
+		            })
+		            .then(function successCallback(response){
+		            	SessionService.set("numberOfSubtopics", response.data);
+		            });
+					
 				}
+				
 				
 			}else{
 				$location.path('/batchesAll');

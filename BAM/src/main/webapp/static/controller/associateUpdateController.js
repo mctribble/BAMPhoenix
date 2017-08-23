@@ -1,13 +1,12 @@
-app.controller("associateUpdateController", ['$rootScope', 'SessionService','$http', '$scope', function($rootScope, SessionService, $http, $scope){
+app.controller("associateUpdateController", ['SessionService','$http', '$scope', '$rootScope', function(SessionService, $http, $scope, $rootScope){
 	
 	$scope.updateDisplay = false;	
 	
-	$scope.testMsg = 'test message from updateAssociateController.js';
-
+	$scope.users = SessionService.get("currentUser");
+	
 	SessionService.set("currentBatch", null);
 	
 	$scope.updateAssociate = function(){
-
 		$http({
 			url: 'rest/api/v1/Users/Update',
 			method: 'POST',
@@ -15,11 +14,14 @@ app.controller("associateUpdateController", ['$rootScope', 'SessionService','$ht
 		        'Content-Type': 'application/json', 
 		        'Accept': 'application/json' 
 		    },
-			data: SessionService.get("currentUser")
+			data: $scope.users
 		}).then (function success(response){
 			$scope.updateDisplay = true;
 			$scope.updateMsg = 'Update Successful';
 			$scope.alertClass = 'alert alert-success';
+			SessionService.set("currentUser", $scope.users);
+			$rootScope.user = SessionService.get("currentUser");
+			
 		
 		}, function error(response){
 			$scope.updateDisplay = true;

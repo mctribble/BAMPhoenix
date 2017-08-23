@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.bean.BamUser;
 import com.bam.bean.Batch;
+import com.bam.bean.CustomException;
 import com.bam.service.BatchService;
 import com.bam.service.PasswordGenerator;
 import com.bam.service.UsersDetailsService;
@@ -22,8 +23,8 @@ import com.bam.service.UsersDetailsService;
 @RequestMapping(value = "/api/v1/Users/")
 public class UserController {
 	
-	private final String userID = "userId";
-	private final String batchID = "batchId";
+	private static final String USERID = "userId";
+	private static final String BATCHID = "batchId";
 	
 	@Autowired
 	UsersDetailsService userService;
@@ -54,7 +55,7 @@ public class UserController {
 	public List<BamUser> getUsersInBatch(HttpServletRequest request) {
 
 		//Get the batch id from the request
-		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		
 		//Retrieve and return users in a batch from the database
 		return userService.findUsersInBatch(batchId);
@@ -65,7 +66,7 @@ public class UserController {
 	public List<BamUser> dropUserFromBatch(HttpServletRequest request) {
 
 		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter(userID) );
+		int userId = Integer.parseInt( request.getParameter(USERID) );
 		BamUser user = userService.findUserById( userId );
 		int batchId = user.getBatch().getId();
 
@@ -87,12 +88,12 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="Register", method=RequestMethod.POST, produces="application/json")
-	public void addUser(@RequestBody BamUser currentUser) throws Exception {
+	public void addUser(@RequestBody BamUser currentUser) throws CustomException {
 		if(userService.findUserByEmail(currentUser.getEmail())==null){
 			currentUser.setRole(1);
 			userService.addOrUpdateUser(currentUser);
 		} else {
-			throw new IllegalArgumentException("Email exists in database");
+			throw new CustomException("Email exists in database");
 		}	
 	}
 
@@ -112,14 +113,14 @@ public class UserController {
 	 */
 
 	@RequestMapping(value="Reset", method=RequestMethod.POST, produces="application/java")
-	public void resetPassword(@RequestBody BamUser userNewPass) throws Exception{
+	public void resetPassword(@RequestBody BamUser userNewPass) throws CustomException{
 		BamUser currentUser = userService.findUserByEmail(userNewPass.getEmail());
 		if (currentUser.getPwd().equals(userNewPass.getPwd())) {
 			currentUser.setPwd(userNewPass.getPwd2());
 			userService.addOrUpdateUser(currentUser);
 
 		}else{
-			throw new IllegalArgumentException("Wrong password, password not changed");
+			throw new CustomException("Wrong password, password not changed");
 		}
 	}
 
@@ -128,7 +129,7 @@ public class UserController {
 	public List<BamUser> removeUser(HttpServletRequest request) {
 
 		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter(userID) );
+		int userId = Integer.parseInt( request.getParameter(USERID) );
 		BamUser user = userService.findUserById( userId );
 		int batchId = user.getBatch().getId();
 
@@ -146,9 +147,9 @@ public class UserController {
 	public List<BamUser> addUserToBatch(HttpServletRequest request) {
 
 		//Get the user id from the request
-		int userId = Integer.parseInt( request.getParameter(userID) );
+		int userId = Integer.parseInt( request.getParameter(USERID) );
 		//Get the batch to add the user to from the request
-		int batchId = Integer.parseInt( request.getParameter(batchID) );
+		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		
 		BamUser user = userService.findUserById( userId );
 		
@@ -166,11 +167,14 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "Recovery", method = RequestMethod.POST, produces = "application/json")
-    public void RecoverPassword(@RequestBody String email) {
+
+    public void recoverPassword(@RequestBody String email) {
     	String generate = PasswordGenerator.makePassword();
+
         // Lookup user in database by e-mail
         BamUser user = userService.findUserByEmail(email);
         if (user != null) {
+        	generate = PasswordGenerator.makePassword();
         	user.setPwd(generate);
         	userService.addOrUpdateUser(user);
         	userService.recoverE(user);
