@@ -7,9 +7,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import com.bam.service.BamUserServiceDetails;
 
 /**
  * 
@@ -33,7 +34,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	UserDetailsService userDetailsService;
+	BamUserServiceDetails userDetailsService;
 
 	@Autowired
 	private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
