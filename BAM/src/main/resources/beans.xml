@@ -27,7 +27,9 @@
 		<property name="url" value="#{systemEnvironment['DB_URL']}"></property>
 		<property name="username" value="#{systemEnvironment['DB_USERNAME']}"></property>
 		<property name="password" value="#{systemEnvironment['DB_PASSWORD']}"></property>
-		
+		<property name="maxIdle" value="0"></property> 
+		<property name="minIdle" value="10"></property>
+		<property name="minEvictableIdleTimeMillis" value="10"></property>
 	</bean>
 	
 	<!-- Because we use Hibernate -->
@@ -63,7 +65,8 @@
 	<bean name="topicsService" class="com.bam.service.TopicService"></bean>
 	<bean name="mailService" class="com.bam.service.MailService"></bean>
 	<bean name="passwordGenerator" class="com.bam.service.PasswordGenerator"></bean>
-	<bean name="userDetailsService" class="com.bam.service.UsersDetailsService"></bean>
+	<bean name="userDetailsService" class="com.bam.service.BamUserServiceDetails"></bean>
+	<bean name="bamUserService" class="com.bam.service.BamUserService"></bean>
 	<bean name="curriculumService" class="com.bam.service.CurriculumService"></bean>
 	<bean name="curriculumSubtopicService" class="com.bam.service.CurriculumSubtopicService"></bean>	
 </beans>

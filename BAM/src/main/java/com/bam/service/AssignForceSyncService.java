@@ -33,8 +33,8 @@ public class AssignForceSyncService {
 	@Resource(name="batchesService")
 	BatchService bservice;
 	
-	@Resource(name="userDetailsService")
-	UsersDetailsService uservice;
+	@Resource(name="bamUserService")
+	BamUserService uservice;
 	
 	static RestTemplate restTemplate = new RestTemplate();
 	static String baseUrl = "http://assignforce.revaturelabs.com/api/v2/";
@@ -78,6 +78,7 @@ public class AssignForceSyncService {
 				currentBatch.setId(batch.getID());
 				currentBatch.setType(type);
 				
+				
 				// First and last names pulled from AssignForce trainer to search for current trainers.
 				String firstName = batch.getTrainer().getFirstName();
 				String lastName = batch.getTrainer().getLastName();
@@ -91,9 +92,11 @@ public class AssignForceSyncService {
 					bamUser.setAssignForceID(batch.getTrainer().getTrainerId());
 					currentBatch.setTrainer(bamUser);
 				}
-				// Batch is persisted, either added or updated.
-				bservice.addOrUpdateBatch(currentBatch);
 				
+				// Batch is persisted, the batch will only be added if it doesn't already exist in db
+				if(bservice.getBatchById(currentBatch.getId()) == null){
+					bservice.addOrUpdateBatch(currentBatch);	
+				}
 			}
 		}
 	}

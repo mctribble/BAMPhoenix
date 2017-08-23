@@ -254,7 +254,7 @@ app.controller(
 			}).then(function(response){
 				var curricula = response.data;
 				//parse the response into the local (front end) json object format
-				for(i in curricula){
+				for(var i in curricula){
 					var curriculum = curricula[i];
 
 					//raise flag if there exists a a curriculum of this type already

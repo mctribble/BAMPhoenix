@@ -333,8 +333,12 @@
             
             }
             /* event source that contains custom events on the scope */
+<<<<<<< HEAD
             
            
+=======
+            var responses = [];
+>>>>>>> 8c4d8a8cccf5040e910de10c3e9bc8f385bfa48e
         	$scope.events = [];
         	var numberOfPages;
         	 
