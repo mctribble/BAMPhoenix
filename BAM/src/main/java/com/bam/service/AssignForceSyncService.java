@@ -78,6 +78,7 @@ public class AssignForceSyncService {
 				currentBatch.setId(batch.getID());
 				currentBatch.setType(type);
 				
+				
 				// First and last names pulled from AssignForce trainer to search for current trainers.
 				String first_name = batch.getTrainer().getFirstName();
 				String last_name = batch.getTrainer().getLastName();
@@ -91,9 +92,11 @@ public class AssignForceSyncService {
 					bamUser.setAssignForce_ID(batch.getTrainer().getTrainerId());
 					currentBatch.setTrainer(bamUser);
 				}
-				// Batch is persisted, either added or updated.
-				bservice.addOrUpdateBatch(currentBatch);
 				
+				// Batch is persisted, the batch will only be added if it doesn't already exist in db
+				if(bservice.getBatchById(currentBatch.getId()) == null){
+					bservice.addOrUpdateBatch(currentBatch);	
+				}
 			}
 		}
 	}
