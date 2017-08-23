@@ -1,0 +1,131 @@
+@CHARSET "ISO-8859-1";
+
+.container1 {
+	
+	background-image: url('https://ak3.picdn.net/shutterstock/videos/12450170/thumb/1.jpg');
+	background-blend-mode: luminosity;
+	background-repeat: no-repeat;
+    background-size: cover;
+    height: -webkit-fill-available;
+}
+
+.pan{
+	width: auto;
+    background-color: rgba(243, 93, 10, 0.88);
+    padding: 50px;
+    margin: 10px;
+    border-radius: 7px;
+    font-weight: bold;
+    border-style: inset;
+    color: white;
+    border-color: #e85f12;
+}
+
+ul.listTitle{
+	font-weight: bold;
+}
+
+li.listItem{
+	font-weight: normal;
+}
+
+ul {
+    padding-left: 15px;
+}
+
+ul.mainList{
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
+li {
+	list-style: none;
+}
+
+.navbar{
+	margin-bottom: 10px!important;
+}
+
+.container{
+	margin-top:10px!important;
+}
+
+#pan2{
+	width: auto;
+    background-color: rgba(50, 65, 118, .9);
+    margin: 15px;
+    padding: 15px;
+    border-radius: 7px;
+    font-weight: bold;
+    border-style: outset;
+    color: white;
+    border-color: #7c7da7;
+}
+
+#pan4{
+	width: auto;
+    background-color: rgba(50, 65, 118, .9);
+    margin: 15px;
+    padding: 15px;
+    border-radius: 7px;
+    font-weight: bold;
+    border-style: outset;
+    color: white;
+    border-color: #7c7da7;
+}
+
+#pan3{
+	width: auto;
+    background-color: rgba(50, 65, 118, .9);
+    float: right;
+	margin: 15px;
+    padding: 15px;
+    border-radius: 7px;
+    font-weight: bold;
+    border-style: outset;
+    color: white;
+    border-color: #7c7da7;
+}
+
+#progress{
+    background-color:rgba(50, 65, 118, .9);
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-weight: bold;
+    border-radius: 7px;
+    border-style: outset;
+    border-color: #7c7da7;
+    color: white;
+}
+
+#loadingPic{
+	width: 5%;
+	opacity: 0.8;
+}
+
+
+.navbar{
+	margin-bottom: 10px!important;
+}
+
+.container{
+	margin-top:10px!important;
+}
+
+
+ul {
+    padding-left: 15px;
+}
+
+ul.mainList{
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
+li {
+	list-style: none;
+}
