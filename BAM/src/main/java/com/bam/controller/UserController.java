@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bam.bean.BamUser;
 import com.bam.bean.Batch;
 import com.bam.bean.CustomException;
+import com.bam.service.BamUserService;
 import com.bam.service.BatchService;
 import com.bam.service.PasswordGenerator;
-import com.bam.service.UsersDetailsService;
 
 
 @RestController
@@ -28,7 +28,7 @@ public class UserController {
 	private static final String BATCHID = "batchId";
 
 	@Autowired
-	UsersDetailsService userService;
+	BamUserService userService;
 
 	@Autowired
 	BatchService batchService;
