@@ -12,7 +12,7 @@ public class AssignForceBatch {
 		private Timestamp endDate;
 		private AssignForceCurriculum curriculum;
 		private AssignForceTrainer trainer;
-		private Integer ID;
+		private Integer id;
 		
 		public AssignForceBatch() {}
 
@@ -24,7 +24,7 @@ public class AssignForceBatch {
 			this.endDate = endDate;
 			this.curriculum = curriculum;
 			this.trainer = trainer;
-			ID = iD;
+			id = iD;
 		}
 
 		public String getName() {
@@ -69,17 +69,17 @@ public class AssignForceBatch {
 		}
 
 		public Integer getID() {
-			return ID;
+			return id;
 		}
 
 		public void setID(Integer iD) {
-			ID = iD;
+			id = iD;
 		}
 
 		@Override
 		public String toString() {
 			return "AssignForceBatch [name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
-					+ ", curriculum=" + curriculum + ", trainer=" + trainer + ", ID=" + ID + "]";
+					+ ", curriculum=" + curriculum + ", trainer=" + trainer + ", ID=" + id + "]";
 		}
 		
 }

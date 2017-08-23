@@ -10,12 +10,16 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
 
 import com.bam.bean.CustomException;
+import com.bam.logging.LoggerClass;
 
 public class MailService {
 
 	public static void sendMail(String email) {
+		Logger logger = Logger.getLogger(LoggerClass.class);
+
 		
 		
 
@@ -55,7 +59,7 @@ public class MailService {
 				try {
 					throw new CustomException(e);
 				} catch (CustomException e1) {
-					;
+					logger.error(e1);
 				}
 			} 
         }

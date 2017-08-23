@@ -125,7 +125,7 @@ app.controller(
 		$scope.setTemplate = function(curriculum){
 			if(curriculum){
 				//attempt to look for curr in curricula object before doing http req (caching)
-				for(i in $scope.curricula){
+				for(var i in $scope.curricula){
 					if( $scope.curricula[i].type == curriculum.meta.curriculumName && $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks.length > 0){
 						$scope.template = $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1];
 						return;
@@ -207,7 +207,7 @@ app.controller(
 		$scope.saveCurriculum = function(){
 			//loop through curricula looking for an existing type. if found, append to versions.
 			var typeExists = false;
-			for(item in $scope.curricula){
+			for(var item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculumName){
 					$scope.curricula[item].versions.push($scope.displayedCurriculum);
 					typeExists = true;
@@ -260,7 +260,7 @@ app.controller(
 					//raise flag if there exists a a curriculum of this type already
 					var curriculumTypeExists = false;
 					//determine if $scope.curricula has a type of curriculum.Name already. If so add it as an additional version of the type
-					for(j in $scope.curricula){
+					for(var j in $scope.curricula){
 						var localCurricula = $scope.curricula[j];
 						//perform the check mentioned above
 						if(localCurricula.type == curriculum.curriculumName){
@@ -278,9 +278,9 @@ app.controller(
 					
 					//if a curriculum of type curriculum.curriculumName does not exist, add it as a new base curriculum type
 					if(!curriculumTypeExists){
-						metaData = curriculum;
+						var metaData = curriculum;
 						delete metaData.weeks;
-						var newCurriculum = {
+						 newCurriculum = {
 								type: curriculum.curriculumName,
 								versions: [{meta:metaData, weeks:[]}]
 						};

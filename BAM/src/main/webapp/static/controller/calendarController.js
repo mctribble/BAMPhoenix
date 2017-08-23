@@ -313,7 +313,7 @@
                 return {};
             };
             
-            var pageNumber = 0;
+            
             var pageSize = 20;
             var url;
     		var myDataPromise;//have to get the total number of subtopics first before we can start pagination
@@ -333,8 +333,8 @@
             
             }
             /* event source that contains custom events on the scope */
-            var chain = $q.when();
-            var responses = [];
+            
+           
         	$scope.events = [];
         	var numberOfPages;
         	 
