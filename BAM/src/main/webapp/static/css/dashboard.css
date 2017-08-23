@@ -28,6 +28,18 @@ ul.listTitle{
 li.listItem{
 	font-weight: normal;
 }
+	
+.styled-select {
+   height: 29px;
+   overflow: hidden;
+   width: 240px;
+}
+
+.semi-square {
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+}
 
 ul {
     padding-left: 15px;

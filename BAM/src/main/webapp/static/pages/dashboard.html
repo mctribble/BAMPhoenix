@@ -3,17 +3,23 @@
 		<div class="pan">
 		<h1 class="display-3">Welcome, {{user.fName}}</h1>
 		<p class="lead"> Pick up where you left off</p>
-		<div>Batch Status: {{message}}</div>	
+		
+		Batch Status: <br>
+  			<select id="batchDropdown" ng-init="currentBatch(this)" class="styled-select blue semi-square" 
+  				ng-show="trainerHasBatch && batchCount > 1">
+  			</select>
+		<div ng-show="userHasBatch || batchCount == 1">{{message}}</div>	
+		
  		</div>
 		
 		<div class="row">
 		<div id="pan2" class="col-md-6 pan2">
-		<ul  ng-model="getData">
-			<li>First Name: {{user.fName}}</li>
-			<li>Last Name: {{user.lName}}</li>
-			<li>Current Batch Start Date: {{currentBatchStart1 | date: 'MM-dd-yyyy'}}</li>
-			<li>Current Batch End Date: {{currentBatchEnd1 | date: 'MM-dd-yyyy'}}</li>
-		</ul>
+			<ul  ng-model="getData">
+				<li>First Name: {{user.fName}}</li>
+				<li>Last Name: {{user.lName}}</li>
+				<li>Current Batch Start Date: {{currentBatchStart1 | date: 'MM-dd-yyyy'}}</li>
+				<li>Current Batch End Date: {{currentBatchEnd1 | date: 'MM-dd-yyyy'}}</li>
+			</ul>
 		</div>
 		
 				
