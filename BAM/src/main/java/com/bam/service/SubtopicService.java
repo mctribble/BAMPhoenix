@@ -36,7 +36,6 @@ public class SubtopicService {
 	
 	public void addSubtopic(int subtopic, int batch){
 		Subtopic s = new Subtopic();
-
 		Batch b;
 		SubtopicName st;
 		SubtopicStatus ss;
@@ -71,8 +70,20 @@ public class SubtopicService {
 		return subtopicRepository.findByBatch(batchRepository.findById(batchId));
 	}
 
-	public void updateSubtopic(Subtopic topic) {
-		subtopicRepository.save(topic);
+	/**
+	 * 
+	 * @param topic
+	 * Persisting subtopic to database.
+	 * To handle timezone offset, before submission to DB, 
+	 * adding offset to date and updating date.
+	 * 
+	 * @author Samuel Louis-Pierre, Avant Mathur
+	 */
+	public void updateSubtopic(Subtopic subtopic) {
+		Long newDate = subtopic.getSubtopicDate().getTime() + 46800000;
+		subtopic.setSubtopicDate(new Timestamp(newDate));
+		
+		subtopicRepository.save(subtopic);
 	}
 
 	public SubtopicStatus getStatus(String name) {

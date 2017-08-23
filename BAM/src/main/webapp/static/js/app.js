@@ -31,6 +31,9 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/editBatch", {
 		templateUrl: "static/pages/EditBatch.html",
 		controller: "batchEditController"
+	}).when("/addSubtopic", {
+		templateUrl: "static/pages/addSubtopic.html",
+//		controller: "addSubtopicController"
 	}).when("/noBatch",{
 		templateUrl: "static/pages/NoBatch.html"
 	}).when("/curriculum",{
