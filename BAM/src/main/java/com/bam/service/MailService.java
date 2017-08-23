@@ -15,7 +15,7 @@ import com.bam.bean.CustomException;
 
 public class MailService {
 
-	public static void sendMail(String email) {
+	public static void sendMail(String email, String newPassword) {
 		
 		
 
@@ -23,9 +23,6 @@ public class MailService {
         final String PASSWORD = "testing123";
         String receiver= email; //user.getemail
         
-        PasswordGenerator pass = new PasswordGenerator();
-        
-
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -45,7 +42,9 @@ public class MailService {
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(receiver));
             message.setSubject("Recover Password");
-            message.setText("Your temporary password is " + pass);   
+            message.setText("Hi! Your New temporary password is: \n " + newPassword + "\n"  + "" + " "+
+                    "\n" + "Upon Logging in, please click the dropdown menu where your name is located and select reset password to set" + " "
+                            + "your password to your convience. \n" + "" + "\n Never show or give your password to anyone to avoid your account from being compromised. \n" + ""+ "\n Regards, \n Revature Team");
 
 
             Transport.send(message);
