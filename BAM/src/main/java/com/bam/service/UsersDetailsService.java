@@ -115,4 +115,18 @@ public class UsersDetailsService implements UserDetailsService {
 		th.start();
 	}
 
+	
+	/**
+	 * Service method for calling spring data repository method. Finds user with given firstname and lastname.
+	 * 
+	 * 
+	 * @author DillonT, GilB
+	 * @param f
+	 * @param l
+	 * @return
+	 */
+	public List<BamUser> getByFNameAndLName(String f, String l) {
+		return dao.findByFNameAndLName(f, l);
+	}
+
 }
