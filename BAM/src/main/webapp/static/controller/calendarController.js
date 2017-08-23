@@ -333,7 +333,6 @@
             
             }
             /* event source that contains custom events on the scope */
-            var chain = $q.when();
             var responses = [];
         	$scope.events = [];
         	var numberOfPages;
