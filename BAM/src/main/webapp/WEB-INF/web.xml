@@ -12,7 +12,6 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/applicationContext.xml</param-value>
@@ -36,6 +35,6 @@
 	</servlet-mapping>
 	<session-config>
         <session-timeout>180</session-timeout>
-    </session-config>
+  </session-config>
 
 </web-app>
