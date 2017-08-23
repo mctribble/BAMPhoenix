@@ -1,4 +1,4 @@
-var app = angular.module('bam', ['ngRoute', 'dndLists']);
+var app = angular.module('bam', ['ngRoute', 'dndLists', 'angulartics', 'angulartics.google.analytics']);
 app.config(function($routeProvider, $locationProvider){
 	$locationProvider.html5Mode(false).hashPrefix('');
 	$routeProvider.when("/",{

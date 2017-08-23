@@ -22,3 +22,4 @@ app.service('SessionService', function($window){
 		sessionStorage.clear();
 	};
 });
+
