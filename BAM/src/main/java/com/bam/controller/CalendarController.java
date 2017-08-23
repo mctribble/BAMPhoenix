@@ -69,13 +69,25 @@ public class CalendarController {
 	 */
 	@RequestMapping(value="SubtopicsPagination", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
-	public List<Subtopic> getSubTopicsByBatch(HttpServletRequest request){
+	public List<Subtopic> getSubtopicsByBatchPagination(HttpServletRequest request){
 		int batchId = Integer.parseInt( request.getParameter(BATCHID) );
 		int pageNum = Integer.parseInt( request.getParameter(PAGENUMBER) );
 		int pageSiz = Integer.parseInt( request.getParameter(PAGESIZE) );
 		
 		return subtopicService.findByBatchId(batchId, new PageRequest(pageNum,pageSiz));
 	}
+
+	@RequestMapping(value = "Subtopics", method = RequestMethod.GET, produces = "application/json")		
+ 	@ResponseBody		
+ 	public List<Subtopic> getSubtopicsByBatch(HttpServletRequest request) {		
+ 		
+ 		//Get the batch id from the request		
+ 		int batchId = Integer.parseInt( request.getParameter(BATCHID) );		
+ 				
+ 		//Retrieve and return users in a batch from the database		
+ 		
+ 		return subtopicService.getSubtopicByBatchId(batchId);		
+ 	}
 	
 	/**
 	 * Counts the number of Subtopics by matching their ids with the batchId.
