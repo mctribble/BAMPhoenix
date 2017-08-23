@@ -63,7 +63,10 @@ public class BamUser {
 									// used when
 	private String pwd2; // the user needs to reset their password.
 
-
+	@Column(name="AssignForce_ID")
+	private Integer AssignForce_ID;
+	
+	
 	public BamUser() {
 		super();
 	}
@@ -99,6 +102,24 @@ public class BamUser {
 		this.phone2 = phone2;
 		this.skype = skype;
 		this.pwd2 = pwd2;
+	}
+
+	public BamUser(int userId, String fName, String mName, String lName, String email, String pwd, int role,
+			Batch batch, String phone, String phone2, String skype, String pwd2, Integer assignForce_ID) {
+		super();
+		this.userId = userId;
+		this.fName = fName;
+		this.mName = mName;
+		this.lName = lName;
+		this.email = email;
+		this.pwd = pwd;
+		this.role = role;
+		this.batch = batch;
+		this.phone = phone;
+		this.phone2 = phone2;
+		this.skype = skype;
+		this.pwd2 = pwd2;
+		AssignForce_ID = assignForce_ID;
 	}
 
 	public int getUserId() {
@@ -195,6 +216,14 @@ public class BamUser {
 
 	public void setPwd2(String pwd2) {
 		this.pwd2 = pwd2;
+	}
+
+	public Integer getAssignForce_ID() {
+		return AssignForce_ID;
+	}
+
+	public void setAssignForce_ID(Integer assignForce_ID) {
+		AssignForce_ID = assignForce_ID;
 	}
 
 	@Override

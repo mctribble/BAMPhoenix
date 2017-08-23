@@ -1,0 +1,64 @@
+<div class="jumbotron container1" ng-controller="dashboardController">
+	<div ng-init = "getData()"  ng-model="getData">
+		<div class="pan">
+		<h1 class="display-3">Welcome, {{user.fName}}</h1>
+		<p class="lead"> Pick up where you left off</p>
+		
+		Batch Status: <br>
+  			<select id="batchDropdown" ng-init="currentBatch(this)" class="styled-select blue semi-square" 
+  				ng-show="trainerHasBatch && batchCount > 1">
+  			</select>
+		<div ng-show="userHasBatch || batchCount == 1">{{message}}</div>	
+		
+ 		</div>
+		
+		<div class="row">
+		<div id="pan2" class="col-md-6 pan2">
+			<ul  ng-model="getData">
+				<li>First Name: {{user.fName}}</li>
+				<li>Last Name: {{user.lName}}</li>
+				<li>Current Batch Start Date: {{currentBatchStart1 | date: 'MM-dd-yyyy'}}</li>
+				<li>Current Batch End Date: {{currentBatchEnd1 | date: 'MM-dd-yyyy'}}</li>
+			</ul>
+		</div>
+		
+				
+		<div id="pan3" class="col-md-5 pan3">
+			<h2>Batch Week: {{weekNum + 1}}</h2>
+				<h3>Associates in batch:</h3>
+				<ul>
+				 <li ng-repeat="list in listNames">{{list.firstName}}&nbsp{{list.lastName}}</li>
+				</ul>
+		</div>
+		</div>
+		
+		
+		<div class="col-md-12" id="pan4" ng-init="returnMissed()">
+			<!-- Progress completed by day -->
+			<div ng-show="userHasBatch || trainerHasBatch && !loading">
+				Batch Progress By Day:
+				<div class="progress" >
+  					<div class="progress-bar progress-bar-striped active" role="progressbar"
+  							aria-valuemin="0" aria-valuemax="100" ng-style="{width: percent}">
+   					{{ percent }} Days Completed
+  					</div>
+				</div>
+			</div>
+			<div ng-show="userHasBatch || trainerHasBatch && !loading">
+				Batch Progress By Subtopic:
+				<div class="progress" >
+  					<div class="progress-bar progress-bar-striped active" role="progressbar"
+  						aria-valuemin="0" aria-valuemax="100" ng-style="{width: subPercent}">
+   						{{ subPercent }} Subtopics Completed/Cancelled
+  					</div>
+				</div>
+			</div>
+			<h3>Topics Missed<img ng-show="loading" src="static/img/loading.gif" id="loadingPic"></img></h3>
+			<p id="missedCount" ng-hide="loading">{{ count }} / {{ totalSub }} missed topics</p>
+			<ul class="mainList" id="mainList" ng-hide="loading">
+			</ul>
+		</div>
+		
+
+ </div>
+</div>
