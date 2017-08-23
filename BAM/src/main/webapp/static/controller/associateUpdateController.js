@@ -1,4 +1,4 @@
-app.controller("associateUpdateController", ['SessionService','$http', '$scope', function(SessionService, $http, $scope){
+app.controller("associateUpdateController", ['SessionService','$http', '$scope', '$rootScope', function(SessionService, $http, $scope, $rootScope){
 	
 	$scope.updateDisplay = false;	
 	
@@ -19,6 +19,9 @@ app.controller("associateUpdateController", ['SessionService','$http', '$scope',
 			$scope.updateDisplay = true;
 			$scope.updateMsg = 'Update Successful';
 			$scope.alertClass = 'alert alert-success';
+			SessionService.set("currentUser", $scope.users);
+			$rootScope.user = SessionService.get("currentUser");
+			
 		
 		}, function error(response){
 			$scope.updateDisplay = true;
