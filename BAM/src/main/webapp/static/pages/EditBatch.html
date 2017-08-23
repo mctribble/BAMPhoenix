@@ -86,7 +86,7 @@
 				<td ng-click="order = 'phone'" class="head">Main Phone</td>
 				<td ng-click="order = 'phone2'" class="head">Secondary Phone</td>
 				<td ng-click="order = 'skype'" class="head">Skype</td>
-				<td class="head">Drop</td>
+				<td class="head">Remove</td>
 			</tr>
 			<!-- ng repeat here to loop through associates in batch -->
 			<tr class="associate-row"
@@ -98,7 +98,7 @@
 				<td class="value mPhone">{{a.phone}}</td>
 				<td class="value sPhone">{{a.phone2}}</td>
 				<td class="value skype">{{a.skype}}</td>
-				<td class="value"><button ng-click="dropAssociate(a.userId)" class="btn" id="login-btn">Drop</button>
+				<button ng-click="remAssociate(a.userId)" class="btn" id="create-acc-btn">Remove</button></td>
 			</tr>
 
 		</table>
