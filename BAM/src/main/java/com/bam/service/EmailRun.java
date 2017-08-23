@@ -5,7 +5,10 @@ import com.bam.bean.BamUser;
 public class EmailRun implements Runnable{
 	private BamUser user;
 
-	public EmailRun() {}
+	public EmailRun() {
+		//Empty because of noargs constructor 
+		}
+	
 	
 	public BamUser getUser() {
 		return user;
@@ -19,6 +22,5 @@ public class EmailRun implements Runnable{
 	public void run() {
 		MailService.sendMail(user.getEmail(), user.getPwd());
 	}
-
 
 }
