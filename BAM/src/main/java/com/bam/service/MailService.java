@@ -22,8 +22,6 @@ public class MailService {
         final String EMAILPASSWORD = System.getenv("EMAIL_PASSWORD");
 		
 
-        final String USERNAME = "revabam@gmail.com";
-        final String PASSWORD = "testing123";
         String receiver= email; //user.getemail
         
         Properties props = new Properties();
@@ -35,13 +33,13 @@ public class MailService {
         Session session = Session.getInstance(props,
                   new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(USERNAME, PASSWORD);
+                        return new PasswordAuthentication(EMAILUSERNAME, EMAILPASSWORD);
                     }
                   });
         try {
 
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(USERNAME));
+            message.setFrom(new InternetAddress(EMAILUSERNAME));
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(receiver));
 
