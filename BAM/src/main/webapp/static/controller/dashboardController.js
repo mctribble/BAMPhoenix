@@ -252,14 +252,14 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
             		 */
 
 
-             		for(var j = 0; i < $scope.subTopics.length ; i++) {
-                		status= response.data[i].status.id;
+             		for(var j = 0; j < $scope.subTopics.length ; j++) {
+                		status= response.data[j].status.id;
 
                  		
                  		
                      		if(status == 4){
-                     			if(response.data[i].subtopicName.topic){
-                        			var topicName = response.data[i].subtopicName.topic.name;
+                     			if(response.data[j].subtopicName.topic){
+                        			var topicName = response.data[j].subtopicName.topic.name;
                      				var topicNameExists = false;
                      				
                      				for(k in $scope.topicArray){
