@@ -17,11 +17,13 @@ import com.bam.bean.CustomException;
 import com.bam.bean.Subtopic;
 import com.bam.bean.SubtopicName;
 import com.bam.bean.SubtopicStatus;
+import com.bam.bean.SubtopicType;
 import com.bam.logging.LoggerClass;
 import com.bam.repository.BatchRepository;
 import com.bam.repository.SubtopicNameRepository;
 import com.bam.repository.SubtopicRepository;
 import com.bam.repository.SubtopicStatusRepository;
+import com.bam.repository.SubtopicTypeRepository;
 
 @Transactional
 public class SubtopicService {
@@ -37,6 +39,9 @@ public class SubtopicService {
 	
 	@Autowired
 	SubtopicStatusRepository subtopicStatusRepository;
+	
+	@Autowired
+	SubtopicTypeRepository subtopicTypeRepository;
 	
 	public void addSubtopic(int subtopic, int batch) throws CustomException{
 		Logger logger = Logger.getLogger(LoggerClass.class);
@@ -117,5 +122,15 @@ public class SubtopicService {
 	public List<Subtopic> findByBatchId(int batchId, PageRequest pageRequest) {
 		return subtopicRepository.findByBatch(batchRepository.findById(batchId), pageRequest);
     }
+	
+	
+	
+	public SubtopicName getName(String name) {
+		return subtopicNameRepository.findByName(name);
+	}
+
+	public SubtopicType getType(int type){
+		return subtopicTypeRepository.findById(type);
+	}
 }
 
