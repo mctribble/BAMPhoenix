@@ -235,7 +235,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
             					$scope.completed += 1;
             				};
             			}else if($scope.userHasBatch){
-            				 response.data[i].status.id;
+            				var status = response.data[i].status.id;
                 				
             					if (status == 2 || status == 3){
             						$scope.completed += 1;
