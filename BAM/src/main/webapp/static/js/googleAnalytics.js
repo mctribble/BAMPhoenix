@@ -6,10 +6,12 @@
 	  $rootScope.$on('$routeChangeSuccess', function () {
 		  $window.ga('send', {
 		      'hitType': 'screenview',
-		      'appName' : 'My Example App',
+		      'appName' : 'bam',
 		      'screenName' : $location.url(),
 		      'hitCallback': function() {
-		    	  $analytics.pageTrack('/my/url');
+		    	  $analytics.pageTrack('/home');
+		    	  $analytics.pageTrack('/reset');
+		    	  $analytics.pageTrack('/calendar');
 		    	  $analytics.eventTrack('eventName');
 		    	  $analytics.eventTrack('eventName', {  category: 'category', label: 'label' });
 		      }
