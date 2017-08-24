@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-
 import com.bam.bean.CustomException;
 
 
@@ -42,9 +41,14 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
+<<<<<<< HEAD
 		} catch ( Throwable e) {
 			throw new CustomException(e);
 			
+=======
+		} catch (Throwable e) {
+			logger.error(e);
+>>>>>>> e16b94554591f5fa1e2477bbf3c0a2ec5a50386e
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
