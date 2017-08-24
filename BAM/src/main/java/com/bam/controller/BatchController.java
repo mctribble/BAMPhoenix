@@ -116,7 +116,6 @@ public class BatchController {
 	@RequestMapping(value = "BatchTypes", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<BatchType> getAllBatchTypes(){
-		System.out.println("BATCH TYPES: " + batchService.getAllBatchTypes());
 		return batchService.getAllBatchTypes();
 	}
 }
