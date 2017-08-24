@@ -90,7 +90,7 @@ app.controller(
 				//loop through array of response objects adding subtopics to the correct week and day arrays.
 				for(var i in response.data){
 					var topic = response.data[i];
-					newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopic_Name_Id);
+					newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopicNameId);
 				}
 				return newCurriculum;
 			})
@@ -153,7 +153,7 @@ app.controller(
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
 		$scope.newCurriculum = function(type){
 			//if the user provides a type, either they are ceating a new version with the latest version of an existing type, or creating a new type
-			if(type && $scope.template.meta.curriculumName != type){
+			if(type && ($scope.template.meta && $scope.template.meta.curriculumName != type)){
 				var typeExists = false;
 				//set the template to the latest version of the curriculum if it exists. otherwise create a new type
 				for(i in $scope.curricula){
@@ -210,6 +210,7 @@ app.controller(
 			for(var item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculumName){
 					$scope.curricula[item].versions.push($scope.displayedCurriculum);
+					
 					typeExists = true;
 				}
 			}
@@ -254,6 +255,7 @@ app.controller(
 			}).then(function(response){
 				var curricula = response.data;
 				//parse the response into the local (front end) json object format
+				
 				for(var i in curricula){
 					var curriculum = curricula[i];
 
@@ -263,15 +265,19 @@ app.controller(
 					for(var j in $scope.curricula){
 						var localCurricula = $scope.curricula[j];
 						//perform the check mentioned above
-						if(localCurricula.type == curriculum.curriculumName){
+						if($scope.curricula[j].type == curriculum.curriculumName){
+							//ensure the object at the required index exists before trying to overwrite it
+							while($scope.curricula[j].versions.length < (curriculum.curriculumVersion - 1)){
+								$scope.curricula[j].versions.push({});
+							}
+							
 							//raise the flag
 							curriculumTypeExists = true;
 							
 							//insert the curriculum into the existing curr type as a version of that type (as specified by the received object) 
 							delete curriculum.weeks;
 							var newCurriculum = {meta:curriculum, weeks:[]};
-							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 0, newCurriculum);
-							
+							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 1, newCurriculum);
 							break;
 						}
 					}
@@ -282,12 +288,20 @@ app.controller(
 						delete metaData.weeks;
 						var newCurriculum = {
 								type: curriculum.curriculumName,
-								versions: [{meta:metaData, weeks:[]}]
+								versions: []
 						};
+						
+						//ensure the object at the required index exists before trying to overwrite it
+						for(var i = 0; i < curriculum.curriculumVersion - 1; i++){
+							newCurriculum.versions.push({});
+						}
+						
+						newCurriculum.versions.splice(curriculum.curriculumVersion - 1, 1, {meta: metaData, weeks:[]});
 						$scope.curricula.push(newCurriculum);
 					}
 				}
-			});
+			}
+			);
 		}
 		
 		$scope.clearCurriculumView = function(){
@@ -344,12 +358,25 @@ app.controller(
 				//search topics for the matching type passed
 				for(i in $scope.topics){
 					if($scope.topics[i].name == parentTopic){
-						$scope.topics[i].subtopics.push(
-								{
-									id: $scope.topics[i].subtopics.length,
-									name: input
-								}
-						)
+						var newTopic = {
+								id: $scope.topics[i].subtopics.length,
+								name: input,
+								topic: {id:$scope.topics[i].id, name:parentTopic},
+								type: {id:1, name:"Lesson"}
+							}
+						//addthe subtopic locally
+						$scope.topics[i].subtopics.push(newTopic);
+						
+						//persist the subtopic to the db
+						$http({
+							method:'POST',
+							url: 'rest/api/v1/Subtopic/Add',
+							params:{
+								subtopicName: input,
+								topicId: $scope.topics[i].id + 1,
+								typeId: 1
+							}
+						});
 					}
 				}
 			}else{
@@ -359,6 +386,13 @@ app.controller(
 						subtopics: []
 				}
 				$scope.topics.push(newTopic);
+				$http({
+					method: 'POST',
+					url: 'rest/api/v1/Topic/Add',
+					params: {
+						name:newTopic.name
+					}
+				});
 			}
 		};
 		
@@ -368,7 +402,7 @@ app.controller(
 
 		//load the topic pool on page load
 		$scope.getTopicPool();
-		
+
 		//get the curricula meta data on page load
 		$scope.getCurricula()
 		//then load the first version of each curriculum type
@@ -387,6 +421,7 @@ app.controller(
 			}
 		})
 		;
+
 
 		/* END CONTROLLER BODY - EXECUTED ON PAGE LOAD */
 	}

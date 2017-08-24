@@ -11,13 +11,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bam.bean.Batch;
+import com.bam.bean.CustomException;
 import com.bam.bean.Subtopic;
 import com.bam.bean.SubtopicName;
 import com.bam.bean.SubtopicStatus;
+import com.bam.bean.SubtopicType;
 import com.bam.repository.BatchRepository;
 import com.bam.repository.SubtopicNameRepository;
 import com.bam.repository.SubtopicRepository;
 import com.bam.repository.SubtopicStatusRepository;
+import com.bam.repository.SubtopicTypeRepository;
 
 @Transactional
 public class SubtopicService {
@@ -34,7 +37,10 @@ public class SubtopicService {
 	@Autowired
 	SubtopicStatusRepository subtopicStatusRepository;
 	
-	public void addSubtopic(int subtopic, int batch){
+	@Autowired
+	SubtopicTypeRepository subtopicTypeRepository;
+	
+	public void addSubtopic(int subtopic, int batch) throws CustomException{
 		Subtopic s = new Subtopic();
 		Batch b;
 		SubtopicName st;
@@ -122,4 +128,31 @@ public class SubtopicService {
 	public List<Subtopic> findByBatchId(int batchId, PageRequest pageRequest) {
 		return subtopicRepository.findByBatch(batchRepository.findById(batchId), pageRequest);
     }
+    
+	/**
+	 * 
+	 * @param String name
+	 * @return SubtopicName
+	 */
+	public SubtopicName getSubtopicName(String name) {
+		return subtopicNameRepository.findByName(name);
+	}
+
+	/**
+	 * 
+	 * @param int type
+	 * @return SubtopicType
+	 */
+	public SubtopicType getSubtopicType(int type){
+		return subtopicTypeRepository.findById(type);
+	}
+	
+	/**
+	 * 
+	 * @param SubtopicName subtopicName
+	 * @author Brian McKalip
+	 */
+	public void addOrUpdateSubtopicName(SubtopicName subtopicName){
+		subtopicNameRepository.save(subtopicName);
+	}
 }
