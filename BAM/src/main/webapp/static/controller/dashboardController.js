@@ -2,8 +2,8 @@
  * @author Sarah Kummerfeldt 
  * @author Kosiba Oshodi-Glover
  */
-app.controller('dashboardController', function($http, $scope, SessionService) {
-	
+app.controller('dashboardController', function($http, $scope, $analytics, SessionService) {
+	 $analytics.pageTrack('/home');
 	window.onload = function() {
 	    if(!window.location.hash) {
 	        window.location = window.location + '#loaded';
