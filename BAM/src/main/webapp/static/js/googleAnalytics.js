@@ -2,7 +2,7 @@
  * @Author: Duncan Hayward 
  * Adds google Analytics to site
  */
-  app.controller('SampleCtrl', function ($rootScope, $location, $window, $analytics) {
+  app.controller('analyticsCtrl', function ($rootScope, $location, $window, $analytics) {
 	  $rootScope.$on('$routeChangeSuccess', function () {
 		  $window.ga('send', {
 		      'hitType': 'screenview',

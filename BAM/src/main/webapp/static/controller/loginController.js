@@ -1,6 +1,7 @@
 app.controller('loginController', function($rootScope, $window, $scope, $location, $analytics, $http, SessionService) {
 	$(document).ready(function(){
 		$(".navbar").hide();
+		SessionService.remove();
 	});
 	$rootScope.userRole;
 	$scope.msg;
