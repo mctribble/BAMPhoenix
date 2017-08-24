@@ -4,7 +4,7 @@
  */
 app.controller("subTopicController",function($scope, SessionService, $location, $compile, $http){
 	
-	/*set batchId with the id of the currentBatch if it exists else use the trainerBatch*/
+	//set batchId with the id of the currentBatch if it exists else use the trainerBatch
 	var batchId;
 	if(SessionService.get("currentBatch"))
 	{
@@ -17,10 +17,10 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 		SessionService.set("currentBatchName", SessionService.get("trainerBatch").name);
 	}
 	
-	/*Check if currentBatch is set before using it.*/
+	//Check if currentBatch is set before using it.
 	if(batchId) 
 	{
-		/*get the batch from the server by the id.*/
+		//get the batch from the server by the id.
 		$http({
 			url: "rest/api/v1/Batches/ById",
 			method: "GET",
@@ -38,23 +38,19 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 	$scope.getTopicPool = function(){
 		$http({
 			url: "rest/api/v1/Curriculum/TopicPool",
-			method: "GET", //Getting the topics
+			method: "GET", //Getting the tooics
 			
 		}).then(function(response){
 			var topics = response.data;
 			$scope.topics = topics;
-
+			
+			var totalTopics = 0;
 			var unqiueTopics = new Set();
 			var topicMap = new Map();
 			
 			substring = ":null";
 
 			var subtopicArray = [];
-			
-			/*Adding a topic to the set in order to prevent duplicates. 
-			 * Then mapping the subtopic to the corresponding topic.
-			 * Author: Jaydeep Bhatia */
-			
 			for(i in topics){
 								
 				if(JSON.stringify(topics[i]).includes(substring) == false)
@@ -65,22 +61,31 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 					var array = [];
 					array.push(topics[i].name);
 					topicMap.set(topics[i].topic.name, array);
-
+					
+					totalTopics++;
 					}else{
 						var array = topicMap.get(topics[i].topic.name);
 						topicMap.delete(topics[i].topic.name);
 						array.push(topics[i].name);
 						topicMap.set(topics[i].topic.name,array);
-
+						totalTopics++;
+					
 					}
 					}
 		
 			}
 			
+			var countT =0;
+			for (var [key, value] of topicMap) {
+				  countT += value.length;				  
+				}
+
+			//parse the response into the local (front end) json object format
+			
 					var eventz = angular.element( document.querySelector( '#events' ));
 					var topicnameevent = angular.element( document.querySelector( '#topicname' ));
 
-        			/*Dynamically adding topics to the drop-down menu*/
+        			//topic
         			for(topic of unqiueTopics){
         				
         				var top = angular.element("<option>" + topic + "</option>");
@@ -90,26 +95,26 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
         				
         			}        			 
 
-        		/*Getting the value of the element by id from the topics drop-down.*/
+        			$scope.utopia = unqiueTopics;
+
         		$('#topicname').change(function () {
-        			var selection = this.value; //selected topic = this.value 
-        			$scope.selectedTopic = selection; //anywhere in the controller       			       			
+        			var selection = this.value;
+        			$scope.selectedTopic = selection;        			       			
         			
-        			eventz.empty(); //id for the subtopic dropdown menu. 
-        							//The dropdown menu is cleared so it won't contain the other subtopics unrelated to the selected topic.  
+        			eventz.empty();
+
+        			var loop = Array.from(topicMap).length;
         			
-        			var evnts = 0; 
-        					/*adding subtopics to the subtopics drop-down menu*/
-        					for(subtopic of Array.from(topicMap.get(selection))){ //selection(selected topic) referencing topicMap(which is a key value pair with key = topics value = array of subtopics)
-        																			//and array is getting array of subtopics from the topic map. 
-        	        			var ev = angular.element("<option id = events"+ evnts++ +">" + subtopic + "</option>"); //adding subtopics to the dropdown menu. 
-        	    				var eve = $compile(ev)($scope); 
+        			var evnts = 0;
+        					//adding subtopics to the subtopics dropdown menu
+        					for(subtopic of Array.from(topicMap.get(selection))){
+        	        			var ev = angular.element("<option id = events"+ evnts++ +">" + subtopic + "</option>");
+        	    				var eve = $compile(ev)($scope);
         	    				eventz.append(eve);
-        					} //selection -> 
+        					}
         					
         					$scope.selectedSubtopic = angular.element( document.querySelector( '#events0'))[0].innerText;
         					
-        					/*Getting topic and subtopic id based on the drop-down selection.*/
         					for(i in topics){
                     			if($scope.selectedSubtopic == topics[i].name){
                     				$scope.topic_id = topics[i].topic.id;
@@ -118,12 +123,12 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
                     		}       		
         		});
         		
-        		/*Getting the value of the element by id from the subtopics drop-down.*/
+        		
+        		
         		$('#events').change(function () {
         			var selection = this.value;
         			$scope.selectedSubtopic = selection;
-        			
-        			/*Getting topic and subtopic id based on the drop-down selection.*/
+
             		for(i in topics){
 
             			if($scope.selectedSubtopic == topics[i].name){
@@ -135,7 +140,6 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
         			
         		});
 
-        		/*Getting the value of the element by id from the date menu.*/
         		$('#startDate').change(function () {
         			var selection = this.value;
         			$scope.date = selection;
@@ -144,7 +148,7 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 			});
 		}
 
-	/*load the topic pool on page load*/
+	//load the topic pool on page load
 	$scope.getTopicPool();
 
 	/*Creating the objects that are needed for subtopic object 
@@ -189,7 +193,7 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 			method: 'POST',
 			data : subtopic
 		}).then(function(response){
-			 $scope.subtopic.batch = batchId; //reponse.data is a JavaScript object (automatically parsed from the JSON from the server)
+			 $scope.subtopic.batch = batchId; //reponse.data is a javascript object (automatically parsed from the JSON from the server)
 			 $scope.subtopic.name = subtopicName.name;
 			 $scope.subtopic.status = 1;
 		},function(response) {
