@@ -2,8 +2,9 @@
  * @author Sarah Kummerfeldt 
  * @author Kosiba Oshodi-Glover
  */
-app.controller('dashboardController', function($http, $scope, SessionService) {
-	
+
+app.controller('dashboardController', function($http, $scope, $analytics, SessionService, $rootScope) {
+	 $analytics.pageTrack('/home');
 	window.onload = function() {
 	    if(!window.location.hash) {
 	        window.location = window.location + '#loaded';
@@ -11,33 +12,32 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 	    }
 	}
 	
+	/**
+	 * rootScope used to pass a variable between controllers
+	 */
+	$rootScope.changedBatchId;
 	
 	$(".navbar").show();
 	$scope.user;
 	var batchId;
-
 	/**
 	 * function that will return dates, list of associates, status, and name of current batch
 	 * @param getData
 	 * @return weekNum returns an int 
 	 */
 	$scope.getData = function(start, end, idOfBatch, numberOfHits) {
-		
 		/**
 		 * Sets the batch id to retrieve batch info for current user or trainer.
 		 */
-		if(SessionService.get("currentUser").batch)
-		{
+		if(SessionService.get("currentUser").batch){
 			batchId = SessionService.get("currentUser").batch.id;
 			SessionService.set("currentBatchName", SessionService.get("currentUser").batch.name);
 			
-		}else if(SessionService.get("trainerBatch"))
-		{
+		}else if(SessionService.get("trainerBatch")){
 			batchId = SessionService.get("trainerBatch").id;
 			SessionService.set("currentBatchName", SessionService.get("trainerBatch").name);
 			
-		}else
-		{
+		}else{
 			batchId = 3;
 		} 
 		
@@ -48,7 +48,6 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 		$scope.noBatch = SessionService.get("currentUser").userId;
 		$scope.trainerHasBatch = SessionService.get("trainerBatch");
 		$scope.userHasBatch = SessionService.get("currentUser").batch;
-		
 		
 		if($scope.trainerHasBatch){
 			var currentDate = new Date().getTime();
@@ -99,8 +98,10 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				$scope.usersInBatch = response.data
 				
 				$scope.listNames = [];
+
 			    		var firstNames= [];
 						var lastNames= [];
+
 			    
 				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
@@ -156,8 +157,10 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				$scope.usersInBatch = response.data
 				
 				$scope.listNames = [];
+
 			    		var firstNames= [];
 						var lastNames= [];
+
 			    
 				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
@@ -184,8 +187,19 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				$scope.listNames = 'N/A';
 				$scope.percent = 'N/A';
 			}
+		} else if (!$scope.trainerHasBatch || !scope.userHasBatch){
+			$scope.message = 'You have no current batches';
+			$scope.currentBatchStart1 = 'N/A';
+			$scope.currentBatchEnd1 = 'N/A';
+			$scope.weekNum = 'N/A';
+			$scope.listNames = 'N/A';
+			$scope.percent = 'N/A';
 		}
 	}
+	
+	
+		
+	
 	
 		var currentDate = new Date().getTime();
 		
@@ -205,16 +219,22 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 		            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
 		             	if(selectedInfo == undefined && $scope.hitCount == 0){
 		             		url ="rest/api/v1/Calendar/Subtopics?batchId="+ SessionService.get("trainerBatch").id;
+		             		$rootScope.changedBatchId = SessionService.get("trainerBatch").id;
 		             	} else if(selectedInfo != undefined){
 		             		url ="rest/api/v1/Calendar/Subtopics?batchId="+ selectedInfo;
+		             		$rootScope.changedBatchId = selectedInfo;
 		             	}
 		             	
 		            }
-			 	 	
-	
 
-	            $scope.loading = true;
+			 	 
+			 	if($scope.trainerHasBatch){
+			 		$scope.loading = true;
+			 	} else {
+			 		$scope.loading = false;
+			 	};
 	            
+			 	if($scope.loading){
          		$http({
              		method : "GET",
              		url : url
@@ -253,6 +273,8 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 
              		for(var i = 0; i < $scope.subTopics.length ; i++) {
                 		var status= response.data[i].status.id;
+
+
                  		
                  		
                      		if(status == 4){
@@ -338,7 +360,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
              	}).finally(function() {
             		$scope.loading = false;
             	});
-         	
+			 }
 		}
 		
 			 
@@ -358,7 +380,9 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 			})
 			.then(function success(response){
 				$scope.batchCount = 0;
+
 				for(var m = 0; m < response.data.length; m++){
+
 					if(response.data[m].trainer.userId == SessionService.get("currentUser").userId){
 						if(currentDate < response.data[m].endDate && currentDate > response.data[m].startDate){
 							var batchDropdown = document.getElementById("batchDropdown");
@@ -384,6 +408,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 					$scope.$apply(function(){ 
 						
 						for(var n = 0; n < response.data.length; n++){
+
 							if(response.data[n].id == $scope.changeInfo){
 						/**
 	            		 * Populates the day progress bar by days completed when new option selected
@@ -411,6 +436,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 							}
 						}
 					});
+					$rootScope.changedBatchId = $scope.changeInfo;
 					$scope.returnMissed($scope.changeInfo);
 					$scope.getData(startDate, endDate, $scope.changeInfo, $scope.hitCount);
 				});
