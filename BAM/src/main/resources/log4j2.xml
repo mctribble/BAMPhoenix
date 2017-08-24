@@ -5,7 +5,7 @@
 			url="https://prd-p-9hp2hbcv2cnv.cloud.splunk.com:8088/services/collector"
 			token="32C0F7FA-FAF9-4394-86A9-04900224EEE5"
 			disableCertificateValidation="true">
-			<PatternLayout pattern="%m" />
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
 		</Http>
 		<File name="FILE" fileName="/log4j_logs/BAM_Phoenix_log.html">
 			<HTMLLayout charset="UTF-8" title="BAM Phoenix Log" locationInfo="true" />
@@ -18,3 +18,11 @@
 		</Root>
 	</Loggers>
 </Configuration>
+
+<!-- Let break it down :(Conversion Pattern)
+
+%d{yyyy-MM-dd HH:mm:ss} = Date and time format
+%-5p = The logging priority, like DEBUG or ERROR. The -5 is optional, for the pretty print format.
+%c{1} = The logging name we set via getLogger()
+%L = The line number from where the logging request.
+%m%n = The message to log and line break. -->
