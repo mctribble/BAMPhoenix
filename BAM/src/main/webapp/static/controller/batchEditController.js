@@ -8,7 +8,7 @@ app.controller("batchEditController",function($rootScope, $scope, SessionService
 		SessionService.set("currentBatchName", SessionService.get("currentBatch").name);
 	}else
 	{
-		batchId = SessionService.get("trainerBatch").id; //if currentBatch is not set use the trainerBatch's id
+		batchId = $rootScope.changedBatchId; //if currentBatch is not set use the trainerBatch's id
 		SessionService.set("currentBatchName", SessionService.get("trainerBatch").name);
 	}
 	

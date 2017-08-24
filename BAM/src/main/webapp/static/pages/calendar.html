@@ -3,7 +3,7 @@
 
 <ul class="nav nav-tabs" ng-show="user.role>=2">
 
-	<li class="nav-link active"><a href="#/home">Calendar</a></li>
+	<li class="nav-link active"><a href="#/calendar">Calendar</a></li>
 	<li class="nav-link"><a href="#/associates">View Associates</a></li>
 	<li class="nav-link"><a href="#/editBatch" >Edit Batch</a></li>
 
@@ -34,7 +34,6 @@
 					ng-model="searchDate" ng-keyup="changeDateKeyPress($event)" />
 			</div>
 			<button class="btn btn-warning" ng-click="changeDate()">Search</button>
-			<button class="btn btn-primary" ng-click="currentBatch()" ng-show="myBatchButton">My Batch</button>
 		</div>
 		<br>
 		<div class="well">

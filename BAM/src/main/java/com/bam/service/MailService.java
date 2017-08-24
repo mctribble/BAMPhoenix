@@ -10,19 +10,19 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.bam.bean.BamUser;
+
+import com.bam.bean.CustomException;
 
 public class MailService {
 
 	public static void sendMail(String email, String newPassword) {
+		
+		
 
-
-		//replace these with environtment vairables
-        final String username = "revabam@gmail.com";
-        final String password = "testing123";
+        final String USERNAME = "revabam@gmail.com";
+        final String PASSWORD = "testing123";
         String receiver= email; //user.getemail
         
-        Properties pop = new Properties();
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -32,32 +32,34 @@ public class MailService {
         Session session = Session.getInstance(props,
                   new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(USERNAME, PASSWORD);
                     }
                   });
         try {
 
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
+            message.setFrom(new InternetAddress(USERNAME));
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(receiver));
             message.setSubject("Recover Password");
-  
-            message.setText("Your temporary password is " + newPassword  + " " + " Feel free to click the following link login \n" + " "+
-                    "Login Page: http://localhost:8085/BAM/#/");            
-            
-//            + ", and your username is" +
-//            " " + email + ". Feel free to click the following link to set your own! \n"
-//                + "Password Reset: http://localhost:7001/PeekABooERS/initiallogin.html"
+            message.setText("Hi! Your New temporary password is: \n " + newPassword + "\n"  + "" + " "+
+                    "\n" + "Upon Logging in, please click the dropdown menu where your name is located and select reset password to set" + " "
+                            + "your password to your convience. \n" + "" + "\n Never show or give your password to anyone to avoid your account from being compromised. \n" + ""+ "\n Regards, \n Revature Team");
+
 
             Transport.send(message);
             
 
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+				try {
+					throw new CustomException(e);
+				} catch (CustomException e1) {
+					;
+				}
+			} 
         }
 
 
     }
 
-}
+

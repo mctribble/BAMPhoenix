@@ -2,20 +2,22 @@ package com.bam.service;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bam.bean.Batch;
+import com.bam.bean.CustomException;
 import com.bam.bean.Subtopic;
 import com.bam.bean.SubtopicName;
 import com.bam.bean.SubtopicStatus;
+import com.bam.logging.LoggerClass;
 import com.bam.repository.BatchRepository;
 import com.bam.repository.SubtopicNameRepository;
 import com.bam.repository.SubtopicRepository;
@@ -36,8 +38,11 @@ public class SubtopicService {
 	@Autowired
 	SubtopicStatusRepository subtopicStatusRepository;
 	
-	public void addSubtopic(int subtopic, int batch){
+	public void addSubtopic(int subtopic, int batch) throws CustomException{
+		Logger logger = Logger.getLogger(LoggerClass.class);
+
 		Subtopic s = new Subtopic();
+
 		Batch b;
 		SubtopicName st;
 		SubtopicStatus ss;
@@ -46,8 +51,8 @@ public class SubtopicService {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			date = dateFormat.parse("23/09/2017");
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (ParseException e) {
+			logger.error(e);
 		}
 		long time = date.getTime();
 		Timestamp ts = new Timestamp(time);
@@ -80,9 +85,21 @@ public class SubtopicService {
 		return subtopicStatusRepository.findByName(name);
 	}
 
-	public Page<Subtopic> findAll(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * Service method to return the number of Subtopics by matching their ids with
+	 * the batchId.
+	 * 
+	 * @param batchId(int)
+	 * @return number(long) of Subtopics
+	 * 
+	 * @author Michael Garza, Gary LaMountain
+	 */
+	public Long getNumberOfSubtopics(int batchId){
+		return subtopicRepository.countSubtopicsByBatchId(batchId);
+  }
+
+	public List<SubtopicName> getAllSubtopics(){
+		return subtopicNameRepository.findAll();
 	}
 
 	/**
@@ -101,3 +118,4 @@ public class SubtopicService {
 		return subtopicRepository.findByBatch(batchRepository.findById(batchId), pageRequest);
     }
 }
+

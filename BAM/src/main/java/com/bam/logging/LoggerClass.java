@@ -43,7 +43,7 @@ public class LoggerClass {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
 			
-			e.printStackTrace();
+			logger.error(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -55,7 +55,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));	
 	}
@@ -67,7 +67,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			e.printStackTrace();
+			logger.error(e);
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -79,7 +79,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			e.printStackTrace();
+			logger.error(e);
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -91,7 +91,33 @@ public class LoggerClass {
 	 * @author Jonathan Layssard
 	 */
 	@Around("execution(* com.bam.service.CurriculumService.getAllCurriculum(..))")
-	public void hijackGetAllCurriculum(ProceedingJoinPoint jp)throws Throwable{
+	public void hijackGetAllCurriculum(ProceedingJoinPoint jp)throws CustomException{
+		logger.info(intercepted + jp.getSignature().getName());
+		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
+		try {
+			logger.info(jp.proceed());
+		} catch (Throwable e) {
+			logger.error(e);
+		}
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
+	}
+	
+	/**
+	 * Logging methods from the EmailRun Class
+	 * getUser()
+	 * setUser()
+	 * @author Jonathan Layssard
+	 */
+	@Around("execution(* com.bam.service.EmailRun.getUser(..))")
+	public void hijackGetUser(ProceedingJoinPoint jp)throws Throwable{
+		logger.info(intercepted + jp.getSignature().getName());
+		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
+		logger.info(jp.proceed());
+		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
+	}
+	
+	@Around("execution(* com.bam.service.EmailRun.setUser(..))")
+	public void hijackSetUser(ProceedingJoinPoint jp)throws Throwable{
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		logger.info(jp.proceed());
@@ -111,7 +137,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -128,7 +154,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -149,7 +175,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			e.printStackTrace();
+			logger.error(e);
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -161,7 +187,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -174,7 +200,7 @@ public class LoggerClass {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
 			
-			e.printStackTrace();
+			logger.error(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -186,7 +212,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			e.printStackTrace();
+			logger.error(e);
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -198,8 +224,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -220,8 +245,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -233,8 +257,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -246,8 +269,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -259,8 +281,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -272,8 +293,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -299,8 +319,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -312,8 +331,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -325,8 +343,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -338,8 +355,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -351,25 +367,25 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
+
 	@Around("execution(* com.bam.service.UsersDetailsService.findByRole(..))")
-	public void hijackFindByRole(ProceedingJoinPoint jp)throws CustomException{
+	public void hijackFindByRole(ProceedingJoinPoint jp)throws CustomException {
 		logger.info(intercepted + jp.getSignature().getName());
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
+
 	@Around("execution(* com.bam.service.UsersDetailsService.findUserById(..))")
 	public void hijackFindUserById(ProceedingJoinPoint jp)throws CustomException{
 		logger.info(intercepted + jp.getSignature().getName());
@@ -377,11 +393,11 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
+
 
 	@Around("execution(* com.bam.service.UsersDetailsService.findUserByEmail(..))")
 	public void hijackFindUserByEmail(ProceedingJoinPoint jp)throws CustomException{
@@ -390,12 +406,12 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
+
 	@Around("execution(* com.bam.service.UsersDetailsService.findUserInBatch(..))")
 	public void hijackFindUserInBatch(ProceedingJoinPoint jp)throws CustomException{
 		logger.info(intercepted + jp.getSignature().getName());
@@ -403,12 +419,12 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		} 
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
   
+
 	@Around("execution(* com.bam.service.UsersDetailsService.findUserNotInBatch(..))")
 	public void hijackFindUserNotInBatch(ProceedingJoinPoint jp)throws CustomException{
 		logger.info(intercepted + jp.getSignature().getName());
@@ -416,8 +432,8 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			logger.error(e);
 		}
 		logger.info(dataRequest +simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}

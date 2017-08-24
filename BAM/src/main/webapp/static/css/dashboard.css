@@ -11,7 +11,7 @@
 
 .pan{
 	width: auto;
-    background-color: rgba(243, 93, 10, 0.88);
+    background-color: rgba(243, 93, 10, .95);
     padding: 50px;
     margin: 10px;
     border-radius: 7px;
@@ -27,6 +27,18 @@ ul.listTitle{
 
 li.listItem{
 	font-weight: normal;
+}
+	
+.styled-select {
+   height: 29px;
+   overflow: hidden;
+   width: 240px;
+}
+
+.semi-square {
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
 }
 
 ul {
@@ -51,9 +63,30 @@ li {
 	margin-top:10px!important;
 }
 
+.btn-primary {
+	background-color:#324176;
+	border-color: #9692b8;
+}
+
+.smallFont{
+	font-size: small;
+	text-align: right;
+	color: #324176;
+}
+
+.myAttribute:hover{
+	text-decoration: none;
+	color: #324176;
+}
+
+.myAttribute {
+	text-decoration: none;
+	color: white;
+}
+
 #pan2{
 	width: auto;
-    background-color: rgba(50, 65, 118, .9);
+    background-color: rgba(50, 65, 118, .95);
     margin: 15px;
     padding: 15px;
     border-radius: 7px;
@@ -65,7 +98,7 @@ li {
 
 #pan4{
 	width: auto;
-    background-color: rgba(50, 65, 118, .9);
+    background-color: rgba(50, 65, 118, .95);
     margin: 15px;
     padding: 15px;
     border-radius: 7px;
@@ -77,7 +110,7 @@ li {
 
 #pan3{
 	width: auto;
-    background-color: rgba(50, 65, 118, .9);
+    background-color: rgba(50, 65, 118, .95);
     float: right;
 	margin: 15px;
     padding: 15px;
@@ -89,7 +122,7 @@ li {
 }
 
 #progress{
-    background-color:rgba(50, 65, 118, .9);
+    background-color:rgba(50, 65, 118, .95);
     padding-top: 10px;
     padding-bottom: 5px;
     padding-left: 4px;

@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,22 +17,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.bean.Batch;
+import com.bam.logging.LoggerClass;
+import com.bam.service.BamUserService;
 import com.bam.service.BatchService;
-import com.bam.service.UsersDetailsService;
 
 @RestController
 @RequestMapping(value = "/api/v1/Batches/")
 public class BatchController {
 
-	
-	private final static String EMAIL = "email";
+	private static final Logger logger = Logger.getLogger(LoggerClass.class);
+	private static final String EMAIL = "email";
 	
 	@Autowired
 	BatchService batchService;
 
 	@Autowired
-
-	UsersDetailsService bamUserService;
+	BamUserService bamUserService;
 
 
 	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
@@ -97,7 +98,7 @@ public class BatchController {
 		try {
 			currentBatch = new ObjectMapper().readValue(jsonObject, Batch.class);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		
 		batchService.addOrUpdateBatch(currentBatch);

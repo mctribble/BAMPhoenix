@@ -9,6 +9,21 @@ var fixedstart=[];
 
 app.controller('batchesAllController', function($scope, SessionService, $rootScope, $location, $http,$filter)
 {	
+	
+	$scope.syncBatchesWithAssignForce = function(){
+		
+		$scope.currentlyLoading = true;
+		
+		$http({
+			url: 'rest/refreshBatches',
+			method: 'GET'
+		}).then(function success(response){
+			$scope.currentlyLoading = false;
+		}, function error(response){
+			$scope.currentlyLoading = false;
+		})
+	}
+	
 	$scope.msg;
 	$scope.getBatchesAll = function(){
 		
