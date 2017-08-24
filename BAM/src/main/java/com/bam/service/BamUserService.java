@@ -61,13 +61,13 @@ public class BamUserService {
 	 /*
       *	Author: Adeo Salam
 	  */
-	public void recoverE(BamUser user) {
-		EmailRun er = new EmailRun();
-		
-		er.setUser(user);
-		Thread th = new Thread(er);
-		th.start();
-	}
+	public void recoverE(BamUser user, String unhashedPwd) {		
+ 		EmailRun er = new EmailRun();		
+ 		user.setPwd(unhashedPwd);		
+ 		er.setUser(user);		
+ 		Thread th = new Thread(er);		
+ 		th.start();		
+ 	}
 	
 	/**
 	 * Service method for calling spring data repository method. Finds user with given firstname and lastname.
