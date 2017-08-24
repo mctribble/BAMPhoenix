@@ -42,6 +42,7 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
+			
 			logger.error(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
