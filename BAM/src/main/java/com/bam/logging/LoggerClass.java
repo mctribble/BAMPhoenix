@@ -8,14 +8,11 @@ import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.stereotype.Component;
-
 import com.bam.bean.CustomException;
 
 
 
 @Aspect
-@Component
 public class LoggerClass {
 	
 	//Created Logger for Intercepting Methods and logging that Information
