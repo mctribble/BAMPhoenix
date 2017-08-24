@@ -60,7 +60,7 @@ public class MailService {
 				try {
 					throw new CustomException(e);
 				} catch (CustomException e1) {
-					logger.error(e1);
+					logger.info("Error:"+ e1);
 				}
 			} 
         }
