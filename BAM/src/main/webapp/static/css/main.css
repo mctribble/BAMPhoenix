@@ -251,7 +251,9 @@ label::before {
 }
 */
 /***** 4.0 TABLES *****/
-
+.table td{
+	cursor: pointer;
+}
 /* Editor: Joseph Nguyen
 		Modified colors to be easier on the eyes.
 */

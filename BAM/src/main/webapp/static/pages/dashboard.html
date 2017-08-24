@@ -34,14 +34,10 @@
 		
 				
 		<div id="pan3" class="col-md-5 pan3">
-<<<<<<< HEAD
-			<h2>Batch Week: {{weekNum}}</h2>
-				<h3>Associates in batch:</h3>
-=======
+
 			<h2 ng-hide="!trainerHasBatch">Batch Week: {{weekNum + 1}}</h2>
 			<h2 ng-show=!trainerHasBatch>Batch Week: {{weekNum}}</h2>
 				<h3 ng-hide="!trainerHasBatch">Associates in batch:</h3>
->>>>>>> 4d03aaf2b56fa579b9d8a6a7851ff0f2b3cb49b1
 				<ul>
 				 <li ng-repeat="list in listNames">{{list.firstName}}&nbsp{{list.lastName}}</li>
 				</ul>

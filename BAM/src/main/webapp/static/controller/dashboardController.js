@@ -10,14 +10,6 @@ app.controller('dashboardController', function($http, $scope, SessionService, $l
 	        window.location.reload();
 	    }
 	}
-<<<<<<< HEAD
-
-	$(".navbar").show();
-	$scope.user;
-	
-	var batchId;
-=======
->>>>>>> 4d03aaf2b56fa579b9d8a6a7851ff0f2b3cb49b1
 	
 	/**
 	 * rootScope used to pass a variable between controllers
@@ -149,12 +141,7 @@ app.controller('dashboardController', function($http, $scope, SessionService, $l
 				}
 				
 				var dif = weeksBetween($scope.currentBatchStart1, currentDate);
-<<<<<<< HEAD
 				$scope.weekNum = dif + 1;
-				
-=======
-				$scope.weekNum = dif;
->>>>>>> 4d03aaf2b56fa579b9d8a6a7851ff0f2b3cb49b1
 						
 			$http({
 				url: "rest/api/v1/Users/InBatch",

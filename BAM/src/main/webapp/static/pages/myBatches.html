@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs">
 	<li class="nav-link active"><a href="#/myBatches">Current Batches</a></li>
-	<li class="nav-link"><a href="#/batchesPast">Past</a></li>
-	<li class="nav-link"><a href="#/batchesFuture">Future</a></li>
+	<li class="nav-link"><a href="#/batchesPast">Past Batches</a></li>
+	<li class="nav-link"><a href="#/batchesFuture">Future Batches</a></li>
 </ul>
 <br>
 <h3 style="text-align: center;">My Batches</h3>
@@ -17,7 +17,7 @@
 		<th>End Date</th>
 	</tr>
 	<tr
-		ng-repeat="batch in inMyBatch"
+		ng-repeat="batch in inMyBatch | orderBy:order | filter:searchBox"
 		ng-click="goToBatch(batch)">
 		<td>{{batch.batchNames}}</td>
 		<td>{{batch.trainerFNames}} {{batch.trainerLNames}}</td>
