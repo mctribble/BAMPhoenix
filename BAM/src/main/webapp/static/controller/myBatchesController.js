@@ -5,7 +5,9 @@ app.controller('myBatchesController', function($scope, SessionService, $rootScop
 {
 	$scope.msg;
 	
+	var batchId;
 	batchId = SessionService.get("trainerBatch").id;
+	console.log(batchId);
 	
 	var currentDate = new Date().getTime();
 	

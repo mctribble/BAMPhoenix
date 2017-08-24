@@ -26,7 +26,26 @@
 
 		  //This is what sets the batch id to what batch the trainer wants to view from the dashboard
 		  	//if they have multiple current batches
-		  var thisBatchId = $rootScope.changedBatchId
+		  var currentDate = new Date();
+		  var thisBatchId = SessionService.get("trainerBatch").id;
+		  
+		  if($rootScope.changedBatchId){
+			  SessionService.unset("currentBatch");
+			  thisBatchId = $rootScope.changedBatchId;
+			  delete $rootScope.changedBatchId;
+			  
+		  }
+		  
+		  if(SessionService.get("currentBatch")){
+			  if(SessionService.get("currentBatch").endDate > currentDate){
+				  if(SessionService.get("currentBatch").trainer.id == SessionService.get("currentUser").id){
+					  SesssionService.set("trainerBatch", SessionService.get("currentBatch"));
+					  thisBatchId = SessionService.get("trainerBatch").id;
+					  SessionService.unset("currentBatch");
+				  }
+			 }
+			  
+		  }
 		  
 	  	// Varibles set for the use of adding day,month,year,to the Date
 		// attribute of a calendar.
