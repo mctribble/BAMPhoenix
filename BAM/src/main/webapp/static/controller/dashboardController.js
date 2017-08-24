@@ -116,21 +116,21 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				}
 			})
 		}else if($scope.userHasBatch){
-			 currentDate = new Date().getTime();
+			 var currentDate2 = new Date().getTime();
 			
 			/**
 			 * Populates the day progress bar by days completed
 			 */
-			 startDate = SessionService.get("currentUser").batch.startDate;
-			 endDate = SessionService.get("currentUser").batch.endDate;
+			 var startDate2 = SessionService.get("currentUser").batch.startDate;
+			 var endDate2 = SessionService.get("currentUser").batch.endDate;
 			
-			 daysComplete = currentDate - startDate;
-			 totalDays = endDate - startDate;
+			 var daysCompleted = currentDate2 - startDate2;
+			 var totalDaysCompleted = endDate2 - startDate2;
 			
-			$scope.percent = Math.round((daysComplete * 100) / totalDays) + "%";
+			$scope.percent = Math.round((daysCompleted * 100) / totalDaysCompleted) + "%";
 			
 			
-			if(SessionService.get("currentUser").batch.endDate > currentDate){
+			if(SessionService.get("currentUser").batch.endDate > currentDate2){
 				$scope.message = SessionService.get("currentUser").batch.name;
 				$scope.currentBatchStart1 = SessionService.get("currentUser").batch.startDate;
 				$scope.currentBatchEnd1 = SessionService.get("currentUser").batch.endDate;
@@ -253,11 +253,11 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 
 
              		for(var j = 0; j < $scope.subTopics.length ; j++) {
-                		status= response.data[j].status.id;
+                		var stat= response.data[j].status.id;
 
                  		
                  		
-                     		if(status == 4){
+                     		if(stat == 4){
                      			if(response.data[j].subtopicName.topic){
                         			var topicName = response.data[j].subtopicName.topic.name;
                      				var topicNameExists = false;
@@ -272,13 +272,13 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
                      				}
                      			
                      			}else {
-                     				topicNameExists = false;
+                     				var iftopicNameExists = false;
                                  	for(k in $scope.topicArray){
                      					if($scope.topicArray[k] == "Other"){
-                     						topicNameExists = true;
+                     						iftopicNameExists = true;
                      					}
                      				}
-                     				if(!topicNameExists){
+                     				if(!iftopicNameExists){
                      					$scope.topicArray.push("Other");
                      				}
                      			}
@@ -301,37 +301,37 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
              		
              		
              		for(var k = 0; k < $scope.subTopics.length ; k++) {
-                		 	status= response.data[k].status.id;
-                 			title = response.data[k].subtopicName.name
+                		 	var st= response.data[k].status.id;
+                 			var title = response.data[k].subtopicName.name
                  		
-                     		if(status == 4){
+                     		if(st == 4){
                      			if(response.data[k].subtopicName.topic){
-                     				topicName = response.data[k].subtopicName.topic.name;
+                     				var tName = response.data[k].subtopicName.topic.name;
                      				
                      					for(var l = 0; l < $scope.topicArray.length ; l++){
-                     						if(topicName == $scope.topicArray[l]){
-                     							docElement = document.getElementById(topicName);
-                     							createLI = document.createElement("LI");
-                     							textNode = document.createTextNode(title);
+                     						if(tName == $scope.topicArray[l]){
+                     							var dElement = document.getElementById(tName);
+                     							var cLI = document.createElement("LI");
+                     							var tNode = document.createTextNode(title);
                      	                 		
-                     	                 		createLI.className += "listItem";
+                     	                 		cLI.className += "listItem";
                      	     					
-                     	                 		createLI.appendChild(textNode);
-                     	     					docElement.appendChild(createLI);
+                     	                 		cLI.appendChild(tNode);
+                     	     					dElement.appendChild(cLI);
                      	     					
                      	     					$scope.count += 1;
                      						}
                      					}
                      					
                      			}else if(!response.data[k].subtopicName.topic && document.getElementById("Other")){
-                     				docElement = document.getElementById("Other");
-                     				createLI = document.createElement("LI");
-                     				textNode = document.createTextNode(title);
+                     				var docEle = document.getElementById("Other");
+                     				var creLI = document.createElement("LI");
+                     				var txtNode = document.createTextNode(title);
                  	                 		
-                 	     			createLI.className += "listItem";
+                 	     			creLI.className += "listItem";
                  	     					
-                 	     			createLI.appendChild(textNode);
-                 	     			docElement.appendChild(createLI);
+                 	     			creLI.appendChild(txtNode);
+                 	     			docEle.appendChild(creLI);
                  	     					
                  	     			$scope.count += 1;
                      			}
@@ -399,8 +399,8 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 	            				startDate = response.data[n].startDate;
 	            				endDate = response.data[n].endDate;
 	            				
-	            				daysComplete = currentDate - startDate;
-	            				totalDays = endDate - startDate;
+	            				var daysComplete = currentDate - startDate;
+	            				var totalDays = endDate - startDate;
 	            				
 	            				$scope.percent = Math.round((daysComplete * 100) / totalDays) + "%";
 	            				
@@ -409,10 +409,10 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 	            				startDate = SessionService.get("currentUser").batch.startDate;
 	            				endDate = SessionService.get("currentUser").batch.endDate;
 	            				
-	            				 daysComplete = currentDate - startDate;
-	            				 totalDays = endDate - startDate;
+	            				 var dayscomplete = currentDate - startDate;
+	            				 var totaldays = endDate - startDate;
 	            				
-	            				$scope.percent = Math.round((daysComplete * 100) / totalDays) + "%";
+	            				$scope.percent = Math.round((dayscomplete * 100) / totaldays) + "%";
 	            			}
 							}
 						}
