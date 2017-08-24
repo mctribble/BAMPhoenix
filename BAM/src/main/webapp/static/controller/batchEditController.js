@@ -1,5 +1,8 @@
 
 app.controller("batchEditController",function($rootScope, $scope, SessionService, $location, $http){
+	
+	$scope.updateDisplay = false;	
+	
 	//set batchId with the id of the currentBatch if it exists else use the trainerBatch
 	var batchId;
 	if(SessionService.get("currentBatch"))
@@ -63,7 +66,15 @@ app.controller("batchEditController",function($rootScope, $scope, SessionService
 		        'Accept': 'application/json' 
 		    },
 			data: $scope.batch
-		}).then(function(){
+		}).then (function success(response){
+			$scope.updateDisplay = true;
+			$scope.updateMsg = 'Update Successful';
+			$scope.alertClass = 'alert alert-success';
+			SessionService.set("currentBatch", $scope.batch);
+		}, function error(response){
+			$scope.updateDisplay = true;
+			$scope.updateMsg = 'Update Failed';
+			$scope.alertClass = 'alert alert-danger';
 		});
 	}
 	

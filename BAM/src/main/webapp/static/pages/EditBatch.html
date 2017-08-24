@@ -11,7 +11,7 @@
 			<div class="header">
 				<h3 style="text-align: center;">{{currentBatchName}} Edit</h3>
 			</div>
-			<form>
+			<form ng-submit="updateBatch()">
 				<div class="input-group">
 					<span class="input-group-addon input-tag">Batch Name:</span> <input
 						type="text" class="form-control" ng-model="batch.name"
@@ -20,6 +20,7 @@
 				<div class="input-group">
 					<span class="input-group-addon input-tag">Batch Type:</span>
 						<select ng-model="batch.type" ng-options="item.name for item in batchTypes" required>
+							<option value="">Select type</option>
 						</select>
 					 <!--   <input
 						type="text" class="form-control" ng-model="batch.type.name"
@@ -34,17 +35,22 @@
 					<span class="input-group-addon input-tag">End Date:</span> <input
 						type="date" class="form-control" ng-model="batch.endDate" required />
 				</div>
+				<br>
+				
+				<div ng-class="alertClass" ng-show="updateDisplay">
+            		{{updateMsg}}
+            	</div>
 
 				<br>
 				<div class="login-btn-container">
-					<button class="btn threeqtr-width" id="login-btn" ng-click="updateBatch()">SUBMIT</button>
+					<button class="btn threeqtr-width" id="login-btn" type="submit">SUBMIT</button>
 				</div>
 				
 				<div class="login-btn-container">
 					<button class="btn threeqtr-width" id="create-acc-btn" ng-click="addRemAssociate()">EDIT ASSOCIATES</button>
 				</div>
 			</form>
-
+			
 		</div>
 	</div>
 	<div class="login col-md-4">
