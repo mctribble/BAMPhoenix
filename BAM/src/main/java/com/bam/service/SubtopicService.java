@@ -40,7 +40,7 @@ public class SubtopicService {
 	@Autowired
 	SubtopicTypeRepository subtopicTypeRepository;
 	
-	public void addSubtopic(int subtopic, int batch)throws CustomException{
+	public void addSubtopic(int subtopic, int batch) throws CustomException{
 		Subtopic s = new Subtopic();
 		Batch b;
 		SubtopicName st;
