@@ -1,4 +1,4 @@
-var app = angular.module('bam', ['ngRoute', 'dndLists']);
+var app = angular.module('bam', ['ngRoute', 'dndLists','angulartics', 'angulartics.google.analytics']);
 app.config(function($routeProvider, $locationProvider){
 	$locationProvider.html5Mode(false).hashPrefix('');
 	$routeProvider.when("/",{
@@ -32,7 +32,8 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl: "static/pages/EditBatch.html",
 		controller: "batchEditController"
 	}).when("/noBatch",{
-		templateUrl: "static/pages/NoBatch.html"
+		templateUrl: "static/pages/NoBatch.html",
+		controller: "noBatchController"
 	}).when("/curriculum",{
 		templateUrl: "static/pages/curriculum.html",
 		controller: "curriculumController"
