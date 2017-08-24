@@ -18,9 +18,12 @@
 						placeholder="Batch Name" required readonly/>
 				</div>
 				<div class="input-group">
-					<span class="input-group-addon input-tag">Batch Type:</span> <input
+					<span class="input-group-addon input-tag">Batch Type:</span>
+						<select ng-model="batch.type" ng-options="item.name for item in batchTypes" required>
+						</select>
+					 <!--   <input
 						type="text" class="form-control" ng-model="batch.type.name"
-						placeholder="Batch Type" required />
+						placeholder="Batch Type" required />  -->
 				</div>
 				<div class="input-group">
 					<span class="input-group-addon input-tag">Start Date:</span> <input

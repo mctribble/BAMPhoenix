@@ -6,15 +6,20 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bam.bean.Batch;
-import com.bam.repository.BatchRepository;
 import com.bam.bean.BamUser;
+import com.bam.bean.Batch;
+import com.bam.bean.BatchType;
+import com.bam.repository.BatchRepository;
+import com.bam.repository.BatchTypeRepository;
 
 @Transactional
 public class BatchService {
 	@Autowired
 	BatchRepository batchRepository;
 
+	@Autowired
+	BatchTypeRepository batchTypeRepository;
+	
 	public void addOrUpdateBatch(Batch b) {
 		batchRepository.save(b);
 	}
@@ -31,4 +36,10 @@ public class BatchService {
 	public List<Batch> getBatchByTrainer(BamUser trainer) {
 		return batchRepository.findByTrainer(trainer);
 	}
+	
+	public List<BatchType> getAllBatchTypes() {
+		System.out.println("Batch TYPES: " + batchTypeRepository.findAll());
+		return batchTypeRepository.findAll();
+	}
+	
 }

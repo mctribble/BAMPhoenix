@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.bean.Batch;
+import com.bam.bean.BatchType;
 import com.bam.logging.LoggerClass;
 import com.bam.service.BamUserService;
 import com.bam.service.BatchService;
@@ -110,5 +111,12 @@ public class BatchController {
 	@RequestMapping(value = "UpdateBatch", method = RequestMethod.POST)
 	public void updateBatch(@RequestBody Batch batch){
 		batchService.addOrUpdateBatch(batch);
+	}
+	
+	@RequestMapping(value = "BatchTypes", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public List<BatchType> getAllBatchTypes(){
+		System.out.println("BATCH TYPES: " + batchService.getAllBatchTypes());
+		return batchService.getAllBatchTypes();
 	}
 }

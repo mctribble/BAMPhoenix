@@ -55,9 +55,6 @@ app.controller("batchEditController",function($rootScope, $scope, SessionService
 	}	
 	
 	$scope.updateBatch = function(){
-		console.log("Inside updateBatch()");
-		console.log(SessionService.get("currentBatch"));
-		console.log($scope.batch);
 		$http({
 			url: "rest/api/v1/Batches/UpdateBatch",
 			method: 'POST',
@@ -67,9 +64,16 @@ app.controller("batchEditController",function($rootScope, $scope, SessionService
 		    },
 			data: $scope.batch
 		}).then(function(){
-			//put success here
 		});
 	}
+	
+	//get all batch types and populate select box
+	$http({
+		url: "rest/api/v1/Batches/BatchTypes",
+		method: "GET",
+	}).then(function(response){
+		$scope.batchTypes = response.data;
+	})
 	
 	
 	/* 
