@@ -13,10 +13,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bam.bean.Batch;
-import com.bam.bean.CustomException;
 import com.bam.bean.Subtopic;
 import com.bam.bean.SubtopicName;
 import com.bam.bean.SubtopicStatus;
+import com.bam.exception.CustomException;
 import com.bam.logging.LoggerClass;
 import com.bam.repository.BatchRepository;
 import com.bam.repository.SubtopicNameRepository;

@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 
-import com.bam.bean.CustomException;
+import com.bam.exception.CustomException;
 import com.bam.logging.LoggerClass;
 
 public class MailService {

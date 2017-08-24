@@ -1,4 +1,4 @@
-package com.bam.bean;
+package com.bam.exception;
 
 import javax.mail.MessagingException;
 
