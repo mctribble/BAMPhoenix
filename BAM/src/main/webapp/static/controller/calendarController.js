@@ -17,8 +17,8 @@
         calendars : {}
     })
   
-  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', '$analytics', 'SessionService', 'SubtopicService', '$q',
-        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, $analytics, SubtopicService, $q) {
+  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService', 'SubtopicService', '$q',
+        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, SubtopicService, $q) {
 	  		if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
 				$location.path('/noBatch');
