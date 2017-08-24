@@ -136,6 +136,9 @@
 	text-align: right;
 }
 
+.navbar-text{
+	    cursor: pointer;
+}
 .navbar-button {
 	/* 	font-family: "Audimat" !important; */
 	background-color: #3379b7;
@@ -170,7 +173,8 @@ li.dropdown{
 ul.dropdown-menu{
 	text-align: center;
 	margin-left: auto;
-	right: 0px;
+	max-width: 10rem;
+	left: auto;
 	overflow: visible;
     visibility: visible;
     position: absolute;
@@ -191,6 +195,7 @@ li.expand{
 .logoutli{
 	width: 100px;
 	margin: auto;
+	cursor: pointer;
 }
 
 /******** 'FORGOT PASSWORD?' STYLING ********/

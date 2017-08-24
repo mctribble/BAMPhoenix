@@ -13,7 +13,9 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 
 	$(".navbar").show();
 	$scope.user;
+	
 	var batchId;
+	
 	/**
 	 * Sets the batch id to retrieve batch info for current user or trainer.
 	 */
@@ -56,7 +58,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				}
 				
 				var dif = weeksBetween($scope.currentBatchStart1, currentDate);
-				$scope.weekNum = dif;
+				$scope.weekNum = dif + 1;
 				
 		}else{
 			$scope.message = 'You have no current batches';
@@ -71,15 +73,13 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				}
 			}).then(function(response){
 				$scope.usersInBatch = response.data
-				
 				$scope.listNames = [];
 			    		firstNames= [];
 						lastNames= [];
 			    
-				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
 					$scope.batchUsers = $scope.usersInBatch[i];
-				    
+									    
 				    firstNames.push($scope.batchUsers.fName);
 					lastNames.push($scope.batchUsers.lName);
 					
@@ -87,6 +87,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				    		"firstName": firstNames[i],
 				    		"lastName": lastNames[i]
 				    };
+					
 				}
 			})
 		}else if($scope.userHasBatch){
@@ -107,8 +108,8 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				}
 				
 				var dif = weeksBetween($scope.currentBatchStart1, currentDate);
-				$scope.weekNum = dif;
-				console.log(dif);
+				$scope.weekNum = dif + 1;
+				
 						
 			$http({
 				url: "rest/api/v1/Users/InBatch",

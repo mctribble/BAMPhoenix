@@ -21,13 +21,11 @@ app.controller('batchesAllController', function($scope, SessionService, $rootSco
 			$scope.msg = 'all batches retrieved';
 		
 			
-		
-			
 			for(var i=0;i<response.data.length;i++){
 				response.data[i].startDate=formatDate(response.data[i].startDate)
 				response.data[i].endDate=formatDate(response.data[i].endDate)
 			}
-			//SessionService.set("batchesAll", response.data);
+			
 			
 			$scope.batchesAll=response.data;			
 

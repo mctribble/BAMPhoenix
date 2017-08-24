@@ -1,0 +1,29 @@
+<ul class="nav nav-tabs">
+	<li class="nav-link active"><a href="#/myBatches">Current Batches</a></li>
+	<li class="nav-link"><a href="#/batchesPast">Past</a></li>
+	<li class="nav-link"><a href="#/batchesFuture">Future</a></li>
+</ul>
+<br>
+<h3 style="text-align: center;">My Batches</h3>
+<div class="input-group">
+	<span class="input-group-addon"> Search: </span> <input type="search" class="form-control" ng-model="searchBox">
+</div>
+<table class="table">
+	<tr>
+		<th>Name</th>
+		<th>Trainer</th>
+		<th>Type</th>
+		<th>Start Date</th>
+		<th>End Date</th>
+	</tr>
+	<tr
+		ng-repeat="batch in inMyBatch"
+		ng-click="goToBatch(batch)">
+		<td>{{batch.batchNames}}</td>
+		<td>{{batch.trainerFNames}} {{batch.trainerLNames}}</td>
+		<td>{{batch.types}}</td>
+		<td>{{batch.startDates | date: 'MM-dd-yyyy'}}</td>
+		<td>{{batch.endDates | date: 'MM-dd-yyyy'}}</td>
+	</tr>
+</table>
+	
