@@ -38,7 +38,6 @@ public class BatchService {
 	}
 	
 	public List<BatchType> getAllBatchTypes() {
-		System.out.println("Batch TYPES: " + batchTypeRepository.findAll());
 		return batchTypeRepository.findAll();
 	}
 	
