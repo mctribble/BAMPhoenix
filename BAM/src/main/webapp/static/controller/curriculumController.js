@@ -280,11 +280,11 @@ app.controller(
 					if(!curriculumTypeExists){
 						var metaData = curriculum;
 						delete metaData.weeks;
-						 newCurriculum = {
+						var newCurriculum2 = {
 								type: curriculum.curriculumName,
 								versions: [{meta:metaData, weeks:[]}]
 						};
-						$scope.curricula.push(newCurriculum);
+						$scope.curricula.push(newCurriculum2);
 					}
 				}
 			});
