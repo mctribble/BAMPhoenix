@@ -88,7 +88,7 @@ app.controller(
 				}
 				
 				//loop through array of response objects adding subtopics to the correct week and day arrays.
-				for(i in response.data){
+				for(var i in response.data){
 					var topic = response.data[i];
 					newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopic_Name_Id);
 				}
@@ -125,7 +125,7 @@ app.controller(
 		$scope.setTemplate = function(curriculum){
 			if(curriculum){
 				//attempt to look for curr in curricula object before doing http req (caching)
-				for(i in $scope.curricula){
+				for(var i in $scope.curricula){
 					if( $scope.curricula[i].type == curriculum.meta.curriculumName && $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks.length > 0){
 						$scope.template = $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1];
 						return;
@@ -137,7 +137,7 @@ app.controller(
 					//set the newCurriculum object as the $scope.template
 					$scope.template = newCurriculum;
 					//add newCurriculum as a version to the curricula type:
-					for(j in $scope.curricula){
+					for(var j in $scope.curricula){
 						if($scope.curricula[j].type == curriculum.curriculumName){
 							$scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
 						}
@@ -194,7 +194,7 @@ app.controller(
 			curriculum.meta.curriculumCreator = SessionService.get("currentUser");
 			curriculum.meta.curriculumdateCreated = $scope.getDate();
 			//loop through the curricula looking for the curriculum type, if found, count the number of versions and set this curr. object's version to it + 1
-			for(item in $scope.curricula){
+			for(var item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.template.meta.curriculumName){
 					curriculum.meta.curriculumVersion = $scope.curricula[item].versions.length + 1;
 				}
@@ -207,7 +207,7 @@ app.controller(
 		$scope.saveCurriculum = function(){
 			//loop through curricula looking for an existing type. if found, append to versions.
 			var typeExists = false;
-			for(item in $scope.curricula){
+			for(var item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculumName){
 					$scope.curricula[item].versions.push($scope.displayedCurriculum);
 					typeExists = true;
@@ -254,13 +254,13 @@ app.controller(
 			}).then(function(response){
 				var curricula = response.data;
 				//parse the response into the local (front end) json object format
-				for(i in curricula){
+				for(var i in curricula){
 					var curriculum = curricula[i];
 
 					//raise flag if there exists a a curriculum of this type already
 					var curriculumTypeExists = false;
 					//determine if $scope.curricula has a type of curriculum.Name already. If so add it as an additional version of the type
-					for(j in $scope.curricula){
+					for(var j in $scope.curricula){
 						var localCurricula = $scope.curricula[j];
 						//perform the check mentioned above
 						if(localCurricula.type == curriculum.curriculumName){

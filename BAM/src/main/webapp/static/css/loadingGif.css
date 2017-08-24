@@ -1,0 +1,12 @@
+@CHARSET "ISO-8859-1";
+#loadingGif {
+	position: fixed;
+	top: 50%;
+	left: 40%;
+	margin-top: -96px;
+	margin-left: -150px;
+	background-color: white;
+	z-index: 1000;
+	border-radius: 80px;
+	opacity: 0.9;
+}
