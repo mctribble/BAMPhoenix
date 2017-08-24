@@ -98,8 +98,10 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 				$scope.usersInBatch = response.data
 				
 				$scope.listNames = [];
+
 			    		var firstNames= [];
 						var lastNames= [];
+
 			    
 				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
@@ -155,8 +157,10 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 				$scope.usersInBatch = response.data
 				
 				$scope.listNames = [];
+
 			    		var firstNames= [];
 						var lastNames= [];
+
 			    
 				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
@@ -269,6 +273,8 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 
              		for(var i = 0; i < $scope.subTopics.length ; i++) {
                 		var status= response.data[i].status.id;
+
+
                  		
                  		
                      		if(status == 4){
@@ -374,7 +380,9 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 			})
 			.then(function success(response){
 				$scope.batchCount = 0;
+
 				for(var m = 0; m < response.data.length; m++){
+
 					if(response.data[m].trainer.userId == SessionService.get("currentUser").userId){
 						if(currentDate < response.data[m].endDate && currentDate > response.data[m].startDate){
 							var batchDropdown = document.getElementById("batchDropdown");
@@ -400,6 +408,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 					$scope.$apply(function(){ 
 						
 						for(var n = 0; n < response.data.length; n++){
+
 							if(response.data[n].id == $scope.changeInfo){
 						/**
 	            		 * Populates the day progress bar by days completed when new option selected

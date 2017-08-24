@@ -26,21 +26,21 @@ public class Subtopic {
 
 	@Id
 	@Column(name = "Subtopic_Id")
-	@SequenceGenerator(name = "SUBTOPICID_SEQ", sequenceName = "SUBTOPICID_SEQ")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUBTOPICID_SEQ")
+	@SequenceGenerator(name = "SUBTOPIC_SEQ", sequenceName = "SUBTOPIC_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUBTOPIC_SEQ")
 	private int subtopicId;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SUBTOPIC_NAME_ID", referencedColumnName = "SUBTOPIC_NAME_ID")
 	@Autowired
 	private SubtopicName subtopicName;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SUBTOPIC_BATCH_ID", referencedColumnName = "BATCH_ID")
 	@Autowired
 	private Batch batch;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SUBTOPIC_STATUS_ID", referencedColumnName = "STATUS_ID")
 	@Autowired
 	private SubtopicStatus status;
