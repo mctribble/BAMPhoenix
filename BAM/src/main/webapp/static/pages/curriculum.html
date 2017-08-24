@@ -86,7 +86,10 @@
 								
 							</div>
 							<div class="col col-md-1">
-								<button class="btn btn-sm btn-danger text-right" ng-click="deleteWeek($index+1)"> X </button>
+								<button class="btn btn-md btn-danger text-right" 
+										ng-click="deleteWeek($index+1)" 
+										dnd-list="[]" 
+										> X </button>
 							</div>
 						</div>
 					</div>
@@ -113,19 +116,7 @@
 												dnd-draggable="subtopic"
 												dnd-effect-allowed="move"
 												dnd-moved="day.subtopics.splice($index, 1); console.log($index)">
-												
-<!-- 
-												<div class="row">
-													<div class="col col-xs-11"></div>
-													<div class="col col-xs-1" style="width=100%;background-color:red;">x</div>
-												</div>
- -->
-												<div class="row">
-													<div class="col col-xs-12">
-														{{subtopic.name}} 
-													</div>
-												</div>
-												
+													{{subtopic.name}} 
 											</li>
 										</ul>
 										<!-- ***************************** End Subtopic List***************************************** -->

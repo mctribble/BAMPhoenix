@@ -22,19 +22,19 @@ public class SubtopicName {
 
 	@Id
 	@Column(name = "Subtopic_Name_ID")
-	@SequenceGenerator(name = "Subtopic_Name_ID_SEQ", sequenceName = "Subtopic_Name_ID_SEQ")
+	@SequenceGenerator(name = "Subtopic_Name_ID_SEQ", sequenceName = "Subtopic_Name_ID_SEQ", allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Subtopic_Name_ID_SEQ")
 	private Integer id;
 
 	@Column(name = "Subtopic_Name")
 	private String name;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Subtopic_Topic", referencedColumnName = "Topic_ID")
 	@Autowired
 	private TopicName topic;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Subtopic_Type", referencedColumnName = "Type_ID")
 	@Autowired
 	private SubtopicType type;
