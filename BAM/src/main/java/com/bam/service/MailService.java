@@ -17,6 +17,9 @@ public class MailService {
 
 	public static void sendMail(String email, String newPassword) {
 		
+		//Use "System.getenv" to get the value of the specified environment variable 
+		    final String EMAILUSERNAME = System.getenv("EMAIL_USERNAME");
+        final String EMAILPASSWORD = System.getenv("EMAIL_PASSWORD");
 		
 
         final String USERNAME = "revabam@gmail.com";
@@ -41,11 +44,11 @@ public class MailService {
             message.setFrom(new InternetAddress(USERNAME));
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(receiver));
+
             message.setSubject("Recover Password");
             message.setText("Hi! Your New temporary password is: \n " + newPassword + "\n"  + "" + " "+
                     "\n" + "Upon Logging in, please click the dropdown menu where your name is located and select reset password to set" + " "
                             + "your password to your convience. \n" + "" + "\n Never show or give your password to anyone to avoid your account from being compromised. \n" + ""+ "\n Regards, \n Revature Team");
-
 
             Transport.send(message);
             
