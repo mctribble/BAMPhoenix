@@ -41,10 +41,17 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
+<<<<<<< HEAD
 		} catch ( Throwable e) {
 			throw new CustomException(e);
 			
 
+=======
+
+		} catch ( Throwable e) {
+			throw new CustomException(e);
+			
+>>>>>>> 528cf4b7f1155c71aba6131badfdf9dcd7806e71
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
@@ -132,7 +139,6 @@ public class LoggerClass {
 		try {
 			logger.info(jp.proceed());
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			throw new CustomException(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
