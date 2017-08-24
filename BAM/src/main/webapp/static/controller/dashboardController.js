@@ -143,7 +143,7 @@ app.controller('dashboardController', function($http, $scope, SessionService) {
 				    return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
 				}
 				
-				var difference = weeksBetween($scope.currentBatchStart1, currentDate);
+				var difference = weeksBetween2($scope.currentBatchStart1, currentDate);
 				$scope.weekNum = difference;
 						
 			$http({
