@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,11 @@ public class Batch {
 	private String name;
 
 	@Column(name = "Start_Date")
+	@NotNull(message = "Start date cannot be empty")
 	private Timestamp startDate;
 
 	@Column(name = "End_Date")
+	@NotNull(message = "End date cannot be empty")
 	private Timestamp endDate;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

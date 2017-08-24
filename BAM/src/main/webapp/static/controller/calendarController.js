@@ -17,29 +17,13 @@
         calendars : {}
     })
   
-	  		
-	  		
   app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService', 'SubtopicService', '$q',
         function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, SubtopicService, $q) {
-	  	$(".navbar").show();
 		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
 				$location.path('/noBatch');
 			}
 		  
-		if(!SessionService.get("currentBatch")){
-			$scope.myBatchButton = false;
-		}
-		  
-		//If trying to look at your current batch when looking at all batches, loads an editable version instead.
-	  	if(SessionService.get("trainerBatch") && SessionService.get("currentBatch")){
-	  		if(SessionService.get("trainerBatch").id == SessionService.get("currentBatch").id){
-	  			SessionService.unset("currentBatch");
-	  			$scope.myBatchButton = false;
-	  		}else{
-	  			$scope.myBatchButton = true;
-	  		}
-	  	}
 		  
 	  	// Varibles set for the use of adding day,month,year,to the Date
 		// attribute of a calendar.
@@ -106,6 +90,7 @@
           /*
            * @Author: Tom Scheffer
            * Changes the calendar to your batch when looking at another trainer's batch
+           * Currently not in use
            */
           $scope.currentBatch = function(){
 
@@ -120,7 +105,6 @@
         			  $scope.loading = true;
         			  $scope.loadCalendarInfoTrainer();
         			  $scope.loadCalendar(url);
-        			  $scope.myBatchButton = false;
         		  }
         	  }
 
@@ -330,7 +314,7 @@
             };
             
             var pageNumber = 0;
-            var pageSize = 20;
+            var pageSize = 34;
             var url;
     		var myDataPromise;//have to get the total number of subtopics first before we can start pagination
     		
@@ -349,7 +333,6 @@
             
             }
             /* event source that contains custom events on the scope */
-            var chain = $q.when();
             var responses = [];
         	$scope.events = [];
         	var numberOfPages;
@@ -416,10 +399,12 @@
                 			response = null;
                 		// $scope.renderCalendar('myCalendar');
                 	}).finally(function() {
-                		// Turn off loading indicator whether success or
-						// failure.
-                		$scope.loading = false;
-                		SessionService.set("gotSubtopics", false); 
+                		// Turn off loading indicator when the last page is processing
+                		if(index == numberOfPages - 1){
+                			$scope.loading = false;
+                			SessionService.set("gotSubtopics", false);
+                		}
+                		 
                 	});
               			})(n)
               			}; // end of for loop
@@ -428,7 +413,7 @@
             if(!SessionService.get("gotSubtopics") && url) {           	
             	SessionService.set("gotSubtopics", true);         		
             	$scope.loading = true;		
-            	$scope.loadCalendar(url);		
+            	$scope.loadCalendar(url);
             }
             		
             
