@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.bean.Curriculum;
 import com.bam.bean.CurriculumSubtopic;
-import com.bam.bean.CustomException;
 import com.bam.bean.SubtopicName;
 import com.bam.dto.CurriculumSubtopicDTO;
 import com.bam.dto.DaysDTO;
