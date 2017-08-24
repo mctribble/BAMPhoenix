@@ -11,11 +11,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bam.bean.Batch;
+import com.bam.bean.CustomException;
 import com.bam.bean.Subtopic;
 import com.bam.bean.SubtopicName;
 import com.bam.bean.SubtopicStatus;
 import com.bam.bean.SubtopicType;
-import com.bam.logging.LoggerClass;
 import com.bam.repository.BatchRepository;
 import com.bam.repository.SubtopicNameRepository;
 import com.bam.repository.SubtopicRepository;
@@ -41,7 +41,6 @@ public class SubtopicService {
 	SubtopicTypeRepository subtopicTypeRepository;
 	
 	public void addSubtopic(int subtopic, int batch) throws CustomException{
-		Logger logger = Logger.getLogger(LoggerClass.class);
 		Subtopic s = new Subtopic();
 		Batch b;
 		SubtopicName st;
