@@ -28,7 +28,7 @@ app.controller('navController', function($rootScope, SessionService, $scope, $lo
 	$scope.redirect();
 	
 	$scope.hideNav = function (){
-		
+		delete $rootScope.changedBatchId;
         SessionService.remove();
     }
 	
