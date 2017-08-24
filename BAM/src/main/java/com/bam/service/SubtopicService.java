@@ -123,14 +123,31 @@ public class SubtopicService {
 		return subtopicRepository.findByBatch(batchRepository.findById(batchId), pageRequest);
     }
 	
-	
-	
-	public SubtopicName getName(String name) {
+	/**
+	 * 
+	 * @param String name
+	 * @return SubtopicName
+	 */
+	public SubtopicName getSubtopicName(String name) {
 		return subtopicNameRepository.findByName(name);
 	}
 
-	public SubtopicType getType(int type){
+	/**
+	 * 
+	 * @param int type
+	 * @return SubtopicType
+	 */
+	public SubtopicType getSubtopicType(int type){
 		return subtopicTypeRepository.findById(type);
+	}
+	
+	/**
+	 * 
+	 * @param SubtopicName subtopicName
+	 * @author Brian McKalip
+	 */
+	public void addOrUpdateSubtopicName(SubtopicName subtopicName){
+		subtopicNameRepository.save(subtopicName);
 	}
 }
 

@@ -90,7 +90,7 @@ app.controller(
 				//loop through array of response objects adding subtopics to the correct week and day arrays.
 				for(var i in response.data){
 					var topic = response.data[i];
-					newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopic_Name_Id);
+					newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopicNameId);
 				}
 				return newCurriculum;
 			})
@@ -300,7 +300,6 @@ app.controller(
 						$scope.curricula.push(newCurriculum);
 					}
 				}
-				console.log($scope.curricula);
 			}
 			);
 		}
@@ -374,8 +373,8 @@ app.controller(
 							url: 'rest/api/v1/Subtopic/Add',
 							params:{
 								subtopicName: input,
-								topic: $scope.topics[i].id,
-								type: 1
+								topicId: $scope.topics[i].id + 1,
+								typeId: 1
 							}
 						});
 					}
@@ -387,12 +386,11 @@ app.controller(
 						subtopics: []
 				}
 				$scope.topics.push(newTopic);
-				console.log(newTopic);
 				$http({
 					method: 'POST',
 					url: 'rest/api/v1/Topic/Add',
 					params: {
-						topic:newTopic.name
+						name:newTopic.name
 					}
 				});
 			}

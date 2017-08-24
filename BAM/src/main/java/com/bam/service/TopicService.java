@@ -57,7 +57,6 @@ public class TopicService {
 	
 	public TopicName getTopicName(int id){
 		return topicNameRepository.findById(id);
-
 	}
 
 }
