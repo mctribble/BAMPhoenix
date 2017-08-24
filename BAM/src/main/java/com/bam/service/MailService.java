@@ -17,10 +17,10 @@ public class MailService {
 
 	public static void sendMail(String email, String newPassword) {
 		
-		//Use "System.getenv" to get the value of the specified environment variable 
+		
 
-		final String EMAILUSERNAME = System.getenv("EMAILUSERNAME");
-        final String EMAILPASSWORD = System.getenv("EMAILPASSWORD");
+        final String USERNAME = "revabam@gmail.com";
+        final String PASSWORD = "testing123";
         String receiver= email; //user.getemail
         
         Properties props = new Properties();
@@ -32,13 +32,13 @@ public class MailService {
         Session session = Session.getInstance(props,
                   new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(EMAILUSERNAME, EMAILPASSWORD);
+                        return new PasswordAuthentication(USERNAME, PASSWORD);
                     }
                   });
         try {
 
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(EMAILUSERNAME));
+            message.setFrom(new InternetAddress(USERNAME));
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(receiver));
             message.setSubject("Recover Password");
