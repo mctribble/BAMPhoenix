@@ -19,6 +19,8 @@ app.controller(
 	function($scope, $http, $q, SessionService) {
 		/* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
 		
+		$scope.showBtn = false;
+		
 		//constant array defining valid days of the week 
 		$scope.weekdays = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" ];
 		
@@ -197,6 +199,7 @@ app.controller(
 			.then(function(){
 				$scope.displayedCurriculum = $scope.template;
 				$scope.isEditable = false;
+				$scope.showBtn = true;
 				$scope.downloadXLS();
 			});
 			
