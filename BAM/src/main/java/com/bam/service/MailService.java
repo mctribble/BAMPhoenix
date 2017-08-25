@@ -19,8 +19,8 @@ public class MailService {
 		
 		//Use "System.getenv" to get the value of the specified environment variable 
 
-		final String EMAILUSERNAME = System.getenv("EMAILUSERNAME");
-        final String EMAILPASSWORD = System.getenv("EMAILPASSWORD");
+		final String EMAILUSERNAME = System.getenv("EMAIL_USERNAME");
+        final String EMAILPASSWORD = System.getenv("EMAIL_PASSWORD");
         String receiver= email; //user.getemail
         
         Properties props = new Properties();
