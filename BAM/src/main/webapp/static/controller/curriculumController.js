@@ -19,8 +19,6 @@ app.controller(
 	function($scope, $http, $q, SessionService) {
 		/* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
 		
-		$scope.showBtn = false;
-		
 		//constant array defining valid days of the week 
 		$scope.weekdays = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" ];
 		
@@ -52,7 +50,6 @@ app.controller(
 		
 		$scope.downloadXLS = function(){
 			var xlsArray = [];
-			$scope.showBtn = true;
 			
 			for(var i = 0; i < $scope.displayedCurriculum.weeks.length; i++){
 				for(var j = 0; j < 5; j++){
@@ -172,7 +169,6 @@ app.controller(
 				for(var i in $scope.curricula){
 					if( $scope.curricula[i].type == curriculum.meta.curriculumName && $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks.length > 0){
 						$scope.template = $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1];
-						console.log("using cached version");
 						//return a valid promise
 						return $q.resolve(true); 
 					}
