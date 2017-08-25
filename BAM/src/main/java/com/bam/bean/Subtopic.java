@@ -111,7 +111,7 @@ public class Subtopic {
 
 	@Override
 	public String toString() {
-		return "Subtopic [subtopicId=" + subtopicId + ", batch=" + batch + ", subtopicDate=" + subtopicDate + "]";
+		return "Subtopic [subtopicId=" + subtopicId + ", batch=" + batch + ", subtopicDate=" + subtopicDate + ", status=" + status +"]";
 	}
 
 }
