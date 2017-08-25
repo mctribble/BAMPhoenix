@@ -137,9 +137,18 @@
 	text-align: right;
 }
 
+.navbar-text {
+    display: inline-block;
+    padding-top: .5rem;
+    padding-bottom: .425rem;
+   	padding-right: .5rem;
+   	padding-left: .5rem;
+}
+
 .navbar-text{
 	    cursor: pointer;
 }
+
 .navbar-button {
 	/* 	font-family: "Audimat" !important; */
 	background-color: #3379b7;

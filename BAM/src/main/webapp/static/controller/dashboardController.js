@@ -80,7 +80,7 @@ app.controller('dashboardController', function($http, $scope, SessionService, $l
 				}
 				
 				var dif = weeksBetween($scope.currentBatchStart1, currentDate);
-				$scope.weekNum = dif + 1;
+				$scope.weekNum = dif;
 				
 		}else{
 			$scope.message = 'You have no current batches';
@@ -141,7 +141,7 @@ app.controller('dashboardController', function($http, $scope, SessionService, $l
 				}
 				
 				var dif = weeksBetween($scope.currentBatchStart1, currentDate);
-				$scope.weekNum = dif + 1;
+				$scope.weekNum = dif;
 						
 			$http({
 				url: "rest/api/v1/Users/InBatch",
