@@ -1,6 +1,7 @@
-app.controller('loginController', function($rootScope, $window, $scope, $location, $http, SessionService) {
+app.controller('loginController', function($rootScope, $window, $scope, $location, $analytics, $http, SessionService) {
 	$(document).ready(function(){
 		$(".navbar").hide();
+		SessionService.remove();
 	});
 	$rootScope.userRole;
 	$scope.msg;
@@ -8,6 +9,7 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 	$rootScope.user;
 	$scope.msg;
 	$rootScope.trainerBatch;
+	$analytics.pageTrack('/login');
 	$scope.logIn = function() {
 		var user = {
 			email : $scope.email,
