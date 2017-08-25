@@ -65,14 +65,11 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
-
-
 	public void addSchedule(@RequestBody String json) throws JsonParseException, JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
 		CurriculumSubtopicDTO c = mapper.readValue(json, CurriculumSubtopicDTO.class);
 		
 		//save curriculum object first
-
 
 		Curriculum curriculum = new Curriculum();
 		curriculum.setCurriculumCreator(c.getMeta().getCurriculum().getCurriculumCreator());
@@ -80,8 +77,25 @@ public class CurriculumController {
 		curriculum.setCurriculumName(c.getMeta().getCurriculum().getCurriculumName());
 		curriculum.setCurriculumNumberOfWeeks(c.getMeta().getCurriculum().getCurriculumNumberOfWeeks());
 		curriculum.setCurriculumVersion(c.getMeta().getCurriculum().getCurriculumVersion());
+		curriculum.setIsMaster(c.getMeta().getCurriculum().getIsMaster());
+		
+		//perform validation on isMaster; if another curriculum with same name is master, change that to 0
+		List<Curriculum> curriculumList = curriculumService.findAllCurriculumByName(curriculum.getCurriculumName());
+		
+		try{
+			Curriculum prevMaster = null;
+			for(int i = 0; i < curriculumList.size(); i++){
+				if(curriculumList.get(i).getIsMaster() == 1)
+					prevMaster = curriculumList.get(i);
+			}
+			prevMaster.setIsMaster(0);
+			curriculumService.save(prevMaster);
+		} catch(NullPointerException e){
+			e.printStackTrace();
+		}
 		
 		curriculumService.save(curriculum);
+		
 		CurriculumSubtopic cs = new CurriculumSubtopic();
 		cs.setCurriculumSubtopicCurriculumID(curriculum);
 		int numWeeks = c.getWeeks().length;
@@ -98,4 +112,5 @@ public class CurriculumController {
 			}
 		}
 	}
+	
 }
