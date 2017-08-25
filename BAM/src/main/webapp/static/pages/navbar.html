@@ -10,7 +10,7 @@
 	<a class="navbar-brand" analytics-on="click" analytics-event="Download" href="#/home">Dashboard</a>
 	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		<div class="navbar-nav">
-			<a class="nav-item nav-link" href="#/calendar" analytics-on="click" analytics-event="Download" ng-init="refresh()">Calendar</a>
+			<a class="nav-item nav-link" href="#/calendar" analytics-on="click" analytics-event="Download" ng-init="refresh()" ng-show="user.role>=2 || user.batch">Calendar</a>
 			<a class="nav-item nav-link" href="#/batchesAll" analytics-on="click" analytics-event="Download"
 				ng-show="user.role>=2" >All Batches</a>
 			<a class="nav-item nav-link" href="#/curriculum" analytics-on="click" analytics-event="Download" ng-show="user.role>=2">Curriculum</a>
