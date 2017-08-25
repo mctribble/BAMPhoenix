@@ -2,10 +2,21 @@
  * Defines a controller to handle DOM manipulation of the Curriculum HTML page
  * @Author Brian McKalip
  */
+
+download = function (content, filename, contentType) {
+    if (!contentType) contentType = 'application/octet-stream';
+    var a = document.getElementById('xlsDownload');
+    var blob = new Blob([content], {
+        'type': contentType
+    });
+    a.href = window.URL.createObjectURL(blob);
+    a.download = filename;
+};
+
 app.controller(
 	"curriculumController",
 	
-	function($scope, $http, SessionService) {
+	function($scope, $http, $q, SessionService) {
 		/* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
 		
 		//constant array defining valid days of the week 
@@ -34,6 +45,30 @@ app.controller(
 		$scope.curricula = [];
 		
 		/* END OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
+		
+		/* BEGIN JSON TO XLS CONVERSION AND DOWNLOAD */
+		
+		$scope.downloadXLS = function(){
+			var xlsArray = [];
+			
+			for(var i = 0; i < $scope.displayedCurriculum.weeks.length; i++){
+				for(var j = 0; j < 5; j++){
+					for(var k = 0; k < $scope.displayedCurriculum.weeks[i].days[j].subtopics.length; k++){
+						var subtopic = $scope.displayedCurriculum.weeks[i].days[j].subtopics[k];
+						var xlsObject = {
+								Week : i+1,
+								Day : j+1,
+								Subtopic : subtopic.name 
+						};
+						xlsArray.push(xlsObject);
+					}
+				}
+			}
+			download(jsonToSsXml(angular.toJson(xlsArray)), 'Curriculum.xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		}
+		
+		/* END XLS FUNCTION */
+		
 		
 		/* BEGIN UTILITY FUNCTIONS */
 		$scope.sanitizeString = function(str){
@@ -90,7 +125,7 @@ app.controller(
 				//loop through array of response objects adding subtopics to the correct week and day arrays.
 				for(var i in response.data){
 					var topic = response.data[i];
-					newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopic_Name_Id);
+					newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopicNameId);
 				}
 				return newCurriculum;
 			})
@@ -123,16 +158,23 @@ app.controller(
 		
 		//when an existing curriculum is selected, it will be loaded into the template
 		$scope.setTemplate = function(curriculum){
+			if($scope.displayedCurriculum && $scope.displayedCurriculum.meta.curriculumName){
+				if(!confirm("There is currently a template loaded. Are you sure you want to overwrite this template?")){
+					//return a valid promise
+					return $q.resolve(true);
+				}
+			}
 			if(curriculum){
 				//attempt to look for curr in curricula object before doing http req (caching)
 				for(var i in $scope.curricula){
 					if( $scope.curricula[i].type == curriculum.meta.curriculumName && $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks.length > 0){
 						$scope.template = $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1];
-						return;
+						//return a valid promise
+						return $q.resolve(true); 
 					}
 				}
 				
-				$scope.requestCurriculum(curriculum)
+				return $scope.requestCurriculum(curriculum)
 				.then(function(newCurriculum){
 					//set the newCurriculum object as the $scope.template
 					$scope.template = newCurriculum;
@@ -149,11 +191,21 @@ app.controller(
 				$('#newCurriculumType').modal('show');
 			}
 		}
+		
+		$scope.viewCurriculum = function(version){
+			$scope.setTemplate(version)
+			.then(function(){
+				$scope.displayedCurriculum = $scope.template;
+				$scope.isEditable = false;
+				$scope.downloadXLS();
+			});
+			
+		}
 			
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
 		$scope.newCurriculum = function(type){
 			//if the user provides a type, either they are ceating a new version with the latest version of an existing type, or creating a new type
-			if(type && $scope.template.meta.curriculumName != type){
+			if(type && ($scope.template.meta && $scope.template.meta.curriculumName != type)){
 				var typeExists = false;
 				//set the template to the latest version of the curriculum if it exists. otherwise create a new type
 				for(i in $scope.curricula){
@@ -200,6 +252,7 @@ app.controller(
 				}
 			}
 			$scope.displayedCurriculum = curriculum;
+			$scope.isEditable = true;
 			//clear the modal box if it's got a value in it
 			document.getElementById("newCurriculumTypeNameInput").value = "";
 		}
@@ -210,6 +263,7 @@ app.controller(
 			for(var item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.displayedCurriculum.meta.curriculumName){
 					$scope.curricula[item].versions.push($scope.displayedCurriculum);
+					
 					typeExists = true;
 				}
 			}
@@ -254,6 +308,7 @@ app.controller(
 			}).then(function(response){
 				var curricula = response.data;
 				//parse the response into the local (front end) json object format
+				
 				for(var i in curricula){
 					var curriculum = curricula[i];
 
@@ -263,15 +318,19 @@ app.controller(
 					for(var j in $scope.curricula){
 						var localCurricula = $scope.curricula[j];
 						//perform the check mentioned above
-						if(localCurricula.type == curriculum.curriculumName){
+						if($scope.curricula[j].type == curriculum.curriculumName){
+							//ensure the object at the required index exists before trying to overwrite it
+							while($scope.curricula[j].versions.length < (curriculum.curriculumVersion - 1)){
+								$scope.curricula[j].versions.push({});
+							}
+							
 							//raise the flag
 							curriculumTypeExists = true;
 							
 							//insert the curriculum into the existing curr type as a version of that type (as specified by the received object) 
 							delete curriculum.weeks;
 							var newCurriculum = {meta:curriculum, weeks:[]};
-							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 0, newCurriculum);
-							
+							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 1, newCurriculum);
 							break;
 						}
 					}
@@ -282,12 +341,20 @@ app.controller(
 						delete metaData.weeks;
 						var newCurriculum2 = {
 								type: curriculum.curriculumName,
-								versions: [{meta:metaData, weeks:[]}]
+								versions: []
 						};
+						
+						//ensure the object at the required index exists before trying to overwrite it
+						for(var i = 0; i < curriculum.curriculumVersion - 1; i++){
+							newCurriculum2.versions.push({});
+						}
+						
+						newCurriculum2.versions.splice(curriculum.curriculumVersion - 1, 1, {meta: metaData, weeks:[]});
 						$scope.curricula.push(newCurriculum2);
 					}
 				}
-			});
+			}
+			);
 		}
 		
 		$scope.clearCurriculumView = function(){
@@ -344,12 +411,25 @@ app.controller(
 				//search topics for the matching type passed
 				for(i in $scope.topics){
 					if($scope.topics[i].name == parentTopic){
-						$scope.topics[i].subtopics.push(
-								{
-									id: $scope.topics[i].subtopics.length,
-									name: input
-								}
-						)
+						var newTopic = {
+								id: $scope.topics[i].subtopics.length,
+								name: input,
+								topic: {id:$scope.topics[i].id, name:parentTopic},
+								type: {id:1, name:"Lesson"}
+							}
+						//addthe subtopic locally
+						$scope.topics[i].subtopics.push(newTopic);
+						
+						//persist the subtopic to the db
+						$http({
+							method:'POST',
+							url: 'rest/api/v1/Subtopic/Add',
+							params:{
+								subtopicName: input,
+								topicId: $scope.topics[i].id + 1,
+								typeId: 1
+							}
+						});
 					}
 				}
 			}else{
@@ -359,6 +439,13 @@ app.controller(
 						subtopics: []
 				}
 				$scope.topics.push(newTopic);
+				$http({
+					method: 'POST',
+					url: 'rest/api/v1/Topic/Add',
+					params: {
+						name:newTopic.name
+					}
+				});
 			}
 		};
 		
@@ -368,7 +455,7 @@ app.controller(
 
 		//load the topic pool on page load
 		$scope.getTopicPool();
-		
+
 		//get the curricula meta data on page load
 		$scope.getCurricula()
 		//then load the first version of each curriculum type
@@ -387,6 +474,7 @@ app.controller(
 			}
 		})
 		;
+
 
 		/* END CONTROLLER BODY - EXECUTED ON PAGE LOAD */
 	}

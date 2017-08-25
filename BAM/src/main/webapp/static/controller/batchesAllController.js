@@ -7,9 +7,9 @@ function formatDate(inputStr) {
 var fixeded=[];
 var fixedstart=[];
 
-app.controller('batchesAllController', function($scope, SessionService, $rootScope, $location, $http,$filter)
+app.controller('batchesAllController', function($scope, SessionService, $rootScope, $analytics, $location, $http,$filter)
 {	
-	
+	$analytics.pageTrack('/batchesAll');
 	$scope.syncBatchesWithAssignForce = function(){
 		
 		$scope.currentlyLoading = true;

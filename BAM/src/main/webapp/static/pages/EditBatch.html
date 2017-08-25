@@ -1,7 +1,8 @@
 <ul class="nav nav-tabs" >
-	<li class="nav-link"><a href="#/home">Calendar</a></li>
+	<li class="nav-link"><a href="#/calendar">Calendar</a></li>
 	<li class="nav-link"><a href="#/associates">View Associates</a></li>
 	<li class="nav-link active"><a href="#/editBatch">Edit Batch</a></li>
+	<li class="nav-link"><a href="#/addSubtopic">Add Subtopics</a></li>
 </ul>
 <br>
 
@@ -11,16 +12,20 @@
 			<div class="header">
 				<h3 style="text-align: center;">{{currentBatchName}} Edit</h3>
 			</div>
-			<form>
+			<form ng-submit="updateBatch()">
 				<div class="input-group">
 					<span class="input-group-addon input-tag">Batch Name:</span> <input
 						type="text" class="form-control" ng-model="batch.name"
 						placeholder="Batch Name" required readonly/>
 				</div>
 				<div class="input-group">
-					<span class="input-group-addon input-tag">Batch Type:</span> <input
+					<span class="input-group-addon input-tag">Batch Type:</span>
+						<select ng-model="batch.type" ng-options="item.name for item in batchTypes" required>
+							<option value="">Select type</option>
+						</select>
+					 <!--   <input
 						type="text" class="form-control" ng-model="batch.type.name"
-						placeholder="Batch Type" required />
+						placeholder="Batch Type" required />  -->
 				</div>
 				<div class="input-group">
 					<span class="input-group-addon input-tag">Start Date:</span> <input
@@ -31,17 +36,22 @@
 					<span class="input-group-addon input-tag">End Date:</span> <input
 						type="date" class="form-control" ng-model="batch.endDate" required />
 				</div>
+				<br>
+				
+				<div ng-class="alertClass" ng-show="updateDisplay">
+            		{{updateMsg}}
+            	</div>
 
 				<br>
 				<div class="login-btn-container">
-					<button class="btn threeqtr-width" id="login-btn" ng-click="">SUBMIT</button>
+					<button class="btn threeqtr-width" id="login-btn" type="submit">SUBMIT</button>
 				</div>
 				
 				<div class="login-btn-container">
 					<button class="btn threeqtr-width" id="create-acc-btn" ng-click="addRemAssociate()">EDIT ASSOCIATES</button>
 				</div>
 			</form>
-
+			
 		</div>
 	</div>
 	<div class="login col-md-4">

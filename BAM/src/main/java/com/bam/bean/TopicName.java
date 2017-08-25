@@ -17,7 +17,7 @@ public class TopicName {
 
 	@Id
 	@Column(name = "Topic_ID")
-	@SequenceGenerator(name = "Topic_ID_SEQ", sequenceName = "Topic_ID_SEQ")
+	@SequenceGenerator(name = "Topic_ID_SEQ", sequenceName = "Topic_ID_SEQ", allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Topic_ID_SEQ")
 	private Integer id;
 

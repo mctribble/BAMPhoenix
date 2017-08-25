@@ -23,10 +23,11 @@ public class MailService {
 
 
 		
+		//Use "System.getenv" to get the value of the specified environment variable 
+		    final String EMAILUSERNAME = System.getenv("EMAIL_USERNAME");
+        final String EMAILPASSWORD = System.getenv("EMAIL_PASSWORD");
 		
 
-        final String USERNAME = "revabam@gmail.com";
-        final String PASSWORD = "testing123";
         String receiver= email; //user.getemail
         
         Properties props = new Properties();
@@ -38,20 +39,20 @@ public class MailService {
         Session session = Session.getInstance(props,
                   new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(USERNAME, PASSWORD);
+                        return new PasswordAuthentication(EMAILUSERNAME, EMAILPASSWORD);
                     }
                   });
         try {
 
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(USERNAME));
+            message.setFrom(new InternetAddress(EMAILUSERNAME));
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(receiver));
+
             message.setSubject("Recover Password");
             message.setText("Hi! Your New temporary password is: \n " + newPassword + "\n"  + "" + " "+
                     "\n" + "Upon Logging in, please click the dropdown menu where your name is located and select reset password to set" + " "
                             + "your password to your convience. \n" + "" + "\n Never show or give your password to anyone to avoid your account from being compromised. \n" + ""+ "\n Regards, \n Revature Team");
-
 
             Transport.send(message);
             
