@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.bean.Curriculum;
 import com.bam.bean.CurriculumSubtopic;
-import com.bam.bean.CustomException;
 import com.bam.bean.SubtopicName;
 import com.bam.dto.CurriculumSubtopicDTO;
 import com.bam.dto.DaysDTO;
 import com.bam.service.CurriculumService;
 import com.bam.service.CurriculumSubtopicService;
 import com.bam.service.SubtopicService;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -68,7 +66,7 @@ public class CurriculumController {
 	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
 
 
-	public void addSchedule(@RequestBody String json) throws JsonParseException, JsonMappingException, IOException{
+	public void addSchedule(@RequestBody String json) throws  JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
 		CurriculumSubtopicDTO c = mapper.readValue(json, CurriculumSubtopicDTO.class);
 		

@@ -17,7 +17,7 @@ public class TopicName {
 
 	@Id
 	@Column(name = "Topic_ID")
-	@SequenceGenerator(name = "Topic_ID_SEQ", sequenceName = "Topic_ID_SEQ")
+	@SequenceGenerator(name = "Topic_ID_SEQ", sequenceName = "Topic_ID_SEQ", allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Topic_ID_SEQ")
 	private Integer id;
 
@@ -35,29 +35,29 @@ public class TopicName {
 	}
 
 	public TopicName(String name) {
-		super();
+		super();//NOSONAR
 		this.name = name;
 	}
 
 	public Integer getId() {
 		return id;
-	}
+	}//NOSONAR
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
+	}//NOSONAR
 
 	public String getName() {
 		return name;
-	}
+	}//NOSONAR
 
 	public void setName(String name) {
 		this.name = name;
-	}
+	}//NOSONAR
 
 	@Override
 	public String toString() {
-		return "TopicName [id=" + id + ", name=" + name + "]";
+		return "TopicName [id=" + id + ", name=" + name + "]";//NOSONAR
 	}
 
 }

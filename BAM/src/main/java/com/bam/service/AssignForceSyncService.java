@@ -45,7 +45,7 @@ public class AssignForceSyncService {
 	public void assignForceSync() {
 		
 		// Object to hold data from AssignForce
-		AssignForceBatch batch = new AssignForceBatch();
+		AssignForceBatch batch;
 		
 		// Object which will be persisted; populated with AssignForceBatch data.
 		Batch currentBatch = new Batch();
@@ -54,7 +54,7 @@ public class AssignForceSyncService {
 		BatchType type = new BatchType();
 		
 		// Object necessary for creation of batch; populated with AssignForceBatch data.
-		BamUser bamUser = new BamUser();
+		BamUser bamUser;
 		
 		// Cycling through all batches received from AssignForce.
 		for(int i = 0; i < batches.getBody().size(); i++) {
@@ -80,16 +80,16 @@ public class AssignForceSyncService {
 				
 				
 				// First and last names pulled from AssignForce trainer to search for current trainers.
-				String first_name = batch.getTrainer().getFirstName();
-				String last_name = batch.getTrainer().getLastName();
+				String firstName = batch.getTrainer().getFirstName();
+				String lastName = batch.getTrainer().getLastName();
 				
 				// List comprised of trainers both in AssignForce and BAM
-				List<BamUser> BAMtrainers = uservice.getByFNameAndLName(first_name, last_name);
+				List<BamUser> bamTrainers = uservice.getByFNameAndLName(firstName, lastName);
 	
 				// If List is not empty and user is a trainer, trainer is assigned to batch.
-				if(!BAMtrainers.isEmpty() && BAMtrainers.get(0).getRole() == 2) {
-					bamUser = BAMtrainers.get(0);
-					bamUser.setAssignForce_ID(batch.getTrainer().getTrainerId());
+				if(!bamTrainers.isEmpty() && bamTrainers.get(0).getRole() == 2) {
+					bamUser = bamTrainers.get(0);
+					bamUser.setAssignForceID(batch.getTrainer().getTrainerId());
 					currentBatch.setTrainer(bamUser);
 				}
 				
