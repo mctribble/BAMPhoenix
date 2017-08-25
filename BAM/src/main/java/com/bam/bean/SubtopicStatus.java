@@ -37,27 +37,27 @@ public class SubtopicStatus {
 	public SubtopicStatus(String name) {
 		super();
 		this.name = name;
-	}
+	}//NOSONAR
 
 	public Integer getId() {
 		return id;
-	}
+	}//NOSONAR
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
+	}//NOSONAR
 
 	public String getName() {
 		return name;
-	}
+	}//NOSONAR
 
 	public void setName(String name) {
 		this.name = name;
-	}
+	}//NOSONAR
 
 	@Override
 	public String toString() {
-		return "SubtopicStatus [id=" + id + ", name=" + name + "]";
+		return "SubtopicStatus [id=" + id + ", name=" + name + "]";//NOSONAR
 	}
 
 }
