@@ -2,11 +2,25 @@
  * Defines a controller to handle DOM manipulation of the Curriculum HTML page
  * @Author Brian McKalip
  */
+
+download = function (content, filename, contentType) {
+    if (!contentType) contentType = 'application/octet-stream';
+    var a = document.getElementById('xlsDownload');
+    var blob = new Blob([content], {
+        'type': contentType
+    });
+    console.log("INSIDE DOWNLOAD")
+    a.href = window.URL.createObjectURL(blob);
+    a.download = filename;
+};
+
 app.controller(
 	"curriculumController",
 	
 	function($scope, $http, $q, SessionService) {
 		/* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
+		
+		$scope.showBtn = false;
 		
 		//constant array defining valid days of the week 
 		$scope.weekdays = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" ];
@@ -34,6 +48,31 @@ app.controller(
 		$scope.curricula = [];
 		
 		/* END OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
+		
+		/* BEGIN JSON TO XLS CONVERSION AND DOWNLOAD */
+		
+		$scope.downloadXLS = function(){
+			var xlsArray = [];
+			$scope.showBtn = true;
+			
+			for(var i = 0; i < $scope.displayedCurriculum.weeks.length; i++){
+				for(var j = 0; j < 5; j++){
+					for(var k = 0; k < $scope.displayedCurriculum.weeks[i].days[j].subtopics.length; k++){
+						var subtopic = $scope.displayedCurriculum.weeks[i].days[j].subtopics[k];
+						var xlsObject = {
+								Week : i+1,
+								Day : j+1,
+								Subtopic : subtopic.name 
+						};
+						xlsArray.push(xlsObject);
+					}
+				}
+			}
+			download(jsonToSsXml(angular.toJson(xlsArray)), 'Curriculum.xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		}
+		
+		/* END XLS FUNCTION */
+		
 		
 		/* BEGIN UTILITY FUNCTIONS */
 		$scope.sanitizeString = function(str){

@@ -21,7 +21,7 @@
 								</div>
 								<div class="col col-md-2">
 									<button class="btn btn-sm btn-success"
-										ng-click="deselectItems(); newCurriculum(curriculum.type)">+</button>
+										ng-click="deselectItems(); newCurriculum(curriculum.type); downloadXLS()">+</button>
 								</div>
 							</div>
 
@@ -71,6 +71,7 @@
 							<button type="button" class="btn btn-md btn-success" ng-disabled="!displayedCurriculum.meta.curriculumNumberOfWeeks || !isEditable" ng-click="saveCurriculum()">Save Curriculum</button>
 							<button type="button" class="btn btn-md btn-danger" ng-click="clearCurriculumView()">X</button>
 						</div>
+						<a href="" class="btn btn-md btn-primary" ng-show="showBtn" id="xlsDownload">Download Curriculum</a>
 					</div>
 				</div>
 				
