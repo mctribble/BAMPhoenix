@@ -147,6 +147,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 				}
 				
 				var difference = weeksBetween2($scope.currentBatchStart1, currentDate2);
+
 				$scope.weekNum = difference;
 						
 			$http({
