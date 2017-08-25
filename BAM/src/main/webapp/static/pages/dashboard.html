@@ -38,7 +38,7 @@
 		<div id="pan3" class="col-md-6 pan3">
 			<h2 ng-hide="!trainerHasBatch || !userHasBatch">Batch Week: {{weekNum + 1}}</h2>
 			<h2 ng-show="!trainerHasBatch || !userHasBatch">Batch Week: {{weekNum}}</h2>
-				<h3 ng-show="trainerHasBatch && numOfAssociates != 0 || userHasBatch">Associates in batch:</h3>
+				<h3 ng-show="trainerHasBatch && numOfAssociates != 0">Associates in batch:</h3>
 				<ul class="makeColumns">
 				 <li ng-repeat="list in listNames">{{list.firstName}}&nbsp{{list.lastName}}</li>
 				</ul>

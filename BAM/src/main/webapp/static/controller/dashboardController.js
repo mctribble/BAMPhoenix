@@ -102,7 +102,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 			    		var firstNames= [];
 						var lastNames= [];
 				
-				$scope.numOfAssociates = $scope.usersInBatch.length;
+				$scope.numOfAssociates = 0;
 				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
 					$scope.batchUsers = $scope.usersInBatch[i];
@@ -146,7 +146,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 				    return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
 				}
 				
-				var difference = weeksBetween2($scope.currentBatchStart1, currentDate);
+				var difference = weeksBetween2($scope.currentBatchStart1, currentDate2);
 				$scope.weekNum = difference;
 						
 			$http({
@@ -163,7 +163,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 			    		var firstNames= [];
 						var lastNames= [];
 
-			    
+				$scope.numOfAssociates = 0;
 				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
 					$scope.batchUsers = $scope.usersInBatch[i];
@@ -171,6 +171,8 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 				    if(SessionService.get("currentUser").batch.endDate > currentDate){
 					    firstNames.push($scope.batchUsers.fName);
 						lastNames.push($scope.batchUsers.lName);
+						
+						$scope.numOfAssociates += 1;
 						
 						$scope.listNames[i] = {
 					    		"firstName": firstNames[i],
