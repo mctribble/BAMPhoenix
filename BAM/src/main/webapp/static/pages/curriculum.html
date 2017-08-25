@@ -31,8 +31,9 @@
 						<div id="collapseCurriculum{{sanitizeString(curriculum.type)}}" class="collapse" role="tabpanel">
 							<div class="card-block">
 								<div class="list-group">
-									<a ng-class="{'active': active === true}" class="list-group-item" ng-repeat="version in curriculum.versions track by version.meta.curriculumVersion" ng-click="setTemplate(version); deselectItems(); active = !active;">
+									<a ng-class="{'active': active === true}" class="list-group-item" ng-repeat="version in curriculum.versions track by version.meta.curriculumVersion" ng-click="viewCurriculum(version); deselectItems(); active = !active;">
 										Version #{{$index + 1}}
+										
 									</a>
 								</div>
 							</div>
@@ -52,16 +53,22 @@
 						<div class="page-header">
 							<h1 ng-if="displayedCurriculum.meta.curriculumName">
 								{{displayedCurriculum.meta.curriculumName}} Curriculum
-								<small id="curriculumSubheader">Version #{{displayedCurriculum.meta.curriculumVersion}}</small>
+								<small id="curriculumSubheader">
+									Version #{{displayedCurriculum.meta.curriculumVersion}}
+									<span ng-if="!isEditable" class="readOnly">(Read Only)</span>
+								</small>
 							</h1>
 						</div>
 						
 					</div>
 					
 					<div class="col col-md-4 pull-right">
-						<button type="button" class="btn btn-md btn-primary" ng-disabled="!displayedCurriculum.meta.curriculumName" ng-click="addWeek()">Add Week</button>
+						<button type="button" 
+								class="btn btn-md btn-primary" 
+								ng-disabled="!displayedCurriculum.meta.curriculumName || !isEditable" 
+								ng-click="addWeek()">Add Week</button>
 						<div class="btn-group">
-							<button type="button" class="btn btn-md btn-success" ng-disabled="!displayedCurriculum.meta.curriculumNumberOfWeeks" ng-click="saveCurriculum()">Save Curriculum</button>
+							<button type="button" class="btn btn-md btn-success" ng-disabled="!displayedCurriculum.meta.curriculumNumberOfWeeks || !isEditable" ng-click="saveCurriculum()">Save Curriculum</button>
 							<button type="button" class="btn btn-md btn-danger" ng-click="clearCurriculumView()">X</button>
 						</div>
 					</div>
@@ -88,7 +95,9 @@
 							<div class="col col-md-1">
 								<button class="btn btn-md btn-danger text-right" 
 										ng-click="deleteWeek($index+1)" 
-										dnd-list="[]" 
+										ng-disabled="!isEditable"
+										dnd-list="[]"
+										dnd-disable-if="!isEditable"
 										> X </button>
 							</div>
 						</div>
@@ -115,7 +124,9 @@
 												ng-repeat="subtopic in day.subtopics" 
 												dnd-draggable="subtopic"
 												dnd-effect-allowed="move"
-												dnd-moved="day.subtopics.splice($index, 1); console.log($index)">
+												dnd-moved="day.subtopics.splice($index, 1); console.log($index)"
+												dnd-disable-if="!isEditable"	
+												>
 													{{subtopic.name}} 
 											</li>
 										</ul>
@@ -181,7 +192,9 @@
 									ng-repeat="sub in filteredSubtopics = (topic.subtopics | filter:subtopicFilter)"
 									dnd-draggable="sub" 
 									dnd-effect-allowed="copy" 
-									dnd-moved="topic.subtopics.splice($index, 1)">
+									dnd-moved="topic.subtopics.splice($index, 1)"
+									dnd-disable-if="!isEditable"	
+								>
 									{{sub.name}}
 								</li>
 								

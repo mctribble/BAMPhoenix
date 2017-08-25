@@ -5,7 +5,7 @@
 app.controller(
 	"curriculumController",
 	
-	function($scope, $http, SessionService) {
+	function($scope, $http, $q, SessionService) {
 		/* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
 		
 		//constant array defining valid days of the week 
@@ -123,16 +123,24 @@ app.controller(
 		
 		//when an existing curriculum is selected, it will be loaded into the template
 		$scope.setTemplate = function(curriculum){
+			if($scope.displayedCurriculum && $scope.displayedCurriculum.meta.curriculumName){
+				if(!confirm("There is currently a template loaded. Are you sure you want to overwrite this template?")){
+					//return a valid promise
+					return $q.resolve(true);
+				}
+			}
 			if(curriculum){
 				//attempt to look for curr in curricula object before doing http req (caching)
 				for(var i in $scope.curricula){
 					if( $scope.curricula[i].type == curriculum.meta.curriculumName && $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks.length > 0){
 						$scope.template = $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1];
-						return;
+						console.log("using cached version");
+						//return a valid promise
+						return $q.resolve(true); 
 					}
 				}
 				
-				$scope.requestCurriculum(curriculum)
+				return $scope.requestCurriculum(curriculum)
 				.then(function(newCurriculum){
 					//set the newCurriculum object as the $scope.template
 					$scope.template = newCurriculum;
@@ -148,6 +156,15 @@ app.controller(
 				//show the modal
 				$('#newCurriculumType').modal('show');
 			}
+		}
+		
+		$scope.viewCurriculum = function(version){
+			$scope.setTemplate(version)
+			.then(function(){
+				$scope.displayedCurriculum = $scope.template;
+				$scope.isEditable = false;
+			});
+			
 		}
 			
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
@@ -200,6 +217,7 @@ app.controller(
 				}
 			}
 			$scope.displayedCurriculum = curriculum;
+			$scope.isEditable = true;
 			//clear the modal box if it's got a value in it
 			document.getElementById("newCurriculumTypeNameInput").value = "";
 		}
