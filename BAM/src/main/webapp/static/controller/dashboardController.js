@@ -171,6 +171,9 @@ app.controller('dashboardController', function($http, $scope, SessionService, $l
 				    }else{
 				    	$scope.listNames = 'N/A';
 				    }
+				    $scope.trainerInBatch = SessionService.get("currentUser").batch.trainer.fName;
+				    $scope.trainerInBatchLast = SessionService.get("currentUser").batch.trainer.lName;
+				    
 				}
 			})
 			} else {

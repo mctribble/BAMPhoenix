@@ -37,9 +37,13 @@
 
 			<h2 ng-hide="!trainerHasBatch">Batch Week: {{weekNum + 1}}</h2>
 			<h2 ng-show=!trainerHasBatch>Batch Week: {{weekNum}}</h2>
+				<h3 ng-show="userHasBatch">Trainer in Batch:</h3>
+				<ul>
+				 <li>{{trainerInBatch}}&nbsp{{trainerInBatchLast}}</li>
+				</ul>
 				<h3 ng-hide="!trainerHasBatch">Associates in batch:</h3>
 				<ul>
-				 <li ng-repeat="list in listNames">{{list.firstName}}&nbsp{{list.lastName}}</li>
+				 <li ng-hide="!trainerHasBatch" ng-repeat="list in listNames">{{list.firstName}}&nbsp{{list.lastName}}</li>
 				</ul>
 		</div>
 		</div>
@@ -65,10 +69,12 @@
   					</div>
 				</div>
 			</div>
+			<div ng-show="trainerHasBatch">
 			<h3>Topics Missed<img ng-show="loading" src="static/img/loading.gif" id="loadingPic"></img></h3>
 			<p id="missedCount" ng-hide="loading">{{ count }} / {{ totalSub }} missed topics</p>
 			<ul class="mainList" id="mainList" ng-hide="loading">
 			</ul>
+		</div>
 		</div>
 		
 
