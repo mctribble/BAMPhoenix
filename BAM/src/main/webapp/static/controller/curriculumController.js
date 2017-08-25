@@ -339,18 +339,18 @@ app.controller(
 					if(!curriculumTypeExists){
 						var metaData = curriculum;
 						delete metaData.weeks;
-						var newCurriculum = {
+						var newCurriculum2 = {
 								type: curriculum.curriculumName,
 								versions: []
 						};
 						
 						//ensure the object at the required index exists before trying to overwrite it
 						for(var i = 0; i < curriculum.curriculumVersion - 1; i++){
-							newCurriculum.versions.push({});
+							newCurriculum2.versions.push({});
 						}
 						
-						newCurriculum.versions.splice(curriculum.curriculumVersion - 1, 1, {meta: metaData, weeks:[]});
-						$scope.curricula.push(newCurriculum);
+						newCurriculum2.versions.splice(curriculum.curriculumVersion - 1, 1, {meta: metaData, weeks:[]});
+						$scope.curricula.push(newCurriculum2);
 					}
 				}
 			}
