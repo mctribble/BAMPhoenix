@@ -150,7 +150,6 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 	/*Creating the objects that are needed for subtopic object 
 	by pulling the values from the corresponding html elements.*/ 
 	$scope.addSubtopic = function(){
-		var start = document.getElementById('startDate');
 
 		var topicName = {
 				id : $scope.topic_id,

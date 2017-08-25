@@ -316,7 +316,6 @@ app.controller(
 					var curriculumTypeExists = false;
 					//determine if $scope.curricula has a type of curriculum.Name already. If so add it as an additional version of the type
 					for(var j in $scope.curricula){
-						var localCurricula = $scope.curricula[j];
 						//perform the check mentioned above
 						if($scope.curricula[j].type == curriculum.curriculumName){
 							//ensure the object at the required index exists before trying to overwrite it
