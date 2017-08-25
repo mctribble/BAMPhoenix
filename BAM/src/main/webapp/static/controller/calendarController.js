@@ -441,7 +441,7 @@
                 		 // http for green to red
                       $http({
                    		method : "GET",
-                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.title+"&status=Canceled"
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.id+"&status=Canceled"
                    		
                    	 }).then(function successCallback(response) {
                  
@@ -454,7 +454,7 @@
                 		  // http for red to yellow
                       $http({
                    		method : "GET",
-                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.title+"&status=Missed"
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.id+"&status=Missed"
                    	 }).then(function successCallback(response) {
                    		
                    	 });
@@ -465,7 +465,7 @@
                 		  // http for yellow to green
                       $http({
                    		method : "GET",
-                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.title+"&status=Completed"
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.id+"&status=Completed"
                    	 }).then(function successCallback(response) {
                    	 });
                 	}
@@ -479,7 +479,7 @@
             		 // http for green to red
                   $http({
                		method : "GET",
-               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.title+"&status=Canceled"
+               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.id+"&status=Canceled"
                		
                	 }).then(function successCallback(response) {
              
@@ -493,7 +493,7 @@
             		  // http for red to blue
                   $http({
                		method : "GET",
-               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.title+"&status=Pending"
+               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.id+"&status=Pending"
                	 }).then(function successCallback(response) {
                		
                	 });
@@ -504,7 +504,7 @@
             		  // http for blue to green
                   $http({
                		method : "GET",
-               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+thisBatchId+"&subtopicId="+event.title+"&status=Completed"
+               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+thisBatchId+"&subtopicId="+event.id+"&status=Completed"
                	 }).then(function successCallback(response) {
                		
 
