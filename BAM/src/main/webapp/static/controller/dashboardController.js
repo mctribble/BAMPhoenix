@@ -182,7 +182,7 @@ app.controller('dashboardController', function($http, $scope, SessionService, $l
 				$scope.listNames = 'N/A';
 				$scope.percent = 'N/A';
 			}
-		} else if (!$scope.trainerHasBatch || !scope.userHasBatch){
+		} else if (!$scope.trainerHasBatch || !$scope.userHasBatch){
 			$scope.message = 'You have no current batches';
 			$scope.currentBatchStart1 = 'N/A';
 			$scope.currentBatchEnd1 = 'N/A';
@@ -221,9 +221,9 @@ app.controller('dashboardController', function($http, $scope, SessionService, $l
 		             	}
 		             	
 		            }
+			 	
 
-			 	 
-			 	if($scope.trainerHasBatch){
+			 	if($scope.trainerHasBatch || $scope.userHasBatch){
 			 		$scope.loading = true;
 			 	} else {
 			 		$scope.loading = false;
@@ -244,7 +244,7 @@ app.controller('dashboardController', function($http, $scope, SessionService, $l
             		for(var i = 0; i < $scope.subTopics.length ; i++){
             				
             			if($scope.trainerHasBatch){
-            			var status= response.data[i].status.id;
+            				var status= response.data[i].status.id;
             				
             				if (status == 2 || status == 3){
             					$scope.completed += 1;

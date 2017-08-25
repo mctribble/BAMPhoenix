@@ -22,6 +22,10 @@
 	padding: 0px;
 }
 
+button{
+	cursor: pointer;
+}
+
 /* LEFT SIDEBAR */
 #curriculaLoaderView{
 	border: 1px solid #ccc;

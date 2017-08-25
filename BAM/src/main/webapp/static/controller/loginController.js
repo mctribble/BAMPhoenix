@@ -80,6 +80,7 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 			$location.path('/');
 			$scope.message = true;
 			$scope.msg = 'Wrong Credentials';
+			$scope.msg2 = 'Enter Valid Email';
 		});
 	}
 	
