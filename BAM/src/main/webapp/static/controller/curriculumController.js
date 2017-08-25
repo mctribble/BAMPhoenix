@@ -9,7 +9,6 @@ download = function (content, filename, contentType) {
     var blob = new Blob([content], {
         'type': contentType
     });
-    console.log("INSIDE DOWNLOAD")
     a.href = window.URL.createObjectURL(blob);
     a.download = filename;
 };
@@ -19,8 +18,6 @@ app.controller(
 	
 	function($scope, $http, $q, SessionService) {
 		/* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
-		
-		$scope.showBtn = false;
 		
 		//constant array defining valid days of the week 
 		$scope.weekdays = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" ];
@@ -53,7 +50,6 @@ app.controller(
 		
 		$scope.downloadXLS = function(){
 			var xlsArray = [];
-			$scope.showBtn = true;
 			
 			for(var i = 0; i < $scope.displayedCurriculum.weeks.length; i++){
 				for(var j = 0; j < 5; j++){
@@ -173,7 +169,6 @@ app.controller(
 				for(var i in $scope.curricula){
 					if( $scope.curricula[i].type == curriculum.meta.curriculumName && $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks.length > 0){
 						$scope.template = $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1];
-						console.log("using cached version");
 						//return a valid promise
 						return $q.resolve(true); 
 					}
@@ -202,6 +197,7 @@ app.controller(
 			.then(function(){
 				$scope.displayedCurriculum = $scope.template;
 				$scope.isEditable = false;
+				$scope.downloadXLS();
 			});
 			
 		}
@@ -343,18 +339,18 @@ app.controller(
 					if(!curriculumTypeExists){
 						var metaData = curriculum;
 						delete metaData.weeks;
-						var newCurriculum = {
+						var newCurriculum2 = {
 								type: curriculum.curriculumName,
 								versions: []
 						};
 						
 						//ensure the object at the required index exists before trying to overwrite it
 						for(var i = 0; i < curriculum.curriculumVersion - 1; i++){
-							newCurriculum.versions.push({});
+							newCurriculum2.versions.push({});
 						}
 						
-						newCurriculum.versions.splice(curriculum.curriculumVersion - 1, 1, {meta: metaData, weeks:[]});
-						$scope.curricula.push(newCurriculum);
+						newCurriculum2.versions.splice(curriculum.curriculumVersion - 1, 1, {meta: metaData, weeks:[]});
+						$scope.curricula.push(newCurriculum2);
 					}
 				}
 			}
