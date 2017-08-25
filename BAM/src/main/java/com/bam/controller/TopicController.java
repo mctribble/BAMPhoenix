@@ -11,16 +11,14 @@ import com.bam.bean.TopicName;
 import com.bam.service.TopicService;
 
 @RestController
-
 @RequestMapping(value = "/api/v1/Topic/")
-
 public class TopicController {
 	@Autowired
 	TopicService topicService;
 
 	@RequestMapping(value="Add", method=RequestMethod.POST)
 	public void addTopicName(HttpServletRequest request){
-		System.out.println("adding topic");
+//		System.out.println("adding topic");
 		TopicName topic = new TopicName();
 		topic.setName(request.getParameter("name"));
 		topicService.addOrUpdateTopicName(topic);

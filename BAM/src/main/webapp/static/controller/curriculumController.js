@@ -24,6 +24,9 @@ app.controller(
 		//constant array defining valid days of the week 
 		$scope.weekdays = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" ];
 		
+		//default type to load on page load
+		$scope.DEFAULT_TYPE = "Java";
+		
 		//list of available topics in the topic pool.
 		$scope.topics = [];
 		
@@ -74,7 +77,6 @@ app.controller(
 		
 		/* BEGIN UTILITY FUNCTIONS */
 		$scope.sanitizeString = function(str){
-
 			if(str){
 				//replace spaces with underscores
 				str = str.replace(' ', '_');
@@ -461,22 +463,41 @@ app.controller(
 
 		//get the curricula meta data on page load
 		$scope.getCurricula()
-		//then load the first version of each curriculum type
+		//then load the master versions of each curriculum type
 		.then(function(){
 			for(i in $scope.curricula){
-				var latestVersion = $scope.curricula[i].versions.slice(-1)[0];
-				$scope.requestCurriculum(latestVersion)
+				var curriculumType = $scope.curricula[i];
+				var masterVersion = {};
+				for(j in curriculumType.versions){
+					if(curriculumType.versions[j].meta.isMaster){
+						masterVersion = curriculumType.versions[j].meta;
+					}
+				}
+				
+				$scope.requestCurriculum(masterVersion)
 				.then(function(newCurriculum){
 					//add newCurriculum as a version to the curricula type:
 					for(j in $scope.curricula){
 						if($scope.curricula[j].type == newCurriculum.curriculumName){
 							$scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
 						}
+						
 					}
 				});
 			}
+		}
+		)
+		//then load default type and version to load on page load
+		.then(function(){
+			for(i in $scope.curricula){
+				var curriculum = $scope.curricula[i];
+				if(curriculum.type == $scope.DEFAULT_TYPE){
+					$scope.displayedCurriculum = curriculum.versions.slice(-1)[0];
+				}
+			}
 		})
 		;
+		
 
 
 		/* END CONTROLLER BODY - EXECUTED ON PAGE LOAD */
