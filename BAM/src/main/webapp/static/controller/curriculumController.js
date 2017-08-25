@@ -2,11 +2,25 @@
  * Defines a controller to handle DOM manipulation of the Curriculum HTML page
  * @Author Brian McKalip
  */
+
+download = function (content, filename, contentType) {
+    if (!contentType) contentType = 'application/octet-stream';
+    var a = document.getElementById('xlsDownload');
+    var blob = new Blob([content], {
+        'type': contentType
+    });
+    console.log("INSIDE DOWNLOAD")
+    a.href = window.URL.createObjectURL(blob);
+    a.download = filename;
+};
+
 app.controller(
 	"curriculumController",
 	
-	function($scope, $http, SessionService) {
+	function($scope, $http, $q, SessionService) {
 		/* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
+		
+		$scope.showBtn = false;
 		
 		//constant array defining valid days of the week 
 		$scope.weekdays = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" ];
@@ -34,6 +48,31 @@ app.controller(
 		$scope.curricula = [];
 		
 		/* END OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
+		
+		/* BEGIN JSON TO XLS CONVERSION AND DOWNLOAD */
+		
+		$scope.downloadXLS = function(){
+			var xlsArray = [];
+			$scope.showBtn = true;
+			
+			for(var i = 0; i < $scope.displayedCurriculum.weeks.length; i++){
+				for(var j = 0; j < 5; j++){
+					for(var k = 0; k < $scope.displayedCurriculum.weeks[i].days[j].subtopics.length; k++){
+						var subtopic = $scope.displayedCurriculum.weeks[i].days[j].subtopics[k];
+						var xlsObject = {
+								Week : i+1,
+								Day : j+1,
+								Subtopic : subtopic.name 
+						};
+						xlsArray.push(xlsObject);
+					}
+				}
+			}
+			download(jsonToSsXml(angular.toJson(xlsArray)), 'Curriculum.xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		}
+		
+		/* END XLS FUNCTION */
+		
 		
 		/* BEGIN UTILITY FUNCTIONS */
 		$scope.sanitizeString = function(str){
@@ -123,16 +162,24 @@ app.controller(
 		
 		//when an existing curriculum is selected, it will be loaded into the template
 		$scope.setTemplate = function(curriculum){
+			if($scope.displayedCurriculum && $scope.displayedCurriculum.meta.curriculumName){
+				if(!confirm("There is currently a template loaded. Are you sure you want to overwrite this template?")){
+					//return a valid promise
+					return $q.resolve(true);
+				}
+			}
 			if(curriculum){
 				//attempt to look for curr in curricula object before doing http req (caching)
 				for(var i in $scope.curricula){
 					if( $scope.curricula[i].type == curriculum.meta.curriculumName && $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1].weeks.length > 0){
 						$scope.template = $scope.curricula[i].versions[curriculum.meta.curriculumVersion - 1];
-						return;
+						console.log("using cached version");
+						//return a valid promise
+						return $q.resolve(true); 
 					}
 				}
 				
-				$scope.requestCurriculum(curriculum)
+				return $scope.requestCurriculum(curriculum)
 				.then(function(newCurriculum){
 					//set the newCurriculum object as the $scope.template
 					$scope.template = newCurriculum;
@@ -148,6 +195,15 @@ app.controller(
 				//show the modal
 				$('#newCurriculumType').modal('show');
 			}
+		}
+		
+		$scope.viewCurriculum = function(version){
+			$scope.setTemplate(version)
+			.then(function(){
+				$scope.displayedCurriculum = $scope.template;
+				$scope.isEditable = false;
+			});
+			
 		}
 			
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
@@ -200,6 +256,7 @@ app.controller(
 				}
 			}
 			$scope.displayedCurriculum = curriculum;
+			$scope.isEditable = true;
 			//clear the modal box if it's got a value in it
 			document.getElementById("newCurriculumTypeNameInput").value = "";
 		}
