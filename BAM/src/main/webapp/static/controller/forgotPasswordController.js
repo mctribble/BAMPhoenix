@@ -5,8 +5,8 @@ app.controller('forgotPasswordController', function ($rootScope, $scope, Session
 
 	$scope.forgot = function() {
 		var user = {		
- -			email : $scope.email,		
- -		};
+ 			email : $scope.email,		
+ 		};
 		$http({
 			url: 'rest/api/v1/Users/Recovery',
 			method: 'POST',
