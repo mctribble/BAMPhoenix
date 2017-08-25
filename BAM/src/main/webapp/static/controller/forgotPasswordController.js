@@ -11,21 +11,21 @@ app.controller('forgotPasswordController', function ($rootScope, $scope, Session
 		$http({
 			url: 'rest/api/v1/Users/Recovery',
 			method: 'POST',
-			data: user.email,
+			data: $scope.email,
 	        params: {
-	            username: user.email,
+	            username: $scope.email,
 	        }
 		})
 		.then(function success(response){
 			$location.path('/');
 			$scope.message = true;
-			$scope.msg = 'Email sent. Please check your inbox for account recovery option.';
+			$scope.msg2 = 'Email sent. Please check your inbox for account recovery option.';
 			
 			},  
 			function error(response){
 				$location.path('/');
 				$scope.message = true;
-				$scope.msg = 'User does not exist in the system';
+				$scope.msg2 = 'User does not exist in the system';
 			});
 		}
 });
