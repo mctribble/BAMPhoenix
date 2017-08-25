@@ -64,7 +64,7 @@ public class BamUser {
 	private String pwd2; // the user needs to reset their password.
 
 	@Column(name="AssignForce_ID")
-	private Integer AssignForceID;
+	private Integer assignForceID;
 	
 	
 	public BamUser() {
@@ -105,7 +105,7 @@ public class BamUser {
 	}
 
 	public BamUser(int userId, String fName, String mName, String lName, String email, String pwd, int role,
-			Batch batch, String phone, String phone2, String skype, String pwd2, Integer assignForceID) {//NOSONAR
+			Batch batch, String phone, String phone2, String skype, String pwd2, Integer AssignForceID) {//NOSONAR
 		super();
 		this.userId = userId;
 		this.fName = fName;
@@ -119,7 +119,7 @@ public class BamUser {
 		this.phone2 = phone2;
 		this.skype = skype;
 		this.pwd2 = pwd2;
-		AssignForceID = assignForceID;
+		assignForceID = AssignForceID;
 	}
 
 	public int getUserId() {
@@ -219,11 +219,11 @@ public class BamUser {
 	}
 
 	public Integer getAssignForceID() {
-		return AssignForceID;
+		return assignForceID;
 	}
 
-	public void setAssignForceID(Integer assignForceID) {
-		AssignForceID = assignForceID;
+	public void setAssignForceID(Integer AssignForceID) {
+		assignForceID = AssignForceID;
 	}
 
 	@Override
