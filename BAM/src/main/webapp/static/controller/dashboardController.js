@@ -101,14 +101,16 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 
 			    		var firstNames= [];
 						var lastNames= [];
-
-			    
+				
+				$scope.numOfAssociates = $scope.usersInBatch.length;
 				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
 					$scope.batchUsers = $scope.usersInBatch[i];
 				    
 				    firstNames.push($scope.batchUsers.fName);
 					lastNames.push($scope.batchUsers.lName);
+					
+					$scope.numOfAssociates += 1;
 					
 					$scope.listNames[i] = {
 				    		"firstName": firstNames[i],
@@ -270,7 +272,6 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
             		/**
             		 * Populates dynamic list of missed subtopics and their respective topics
             		 */
-
              		for(var i = 0; i < $scope.subTopics.length ; i++) {
                 		var status= response.data[i].status.id;
 
@@ -357,6 +358,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
                      			}
                      		}
              		}
+            		
              	}).finally(function() {
             		$scope.loading = false;
             	});
