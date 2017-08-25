@@ -69,6 +69,10 @@ button{
 	height: 900px;
 }
 
+.readOnly{
+	color: #aaa;
+}
+
 .list-group{
 	min-height: 50px;
 }
