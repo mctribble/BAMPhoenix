@@ -9,7 +9,6 @@ download = function (content, filename, contentType) {
     var blob = new Blob([content], {
         'type': contentType
     });
-    console.log("INSIDE DOWNLOAD")
     a.href = window.URL.createObjectURL(blob);
     a.download = filename;
 };
@@ -202,6 +201,7 @@ app.controller(
 			.then(function(){
 				$scope.displayedCurriculum = $scope.template;
 				$scope.isEditable = false;
+				$scope.downloadXLS();
 			});
 			
 		}
