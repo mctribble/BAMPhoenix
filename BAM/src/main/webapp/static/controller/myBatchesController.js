@@ -61,16 +61,13 @@ app.controller('myBatchesController', function($scope, SessionService, $rootScop
 		}); 
 	}
 	
-	
-	
 	$scope.goToBatch = function(batch){
-		console.log(SessionService.get("trainerBatch"));
-		SessionService.set("trainerBatch", batch);
+		var thisBatchId = $rootScope.changedBatchId;		
 		$http({
 			
-			url: 'rest/api/v1/Calendar/Topics',
-			method: 'GET',
-			params: {batchId: batchId}
+			url: "rest/api/v1/Calendar/Topics?batchId=" + thisBatchId,
+			method: 'GET'
+			
 		})
 		.then(function success(response){
 			SessionService.set("gotSubtopics", false);

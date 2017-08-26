@@ -43,7 +43,7 @@
 				<ul>
 				 <li>{{trainerInBatch}}&nbsp{{trainerInBatchLast}}</li>
 				</ul>
-				<h3 ng-show="trainerHasBatch || userHasBatch">Associates in batch:</h3>
+				<h3 ng-hide="!trainerHasBatch || userHasBatch">Associates in batch:</h3>
 				<ul class="makeColumns">
 				 <li ng-repeat="list in listNames">{{list.firstName}}&nbsp{{list.lastName}}</li>
 				</ul>
@@ -71,12 +71,13 @@
   					</div>
 				</div>
 			</div>
+			<div ng-hide="userHasBatch">
 			<h3>Topics Missed<img ng-show="loading" src="static/img/loading.gif" id="loadingPic"></img></h3>
 			<p id="missedCount" ng-hide="loading">{{ count }} / {{ totalSub }} missed topics</p>
 			<ul class="mainList" id="mainList" ng-hide="loading">
 			</ul>
 		</div>
-		
+		</div>
 
  </div>
 </div>
