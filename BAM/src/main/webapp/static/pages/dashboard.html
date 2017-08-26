@@ -4,12 +4,14 @@
 		<h1 class="display-3">Welcome, {{user.fName}}</h1>
 		<p class="lead"> Pick up where you left off</p>
 		
-		<div ng-show="batchCount > 1" class="row">
-		Select Batch: <br>
-  			<select id="batchDropdown" ng-init="currentBatch(this)" class="styled-select blue semi-square">
-  			</select>&nbsp&nbsp&nbsp&nbsp
-  			<a href="#/calendar" class="btn btn-primary myAttribute">View Calendar</a>
-  		</div>
+		<div ng-show="batchCount > 1">
+		Select Batch:
+			<div class="row justify-content-between">
+  				<select id="batchDropdown" ng-init="currentBatch(this)" class="styled-select blue semi-square">
+  				</select>
+  				<a href="#/calendar" class="btn btn-primary myAttribute2 col-3">View Calendar</a>
+			</div>
+		</div>
 		<div ng-hide="batchCount > 1 || user.role == 3" ng-show="userHasBatch || batchCount == 1">
 			Current Batch: <br><a href="#/calendar" class="myAttribute" title="View Calendar">{{message}}</a><br>
 		</div>
@@ -22,8 +24,8 @@
  		</div>		
  		</div>
 		
-		<div class="row">
-		<div id="pan2" class="col-md-6 pan2">
+		<div class="row justify-content-between">
+		<div id="pan2" class="col-md-5 pan2">
 			<ul  ng-model="getData">
 				<li>First Name: {{user.fName}}</li>
 				<li>Last Name: {{user.lName}}</li>
@@ -33,17 +35,17 @@
 		</div>
 		
 				
-		<div id="pan3" class="col-md-5 pan3">
 
-			<h2 ng-hide="!trainerHasBatch">Batch Week: {{weekNum + 1}}</h2>
-			<h2 ng-show=!trainerHasBatch>Batch Week: {{weekNum}}</h2>
+		<div id="pan3" class="col-md-6 pan3">
+			<h2 ng-hide="!trainerHasBatch || !userHasBatch">Batch Week: {{weekNum + 1}}</h2>
+			<h2 ng-show="!trainerHasBatch || !userHasBatch">Batch Week: {{weekNum}}</h2>
 				<h3 ng-show="userHasBatch">Trainer in Batch:</h3>
 				<ul>
 				 <li>{{trainerInBatch}}&nbsp{{trainerInBatchLast}}</li>
 				</ul>
-				<h3 ng-hide="!trainerHasBatch">Associates in batch:</h3>
-				<ul>
-				 <li ng-hide="!trainerHasBatch" ng-repeat="list in listNames">{{list.firstName}}&nbsp{{list.lastName}}</li>
+				<h3 ng-show="trainerHasBatch || userHasBatch">Associates in batch:</h3>
+				<ul class="makeColumns">
+				 <li ng-repeat="list in listNames">{{list.firstName}}&nbsp{{list.lastName}}</li>
 				</ul>
 		</div>
 		</div>
@@ -51,7 +53,7 @@
 		
 		<div class="col-md-12" id="pan4" ng-init="returnMissed()" ng-show="trainerHasBatch || userHasBatch">
 			<!-- Progress completed by day -->
-			<div ng-show="userHasBatch || trainerHasBatch && !loading">
+			<div ng-show="userHasBatch && !loading || trainerHasBatch && !loading">
 				Batch Progress By Day:
 				<div class="progress" >
   					<div class="progress-bar progress-bar-striped active" role="progressbar"
@@ -60,7 +62,7 @@
   					</div>
 				</div>
 			</div>
-			<div ng-show="userHasBatch || trainerHasBatch && !loading">
+			<div ng-show="userHasBatch && !loading || trainerHasBatch && !loading">
 				Batch Progress By Subtopic:
 				<div class="progress" >
   					<div class="progress-bar progress-bar-striped active" role="progressbar"

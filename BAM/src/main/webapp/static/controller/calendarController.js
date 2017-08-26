@@ -19,7 +19,7 @@
 
   app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService', 'SubtopicService', '$q',
         function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, SubtopicService, $q) {
-		  if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
+	  		if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
 				$location.path('/noBatch');
 			}
@@ -29,27 +29,24 @@
 		  var currentDate = new Date();
 		  var thisBatchId = SessionService.get("trainerBatch").id;
 		  
-		  if($rootScope.changedBatchId){
-			  SessionService.unset("currentBatch");
-			  thisBatchId = $rootScope.changedBatchId;
-			  delete $rootScope.changedBatchId;
-			  
-		  }
+	
+
+		  var thisBatchId = $rootScope.changedBatchId;
+
+		    var date = new Date();
 		  
 		  if(SessionService.get("currentBatch")){
-			  if(SessionService.get("currentBatch").endDate > currentDate){
-				  if(SessionService.get("currentBatch").trainer.id == SessionService.get("currentUser").id){
-					  SessionService.set("trainerBatch", SessionService.get("currentBatch"));
-					  thisBatchId = SessionService.get("trainerBatch").id;
+			  if(SessionService.get("currentBatch").trainer.userId == SessionService.get("currentUser").userId){
+				  var end = moment.utc(SessionService.get("currentBatch").endDate)
+				  if(end >= date){
+					  thisBatchId = SessionService.get("currentBatch").id;
 					  SessionService.unset("currentBatch");
 				  }
-			 }
-			  
+			  }
 		  }
-		  
+		  		  
 	  	// Varibles set for the use of adding day,month,year,to the Date
 		// attribute of a calendar.
-		    var date = new Date();
 		    var d = date.getDate();
 		    var m = date.getMonth();
 		    var y = date.getFullYear();
@@ -335,8 +332,10 @@
                 return {};
             };
             
+
             var pageNumber = 0;
             var pageSize = 34;
+
             var url;
     		var myDataPromise;//have to get the total number of subtopics first before we can start pagination
     		
@@ -354,7 +353,10 @@
             
             }
             /* event source that contains custom events on the scope */
-            var responses = [];
+
+            
+           
+
         	$scope.events = [];
         	var numberOfPages;
         	 
@@ -460,7 +462,7 @@
                 		 // http for green to red
                       $http({
                    		method : "GET",
-                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.title+"&status=Canceled"
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.id+"&status=Canceled"
                    		
                    	 }).then(function successCallback(response) {
                  
@@ -473,7 +475,7 @@
                 		  // http for red to yellow
                       $http({
                    		method : "GET",
-                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.title+"&status=Missed"
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.id+"&status=Missed"
                    	 }).then(function successCallback(response) {
                    		
                    	 });
@@ -484,7 +486,7 @@
                 		  // http for yellow to green
                       $http({
                    		method : "GET",
-                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.title+"&status=Completed"
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.id+"&status=Completed"
                    	 }).then(function successCallback(response) {
                    	 });
                 	}
@@ -498,7 +500,7 @@
             		 // http for green to red
                   $http({
                		method : "GET",
-               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.title+"&status=Canceled"
+               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.id+"&status=Canceled"
                		
                	 }).then(function successCallback(response) {
              
@@ -512,7 +514,7 @@
             		  // http for red to blue
                   $http({
                		method : "GET",
-               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.title+"&status=Pending"
+               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+ thisBatchId +"&subtopicId="+event.id+"&status=Pending"
                	 }).then(function successCallback(response) {
                		
                	 });
@@ -523,7 +525,7 @@
             		  // http for blue to green
                   $http({
                		method : "GET",
-               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+thisBatchId+"&subtopicId="+event.title+"&status=Completed"
+               		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+thisBatchId+"&subtopicId="+event.id+"&status=Completed"
                	 }).then(function successCallback(response) {
                		
 

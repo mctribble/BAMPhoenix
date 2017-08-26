@@ -1,5 +1,8 @@
 
 app.controller("batchEditController",function($rootScope, $scope, SessionService, $location, $http){
+	
+	$scope.updateDisplay = false;	
+	
 	//set batchId with the id of the currentBatch if it exists else use the trainerBatch
 	var batchId;
 	if(SessionService.get("currentBatch"))
@@ -53,6 +56,36 @@ app.controller("batchEditController",function($rootScope, $scope, SessionService
 			$scope.msg = 'Failed to retrieve users without a batch';
 		});
 	}	
+	
+	$scope.updateBatch = function(){
+		$http({
+			url: "rest/api/v1/Batches/UpdateBatch",
+			method: 'POST',
+			headers: {
+		        'Content-Type': 'application/json', 
+		        'Accept': 'application/json' 
+		    },
+			data: $scope.batch
+		}).then (function success(response){
+			$scope.updateDisplay = true;
+			$scope.updateMsg = 'Update Successful';
+			$scope.alertClass = 'alert alert-success';
+			SessionService.set("currentBatch", $scope.batch);
+		}, function error(response){
+			$scope.updateDisplay = true;
+			$scope.updateMsg = 'Update Failed';
+			$scope.alertClass = 'alert alert-danger';
+		});
+	}
+	
+	//get all batch types and populate select box
+	$http({
+		url: "rest/api/v1/Batches/BatchTypes",
+		method: "GET",
+	}).then(function(response){
+		$scope.batchTypes = response.data;
+	})
+	
 	
 	/* 
 	 * Tabbing Functionality created from example: https://codepen.io/jasoncluck/pen/iDcbh

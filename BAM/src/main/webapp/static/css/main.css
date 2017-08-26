@@ -50,6 +50,7 @@
 .login-btn-container {
 	text-align: center;
 	margin: auto;
+	margin-bottom: 6px;
 }
 
 .threeqtr-width {
@@ -57,14 +58,48 @@
 	letter-spacing: 1.5px;
 }
 
+.createPointer{
+	cursor: pointer;
+}
+
 #login-btn {
 	color: #ffffff;
+	box-shadow: 0 4px #999;
 	background-color: #303e74;
+	cursor: pointer;
+	transform: translateX(.5px);
+}
+
+#login-btn:hover{
+	background-color: #142863;
+}
+
+#login-btn:active {
+  background-color: #3e8e41;
+  box-shadow: 0 3px #666;
+  transform: translateY(1px);
 }
 
 #create-acc-btn {
 	color: #ffffff;
 	background-color: #f26925;
+	cursor: pointer;
+	box-shadow: 0 4px #999;
+	transform: translateX(.5px);
+}
+
+#create-acc-btn:hover{
+	background-color: #dc4c04;
+}
+
+#create-acc-btn:active {
+  background-color: #3e8e41;
+  box-shadow: 0 3px #666;
+  transform: translateY(1px);
+}
+
+button{
+	cursor: pointer;
 }
 
 /******** REGISTER STYLING *********/
@@ -208,6 +243,7 @@ li.expand{
 	margin: auto;
 	cursor: pointer;
 }
+
 
 /******** 'FORGOT PASSWORD?' STYLING ********/
 .pw {
@@ -526,4 +562,11 @@ body {
 	background-color: transparent !important;
 	color: transparent !important;
 	cursor: default !important;
+}
+
+/* Batches all */
+
+.clickable:hover{
+	cursor: pointer;
+	background-color: #c1b5d3;
 }
