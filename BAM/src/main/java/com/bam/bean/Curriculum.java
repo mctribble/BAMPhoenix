@@ -21,7 +21,7 @@ public class Curriculum {
 	
 	@Id
 	@Column(name = "Curriculum_Id")
-	@SequenceGenerator(name = "Curriculum_ID_SEQ", sequenceName = "Curriculum_ID_SEQ")
+	@SequenceGenerator(name = "Curriculum_ID_SEQ", sequenceName = "Curriculum_ID_SEQ", allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Curriculum_ID_SEQ")
 	private Integer id;
 	

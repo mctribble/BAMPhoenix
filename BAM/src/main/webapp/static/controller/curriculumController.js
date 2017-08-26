@@ -1,8 +1,4 @@
-/**
- * Defines a controller to handle DOM manipulation of the Curriculum HTML page
- * @Author Brian McKalip
- */
-
+//local functions
 download = function (content, filename, contentType) {
     if (!contentType) contentType = 'application/octet-stream';
     var a = document.getElementById('xlsDownload');
@@ -13,9 +9,10 @@ download = function (content, filename, contentType) {
     a.download = filename;
 };
 
-
-
-
+/**
+ * Defines a controller to handle DOM manipulation of the Curriculum HTML page
+ * @Author Brian McKalip
+ */
 app.controller("curriculumController",
 	
 	function($scope, $http, $q, SessionService) {

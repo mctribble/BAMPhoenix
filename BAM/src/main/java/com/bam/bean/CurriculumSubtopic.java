@@ -23,7 +23,7 @@ public class CurriculumSubtopic {
 	
 	@Id
 	@Column(name = "Curriculum_Subtopic_Id")
-	@SequenceGenerator(name = "Curriculum_Subtopic_ID_SEQ", sequenceName = "Curriculum_Subtopic_ID_SEQ")
+	@SequenceGenerator(name = "Curriculum_Subtopic_ID_SEQ", sequenceName = "Curriculum_Subtopic_ID_SEQ", allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Curriculum_Subtopic_ID_SEQ")
 	private int curriculumSubtopicId;
 	
