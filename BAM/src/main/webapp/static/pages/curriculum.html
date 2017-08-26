@@ -31,10 +31,23 @@
 						<div id="collapseCurriculum{{sanitizeString(curriculum.type)}}" class="collapse" role="tabpanel">
 							<div class="card-block">
 								<div class="list-group">
-									<a ng-class="{'active': active === true}" class="list-group-item" ng-repeat="version in curriculum.versions track by version.meta.curriculumVersion" ng-click="viewCurriculum(version); deselectItems(); active = !active;">
-										Version #{{$index + 1}}
-										
-									</a>
+									<div class="list-group-item" 
+									     ng-repeat="version in curriculum.versions track by version.meta.curriculumVersion">
+									   <div class="row">
+										   	<div class="col col-xs-11">
+												<a ng-class="{'active': active === true}" 
+												   active = !active;
+												   ng-click="viewCurriculum(version); deselectItems();"
+												>
+													Version #{{$index + 1}}
+												</a>
+											</div>
+											<div class="col col-xs-1">
+												<input type="radio" name="masterRadio{{version.meta.curriculumName}}" ng-click="setMaster(version)"> 
+												<span ng-if="version.meta.isMaster" style="color:blue;">&nbsp Master</span>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>

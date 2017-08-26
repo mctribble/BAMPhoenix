@@ -13,8 +13,7 @@ download = function (content, filename, contentType) {
     a.download = filename;
 };
 
-app.controller(
-	"curriculumController",
+app.controller("curriculumController",
 	
 	function($scope, $http, $q, SessionService) {
 		/* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
@@ -160,10 +159,31 @@ app.controller(
 			}
 		}
 		
+		$scope.setMaster = function(curriculum){
+			if(confirm("Change master version to version #" + curriculum.meta.curriculumVersion + "?"))
+			//unset master in type:
+			for(i in $scope.curricula){
+				if($scope.curricula[i].type == curriculum.meta.curriculumName){
+					for(j in $scope.curricula[i].versions){
+						var version = $scope.curricula[i].versions[j];
+						version.meta.isMaster = false;
+					}
+				}
+			}
+			
+			//set the new master
+			curriculum.meta.isMaster = true;
+			
+			$http({
+				url: "rest/api/v1/Curriculum/MakeMaster?curriculumId=" + curriculum.meta.curriculumId,
+				method: "GET",
+			})
+		}
+		
 		//when an existing curriculum is selected, it will be loaded into the template
 		$scope.setTemplate = function(curriculum){
-			if($scope.displayedCurriculum && $scope.displayedCurriculum.meta.curriculumName){
-				if(!confirm("There is currently a template loaded. Are you sure you want to overwrite this template?")){
+			if($scope.displayedCurriculum && $scope.isEditable){
+				if(!confirm("There are unsaved changes on the template you are working on. Are you sure you want to overwrite this template?")){
 					//return a valid promise
 					return $q.resolve(true);
 				}
@@ -470,10 +490,9 @@ app.controller(
 				var masterVersion = {};
 				for(j in curriculumType.versions){
 					if(curriculumType.versions[j].meta.isMaster){
-						masterVersion = curriculumType.versions[j].meta;
+						masterVersion = curriculumType.versions[j];
 					}
 				}
-				
 				$scope.requestCurriculum(masterVersion)
 				.then(function(newCurriculum){
 					//add newCurriculum as a version to the curricula type:
@@ -483,6 +502,7 @@ app.controller(
 						}
 						
 					}
+					
 				});
 			}
 		}
@@ -492,14 +512,17 @@ app.controller(
 			for(i in $scope.curricula){
 				var curriculum = $scope.curricula[i];
 				if(curriculum.type == $scope.DEFAULT_TYPE){
-					$scope.displayedCurriculum = curriculum.versions.slice(-1)[0];
+					for(j in curriculum.versions){
+						var version = curriculum.versions[j];
+						if(version.meta.isMaster){
+							$scope.displayedCurriculum = version;									
+							break;
+						}
+					}
 				}
 			}
 		})
 		;
-		
-
-
 		/* END CONTROLLER BODY - EXECUTED ON PAGE LOAD */
 	}
 );
