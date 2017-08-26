@@ -452,7 +452,6 @@ app.controller("curriculumController",
 					var curriculumTypeExists = false;
 					//determine if $scope.curricula has a type of curriculum.Name already. If so add it as an additional version of the type
 					for(var j in $scope.curricula){
-						var localCurricula = $scope.curricula[j];
 						//perform the check mentioned above
 						if($scope.curricula[j].type == curriculum.curriculumName){
 							//ensure the object at the required index exists before trying to overwrite it
@@ -475,18 +474,18 @@ app.controller("curriculumController",
 					if(!curriculumTypeExists){
 						var metaData = curriculum;
 						delete metaData.weeks;
-						var newCurriculum = {
+						var newCurriculum2 = {
 								type: curriculum.curriculumName,
 								versions: []
 						};
 						
 						//ensure the object at the required index exists before trying to overwrite it
 						for(var i = 0; i < curriculum.curriculumVersion - 1; i++){
-							newCurriculum.versions.push({});
+							newCurriculum2.versions.push({});
 						}
 						
-						newCurriculum.versions.splice(curriculum.curriculumVersion - 1, 1, {meta: metaData, weeks:[]});
-						$scope.curricula.push(newCurriculum);
+						newCurriculum2.versions.splice(curriculum.curriculumVersion - 1, 1, {meta: metaData, weeks:[]});
+						$scope.curricula.push(newCurriculum2);
 					}
 				}
 			}

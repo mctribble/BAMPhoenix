@@ -103,7 +103,6 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
         			
         			eventz.empty();
 
-        			var loop = Array.from(topicMap).length;
         			
         			var evnts = 0;
         					//adding subtopics to the subtopics dropdown menu
@@ -154,7 +153,6 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 	/*Creating the objects that are needed for subtopic object 
 	by pulling the values from the corresponding html elements.*/ 
 	$scope.addSubtopic = function(){
-		var start = document.getElementById('startDate');
 
 		var topicName = {
 				id : $scope.topic_id,

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.bean.BamUser;
 import com.bam.bean.Batch;
-import com.bam.bean.CustomException;
+import com.bam.exception.CustomException;
 import com.bam.service.BamUserService;
 import com.bam.service.BatchService;
 import com.bam.service.PasswordGenerator;
