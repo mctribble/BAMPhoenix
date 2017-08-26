@@ -77,6 +77,7 @@ public class CurriculumController {
 		curriculum.setCurriculumName(c.getMeta().getCurriculum().getCurriculumName());
 		curriculum.setCurriculumNumberOfWeeks(c.getMeta().getCurriculum().getCurriculumNumberOfWeeks());
 		curriculum.setCurriculumVersion(c.getMeta().getCurriculum().getCurriculumVersion());
+		curriculum.setIsMaster(c.getMeta().getCurriculum().getIsMaster());
 
 		curriculumService.save(curriculum);
 		

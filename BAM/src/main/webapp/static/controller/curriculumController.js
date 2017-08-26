@@ -229,15 +229,21 @@ app.controller("curriculumController",
 			
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
 		$scope.newCurriculum = function(type){
-			//if the user provides a type, either they are ceating a new version with the latest version of an existing type, or creating a new type
+			var typeExists = false;
+			//if the user provides a type, either they are creating a new version with the latest version of an existing type, or creating a new type
 			if(type && ($scope.template.meta && $scope.template.meta.curriculumName != type)){
-				var typeExists = false;
 				//set the template to the latest version of the curriculum if it exists. otherwise create a new type
 				for(i in $scope.curricula){
 					if($scope.curricula[i].type == type){
-						//get the last version in the array and set it equal to the template
-						$scope.setTemplate($scope.curricula[i].versions.slice(-1)[0]);
-						typeExists = true;
+						//get the master version and set it equal to the template
+						console.log("looking for master template");
+						for(j in $scope.curricula[i].versions){
+							if($scope.curricula[i].versions[j].meta.isMaster){
+								$scope.setTemplate($scope.curricula[i].versions[j]);
+								console.log("setting template as master");
+							}
+							typeExists = true;
+						}
 					}
 				}
 				if(!typeExists){
@@ -253,7 +259,8 @@ app.controller("curriculumController",
 										curriculumNumberOfWeeks: 0,
 										curriculumVersion: 1,
 										curriculumCreator: SessionService.get("currentUser"),
-										curriculumdateCreated: $scope.getDate() //set this to the current date as mm/dd/yy eventually
+										curriculumdateCreated: $scope.getDate(), //set this to the current date as mm/dd/yy eventually
+										isMaster: 1
 									},
 									weeks:[]
 								}
@@ -274,6 +281,8 @@ app.controller("curriculumController",
 			for(var item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.template.meta.curriculumName){
 					curriculum.meta.curriculumVersion = $scope.curricula[item].versions.length + 1;
+					//also, set isMaster to false, since the type exists already
+					curriculum.meta.isMaster = 0;
 				}
 			}
 			$scope.displayedCurriculum = curriculum;
@@ -302,7 +311,7 @@ app.controller("curriculumController",
 				$scope.curricula.push(newType);
 			}
 			
-			//format the displayed curriculum in preperation for persistence
+			//format the displayed curriculum in preparation for persistence
 			var curriculumDTO = {
 					meta:{
 						curriculum: $scope.displayedCurriculum.meta

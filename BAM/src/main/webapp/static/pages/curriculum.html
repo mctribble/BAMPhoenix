@@ -43,8 +43,8 @@
 												</a>
 											</div>
 											<div class="col col-xs-1">
-												<input type="radio" name="masterRadio{{version.meta.curriculumName}}" ng-click="setMaster(version)"> 
-												<span ng-if="version.meta.isMaster" style="color:blue;">&nbsp Master</span>
+												<input ng-if="!version.meta.isMaster" type="radio" name="masterRadio{{version.meta.curriculumName}}" ng-click="setMaster(version)"> 
+												<span ng-if="version.meta.isMaster" style="color:blue;">Master</span>
 											</div>
 										</div>
 									</div>
@@ -110,8 +110,6 @@
 								<button class="btn btn-md btn-danger text-right" 
 										ng-click="deleteWeek($index+1)" 
 										ng-disabled="!isEditable"
-										dnd-list="[]"
-										dnd-disable-if="!isEditable"
 										> X </button>
 							</div>
 						</div>
@@ -141,7 +139,16 @@
 												dnd-moved="day.subtopics.splice($index, 1); console.log($index)"
 												dnd-disable-if="!isEditable"	
 												>
-													{{subtopic.name}} 
+													<span class="day-list-item-header">
+														<button class="btn btn-danger btn-xs" 
+																style=" border-radius:0px;
+																		border-bottom-right-radius:8px;
+																		padding-top:3px;padding-bottom:3px;"
+																ng-click="day.subtopics.splice($index, 1)";
+																>X</button>
+													</span>
+														<span class="day-list-item-body">{{subtopic.name}}</span>
+													 
 											</li>
 										</ul>
 										<!-- ***************************** End Subtopic List***************************************** -->
