@@ -11,13 +11,13 @@
 	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		<div class="navbar-nav">
 			<a class="nav-item nav-link" href="#/calendar" ng-init="refresh()">Calendar</a>
-			<a class="nav-item nav-link" href="#/curriculum" ng-show="user.role>=2">Curriculum</a>
 			<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" 
-			aria-expanded="false" ng-show="user.role>=2"><span class="navbar-text">Batches</span></a>
+			aria-expanded="false" ng-show="user.role>=2"><span class="caret navbar-text">Batches</span></a>
 				<ul class="dropdown-menu">
 					<li class="dropdown-item"><a href="#/batchesAll" class="nodec">All Batches</a></li>
 					<li class="dropdown-item"><a href="#/myBatches" class="nodec">My Batches</a></li>
 				</ul>
+			<a class="nav-item nav-link" href="#/curriculum" ng-show="user.role>=2">Curriculum</a>
 		</div>
 	</div>
 	<div class="nav justify-content-end">

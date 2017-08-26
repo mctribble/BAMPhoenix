@@ -48,6 +48,8 @@ app.controller('dashboardController', function($http, $scope, SessionService, $l
 		$scope.trainerHasBatch = SessionService.get("trainerBatch");
 		$scope.userHasBatch = SessionService.get("currentUser").batch;
 		
+		console.log(SessionService.get("trainerBatch").id);
+		
 		if($scope.trainerHasBatch){
 			var currentDate = new Date().getTime();
 			

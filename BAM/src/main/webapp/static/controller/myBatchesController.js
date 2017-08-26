@@ -5,10 +5,6 @@ app.controller('myBatchesController', function($scope, SessionService, $rootScop
 {
 	$scope.msg;
 	
-	var batchId;
-	batchId = SessionService.get("trainerBatch").id;
-	console.log(batchId);
-	
 	var currentDate = new Date().getTime();
 	
 	$scope.getmyBatches = function(){
@@ -26,6 +22,7 @@ app.controller('myBatchesController', function($scope, SessionService, $rootScop
 				type = [];
 				batchStartDate = [];
 				batchEndDate = [];
+				batchId =[];
 			
 			for(var i=0; i < $scope.myBatches1.length; i++){
                 if($scope.myBatches1[i].endDate > currentDate && $scope.myBatches1[i].startDate < currentDate && $scope.myBatches1[i].trainer.userId == SessionService.get("currentUser").userId){
@@ -37,6 +34,7 @@ app.controller('myBatchesController', function($scope, SessionService, $rootScop
                     	type.push($scope.myBatches.type.name);
                     	batchStartDate.push($scope.myBatches.startDate);
                     	batchEndDate.push($scope.myBatches.endDate);
+                    	batchId.push($scope.myBatches.id);
                     	
                     	
                     	$scope.inMyBatch.push({
@@ -45,7 +43,8 @@ app.controller('myBatchesController', function($scope, SessionService, $rootScop
             		    		"trainerLNames": trainerLName[0], 
             		    		"types": type[0],
             		    		"startDates": batchStartDate[0],
-            		    		"endDates": batchEndDate[0]
+            		    		"endDates": batchEndDate[0],
+            		    		"batchId": batchId[0]
             		    });
                     	
                     	batchName = [];
@@ -54,24 +53,24 @@ app.controller('myBatchesController', function($scope, SessionService, $rootScop
    						type = [];
    						batchStartDate = [];
    						batchEndDate = [];
-            			
-                    	
-                } 
-		             
-                
-                    }
-
-		});
-	
+   						batchId = [];
+   						
+   						console.log($scope.inMyBatch); 
+                }
+                }
+		}); 
 	}
 	
+	
+	
 	$scope.goToBatch = function(batch){
-		SessionService.set("currentBatch", batch);
+		console.log(SessionService.get("trainerBatch"));
+		SessionService.set("trainerBatch", batch);
 		$http({
 			
-			url: "rest/api/v1/Calendar/Topics?batchId=" + batch.id,
-			method: 'GET'
-			
+			url: 'rest/api/v1/Calendar/Topics',
+			method: 'GET',
+			params: {batchId: batchId}
 		})
 		.then(function success(response){
 			SessionService.set("gotSubtopics", false);

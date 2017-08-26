@@ -39,7 +39,7 @@
 		  if(SessionService.get("currentBatch")){
 			  if(SessionService.get("currentBatch").endDate > currentDate){
 				  if(SessionService.get("currentBatch").trainer.id == SessionService.get("currentUser").id){
-					  SesssionService.set("trainerBatch", SessionService.get("currentBatch"));
+					  SessionService.set("trainerBatch", SessionService.get("currentBatch"));
 					  thisBatchId = SessionService.get("trainerBatch").id;
 					  SessionService.unset("currentBatch");
 				  }
