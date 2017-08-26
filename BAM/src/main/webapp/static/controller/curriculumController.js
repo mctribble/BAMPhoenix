@@ -246,12 +246,14 @@ app.controller("curriculumController",
 				};
 			$scope.displayedCurriculum.weeks.push(week);
 			$scope.displayedCurriculum.meta.curriculumNumberOfWeeks += 1;
+			$scope.setWeekProgressBars();
 		}
 		
 		$scope.deleteWeek = function(index){
 			if(confirm("Are you sure you want to delete week #" + index + "?")){
 				$scope.displayedCurriculum.weeks.splice(index-1, 1);
 				$scope.displayedCurriculum.meta.curriculumNumberOfWeeks -= 1;
+				$scope.setWeekProgressBars();
 			}
 		}
 		
@@ -417,6 +419,7 @@ app.controller("curriculumController",
 					},
 					weeks:$scope.displayedCurriculum.weeks
 			}
+			console.log($scope.displayedCurriculum.weeks);
 			//persist to the DB
 			$http({
 				method: 'POST',
@@ -429,7 +432,7 @@ app.controller("curriculumController",
 			}).then(function(){
 			});
 			
-			$scope.displayedCurriculum = null;
+//			$scope.displayedCurriculum = null;
 			$scope.template = null;
 		}
 		
