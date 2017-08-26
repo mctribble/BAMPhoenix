@@ -128,7 +128,6 @@ app.controller("curriculumController",
 		$scope.setWeekProgressBars = function(){
 			
 			if($scope.topicColors.length <= 0) return;
-			console.log("setting week progress bars");
 			if($scope.displayedCurriculum.meta.curriculumNumberOfWeeks){
 				var bars = document.getElementsByClassName("progress");
 				//clear the bars of their children
@@ -163,14 +162,8 @@ app.controller("curriculumController",
 					}
 					//calculate percentages and apply then to the progress bars:
 					var bar = bars[i];
-					console.log("bar");
-					console.log(bar);
-					console.log("total: " + total);
-					console.log("counts: ");
-					console.log(topicCounts);
 					//template: <div class="progress-bar" role="progressbar" style="width: 0%;"></div>
 					if(!total){
-						console.log("adding default (empty) bar");
 						var progress = document.createElement("div");
 						progress.classList.add("progress-bar");
 						progress.setAttribute("role", "progressbar");
@@ -178,14 +171,12 @@ app.controller("curriculumController",
 						progress.innerText = "No Topics";
 						bar.appendChild(progress);
 					}else{
-						console.log("adding topic portion bars");
 						//add a progress section for each parent topic:
 						for(m in topicCounts){
 							var topic = topicCounts[m];
 							var percent = (topic.count / total) * 100;
 							var progress = document.createElement("div");
 							var color = $scope.getTopicColor(topic.name);
-//							console.log(color);
 							progress.classList.add("progress-bar");
 							progress.setAttribute("role", "progressbar");
 							progress.setAttribute("style", "padding:6px; width:" + percent + "%; background-color:" + color + ";");
@@ -419,7 +410,6 @@ app.controller("curriculumController",
 					},
 					weeks:$scope.displayedCurriculum.weeks
 			}
-			console.log($scope.displayedCurriculum.weeks);
 			//persist to the DB
 			$http({
 				method: 'POST',
