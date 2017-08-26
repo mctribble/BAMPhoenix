@@ -13,6 +13,9 @@ download = function (content, filename, contentType) {
     a.download = filename;
 };
 
+
+
+
 app.controller("curriculumController",
 	
 	function($scope, $http, $q, SessionService) {
@@ -47,6 +50,9 @@ app.controller("curriculumController",
 		
 		//this object holds all curricula, which is an array of curriculum. Each has a type (eg java) and an array of versions. This will eventually be loaded via HTTP Get
 		$scope.curricula = [];
+		
+		//holds a list of the randomly generated colors of each parent topic type from the pool (displayed in progress bars)
+		$scope.topicColors = [];
 		
 		/* END OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
 		
@@ -100,6 +106,99 @@ app.controller("curriculumController",
 			if(dd < 10) dd = '0' + dd;
 			if(mm < 10) mm = '0' + mm;
 			return mm + '/' + dd + '/' + yyyy;
+		}
+		
+		$scope.getTopicColor = function(topicName){
+			for(i in $scope.topicColors){
+				var topic = $scope.topicColors[i];
+				if(topic.type == topicName){
+					return topic.color;
+				}
+			}
+		}
+		
+		$scope.setTopicColors = function(topics){
+			for(i in topics){
+				var topic = topics[i];
+				
+				//generate random color (hex)
+				var color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+				$scope.topicColors.push({'type': topic.name, 'color': color});
+				
+			}
+		}
+		
+		$scope.setWeekProgressBars = function(){
+			
+			if($scope.topicColors.length <= 0) return;
+			console.log("setting week progress bars");
+			if($scope.displayedCurriculum.meta.curriculumNumberOfWeeks){
+				var bars = document.getElementsByClassName("progress");
+				//clear the bars of their children
+				for(x in bars){
+					bars[x].innerHTML = '';
+				}
+				for(i in $scope.displayedCurriculum.weeks){
+					var week = $scope.displayedCurriculum.weeks[i];
+					
+					//algorithm: sum the number of subtopics of each topic and calc their percentages
+					var topicCounts = [];
+					var total = 0;
+					for(j in week.days){
+						var day = week.days[j];
+						for(k in day.subtopics){
+							var subtopic = day.subtopics[k];
+							//search topicCounts for existing topic key
+							var typeExists = false;
+							for(l in topicCounts){
+								if(topicCounts[l].name == subtopic.topic.name) {
+									topicCounts[l].count += 1;
+									total += 1;
+									typeExists = true;
+									break;
+								}
+							}
+							if(!typeExists){
+								topicCounts.push({name:subtopic.topic.name, count:1});
+								total += 1;
+							}
+						}
+					}
+					//calculate percentages and apply then to the progress bars:
+					var bar = bars[i];
+					console.log("bar");
+					console.log(bar);
+					console.log("total: " + total);
+					console.log("counts: ");
+					console.log(topicCounts);
+					//template: <div class="progress-bar" role="progressbar" style="width: 0%;"></div>
+					if(!total){
+						console.log("adding default (empty) bar");
+						var progress = document.createElement("div");
+						progress.classList.add("progress-bar");
+						progress.setAttribute("role", "progressbar");
+						progress.setAttribute("style", "padding:6px; width:100%; background-color:red");
+						progress.innerText = "No Topics";
+						bar.appendChild(progress);
+					}else{
+						console.log("adding topic portion bars");
+						//add a progress section for each parent topic:
+						for(m in topicCounts){
+							var topic = topicCounts[m];
+							var percent = (topic.count / total) * 100;
+							var progress = document.createElement("div");
+							var color = $scope.getTopicColor(topic.name);
+//							console.log(color);
+							progress.classList.add("progress-bar");
+							progress.setAttribute("role", "progressbar");
+							progress.setAttribute("style", "padding:6px; width:" + percent + "%; background-color:" + color + ";");
+							progress.innerText = topic.name;
+							bar.appendChild(progress);
+						}
+					}
+					
+				}
+			}
 		}
 		
 		$scope.requestCurriculum = function(curriculum){
@@ -213,6 +312,7 @@ app.controller("curriculumController",
 			}else{
 				//show the modal
 				$('#newCurriculumType').modal('show');
+				return $q.resolve(true)
 			}
 		}
 		
@@ -223,6 +323,9 @@ app.controller("curriculumController",
 				$scope.isEditable = false;
 				$scope.showBtn = true;
 				$scope.downloadXLS();
+				
+			}).then(function(){
+				setTimeout($scope.setWeekProgressBars, 500);
 			});
 			
 		}
@@ -236,11 +339,9 @@ app.controller("curriculumController",
 				for(i in $scope.curricula){
 					if($scope.curricula[i].type == type){
 						//get the master version and set it equal to the template
-						console.log("looking for master template");
 						for(j in $scope.curricula[i].versions){
 							if($scope.curricula[i].versions[j].meta.isMaster){
 								$scope.setTemplate($scope.curricula[i].versions[j]);
-								console.log("setting template as master");
 							}
 							typeExists = true;
 						}
@@ -287,6 +388,7 @@ app.controller("curriculumController",
 			}
 			$scope.displayedCurriculum = curriculum;
 			$scope.isEditable = true;
+			$scope.setWeekProgressBars();
 			//clear the modal box if it's got a value in it
 			document.getElementById("newCurriculumTypeNameInput").value = "";
 		}
@@ -393,7 +495,18 @@ app.controller("curriculumController",
 		
 		$scope.clearCurriculumView = function(){
 			if(confirm("Are you sure you want to clear the current template?")){
-				$scope.displayedCurriculum = null;
+				for(i in $scope.curricula){
+					if($scope.displayedCurriculum.meta.curriculumName == $scope.curricula[i].type){
+						for(j in $scope.curricula[i].versions){
+							var version = $scope.curricula[i].versions[j];
+							if(version.meta.isMaster){
+								$scope.displayedCurriculum = version;
+								break;								
+							}
+						}
+					}
+				}
+//				$scope.displayedCurriculum = null;
 //				$scope.template = null;
 			}
 		}
@@ -403,7 +516,7 @@ app.controller("curriculumController",
 		/* BEGIN TOPIC POOL FUNCTION DEFINITIONS */
 		
 		$scope.getTopicPool = function(){
-			$http({
+			return $http({
 				url: "rest/api/v1/Curriculum/TopicPool",
 				method: "GET",
 				
@@ -437,6 +550,7 @@ app.controller("curriculumController",
 						$scope.topics.push(newTopic);
 					}
 				}
+				return $scope.topics;
 			});
 		};	
 		
@@ -454,6 +568,10 @@ app.controller("curriculumController",
 						//addthe subtopic locally
 						$scope.topics[i].subtopics.push(newTopic);
 						
+						//generate random color (hex) for the new topic
+						var color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+						$scope.topicColors.push({'type': newTopic.name, 'color': color});
+
 						//persist the subtopic to the db
 						$http({
 							method:'POST',
@@ -488,7 +606,8 @@ app.controller("curriculumController",
 		/* BEGIN CONTROLLER BODY - EXECUTED ON PAGE LOAD */
 
 		//load the topic pool on page load
-		$scope.getTopicPool();
+		$scope.getTopicPool()
+		.then(function(topics){$scope.setTopicColors(topics)});
 
 		//get the curricula meta data on page load
 		$scope.getCurricula()
@@ -506,32 +625,20 @@ app.controller("curriculumController",
 				.then(function(newCurriculum){
 					//add newCurriculum as a version to the curricula type:
 					for(j in $scope.curricula){
-						if($scope.curricula[j].type == newCurriculum.curriculumName){
+						if($scope.curricula[j].type == newCurriculum.meta.curriculumName){
 							$scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
+							//load default master curriculum version on page load
+							if(newCurriculum.meta.curriculumName == $scope.DEFAULT_TYPE && newCurriculum.meta.isMaster){
+								$scope.displayedCurriculum = newCurriculum;
+								setTimeout($scope.setWeekProgressBars, 500);
+							}
 						}
 						
 					}
 					
 				});
 			}
-		}
-		)
-		//then load default type and version to load on page load
-		.then(function(){
-			for(i in $scope.curricula){
-				var curriculum = $scope.curricula[i];
-				if(curriculum.type == $scope.DEFAULT_TYPE){
-					for(j in curriculum.versions){
-						var version = curriculum.versions[j];
-						if(version.meta.isMaster){
-							$scope.displayedCurriculum = version;									
-							break;
-						}
-					}
-				}
-			}
-		})
-		;
+		});
 		/* END CONTROLLER BODY - EXECUTED ON PAGE LOAD */
 	}
 );

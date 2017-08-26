@@ -55,6 +55,10 @@
 /* MIDDLE */
 #weekAccordion .card-header .weekCardText{
 	color:black;
+	padding:10px;
+}
+
+#weekAccordion .card-header{
 }
 
 #curriculumView{
