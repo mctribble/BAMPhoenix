@@ -15,7 +15,6 @@ public interface BamUserRepository extends JpaRepository<BamUser, Integer>{
 	public BamUser findByEmail(String email);
 	public List<BamUser> findByBatch(Batch batch);
 	public List<BamUser> findByRole(int role);
-	
 	public List<BamUser> findByFNameAndLName(String f, String l);
 }
 

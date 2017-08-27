@@ -123,5 +123,5 @@ public class CurriculumController {
 		//save new master curriculum
 		curriculumService.save(c);
 	}
-	
+
 }
