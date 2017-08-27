@@ -303,14 +303,14 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
                      		}
              		}
              		
-             		for(var j = 0; j < $scope.topicArray.length ; j++){
+             		for(var z = 0; z < $scope.topicArray.length ; z++){
              			var docElement = document.getElementById("mainList");
              			var createLI = document.createElement("LI");
              			var createUL = document.createElement("UL");
-             			var textNode = document.createTextNode($scope.topicArray[j] + ":");
+             			var textNode = document.createTextNode($scope.topicArray[z] + ":");
              			
              			createLI.className += "listTitle";
-             			createUL.id = $scope.topicArray[j];
+             			createUL.id = $scope.topicArray[z];
              			
              			docElement.appendChild(createLI);
              			createLI.appendChild(textNode);

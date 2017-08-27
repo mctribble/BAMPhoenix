@@ -1,5 +1,7 @@
 package com.bam.exception;
 
+
+
 import javax.mail.MessagingException;
 
 import org.apache.log4j.Logger;
@@ -19,6 +21,7 @@ public class CustomException extends Exception {
 		logger.error(e);
 		
 	}
+
 	public CustomException(String string) {
 		super(string);
 	}
