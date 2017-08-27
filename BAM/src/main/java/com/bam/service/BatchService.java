@@ -2,14 +2,15 @@ package com.bam.service;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bam.bean.Batch;
 import com.bam.repository.BatchRepository;
 import com.bam.bean.BamUser;
 
+@Service
 @Transactional
 public class BatchService {
 	@Autowired
@@ -20,8 +21,6 @@ public class BatchService {
 	}
 
 	public Batch getBatchById(Integer id) {
-		Logger.getLogger(BatchService.class).fatal(batchRepository);
-	
 		return batchRepository.findById(id);
 	}
 
@@ -31,6 +30,6 @@ public class BatchService {
 	}
 
 	public List<Batch> getBatchByTrainer(BamUser trainer) {
-		return batchRepository.findByTrainer(trainer);
-	}
+    return batchRepository.findByTrainer(trainer);
+  }
 }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.bean.BamUser;
 import com.bam.bean.Batch;
-import com.bam.bean.CustomException;
 import com.bam.service.BamUserService;
 import com.bam.service.BatchService;
 import com.bam.service.PasswordGenerator;
@@ -89,7 +88,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="Register", method=RequestMethod.POST, produces="application/json")
-	public void addUser(@RequestBody BamUser currentUser) throws CustomException {
+	public void addUser(@RequestBody BamUser currentUser) throws Throwable {
 		if(userService.findUserByEmail(currentUser.getEmail())==null){
 			currentUser.setRole(1);
 			String password = currentUser.getPwd();
@@ -97,7 +96,7 @@ public class UserController {
 			currentUser.setPwd(hashed);
 			userService.addOrUpdateUser(currentUser);
 		} else {
-			throw new CustomException("Email exists in database");
+			throw new Throwable("Email exists in database");
 		}	
 	}
 
@@ -117,14 +116,14 @@ public class UserController {
 	 */
 
 	@RequestMapping(value="Reset", method=RequestMethod.POST, produces="application/java")
-	public void resetPassword(@RequestBody BamUser userNewPass) throws CustomException{
+	public void resetPassword(@RequestBody BamUser userNewPass) throws Throwable{
 		BamUser currentUser = userService.findUserByEmail(userNewPass.getEmail());
 		if(BCrypt.checkpw(userNewPass.getPwd(), currentUser.getPwd())){
 			String hashed =  BCrypt.hashpw(userNewPass.getPwd2(), BCrypt.gensalt());
 			currentUser.setPwd(hashed);
 			userService.addOrUpdateUser(currentUser);
 		}else{
-			throw new CustomException("Wrong password, password not changed");
+			throw new Throwable("Wrong password, password not changed");
 		}
 	}
 
