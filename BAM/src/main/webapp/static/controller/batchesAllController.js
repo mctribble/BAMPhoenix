@@ -9,8 +9,6 @@ var fixedstart=[];
 
 app.controller('batchesAllController', function($scope, SessionService, $rootScope, $analytics, $location, $http,$filter)
 {	
-	var batchId;
-	batchId = SessionService.get("trainerBatch").id;
 	$analytics.pageTrack('/batchesAll');
 	$scope.syncBatchesWithAssignForce = function(){
 		
