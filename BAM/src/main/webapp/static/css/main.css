@@ -173,15 +173,12 @@ button{
 }
 
 .navbar-text {
-    display: inline-block;
-    padding-top: .5rem;
-    padding-bottom: .425rem;
-   	padding-right: .5rem;
-   	padding-left: .5rem;
-}
-
-.navbar-text{
-	    cursor: pointer;
+	display: inline-block;
+	padding-top: .5rem;
+	padding-bottom: .425rem;
+	padding-right: .5rem;
+	padding-left: .5rem;
+	cursor: pointer;
 }
 
 .navbar-button {
