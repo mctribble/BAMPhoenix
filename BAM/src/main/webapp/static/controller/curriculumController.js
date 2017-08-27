@@ -249,24 +249,25 @@ app.controller("curriculumController",
 		}
 		
 		$scope.setMaster = function(curriculum){
-			if(confirm("Change master version to version #" + curriculum.meta.curriculumVersion + "?"))
-			//unset master in type:
-			for(i in $scope.curricula){
-				if($scope.curricula[i].type == curriculum.meta.curriculumName){
-					for(j in $scope.curricula[i].versions){
-						var version = $scope.curricula[i].versions[j];
-						version.meta.isMaster = false;
+			if(confirm("Change master version to version #" + curriculum.meta.curriculumVersion + "?")){
+				//unset master in type:
+				for(i in $scope.curricula){
+					if($scope.curricula[i].type == curriculum.meta.curriculumName){
+						for(j in $scope.curricula[i].versions){
+							var version = $scope.curricula[i].versions[j];
+							version.meta.isMaster = false;
+						}
 					}
 				}
+				
+				//set the new master
+				curriculum.meta.isMaster = true;
+				
+				$http({
+					url: "rest/api/v1/Curriculum/MakeMaster?curriculumId=" + curriculum.meta.curriculumId,
+					method: "GET",
+				})
 			}
-			
-			//set the new master
-			curriculum.meta.isMaster = true;
-			
-			$http({
-				url: "rest/api/v1/Curriculum/MakeMaster?curriculumId=" + curriculum.meta.curriculumId,
-				method: "GET",
-			})
 		}
 		
 		//when an existing curriculum is selected, it will be loaded into the template
@@ -490,6 +491,7 @@ app.controller("curriculumController",
 							var version = $scope.curricula[i].versions[j];
 							if(version.meta.isMaster){
 								$scope.displayedCurriculum = version;
+								$scope.isEditable = false;
 								break;								
 							}
 						}
