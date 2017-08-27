@@ -54,8 +54,7 @@ app.controller('myBatchesController', function($scope, SessionService, $rootScop
    						batchStartDate = [];
    						batchEndDate = [];
    						batchId = [];
-   						
-   						console.log($scope.inMyBatch); 
+   					
                 }
                 }
 		}); 
