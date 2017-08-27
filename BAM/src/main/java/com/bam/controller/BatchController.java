@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.logging.log4j.LogManager;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +23,7 @@ import com.bam.service.BatchService;
 @RequestMapping(value = "/api/v1/Batches/")
 public class BatchController {
 
-  private static final String EMAIL = "email";
+  private final static String email = "email";
 
   @Autowired
   BatchService batchService;
@@ -42,7 +41,7 @@ public class BatchController {
   @ResponseBody
 
   public List<Batch> getPastBatches(HttpServletRequest request) {
-    List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
+    List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(email)));
 
     List<Batch> pastBatches = new ArrayList<>();
     for (Batch b : batches) {
@@ -57,7 +56,7 @@ public class BatchController {
   @ResponseBody
 
   public List<Batch> getFutureBatches(HttpServletRequest request) {
-    List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
+    List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(email)));
 
     List<Batch> futureBatches = new ArrayList<>();
     for (Batch b : batches) {
@@ -72,7 +71,7 @@ public class BatchController {
   @ResponseBody
 
   public Batch getBatchInProgress(HttpServletRequest request) {
-    List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
+    List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(email)));
 
     Batch batchInProgress = null;
     Timestamp t = new Timestamp(System.currentTimeMillis());
@@ -91,7 +90,7 @@ public class BatchController {
     try {
       currentBatch = new ObjectMapper().readValue(jsonObject, Batch.class);
     } catch (IOException e) {
-      LogManager.getRootLogger().error(e);
+      e.printStackTrace();
     }
 
     batchService.addOrUpdateBatch(currentBatch);
@@ -100,8 +99,7 @@ public class BatchController {
   @RequestMapping(value = "ById", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
   public Batch getBatchById(HttpServletRequest request) {
-
     return batchService.getBatchById(Integer.parseInt(request.getParameter("batchId")));
-
   }
+
 }
