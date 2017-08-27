@@ -68,4 +68,5 @@ public class LoggerClass {
 
     return proceedObj;
   }
+
 }

@@ -11,14 +11,16 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.logging.log4j.LogManager;
-import org.springframework.stereotype.Service;
 
-@Service
 public class MailService {
 
   public static void sendMail(String email, String newPassword) {
-    final String USERNAME = "revabam@gmail.com";
-    final String PASSWORD = "testing123";
+
+    // Use "System.getenv" to get the value of the specified environment
+    // variable
+    final String EMAILUSERNAME = System.getenv("EMAIL_USERNAME");
+    final String EMAILPASSWORD = System.getenv("EMAIL_PASSWORD");
+
     String receiver = email; // user.getemail
 
     Properties props = new Properties();
@@ -29,13 +31,15 @@ public class MailService {
 
     Session session = Session.getInstance(props, new javax.mail.Authenticator() {
       protected PasswordAuthentication getPasswordAuthentication() {
-        return new PasswordAuthentication(USERNAME, PASSWORD);
+        return new PasswordAuthentication(EMAILUSERNAME, EMAILPASSWORD);
       }
     });
     try {
+
       MimeMessage message = new MimeMessage(session);
-      message.setFrom(new InternetAddress(USERNAME));
+      message.setFrom(new InternetAddress(EMAILUSERNAME));
       message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiver));
+
       message.setSubject("Recover Password");
       message.setText("Hi! Your New temporary password is: \n " + newPassword + "\n" + "" + " " + "\n"
           + "Upon Logging in, please click the dropdown menu where your name is located and select reset password to set"
@@ -49,4 +53,5 @@ public class MailService {
       LogManager.getRootLogger().error(e);
     }
   }
+
 }

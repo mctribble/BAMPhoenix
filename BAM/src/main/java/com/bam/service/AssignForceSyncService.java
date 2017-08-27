@@ -98,7 +98,7 @@ public class AssignForceSyncService {
         // batch.
         if (!BAMtrainers.isEmpty() && BAMtrainers.get(0).getRole() == 2) {
           bamUser = BAMtrainers.get(0);
-          bamUser.setAssignForce_ID(batch.getTrainer().getTrainerId());
+          bamUser.setAssignForceID(batch.getTrainer().getTrainerId());
           currentBatch.setTrainer(bamUser);
         }
 
@@ -110,4 +110,5 @@ public class AssignForceSyncService {
       }
     }
   }
+
 }

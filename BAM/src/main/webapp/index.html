@@ -11,6 +11,18 @@
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-105106313-1', 'auto');
+  ga('create', 'UA-105106313-2', 'auto');
+  ga('set', 'page', '/home');
+  ga('send', 'pageview');
+  ga('set', 'page', '/calendar');
+  ga('send', 'pageview');
+  ga('set', 'page', '/batchesAll');
+  ga('send', 'pageview');
+  ga('set', 'page', '/curriculum');
+  ga('send', 'pageview');
+  ga('set', 'page', '/associates');
+  ga('send', 'pageview');
+  ga('set', 'page', '/update');
   ga('send', 'pageview');
 
 </script>
@@ -48,7 +60,7 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
 
 <!-- Drag n Drop library (used in curriculum view)-->
-<script src="static/js/angular-drag-and-drop-lists.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-drag-and-drop-lists/2.1.0/angular-drag-and-drop-lists.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angulartics/1.4.0/angulartics.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angulartics-google-analytics/0.4.0/angulartics-ga.min.js"></script>
@@ -56,6 +68,7 @@
 <script src="static/js/app.js"></script>
 <script src="static/js/service.js"></script>
 <script src="static/js/subtopicService.js"></script>
+<script src="static/js/googleAnalytics.js"></script>
 
 <!-- import controllers -->
 <script src="static/controller/calendarController.js"></script>
@@ -73,7 +86,11 @@
 <script src="static/controller/dashboardController.js"></script>
 <script src="static/controller/passwordResetController.js"></script>
 <script src="static/controller/forgotPasswordController.js"></script>
+<script src="static/controller/addSubtopicController.js"></script>
 <script src="static/controller/noBatchController.js"></script>
+<script src="static/controller/SubtopicAddController.js"></script>
+
+<script src="static/js/excel.js"></script>
 
 <link rel="stylesheet" type="text/css"
 	href="static/css/fullcalendar.css" />
@@ -128,7 +145,7 @@
 
 <title>BAM</title>
 </head>
-<body class="main">
+<body class="main" ng-controller="analyticsCtrl">
 
 	<div class ="navbar" ng-include="'static/pages/navbar.html'"></div>
 	<div id="page-wrap">
