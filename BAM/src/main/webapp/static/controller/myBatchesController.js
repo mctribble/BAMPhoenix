@@ -30,7 +30,6 @@ app.controller('myBatchesController', function($scope, SessionService, $rootScop
 	
 	$scope.goToBatch = function(batch){
 		SessionService.set("currentBatch", batch);
-		console.log(batch);
 		SessionService.unset("futureBatch");
 		$http({
 			
