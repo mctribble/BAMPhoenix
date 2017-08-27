@@ -1,5 +1,5 @@
 //local functions
-download = function (content, filename, contentType) {
+var download = function (content, filename, contentType) {
     if (!contentType) contentType = 'application/octet-stream';
     var a = document.getElementById('xlsDownload');
     var blob = new Blob([content], {
@@ -327,7 +327,7 @@ app.controller("curriculumController",
 			//if the user provides a type, either they are creating a new version with the latest version of an existing type, or creating a new type
 			if(type && ($scope.template.meta && $scope.template.meta.curriculumName != type)){
 				//set the template to the latest version of the curriculum if it exists. otherwise create a new type
-				for(i in $scope.curricula){
+				for(var i in $scope.curricula){
 					if($scope.curricula[i].type == type){
 						//get the master version and set it equal to the template
 						for(j in $scope.curricula[i].versions){
@@ -471,7 +471,7 @@ app.controller("curriculumController",
 						};
 						
 						//ensure the object at the required index exists before trying to overwrite it
-						for(var i = 0; i < curriculum.curriculumVersion - 1; i++){
+						for(var m = 0; m < curriculum.curriculumVersion - 1; m++){
 							newCurriculum2.versions.push({});
 						}
 						
@@ -520,7 +520,7 @@ app.controller("curriculumController",
 					//raise flag if there exists a a topic of this type already
 					var topicExists = false;
 					//determine if $scope.topics has a type of topic.Name already. If so add the subtopic to the existing list
-					for(j in $scope.topics){
+					for(var j in $scope.topics){
 						//perform the check mentioned above
 						if($scope.topics[j] && topic.topic && $scope.topics[j].name == topic.topic.name){
 							//raise the flag
@@ -576,17 +576,17 @@ app.controller("curriculumController",
 					}
 				}
 			}else{
-				var newTopic = {
+				var newTopic2 = {
 						id: $scope.topics.length,
 						name: input,
 						subtopics: []
 				}
-				$scope.topics.push(newTopic);
+				$scope.topics.push(newTopic2);
 				$http({
 					method: 'POST',
 					url: 'rest/api/v1/Topic/Add',
 					params: {
-						name:newTopic.name
+						name:newTopic2.name
 					}
 				});
 			}

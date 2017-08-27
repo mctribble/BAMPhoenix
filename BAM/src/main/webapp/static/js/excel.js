@@ -1,10 +1,10 @@
-testTypes = {
+var testTypes = {
     "Week": "Number",
     "Day": "Number",
     "Subtopic": "String"
 };
 
-emitXmlHeader = function () {
+var emitXmlHeader = function () {
     var headerRow =  '<ss:Row>\n';
     for (var colName in testTypes) {
         headerRow += '  <ss:Cell>\n';
@@ -19,13 +19,13 @@ emitXmlHeader = function () {
            '<ss:Table>\n\n' + headerRow;
 };
 
-emitXmlFooter = function() {
+var emitXmlFooter = function() {
     return '\n</ss:Table>\n' +
            '</ss:Worksheet>\n' +
            '</ss:Workbook>\n';
 };
 
-jsonToSsXml = function (jsonObject) {
+var jsonToSsXml = function (jsonObject) {
     var row;
     var col;
     var xml;
