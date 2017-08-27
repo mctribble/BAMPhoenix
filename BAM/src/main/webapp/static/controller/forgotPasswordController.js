@@ -18,13 +18,15 @@ app.controller('forgotPasswordController', function ($rootScope, $scope, Session
 		.then(function success(response){
 			$location.path('/');
 			$scope.message = true;
-			$scope.msg2 = 'Email sent. Please check your inbox for account recovery option.';
-			
+			$scope.msg = 'Email sent. Please check your inbox for account recovery option.';
+			$scope.alertClass = 'alert alert-success';			
 			},  
 			function error(response){
 				$location.path('/');
 				$scope.message = true;
-				$scope.msg2 = 'User does not exist in the system';
+				$scope.msg = 'User does not exist in the system';
+				$scope.alertClass = 'alert alert-danger';
+
 			});
 		}
 });

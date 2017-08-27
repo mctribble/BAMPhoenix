@@ -35,10 +35,10 @@
 				</p>
 				<div id="demo" class="collapse" ng-controller= "forgotPasswordController">
 					<input type="email" placeholder="enter email address" ng-model="email"> 
-					<button class="btn btn-primary createPointer" ng-click="forgot()">Submit</button>
-					<p ng-show= "message" class= "alert alert-danger"
-					id = "wrong-credentials">{{msg2}}</p>
-				</div>
+
+					<button class="btn btn-primary" ng-click="forgot()">Submit</button>
+					<p ng-show= "message" ng-class= "alertClass"
+					id = "wrong-credentials">{{msg}}</p>
   
   	</div>
 		</div>
