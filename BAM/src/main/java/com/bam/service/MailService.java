@@ -21,12 +21,8 @@ public class MailService {
 	public static void sendMail(String email, String newPassword) {
 		Logger logger = Logger.getLogger(LoggerClass.class);
 
-
-		
-		//Use "System.getenv" to get the value of the specified environment variable 
-		    final String EMAILUSERNAME = System.getenv("EMAIL_USERNAME");
+		final String EMAILUSERNAME = System.getenv("EMAIL_USERNAME");
         final String EMAILPASSWORD = System.getenv("EMAIL_PASSWORD");
-		
 
         String receiver= email; //user.getemail
         
