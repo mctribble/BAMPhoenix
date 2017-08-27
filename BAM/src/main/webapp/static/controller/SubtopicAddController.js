@@ -125,10 +125,6 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
         			
         			$scope.stDate = prevdate;
         			$scope.selDate = newDate;
-        			        			
-        			//displaying previous and selected date for easier testing
-        			console.log('Original Date : '+prevdate);
-        			console.log('Selected Date : '+newDate);
     
         			if($scope.stDate.getMonth() == $scope.selDate.getMonth() && $scope.stDate.getDate() == $scope.selDate.getDate()){
         				console.log("These dates are equal!")
