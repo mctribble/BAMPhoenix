@@ -52,7 +52,7 @@ public class SubtopicService {
 		try {
 			date = dateFormat.parse("23/09/2017");
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new CustomException(e);
 		}
 		long time = date.getTime();
 		Timestamp ts = new Timestamp(time);

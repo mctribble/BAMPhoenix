@@ -1,4 +1,4 @@
-/**
+	/**
  * @author Sarah Kummerfeldt 
  * @author Kosiba Oshodi-Glover
  */
@@ -48,7 +48,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 		$scope.noBatch = SessionService.get("currentUser").userId;
 		$scope.trainerHasBatch = SessionService.get("trainerBatch");
 		$scope.userHasBatch = SessionService.get("currentUser").batch;
-		
+				
 		if($scope.trainerHasBatch){
 			var currentDate = new Date().getTime();
 			
@@ -96,24 +96,24 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 				}
 			}).then(function(response){
 				$scope.usersInBatch = response.data
-				
 				$scope.listNames = [];
 
 			    		var firstNames= [];
 						var lastNames= [];
-
-			    
-				
+				$scope.numOfAssociates = 0;
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
 					$scope.batchUsers = $scope.usersInBatch[i];
-				    
+									    
 				    firstNames.push($scope.batchUsers.fName);
 					lastNames.push($scope.batchUsers.lName);
+					
+					$scope.numOfAssociates += 1;
 					
 					$scope.listNames[i] = {
 				    		"firstName": firstNames[i],
 				    		"lastName": lastNames[i]
 				    };
+					
 				}
 			})
 		}else if($scope.userHasBatch){
@@ -144,7 +144,8 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 				    return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
 				}
 				
-				var difference = weeksBetween2($scope.currentBatchStart1, currentDate);
+				var difference = weeksBetween2($scope.currentBatchStart1, currentDate2);
+
 				$scope.weekNum = difference;
 						
 			$http({
@@ -161,7 +162,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 			    		var firstNames= [];
 						var lastNames= [];
 
-			    
+				$scope.numOfAssociates = 0;
 				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
 					$scope.batchUsers = $scope.usersInBatch[i];
@@ -170,6 +171,8 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 					    firstNames.push($scope.batchUsers.fName);
 						lastNames.push($scope.batchUsers.lName);
 						
+						$scope.numOfAssociates += 1;
+						
 						$scope.listNames[i] = {
 					    		"firstName": firstNames[i],
 					    		"lastName": lastNames[i]
@@ -177,6 +180,9 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 				    }else{
 				    	$scope.listNames = 'N/A';
 				    }
+				    $scope.trainerInBatch = SessionService.get("currentUser").batch.trainer.fName;
+				    $scope.trainerInBatchLast = SessionService.get("currentUser").batch.trainer.lName;
+				    
 				}
 			})
 			} else {
@@ -271,6 +277,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
             		 * Populates dynamic list of missed subtopics and their respective topics
             		 */
 
+
              		for(var j = 0; j < $scope.subTopics.length ; j++) {
                 		var stat= response.data[j].status.id;
                  		
@@ -303,14 +310,14 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
                      		}
              		}
              		
-             		for(var j = 0; j < $scope.topicArray.length ; j++){
+             		for(var z = 0; z < $scope.topicArray.length ; z++){
              			var docElement = document.getElementById("mainList");
              			var createLI = document.createElement("LI");
              			var createUL = document.createElement("UL");
-             			var textNode = document.createTextNode($scope.topicArray[j] + ":");
+             			var textNode = document.createTextNode($scope.topicArray[z] + ":");
              			
              			createLI.className += "listTitle";
-             			createUL.id = $scope.topicArray[j];
+             			createUL.id = $scope.topicArray[z];
              			
              			docElement.appendChild(createLI);
              			createLI.appendChild(textNode);
@@ -355,6 +362,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
                      			}
                      		}
              		}
+            		
              	}).finally(function() {
             		$scope.loading = false;
             	});

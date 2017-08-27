@@ -8,7 +8,6 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 
 	$rootScope.user;
 	$scope.msg;
-	$rootScope.trainerBatch;
 	$analytics.pageTrack('/login');
 	$scope.logIn = function() {
 		var user = {

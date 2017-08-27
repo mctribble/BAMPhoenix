@@ -35,18 +35,23 @@
 		</div>
 		
 				
+
 		<div id="pan3" class="col-md-6 pan3">
 			<h2 ng-hide="!trainerHasBatch || !userHasBatch">Batch Week: {{weekNum + 1}}</h2>
 			<h2 ng-show="!trainerHasBatch || !userHasBatch">Batch Week: {{weekNum}}</h2>
-				<h3 ng-show="trainerHasBatch || userHasBatch">Associates in batch:</h3>
+				<h3 ng-show="userHasBatch">Trainer in Batch:</h3>
+				<ul>
+				 <li>{{trainerInBatch}}&nbsp{{trainerInBatchLast}}</li>
+				</ul>
+				<h3 ng-show="trainerHasBatch && numOfAssociates != 0">Associates in batch:</h3>
 				<ul class="makeColumns">
 				 <li ng-repeat="list in listNames">{{list.firstName}}&nbsp{{list.lastName}}</li>
 				</ul>
 		</div>
 		</div>
 		
-		
 		<div class="col-md-12" id="pan4" ng-init="returnMissed()" ng-show="trainerHasBatch || userHasBatch">
+			<h3 ng-show= "user.role == 1 || count == 0">Batch Progress <img ng-show="loading" src="static/img/loading.gif" id="loadingPic"></img></h3>
 			<!-- Progress completed by day -->
 			<div ng-show="userHasBatch && !loading || trainerHasBatch && !loading">
 				Batch Progress By Day:
@@ -57,7 +62,7 @@
   					</div>
 				</div>
 			</div>
-			<div ng-show="userHasBatch && !loading || trainerHasBatch && !loading">
+			<div ng-show="userHasBatch && !loading && count != 0 || trainerHasBatch && !loading && count != 0">
 				Batch Progress By Subtopic:
 				<div class="progress" >
   					<div class="progress-bar progress-bar-striped active" role="progressbar"
@@ -66,12 +71,13 @@
   					</div>
 				</div>
 			</div>
-			<h3>Topics Missed<img ng-show="loading" src="static/img/loading.gif" id="loadingPic"></img></h3>
-			<p id="missedCount" ng-hide="loading">{{ count }} / {{ totalSub }} missed topics</p>
-			<ul class="mainList" id="mainList" ng-hide="loading">
+			<div ng-hide="userHasBatch">
+			<h3 ng-hide= "count == 0 || user.role == 1">Topics Missed<img ng-show="loading" src="static/img/loading.gif" id="loadingPic"></img></h3>
+			<p id="missedCount" ng-hide="loading || count == 0 || user.role == 1">{{ count }} / {{ totalSub }} missed topics</p>
+			<ul class="mainList" id="mainList" ng-hide="loading || count == 0 || user.role == 1">
 			</ul>
 		</div>
-		
+		</div>
 
  </div>
 </div>

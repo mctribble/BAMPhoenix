@@ -1,9 +1,5 @@
-/**
- * Defines a controller to handle DOM manipulation of the Curriculum HTML page
- * @Author Brian McKalip
- */
-
-download = function (content, filename, contentType) {
+//local functions
+var download = function (content, filename, contentType) {
     if (!contentType) contentType = 'application/octet-stream';
     var a = document.getElementById('xlsDownload');
     var blob = new Blob([content], {
@@ -13,8 +9,11 @@ download = function (content, filename, contentType) {
     a.download = filename;
 };
 
-app.controller(
-	"curriculumController",
+/**
+ * Defines a controller to handle DOM manipulation of the Curriculum HTML page
+ * @Author Brian McKalip
+ */
+app.controller("curriculumController",
 	
 	function($scope, $http, $q, SessionService) {
 		/* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
@@ -23,6 +22,9 @@ app.controller(
 		
 		//constant array defining valid days of the week 
 		$scope.weekdays = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" ];
+		
+		//default type to load on page load
+		$scope.DEFAULT_TYPE = "Java";
 		
 		//list of available topics in the topic pool.
 		$scope.topics = [];
@@ -45,6 +47,9 @@ app.controller(
 		
 		//this object holds all curricula, which is an array of curriculum. Each has a type (eg java) and an array of versions. This will eventually be loaded via HTTP Get
 		$scope.curricula = [];
+		
+		//holds a list of the randomly generated colors of each parent topic type from the pool (displayed in progress bars)
+		$scope.topicColors = [];
 		
 		/* END OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
 		
@@ -74,7 +79,6 @@ app.controller(
 		
 		/* BEGIN UTILITY FUNCTIONS */
 		$scope.sanitizeString = function(str){
-
 			if(str){
 				//replace spaces with underscores
 				str = str.replace(' ', '_');
@@ -99,6 +103,90 @@ app.controller(
 			if(dd < 10) dd = '0' + dd;
 			if(mm < 10) mm = '0' + mm;
 			return mm + '/' + dd + '/' + yyyy;
+		}
+		
+		$scope.getTopicColor = function(topicName){
+			for(i in $scope.topicColors){
+				var topic = $scope.topicColors[i];
+				if(topic.type == topicName){
+					return topic.color;
+				}
+			}
+		}
+		
+		$scope.setTopicColors = function(topics){
+			for(i in topics){
+				var topic = topics[i];
+				
+				//generate random color (hex)
+				var color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+				$scope.topicColors.push({'type': topic.name, 'color': color});
+				
+			}
+		}
+		
+		$scope.setWeekProgressBars = function(){
+			
+			if($scope.topicColors.length <= 0) return;
+			if($scope.displayedCurriculum.meta.curriculumNumberOfWeeks){
+				var bars = document.getElementsByClassName("progress");
+				//clear the bars of their children
+				for(x in bars){
+					bars[x].innerHTML = '';
+				}
+				for(i in $scope.displayedCurriculum.weeks){
+					var week = $scope.displayedCurriculum.weeks[i];
+					
+					//algorithm: sum the number of subtopics of each topic and calc their percentages
+					var topicCounts = [];
+					var total = 0;
+					for(j in week.days){
+						var day = week.days[j];
+						for(k in day.subtopics){
+							var subtopic = day.subtopics[k];
+							//search topicCounts for existing topic key
+							var typeExists = false;
+							for(l in topicCounts){
+								if(topicCounts[l].name == subtopic.topic.name) {
+									topicCounts[l].count += 1;
+									total += 1;
+									typeExists = true;
+									break;
+								}
+							}
+							if(!typeExists){
+								topicCounts.push({name:subtopic.topic.name, count:1});
+								total += 1;
+							}
+						}
+					}
+					//calculate percentages and apply then to the progress bars:
+					var bar = bars[i];
+					//template: <div class="progress-bar" role="progressbar" style="width: 0%;"></div>
+					if(!total){
+						var progress = document.createElement("div");
+						progress.classList.add("progress-bar");
+						progress.setAttribute("role", "progressbar");
+						progress.setAttribute("style", "padding:6px; width:100%; background-color:red");
+						progress.innerText = "No Topics";
+						bar.appendChild(progress);
+					}else{
+						//add a progress section for each parent topic:
+						for(m in topicCounts){
+							var topic = topicCounts[m];
+							var percent = (topic.count / total) * 100;
+							var progress = document.createElement("div");
+							var color = $scope.getTopicColor(topic.name);
+							progress.classList.add("progress-bar");
+							progress.setAttribute("role", "progressbar");
+							progress.setAttribute("style", "padding:6px; width:" + percent + "%; background-color:" + color + ";");
+							progress.innerText = topic.name;
+							bar.appendChild(progress);
+						}
+					}
+					
+				}
+			}
 		}
 		
 		$scope.requestCurriculum = function(curriculum){
@@ -149,19 +237,43 @@ app.controller(
 				};
 			$scope.displayedCurriculum.weeks.push(week);
 			$scope.displayedCurriculum.meta.curriculumNumberOfWeeks += 1;
+			$scope.setWeekProgressBars();
 		}
 		
 		$scope.deleteWeek = function(index){
 			if(confirm("Are you sure you want to delete week #" + index + "?")){
 				$scope.displayedCurriculum.weeks.splice(index-1, 1);
 				$scope.displayedCurriculum.meta.curriculumNumberOfWeeks -= 1;
+				$scope.setWeekProgressBars();
+			}
+		}
+		
+		$scope.setMaster = function(curriculum){
+			if(confirm("Change master version to version #" + curriculum.meta.curriculumVersion + "?")){
+				//unset master in type:
+				for(i in $scope.curricula){
+					if($scope.curricula[i].type == curriculum.meta.curriculumName){
+						for(j in $scope.curricula[i].versions){
+							var version = $scope.curricula[i].versions[j];
+							version.meta.isMaster = false;
+						}
+					}
+				}
+				
+				//set the new master
+				curriculum.meta.isMaster = true;
+				
+				$http({
+					url: "rest/api/v1/Curriculum/MakeMaster?curriculumId=" + curriculum.meta.curriculumId,
+					method: "GET",
+				})
 			}
 		}
 		
 		//when an existing curriculum is selected, it will be loaded into the template
 		$scope.setTemplate = function(curriculum){
-			if($scope.displayedCurriculum && $scope.displayedCurriculum.meta.curriculumName){
-				if(!confirm("There is currently a template loaded. Are you sure you want to overwrite this template?")){
+			if($scope.displayedCurriculum && $scope.isEditable){
+				if(!confirm("There are unsaved changes on the template you are working on. Are you sure you want to overwrite this template?")){
 					//return a valid promise
 					return $q.resolve(true);
 				}
@@ -191,6 +303,7 @@ app.controller(
 			}else{
 				//show the modal
 				$('#newCurriculumType').modal('show');
+				return $q.resolve(true)
 			}
 		}
 		
@@ -201,21 +314,28 @@ app.controller(
 				$scope.isEditable = false;
 				$scope.showBtn = true;
 				$scope.downloadXLS();
+				
+			}).then(function(){
+				setTimeout($scope.setWeekProgressBars, 500);
 			});
 			
 		}
 			
 		//create a new curriculum with the template, if the template is null, a new curriculum will be created
 		$scope.newCurriculum = function(type){
-			//if the user provides a type, either they are ceating a new version with the latest version of an existing type, or creating a new type
+			var typeExists = false;
+			//if the user provides a type, either they are creating a new version with the latest version of an existing type, or creating a new type
 			if(type && ($scope.template.meta && $scope.template.meta.curriculumName != type)){
-				var typeExists = false;
 				//set the template to the latest version of the curriculum if it exists. otherwise create a new type
-				for(i in $scope.curricula){
+				for(var i in $scope.curricula){
 					if($scope.curricula[i].type == type){
-						//get the last version in the array and set it equal to the template
-						$scope.setTemplate($scope.curricula[i].versions.slice(-1)[0]);
-						typeExists = true;
+						//get the master version and set it equal to the template
+						for(j in $scope.curricula[i].versions){
+							if($scope.curricula[i].versions[j].meta.isMaster){
+								$scope.setTemplate($scope.curricula[i].versions[j]);
+							}
+							typeExists = true;
+						}
 					}
 				}
 				if(!typeExists){
@@ -231,7 +351,8 @@ app.controller(
 										curriculumNumberOfWeeks: 0,
 										curriculumVersion: 1,
 										curriculumCreator: SessionService.get("currentUser"),
-										curriculumdateCreated: $scope.getDate() //set this to the current date as mm/dd/yy eventually
+										curriculumdateCreated: $scope.getDate(), //set this to the current date as mm/dd/yy eventually
+										isMaster: 1
 									},
 									weeks:[]
 								}
@@ -252,10 +373,13 @@ app.controller(
 			for(var item in $scope.curricula){
 				if($scope.curricula[item].type == $scope.template.meta.curriculumName){
 					curriculum.meta.curriculumVersion = $scope.curricula[item].versions.length + 1;
+					//also, set isMaster to false, since the type exists already
+					curriculum.meta.isMaster = 0;
 				}
 			}
 			$scope.displayedCurriculum = curriculum;
 			$scope.isEditable = true;
+			$scope.setWeekProgressBars();
 			//clear the modal box if it's got a value in it
 			document.getElementById("newCurriculumTypeNameInput").value = "";
 		}
@@ -280,7 +404,7 @@ app.controller(
 				$scope.curricula.push(newType);
 			}
 			
-			//format the displayed curriculum in preperation for persistence
+			//format the displayed curriculum in preparation for persistence
 			var curriculumDTO = {
 					meta:{
 						curriculum: $scope.displayedCurriculum.meta
@@ -299,7 +423,7 @@ app.controller(
 			}).then(function(){
 			});
 			
-			$scope.displayedCurriculum = null;
+//			$scope.displayedCurriculum = null;
 			$scope.template = null;
 		}
 		
@@ -347,7 +471,7 @@ app.controller(
 						};
 						
 						//ensure the object at the required index exists before trying to overwrite it
-						for(var i = 0; i < curriculum.curriculumVersion - 1; i++){
+						for(var m = 0; m < curriculum.curriculumVersion - 1; m++){
 							newCurriculum2.versions.push({});
 						}
 						
@@ -361,7 +485,19 @@ app.controller(
 		
 		$scope.clearCurriculumView = function(){
 			if(confirm("Are you sure you want to clear the current template?")){
-				$scope.displayedCurriculum = null;
+				for(i in $scope.curricula){
+					if($scope.displayedCurriculum.meta.curriculumName == $scope.curricula[i].type){
+						for(j in $scope.curricula[i].versions){
+							var version = $scope.curricula[i].versions[j];
+							if(version.meta.isMaster){
+								$scope.displayedCurriculum = version;
+								$scope.isEditable = false;
+								break;								
+							}
+						}
+					}
+				}
+//				$scope.displayedCurriculum = null;
 //				$scope.template = null;
 			}
 		}
@@ -371,7 +507,7 @@ app.controller(
 		/* BEGIN TOPIC POOL FUNCTION DEFINITIONS */
 		
 		$scope.getTopicPool = function(){
-			$http({
+			return $http({
 				url: "rest/api/v1/Curriculum/TopicPool",
 				method: "GET",
 				
@@ -384,7 +520,7 @@ app.controller(
 					//raise flag if there exists a a topic of this type already
 					var topicExists = false;
 					//determine if $scope.topics has a type of topic.Name already. If so add the subtopic to the existing list
-					for(j in $scope.topics){
+					for(var j in $scope.topics){
 						//perform the check mentioned above
 						if($scope.topics[j] && topic.topic && $scope.topics[j].name == topic.topic.name){
 							//raise the flag
@@ -405,6 +541,7 @@ app.controller(
 						$scope.topics.push(newTopic);
 					}
 				}
+				return $scope.topics;
 			});
 		};	
 		
@@ -422,6 +559,10 @@ app.controller(
 						//addthe subtopic locally
 						$scope.topics[i].subtopics.push(newTopic);
 						
+						//generate random color (hex) for the new topic
+						var color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+						$scope.topicColors.push({'type': newTopic.name, 'color': color});
+
 						//persist the subtopic to the db
 						$http({
 							method:'POST',
@@ -435,17 +576,17 @@ app.controller(
 					}
 				}
 			}else{
-				var newTopic = {
+				var newTopic2 = {
 						id: $scope.topics.length,
 						name: input,
 						subtopics: []
 				}
-				$scope.topics.push(newTopic);
+				$scope.topics.push(newTopic2);
 				$http({
 					method: 'POST',
 					url: 'rest/api/v1/Topic/Add',
 					params: {
-						name:newTopic.name
+						name:newTopic2.name
 					}
 				});
 			}
@@ -456,28 +597,39 @@ app.controller(
 		/* BEGIN CONTROLLER BODY - EXECUTED ON PAGE LOAD */
 
 		//load the topic pool on page load
-		$scope.getTopicPool();
+		$scope.getTopicPool()
+		.then(function(topics){$scope.setTopicColors(topics)});
 
 		//get the curricula meta data on page load
 		$scope.getCurricula()
-		//then load the first version of each curriculum type
+		//then load the master versions of each curriculum type
 		.then(function(){
 			for(i in $scope.curricula){
-				var latestVersion = $scope.curricula[i].versions.slice(-1)[0];
-				$scope.requestCurriculum(latestVersion)
+				var curriculumType = $scope.curricula[i];
+				var masterVersion = {};
+				for(j in curriculumType.versions){
+					if(curriculumType.versions[j].meta.isMaster){
+						masterVersion = curriculumType.versions[j];
+					}
+				}
+				$scope.requestCurriculum(masterVersion)
 				.then(function(newCurriculum){
 					//add newCurriculum as a version to the curricula type:
 					for(j in $scope.curricula){
-						if($scope.curricula[j].type == newCurriculum.curriculumName){
+						if($scope.curricula[j].type == newCurriculum.meta.curriculumName){
 							$scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
+							//load default master curriculum version on page load
+							if(newCurriculum.meta.curriculumName == $scope.DEFAULT_TYPE && newCurriculum.meta.isMaster){
+								$scope.displayedCurriculum = newCurriculum;
+								setTimeout($scope.setWeekProgressBars, 500);
+							}
 						}
+						
 					}
+					
 				});
 			}
-		})
-		;
-
-
+		});
 		/* END CONTROLLER BODY - EXECUTED ON PAGE LOAD */
 	}
 );
