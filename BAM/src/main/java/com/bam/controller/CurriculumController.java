@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bam.bean.Batch;
 import com.bam.bean.Curriculum;
 import com.bam.bean.CurriculumSubtopic;
 import com.bam.bean.SubtopicName;
 import com.bam.dto.CurriculumSubtopicDTO;
 import com.bam.dto.DaysDTO;
+import com.bam.service.BatchService;
 import com.bam.service.CurriculumService;
 import com.bam.service.CurriculumSubtopicService;
 import com.bam.service.SubtopicService;
@@ -36,6 +38,9 @@ public class CurriculumController {
 	
 	@Autowired
 	SubtopicService subtopicService;
+	
+	@Autowired 
+	BatchService batchService;
 	
 	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
@@ -122,6 +127,44 @@ public class CurriculumController {
 		
 		//save new master curriculum
 		curriculumService.save(c);
+	}
+	
+	//syncs a curriculum with batch from Assignforce
+	@RequestMapping(value = "SyncBatch", method = RequestMethod.GET)
+	public void syncBatch(HttpServletRequest request){
+		Batch currBatch = batchService.getBatchById(Integer.parseInt(request.getParameter("batchId")));
+		String batchType = currBatch.getType().getName();
+		
+		//get curriculums with same batchTypes
+		List<Curriculum> curriculumList = curriculumService.findAllCurriculumByName(batchType);
+		
+		//find the master curriculum; otherwise find one with most up to date version
+		Curriculum c = null;
+		for(int i = 0;  i < curriculumList.size(); i++){
+			//master version found
+			if(curriculumList.get(i).getIsMaster() == 1)
+				c = curriculumList.get(i);
+		}
+		
+		//if master not found, get latest version
+		if(c == null){
+			int min = curriculumList.get(0).getCurriculumVersion();
+			Curriculum tempCurric = curriculumList.get(0);
+			for(int i = 1; i < curriculumList.size(); i++){
+				if(curriculumList.get(i).getCurriculumVersion() > min){
+					min = curriculumList.get(i).getCurriculumVersion();
+					tempCurric = curriculumList.get(i);
+				}
+			}
+			c = tempCurric;
+		}
+		
+		//get all curriculumSubtopics associated with curriculum
+		List<CurriculumSubtopic> subtopicList = curriculumSubtopicService.getCurriculumSubtopicForCurriculum(c);
+		
+		//logic goes here to add to calendar
+		
+		
 	}
 	
 }
