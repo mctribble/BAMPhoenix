@@ -18,7 +18,6 @@ public class TopicController {
 
 	@RequestMapping(value="Add", method=RequestMethod.POST)
 	public void addTopicName(HttpServletRequest request){
-//		System.out.println("adding topic");
 		TopicName topic = new TopicName();
 		topic.setName(request.getParameter("name"));
 		topicService.addOrUpdateTopicName(topic);
