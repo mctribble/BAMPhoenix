@@ -179,6 +179,15 @@ button{
 	text-align: right;
 }
 
+.navbar-text {
+	display: inline-block;
+	padding-top: .5rem;
+	padding-bottom: .425rem;
+	padding-right: .5rem;
+	padding-left: .5rem;
+	cursor: pointer;
+}
+
 .navbar-button {
 	/* 	font-family: "Audimat" !important; */
 	background-color: #3379b7;
@@ -213,12 +222,14 @@ li.dropdown{
 ul.dropdown-menu{
 	text-align: center;
 	margin-left: auto;
-	right: 0px;
+	max-width: 10rem;
+	left: auto;
 	overflow: visible;
     visibility: visible;
     position: absolute;
     z-index: 9999;
 }
+
 
 a:not([href]):not([tabindex]) {
     color: inherit;
@@ -234,6 +245,7 @@ li.expand{
 .logoutli{
 	width: 100px;
 	margin: auto;
+	cursor: pointer;
 }
 
 
@@ -289,7 +301,9 @@ label::before {
 }
 */
 /***** 4.0 TABLES *****/
-
+.table td{
+	cursor: pointer;
+}
 /* Editor: Joseph Nguyen
 		Modified colors to be easier on the eyes.
 */
