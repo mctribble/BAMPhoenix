@@ -38,4 +38,7 @@ public class CurriculumService {
 		curriculumRepository.save(c);
 	}
 	
+	public List<Curriculum> findAllCurriculumByName(String name){
+		return curriculumRepository.findByCurriculumName(name);
+	}
 }

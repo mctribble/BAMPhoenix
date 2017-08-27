@@ -21,7 +21,7 @@ public class Curriculum {
 	
 	@Id
 	@Column(name = "Curriculum_Id")
-	@SequenceGenerator(name = "Curriculum_ID_SEQ", sequenceName = "Curriculum_ID_SEQ")
+	@SequenceGenerator(name = "Curriculum_ID_SEQ", sequenceName = "Curriculum_ID_SEQ", allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Curriculum_ID_SEQ")
 	private Integer id;
 	
@@ -46,6 +46,9 @@ public class Curriculum {
 	
 	@Column(name = "Curriculum_Number_Of_Weeks")
 	private int curriculumNumberOfWeeks;
+	
+	@Column(name = "Curriculum_Is_Master")
+	private int isMaster;
 	
 	public Curriculum(){
 		// Empty beacuse of No-args constructor
@@ -107,15 +110,20 @@ public class Curriculum {
 		this.curriculumNumberOfWeeks = curriculumNumberOfWeeks;
 	}
 
+	public int getIsMaster() {
+		return isMaster;
+	}
+
+	public void setIsMaster(int isMaster) {
+		this.isMaster = isMaster;
+	}
+
 	@Override
 	public String toString() {
 		return "Curriculum [id=" + id + ", curriculumName=" + curriculumName + ", curriculumVersion="
 				+ curriculumVersion + ", curriculumCreator=" + curriculumCreator + ", curriculumModifier="
 				+ curriculumModifier + ", curriculumdateCreated=" + curriculumdateCreated + ", curriculumNumberOfWeeks="
-				+ curriculumNumberOfWeeks + "]";
+				+ curriculumNumberOfWeeks + ", isMaster=" + isMaster + "]";
 	}
-
-	
-
 	
 }

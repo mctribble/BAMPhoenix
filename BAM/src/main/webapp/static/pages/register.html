@@ -8,25 +8,25 @@
 					<h3>Register</h3>
 					<div class="login-btn-container">
 						<div class="input-group">
-							<span class="input-group-addon input-tag"> Email: </span> <input
+							<span class="input-group-addon input-tag"> *Email: </span> <input
 								type="email" class="form-control" ng-model="user.email"
 								placeholder="Email" required />
 
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon input-tag"> Password: </span> <input
+							<span class="input-group-addon input-tag"> *Password: </span> <input
 								class="form-control" size=500 type="password" ng-model="user.pwd"
 								placeholder="Password" required />
 
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon input-tag"> Confirm Password: </span> <input
+							<span class="input-group-addon input-tag"> *Confirm Password: </span> <input
 								class="form-control" type="password" ng-model="confirm_password"
 								placeholder="Confirm Password" required />
 
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon input-tag"> First name: </span> <input
+							<span class="input-group-addon input-tag"> *First name: </span> <input
 								class="form-control" type="text" ng-model="user.fName"  pattern="[A-Za-z]+"
 								placeholder="First Name" required />
 						</div>
@@ -36,12 +36,12 @@
 								placeholder="Middle Name" />
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon input-tag">Last name:</span> <input
+							<span class="input-group-addon input-tag">*Last name:</span> <input
 								class="form-control" type="text" ng-model="user.lName"  pattern="[A-Za-z]+"
 								placeholder="Last Name" required />
 						</div>
 						<div class="input-group">
-							<span class="input-group-addon input-tag">Phone:</span> <input
+							<span class="input-group-addon input-tag">*Phone:</span> <input
 								class="form-control" type="text" ng-model="user.phone" pattern="\d+"
 								placeholder="Phone" required />
 						</div>
@@ -55,6 +55,7 @@
 								class="form-control" type="text" ng-model="user.skype"
 								placeholder="Skype" />
 						</div>
+						<p class="requiredFont"> * Required Fields</p>
 
 						<div ng-class="alertClass" ng-show="updateDisplay">
 							{{updateMsg}}<br>{{updateMsg1}}

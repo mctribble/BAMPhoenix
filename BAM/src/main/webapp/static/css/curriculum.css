@@ -55,9 +55,14 @@ button{
 	background-color: #fff;
 }
 
+
 /* MIDDLE */
 #weekAccordion .card-header .weekCardText{
 	color:black;
+	padding:10px;
+}
+
+#weekAccordion .card-header{
 }
 
 #curriculumView{
@@ -91,7 +96,15 @@ button{
 }
 
 .day-list-item{
+	padding: 0px;
+}
 
+.day-list-item .day-list-item-header{
+	
+}
+
+.day-list-item .day-list-item-body{
+	padding: 10px;
 }
 
 .day-header{

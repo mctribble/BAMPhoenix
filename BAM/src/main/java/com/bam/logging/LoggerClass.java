@@ -45,7 +45,7 @@ public class LoggerClass {
 			logger.info(jp.proceed());
 
 
-		} catch ( Throwable e) {
+		} catch ( Throwable e) {//NOSONAR
 			throw new CustomException(e);
 			
 
@@ -59,7 +59,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		}
@@ -72,7 +72,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		} 
@@ -85,7 +85,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		} 
@@ -104,7 +104,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		}
@@ -123,7 +123,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
@@ -153,7 +153,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		}
@@ -171,7 +171,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		}
@@ -193,7 +193,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		} 
@@ -206,7 +206,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		}
@@ -219,7 +219,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			
 			throw new CustomException(e);
 
@@ -233,7 +233,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		} 
@@ -246,7 +246,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		} 
@@ -268,7 +268,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		} 
@@ -281,7 +281,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		} 
@@ -294,7 +294,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		}
@@ -307,7 +307,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		} 
@@ -320,7 +320,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		} 
@@ -347,7 +347,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		}
@@ -360,7 +360,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		} 
@@ -373,7 +373,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		} 
@@ -386,7 +386,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		}
@@ -399,7 +399,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		}
@@ -413,7 +413,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		} 
@@ -427,7 +427,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		}
@@ -441,7 +441,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		}
@@ -455,7 +455,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 
 		} 
@@ -469,7 +469,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			
 			throw new CustomException(e);
 

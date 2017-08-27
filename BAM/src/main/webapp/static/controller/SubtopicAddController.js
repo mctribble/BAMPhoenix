@@ -48,10 +48,10 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 			var unqiueTopics = new Set();
 			var topicMap = new Map();
 			
-			substring = ":null";
+			var substring = ":null";
 
-			var subtopicArray = [];
-			for(i in topics){
+			
+			for(var i in topics){
 								
 				if(JSON.stringify(topics[i]).includes(substring) == false)
 					{
@@ -64,9 +64,9 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 					
 					totalTopics++;
 					}else{
-						var array = topicMap.get(topics[i].topic.name);
+						var array2 = topicMap.get(topics[i].topic.name);
 						topicMap.delete(topics[i].topic.name);
-						array.push(topics[i].name);
+						array2.push(topics[i].name);
 						topicMap.set(topics[i].topic.name,array);
 						totalTopics++;
 					
@@ -106,7 +106,7 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
         			
         			var evnts = 0;
         					//adding subtopics to the subtopics dropdown menu
-        					for(subtopic of Array.from(topicMap.get(selection))){
+        					for(var subtopic of Array.from(topicMap.get(selection))){
         	        			var ev = angular.element("<option id = events"+ evnts++ +">" + subtopic + "</option>");
         	    				var eve = $compile(ev)($scope);
         	    				eventz.append(eve);
