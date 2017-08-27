@@ -5,8 +5,6 @@ app.controller('myBatchesController', function($scope, SessionService, $rootScop
 {
 	$scope.msg;
 	
-	var currentDate = new Date().getTime();
-	
 	$scope.getmyBatches = function(){
 		var emailer = SessionService.get("currentUser").email;
 		$http({
