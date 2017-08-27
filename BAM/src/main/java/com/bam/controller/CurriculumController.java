@@ -20,6 +20,7 @@ import com.bam.dto.DaysDTO;
 import com.bam.service.CurriculumService;
 import com.bam.service.CurriculumSubtopicService;
 import com.bam.service.SubtopicService;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -64,14 +65,11 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
-
-
-	public void addSchedule(@RequestBody String json) throws  JsonMappingException, IOException{
+	public void addSchedule(@RequestBody String json) throws JsonParseException, JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
 		CurriculumSubtopicDTO c = mapper.readValue(json, CurriculumSubtopicDTO.class);
 		
 		//save curriculum object first
-
 
 		Curriculum curriculum = new Curriculum();
 		curriculum.setCurriculumCreator(c.getMeta().getCurriculum().getCurriculumCreator());
@@ -79,22 +77,51 @@ public class CurriculumController {
 		curriculum.setCurriculumName(c.getMeta().getCurriculum().getCurriculumName());
 		curriculum.setCurriculumNumberOfWeeks(c.getMeta().getCurriculum().getCurriculumNumberOfWeeks());
 		curriculum.setCurriculumVersion(c.getMeta().getCurriculum().getCurriculumVersion());
-		
+		curriculum.setIsMaster(c.getMeta().getCurriculum().getIsMaster());
+
 		curriculumService.save(curriculum);
-		CurriculumSubtopic cs = new CurriculumSubtopic();
-		cs.setCurriculumSubtopicCurriculumID(curriculum);
+		
+
 		int numWeeks = c.getWeeks().length;
 		for(int i = 0; i < numWeeks; i++){
 			DaysDTO[] days = c.getWeeks()[i].getDays();
 			for(int j = 0; j < days.length; j++){
 				SubtopicName[] subtopic = days[j].getSubtopics();
 				for(int k = 0; k < subtopic.length; k++){
+					CurriculumSubtopic cs = new CurriculumSubtopic();
+					cs.setCurriculumSubtopicCurriculumID(curriculum);
 					cs.setCurriculumSubtopicNameId(subtopic[k]);
 					cs.setCurriculumSubtopicWeek(i + 1);
 					cs.setCurriculumSubtopicDay(j + 1);
 					curriculumSubtopicService.saveCurriculumSubtopic(cs);
+					System.out.println(cs.toString());
 				}
 			}
 		}
 	}
+	
+	@RequestMapping(value = "MakeMaster", method = RequestMethod.GET)
+	public void markCurriculumAsMaster(HttpServletRequest request){
+		Curriculum c = curriculumService.getCuricullumById(Integer.parseInt(request.getParameter("curriculumId")));
+		c.setIsMaster(1);
+		
+		//find the curriculum with same name and isMaster = 1; set to 0; save
+		List<Curriculum> curriculumList = curriculumService.findAllCurriculumByName(c.getCurriculumName());
+		
+		try{
+			Curriculum prevMaster = null;
+			for(int i = 0; i < curriculumList.size(); i++){
+				if(curriculumList.get(i).getIsMaster() == 1)
+					prevMaster = curriculumList.get(i);
+			}
+			prevMaster.setIsMaster(0);
+			curriculumService.save(prevMaster);
+		} catch(NullPointerException e){
+			e.printStackTrace();
+		}
+		
+		//save new master curriculum
+		curriculumService.save(c);
+	}
+	
 }

@@ -14,9 +14,7 @@ import com.bam.service.SubtopicService;
 import com.bam.service.TopicService;
 
 @RestController
-
 @RequestMapping(value = "/api/v1/Subtopic/")
-
 public class SubTopicController {
 	@Autowired
 	TopicService topicService;
@@ -29,7 +27,6 @@ public class SubTopicController {
 		SubtopicType type = subTopicService.getSubtopicType(Integer.parseInt(request.getParameter("typeId")));
 		TopicName topic = topicService.getTopicName(Integer.parseInt(request.getParameter("topicId")));
 		SubtopicName subtopic = new SubtopicName(request.getParameter("subtopicName"), topic, type);
-		
 		subTopicService.addOrUpdateSubtopicName(subtopic);
 	}
 }
