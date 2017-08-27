@@ -35,29 +35,29 @@ public class SubtopicType {
 	}
 
 	public SubtopicType(String name) {
-		super();
+		super();//NOSONAR
 		this.name = name;
 	}
 
 	public Integer getId() {
 		return id;
-	}
+	}//NOSONAR
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
+	}//NOSONAR
 
 	public String getName() {
 		return name;
-	}
+	}//NOSONAR
 
 	public void setName(String name) {
 		this.name = name;
-	}
+	}//NOSONAR
 
 	@Override
 	public String toString() {
-		return "SubtopicType [id=" + id + ", name=" + name + "]";
+		return "SubtopicType [id=" + id + ", name=" + name + "]";//NOSONAR
 	}
 
 }

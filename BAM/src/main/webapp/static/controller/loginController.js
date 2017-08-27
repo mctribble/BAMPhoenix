@@ -15,6 +15,7 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 			email : $scope.email,
 			password : $scope.password
 		};
+		document.body.style.cursor = 'wait';
 		
 		$http({
 			url: 'authenticate',
@@ -26,8 +27,7 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 	        }
 		})
 		.then(function success(response){
-			
-		
+			document.body.style.cursor = 'default';
 			
 			SessionService.set("currentUser", response.data);
 			$rootScope.user = SessionService.get("currentUser");
@@ -75,13 +75,16 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 				
 				
 			}else{
+				document.body.style.cursor = 'default';
 				$location.path('/batchesAll');
 			}
 			
 		}, function error(response){
+			document.body.style.cursor = 'default';
 			$location.path('/');
 			$scope.message = true;
 			$scope.msg = 'Wrong Credentials';
+			$scope.msg2 = 'Enter Valid Email';
 		});
 	}
 	

@@ -66,6 +66,7 @@ li {
 .btn-primary {
 	background-color:#324176;
 	border-color: #9692b8;
+	line-height: .8;
 }
 
 .smallFont{
@@ -73,6 +74,7 @@ li {
 	text-align: right;
 	color: #324176;
 }
+
 
 .myAttribute:hover{
 	text-decoration: none;
@@ -84,10 +86,20 @@ li {
 	color: white;
 }
 
+.myAttribute2:hover{
+	text-decoration: none;
+	color: white;
+}
+
+.myAttribute2{
+	text-decoration: none;
+	color: white;
+}
+
 #pan2{
 	width: auto;
     background-color: rgba(50, 65, 118, .95);
-    margin: 15px;
+    margin-left: 25px;
     padding: 15px;
     border-radius: 7px;
     font-weight: bold;
@@ -112,7 +124,7 @@ li {
 	width: auto;
     background-color: rgba(50, 65, 118, .95);
     float: right;
-	margin: 15px;
+	margin-right: 25px;
     padding: 15px;
     border-radius: 7px;
     font-weight: bold;
@@ -139,6 +151,12 @@ li {
 	opacity: 0.8;
 }
 
+#batchDropdown {
+	border-color: #fbfbfc;
+    background-color: rgb(240, 114, 44);
+    color: white;
+    font-weight: bold;
+}
 
 .navbar{
 	margin-bottom: 10px!important;
@@ -155,6 +173,12 @@ ul {
 
 ul.mainList{
     columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
+.makeColumns{
+	columns: 2;
     -webkit-columns: 2;
     -moz-columns: 2;
 }

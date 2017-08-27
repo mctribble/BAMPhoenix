@@ -128,7 +128,6 @@ app.controller("curriculumController",
 		$scope.setWeekProgressBars = function(){
 			
 			if($scope.topicColors.length <= 0) return;
-			console.log("setting week progress bars");
 			if($scope.displayedCurriculum.meta.curriculumNumberOfWeeks){
 				var bars = document.getElementsByClassName("progress");
 				//clear the bars of their children
@@ -163,14 +162,8 @@ app.controller("curriculumController",
 					}
 					//calculate percentages and apply then to the progress bars:
 					var bar = bars[i];
-					console.log("bar");
-					console.log(bar);
-					console.log("total: " + total);
-					console.log("counts: ");
-					console.log(topicCounts);
 					//template: <div class="progress-bar" role="progressbar" style="width: 0%;"></div>
 					if(!total){
-						console.log("adding default (empty) bar");
 						var progress = document.createElement("div");
 						progress.classList.add("progress-bar");
 						progress.setAttribute("role", "progressbar");
@@ -178,14 +171,12 @@ app.controller("curriculumController",
 						progress.innerText = "No Topics";
 						bar.appendChild(progress);
 					}else{
-						console.log("adding topic portion bars");
 						//add a progress section for each parent topic:
 						for(m in topicCounts){
 							var topic = topicCounts[m];
 							var percent = (topic.count / total) * 100;
 							var progress = document.createElement("div");
 							var color = $scope.getTopicColor(topic.name);
-//							console.log(color);
 							progress.classList.add("progress-bar");
 							progress.setAttribute("role", "progressbar");
 							progress.setAttribute("style", "padding:6px; width:" + percent + "%; background-color:" + color + ";");
@@ -419,7 +410,6 @@ app.controller("curriculumController",
 					},
 					weeks:$scope.displayedCurriculum.weeks
 			}
-			console.log($scope.displayedCurriculum.weeks);
 			//persist to the DB
 			$http({
 				method: 'POST',
@@ -452,7 +442,6 @@ app.controller("curriculumController",
 					var curriculumTypeExists = false;
 					//determine if $scope.curricula has a type of curriculum.Name already. If so add it as an additional version of the type
 					for(var j in $scope.curricula){
-						var localCurricula = $scope.curricula[j];
 						//perform the check mentioned above
 						if($scope.curricula[j].type == curriculum.curriculumName){
 							//ensure the object at the required index exists before trying to overwrite it
@@ -475,18 +464,18 @@ app.controller("curriculumController",
 					if(!curriculumTypeExists){
 						var metaData = curriculum;
 						delete metaData.weeks;
-						var newCurriculum = {
+						var newCurriculum2 = {
 								type: curriculum.curriculumName,
 								versions: []
 						};
 						
 						//ensure the object at the required index exists before trying to overwrite it
 						for(var i = 0; i < curriculum.curriculumVersion - 1; i++){
-							newCurriculum.versions.push({});
+							newCurriculum2.versions.push({});
 						}
 						
-						newCurriculum.versions.splice(curriculum.curriculumVersion - 1, 1, {meta: metaData, weeks:[]});
-						$scope.curricula.push(newCurriculum);
+						newCurriculum2.versions.splice(curriculum.curriculumVersion - 1, 1, {meta: metaData, weeks:[]});
+						$scope.curricula.push(newCurriculum2);
 					}
 				}
 			}

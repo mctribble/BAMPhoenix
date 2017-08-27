@@ -10,12 +10,18 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
 
-import com.bam.bean.CustomException;
+import com.bam.exception.CustomException;
+import com.bam.logging.LoggerClass;
 
 public class MailService {
 
+
 	public static void sendMail(String email, String newPassword) {
+		Logger logger = Logger.getLogger(LoggerClass.class);
+
+
 		
 		//Use "System.getenv" to get the value of the specified environment variable 
 		    final String EMAILUSERNAME = System.getenv("EMAIL_USERNAME");
@@ -55,7 +61,7 @@ public class MailService {
 				try {
 					throw new CustomException(e);
 				} catch (CustomException e1) {
-					;
+					logger.info("Error:"+ e1);
 				}
 			} 
         }
