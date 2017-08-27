@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bam.bean.Curriculum;
 import com.bam.bean.CurriculumSubtopic;
 import com.bam.bean.CustomException;
+import com.bam.bean.Subtopic;
 import com.bam.bean.SubtopicName;
 import com.bam.dto.CurriculumSubtopicDTO;
 import com.bam.dto.DaysDTO;
@@ -63,6 +64,13 @@ public class CurriculumController {
 	@ResponseBody
 	public List<SubtopicName> getTopicPool(){
 		return subtopicService.getAllSubtopics();
+	}
+	
+	
+	@RequestMapping(value = "SubtopicPool", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public List<Subtopic> getSubtopicPool(){
+		return subtopicService.getSubtopics();
 	}
 	
 	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
