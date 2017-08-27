@@ -26,11 +26,10 @@ public class SubTopicController {
 
 	@RequestMapping(value="Add", method= RequestMethod.POST)
 	public void addSubTopicName(HttpServletRequest request){
-		System.out.println("adding subtopic");
 		SubtopicType type = subTopicService.getSubtopicType(Integer.parseInt(request.getParameter("typeId")));
 		TopicName topic = topicService.getTopicName(Integer.parseInt(request.getParameter("topicId")));
 		SubtopicName subtopic = new SubtopicName(request.getParameter("subtopicName"), topic, type);
-		System.out.println(subtopic.getId());
+		
 		subTopicService.addOrUpdateSubtopicName(subtopic);
 	}
 }
