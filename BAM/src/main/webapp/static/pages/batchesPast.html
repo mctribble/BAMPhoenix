@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs">
-	<li class="nav-link"><a href="#/batchesAll">All</a></li>
-	<li class="nav-link active"><a href="#/batchesPast">Past</a></li>
-	<li class="nav-link"><a href="#/batchesFuture">Future</a></li>
+	<li class="nav-link"><a href="#/myBatches">Current Batches</a></li>
+	<li class="nav-link active"><a href="#/batchesPast">Past Batches</a></li>
+	<li class="nav-link"><a href="#/batchesFuture">Future Batches</a></li>
 </ul>
 <br>
 <h3 style="text-align: center">Past Batches</h3>
@@ -25,7 +25,7 @@
 		<td>{{batch.name}}</td>
 		<td>{{batch.trainer.fName}} {{batch.trainer.lName}}</td>
 		<td>{{batch.type.name}}</td>
-		<td>{{batch.startDate}}</td>
-		<td>{{batch.endDate}}</td>
+		<td>{{batch.startDate | date: 'MM-dd-yyyy'}}</td>
+		<td>{{batch.endDate | date: 'MM-dd-yyyy'}}</td>
 	</tr>
 </table>			

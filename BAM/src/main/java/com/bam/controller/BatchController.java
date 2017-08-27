@@ -89,6 +89,22 @@ public class BatchController {
 		return batchInProgress;
 	}
 	
+	@RequestMapping(value = "AllInProgress", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public List<Batch> getAllBatchesInProgress(HttpServletRequest request)
+	{
+		List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
+
+		List<Batch> batchesInProgress = new ArrayList<>();
+		Timestamp time = new Timestamp(System.currentTimeMillis());
+		for(Batch b : batches){
+			if(time.after(b.getStartDate()) && time.before(b.getEndDate())){
+				batchesInProgress.add(b);
+				break;
+			}
+		}
+		return batchesInProgress;
+	}
 	
 	@RequestMapping(value="Edit", method=RequestMethod.POST, produces="application/json")
 	public void updateUser(@RequestBody String jsonObject) {

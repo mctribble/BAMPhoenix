@@ -26,22 +26,30 @@
 
 		  //This is what sets the batch id to what batch the trainer wants to view from the dashboard
 		  	//if they have multiple current batches
-		  var thisBatchId = $rootScope.changedBatchId;
+		  var date = new Date();		  
 
-		    var date = new Date();
+		  var thisBatchId = $rootScope.changedBatchId;
 		  
 		  if(SessionService.get("currentBatch")){
 			  if(SessionService.get("currentBatch").trainer.userId == SessionService.get("currentUser").userId){
-				  var end = moment.utc(SessionService.get("currentBatch").endDate)
-				  if(end >= date){
+				  var end = moment.utc(SessionService.get("currentBatch").endDate);
+				  var begin = moment.utc(SessionService.get("currentBatch").startDate);
+				  if(begin >= date){
+					  SessionService.set("futureBatch", SessionService.get("currentBatch"));
+					  thisBatchId = SessionService.get("futureBatch").id;
+					  $rootScope.changedBatchId = thisBatchId;
+					  SessionService.unset("currentBatch");
+				  }else if(end >= date){
 					  thisBatchId = SessionService.get("currentBatch").id;
+					  $rootScope.changedBatchId = thisBatchId;
 					  SessionService.unset("currentBatch");
 				  }
 			  }
+		  }else if(SessionService.get("futureBatch")&&(thisBatchId != SessionService.get("futureBatch").id)){
+			  SessionService.unset("futureBatch");
 		  }
-		  
-		  
-	  	// Varibles set for the use of adding day,month,year,to the Date
+		  		  
+	  	// Variables set for the use of adding day,month,year,to the Date
 		// attribute of a calendar.
 		    var d = date.getDate();
 		    var m = date.getMonth();
@@ -343,10 +351,9 @@
             	url ="rest/api/v1/Calendar/Subtopics?batchId="+SessionService.get("currentBatch").id;
             	//url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+SessionService.get("currentBatch").id+ "&pageSize=" + pageSize + "&pageNumber=0";
             	myDataPromise = SubtopicService.getTotalNumberOfSubtopics(SessionService.get("currentBatch").id);
-            }else if(SessionService.get("currentUser").role == 2 && SessionService.get("trainerBatch")){
+            }else if(SessionService.get("currentUser").role == 2 && (SessionService.get("trainerBatch") || SessionService.get("futureBatch"))){
              	url ="rest/api/v1/Calendar/SubtopicsPagination?batchId="+ thisBatchId + "&pageSize=" + pageSize + "&pageNumber=0";
             	myDataPromise = SubtopicService.getTotalNumberOfSubtopics(thisBatchId);
-            
             }
             /* event source that contains custom events on the scope */
 
@@ -634,6 +641,13 @@
             		beginDate = moment.utc(SessionService.get("currentUser").batch.startDate);
             		beginDate.weekday(0).stripZone().stripTime();
             		finishDate = moment.utc(SessionService.get("currentUser").batch.endDate).stripZone().stripTime();
+            		if(currentWeek >= beginDate && currentWeek < finishDate){
+            			return ((currentWeek.diff(beginDate, 'days')/7)+1);
+            		}
+            	}else if(SessionService.get("currentUser").role >= 2 && !SessionService.get("currentBatch") && SessionService.get("futureBatch")){
+            		beginDate = moment.utc(SessionService.get("futureBatch").startDate);
+            		beginDate.weekday(0).stripZone().stripTime();
+            		finishDate = moment.utc(SessionService.get("futureBatch").endDate).stripZone().stripTime();
             		if(currentWeek >= beginDate && currentWeek < finishDate){
             			return ((currentWeek.diff(beginDate, 'days')/7)+1);
             		}

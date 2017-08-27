@@ -1,31 +1,36 @@
-app.controller('batchesFutureController', function($scope, SessionService, $rootScope, $location, $http)
+/**
+ * @author Kosiba Oshodi-Glover
+ */
+app.controller('myBatchesController', function($scope, SessionService, $rootScope, $location, $http)
 {
 	$scope.msg;
-	$scope.batchesFuture;
-	$scope.getBatchesFuture = function(){
-		
+	
+	var currentDate = new Date().getTime();
+	
+	$scope.getmyBatches = function(){
 		var emailer = SessionService.get("currentUser").email;
 		$http({
-			url: 'rest/api/v1/Batches/Future',
-			method: 'GET',	
+			url: 'rest/api/v1/Batches/AllInProgress',
+			method: 'GET',
 			params: {email: emailer}
 		})
 		.then(function success(response){
 			$scope.message = true;
-			$scope.msg = 'future batches retrieved';
+			$scope.msg = 'my current batches retrieved';
 			for(var i=0;i<response.data.length;i++){
 				response.data[i].startDate=formatDate(response.data[i].startDate)
 				response.data[i].endDate=formatDate(response.data[i].endDate)
 			}
-			$scope.batchesFuture = response.data;
+			$scope.inMyBatch = response.data;
 		}, function error(response){
 			$scope.message = true;
-			$scope.msg = 'future batches not retrieved';
+			$scope.msg = 'my current batches not retrieved';
 		});
 	}
 	
 	$scope.goToBatch = function(batch){
 		SessionService.set("currentBatch", batch);
+		SessionService.unset("futureBatch");
 		$http({
 			
 			url: "rest/api/v1/Calendar/Topics?batchId=" + batch.id,
@@ -46,5 +51,5 @@ app.controller('batchesFutureController', function($scope, SessionService, $root
 		});
 	}
 	
-	$scope.getBatchesFuture();
+	$scope.getmyBatches();
 });
