@@ -1,4 +1,4 @@
-/**
+	/**
  * @author Sarah Kummerfeldt 
  * @author Kosiba Oshodi-Glover
  */
@@ -48,7 +48,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 		$scope.noBatch = SessionService.get("currentUser").userId;
 		$scope.trainerHasBatch = SessionService.get("trainerBatch");
 		$scope.userHasBatch = SessionService.get("currentUser").batch;
-		
+				
 		if($scope.trainerHasBatch){
 			var currentDate = new Date().getTime();
 			
@@ -96,17 +96,14 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 				}
 			}).then(function(response){
 				$scope.usersInBatch = response.data
-				
 				$scope.listNames = [];
 
 			    		var firstNames= [];
 						var lastNames= [];
-				
 				$scope.numOfAssociates = 0;
-				
 				for(var i = 0; i < $scope.usersInBatch.length; i++) {
 					$scope.batchUsers = $scope.usersInBatch[i];
-				    
+									    
 				    firstNames.push($scope.batchUsers.fName);
 					lastNames.push($scope.batchUsers.lName);
 					
@@ -116,6 +113,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 				    		"firstName": firstNames[i],
 				    		"lastName": lastNames[i]
 				    };
+					
 				}
 			})
 		}else if($scope.userHasBatch){
@@ -182,6 +180,9 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 				    }else{
 				    	$scope.listNames = 'N/A';
 				    }
+				    $scope.trainerInBatch = SessionService.get("currentUser").batch.trainer.fName;
+				    $scope.trainerInBatchLast = SessionService.get("currentUser").batch.trainer.lName;
+				    
 				}
 			})
 			} else {
