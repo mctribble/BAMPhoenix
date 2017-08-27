@@ -17,7 +17,7 @@ app.controller("bamUserRegisterController", ['$http', '$scope', '$location', '$t
 			data: $scope.user
 		}).then (function success(response){
 			$scope.updateDisplay = true;
-			$scope.updateMsg = "You updated the user successfully";
+			$scope.updateMsg = "Account created successfully";
 			$scope.updateMsg1 = "Redirecting to Login Page...";
 			$scope.alertClass = 'alert alert-success';
 			 $timeout(function() {

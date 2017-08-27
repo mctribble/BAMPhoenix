@@ -2,7 +2,6 @@ package com.bam.bean;
 
 import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -112,7 +111,7 @@ public class Subtopic {
 
 	@Override
 	public String toString() {
-		return "Subtopic [subtopicId=" + subtopicId + ", batch=" + batch + ", subtopicDate=" + subtopicDate + "]";
+		return "Subtopic [subtopicId=" + subtopicId + ", batch=" + batch + ", subtopicDate=" + subtopicDate + ", status=" + status +"]";
 	}
 
 }

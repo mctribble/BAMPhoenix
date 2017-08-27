@@ -49,6 +49,7 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 			for(i in subtopics){
 					if(!uniqueTopics.has(subtopics[i].subtopicName.topic.name)){
 					uniqueTopics.add(subtopics[i].subtopicName.topic.name);
+
 					var array = [];
 					array.push(subtopics[i].subtopicName.name);
 					topicMap.set(subtopics[i].subtopicName.topic.name, array);
@@ -142,7 +143,6 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 	/*Creating the objects that are needed for subtopic object 
 	by pulling the values from the corresponding html elements.*/ 
 	$scope.addSubtopic = function(){
-		var start = document.getElementById('startDate');
 
 		var topicName = {
 				id : $scope.topic_id,

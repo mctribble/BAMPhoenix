@@ -50,6 +50,7 @@
 .login-btn-container {
 	text-align: center;
 	margin: auto;
+	margin-bottom: 6px;
 }
 
 .threeqtr-width {
@@ -57,14 +58,48 @@
 	letter-spacing: 1.5px;
 }
 
+.createPointer{
+	cursor: pointer;
+}
+
 #login-btn {
 	color: #ffffff;
+	box-shadow: 0 4px #999;
 	background-color: #303e74;
+	cursor: pointer;
+	transform: translateX(.5px);
+}
+
+#login-btn:hover{
+	background-color: #142863;
+}
+
+#login-btn:active {
+  background-color: #3e8e41;
+  box-shadow: 0 3px #666;
+  transform: translateY(1px);
 }
 
 #create-acc-btn {
 	color: #ffffff;
 	background-color: #f26925;
+	cursor: pointer;
+	box-shadow: 0 4px #999;
+	transform: translateX(.5px);
+}
+
+#create-acc-btn:hover{
+	background-color: #dc4c04;
+}
+
+#create-acc-btn:active {
+  background-color: #3e8e41;
+  box-shadow: 0 3px #666;
+  transform: translateY(1px);
+}
+
+button{
+	cursor: pointer;
 }
 
 /******** REGISTER STYLING *********/
@@ -81,6 +116,13 @@
     margin-right: 79px;
     z-index: 1000;
 }
+
+.requiredFont{
+	font-size: 14px;
+	text-align: left;
+	margin-bottom: 0px;
+}
+
 /***** 2.0 NAVBAR STYLING *****/
 .full-navbar {
 	width: 100%;
@@ -137,6 +179,15 @@
 	text-align: right;
 }
 
+.navbar-text {
+	display: inline-block;
+	padding-top: .5rem;
+	padding-bottom: .425rem;
+	padding-right: .5rem;
+	padding-left: .5rem;
+	cursor: pointer;
+}
+
 .navbar-button {
 	/* 	font-family: "Audimat" !important; */
 	background-color: #3379b7;
@@ -171,12 +222,14 @@ li.dropdown{
 ul.dropdown-menu{
 	text-align: center;
 	margin-left: auto;
-	right: 0px;
+	max-width: 10rem;
+	left: auto;
 	overflow: visible;
     visibility: visible;
     position: absolute;
     z-index: 9999;
 }
+
 
 a:not([href]):not([tabindex]) {
     color: inherit;
@@ -192,7 +245,9 @@ li.expand{
 .logoutli{
 	width: 100px;
 	margin: auto;
+	cursor: pointer;
 }
+
 
 /******** 'FORGOT PASSWORD?' STYLING ********/
 .pw {
@@ -246,7 +301,9 @@ label::before {
 }
 */
 /***** 4.0 TABLES *****/
-
+.table td{
+	cursor: pointer;
+}
 /* Editor: Joseph Nguyen
 		Modified colors to be easier on the eyes.
 */
@@ -437,7 +494,7 @@ body {
 }
 
 .input-tag {
-	width: 151px;
+	width: 157px;
 }
 
 
@@ -509,4 +566,12 @@ body {
 	background-color: transparent !important;
 	color: transparent !important;
 	cursor: default !important;
+    border-style: none !important;	
+}
+
+/* Batches all */
+
+.clickable:hover{
+	cursor: pointer;
+	background-color: #c1b5d3;
 }

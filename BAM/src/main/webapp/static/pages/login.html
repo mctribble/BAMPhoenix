@@ -1,7 +1,7 @@
 <div class="vertical-center">
 	<div class="row">
 		<div class="login col-md-6">
-
+		
 			<div class="login-vertical-align">
 				<div ng-class="alertClass" ng-show="updateDisplay">
 					{{updateMsg}}</div>
@@ -31,12 +31,13 @@
 				
 				<input class="pw" id="toggle" type="checkbox" checked>
 				<p style="text-align: center; margin-top: 1em;">
-					<label data-toggle="collapse" data-target="#demo">Forgot password?</label>
+					<label data-toggle="collapse" data-target="#demo" class="createPointer">Forgot password?</label>
 				</p>
 				<div id="demo" class="collapse" ng-controller= "forgotPasswordController">
 					<input type="email" placeholder="enter email address" ng-model="email"> 
+
 					<button class="btn btn-primary" ng-click="forgot()">Submit</button>
-					<p ng-show= "message" class= "alert alert-danger"
+					<p ng-show= "message" ng-class= "alertClass"
 					id = "wrong-credentials">{{msg}}</p>
 				</div>
   

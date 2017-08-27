@@ -30,6 +30,8 @@ app.controller('batchesPastController', function($scope, SessionService, $rootSc
 	}
 	
 	$scope.goToBatch = function(batch){
+		SessionService.set("currentBatch", batch);
+		SessionService.unset("futureBatch");
 		$http({
 			
 			url: "rest/api/v1/Calendar/Topics?batchId=" + batch.id,
