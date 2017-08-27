@@ -11,9 +11,7 @@ import com.bam.bean.TopicName;
 import com.bam.service.TopicService;
 
 @RestController
-
 @RequestMapping(value = "/api/v1/Topic/")
-
 public class TopicController {
 	@Autowired
 	TopicService topicService;

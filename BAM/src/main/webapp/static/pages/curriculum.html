@@ -5,7 +5,7 @@
 	<div class="row">
 		<div id="curriculaLoaderView" class="col col-md-2">
 			<div class="columnHeader text-center">
-				<h1>Curricula</h1>
+				<h1>Templates</h1>
 				<button class="btn btn-md btn-primary" ng-click="deselectItems(); setTemplate()">New Curriculum Type</button>
 			</div>
 				<!-- ***************************** Begin Curricula Accordion***************************************** -->
@@ -16,7 +16,7 @@
 								<div class="col col-md-10">
 									<h5 data-toggle="collapse" data-parent="#curriculaAccordion"
 										data-target="#collapseCurriculum{{sanitizeString(curriculum.type)}}">
-										{{curriculum.type}} 
+										{{curriculum.type}}
 									</h5>
 								</div>
 								<div class="col col-md-2">
@@ -31,10 +31,23 @@
 						<div id="collapseCurriculum{{sanitizeString(curriculum.type)}}" class="collapse" role="tabpanel">
 							<div class="card-block">
 								<div class="list-group">
-									<a ng-class="{'active': active === true}" class="list-group-item" ng-repeat="version in curriculum.versions track by version.meta.curriculumVersion" ng-click="viewCurriculum(version); deselectItems(); active = !active;">
-										Version #{{$index + 1}}
-										
-									</a>
+									<div class="list-group-item" 
+									     ng-repeat="version in curriculum.versions track by version.meta.curriculumVersion">
+									   <div class="row">
+										   	<div class="col col-xs-11">
+												<a ng-class="{'active': active === true}" 
+												   active = !active;
+												   ng-click="viewCurriculum(version); deselectItems();"
+												>
+													Version #{{$index + 1}}
+												</a>
+											</div>
+											<div class="col col-xs-1">
+												<input ng-if="!version.meta.isMaster" type="radio" name="masterRadio{{version.meta.curriculumName}}" ng-click="setMaster(version)"> 
+												<span ng-if="version.meta.isMaster" style="color:blue;">Master</span>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -48,16 +61,15 @@
 <!-- *********************************************** Begin Curriculum view ********************************************************* -->
 		<div id="curriculumView" class="col col-md-8">
 			<div class="columnHeader">
-				<div class="row">
+				<div class="row" ng-if="displayedCurriculum.meta.curriculumName">
 					<div class="col col-md-6">
 						<div class="page-header">
-							<h1 ng-if="displayedCurriculum.meta.curriculumName">
+							<h1>
 								{{displayedCurriculum.meta.curriculumName}} Curriculum
-								<small id="curriculumSubheader">
-									Version #{{displayedCurriculum.meta.curriculumVersion}}
-									<span ng-if="!isEditable" class="readOnly">(Read Only)</span>
+								<small id="curriculumSubheader" ng-if="displayedCurriculum.meta.curriculumName"> Version
+									#{{displayedCurriculum.meta.curriculumVersion}} 
 								</small>
-							</h1>
+							</h1>	
 						</div>
 						
 					</div>
@@ -69,9 +81,21 @@
 								ng-click="addWeek()">Add Week</button>
 						<div class="btn-group">
 							<button type="button" class="btn btn-md btn-success" ng-disabled="!displayedCurriculum.meta.curriculumNumberOfWeeks || !isEditable" ng-click="saveCurriculum()">Save Curriculum</button>
-							<button type="button" class="btn btn-md btn-danger" ng-click="clearCurriculumView()">X</button>
+							<button type="button" class="btn btn-md btn-danger" ng-click="clearCurriculumView()" ng-disabled="displayedCurriculum.meta.isMaster">X</button>
 						</div>
 						<a href="" class="btn btn-md btn-primary" ng-show="showBtn" id="xlsDownload">Download Curriculum</a>
+					</div>
+				</div>
+				
+				<div class="row" ng-if="displayedCurriculum.meta.curriculumName">
+					<div class="col col-md-12">
+						<h3>
+							<small>
+								<span ng-if="!isEditable" class="readOnly">(
+									<span ng-if="displayedCurriculum.meta.isMaster" class="readOnly">Master - </span>
+								Read Only)</span>
+							</small>
+						</h3>
 					</div>
 				</div>
 				
@@ -86,19 +110,19 @@
 				<a data-toggle="collapse" data-target="#collapseWeek{{$index+1}}">
 					<div class="card-header" role="tab">
 						<div class="row">
-							<div class="col col-md-11">
+							<div class="col col-md-2">
 								
 									<h5 class="mb-0 weekCardText">
 										Week {{$index+1}}
 									</h5>
-								
+							</div>
+							<div class="col col-md-9">
+								<div class="progress" style="margin-bottom:0px;height:75%"></div>
 							</div>
 							<div class="col col-md-1">
 								<button class="btn btn-md btn-danger text-right" 
 										ng-click="deleteWeek($index+1)" 
 										ng-disabled="!isEditable"
-										dnd-list="[]"
-										dnd-disable-if="!isEditable"
 										> X </button>
 							</div>
 						</div>
@@ -125,10 +149,20 @@
 												ng-repeat="subtopic in day.subtopics" 
 												dnd-draggable="subtopic"
 												dnd-effect-allowed="move"
-												dnd-moved="day.subtopics.splice($index, 1); console.log($index)"
+												dnd-moved="day.subtopics.splice($index, 1); setWeekProgressBars();"
 												dnd-disable-if="!isEditable"	
 												>
-													{{subtopic.name}} 
+													<span class="day-list-item-header">
+														<button class="btn btn-danger btn-xs" 
+																style=" border-radius:0px;
+																		border-bottom-right-radius:8px;
+																		padding-top:3px;padding-bottom:3px;"
+																ng-disabled="!isEditable"
+																ng-click="day.subtopics.splice($index, 1); setWeekProgressBars();"
+																>x</button>
+													</span>
+														<span class="day-list-item-body">{{subtopic.name}}</span>
+													 
 											</li>
 										</ul>
 										<!-- ***************************** End Subtopic List***************************************** -->
@@ -167,14 +201,23 @@
 						</div>
 					</div>
 				</div>
-				<div class="card" ng-repeat="topic in filteredTopics = (topics | filter:topicFilter)">
+				<div class="card" 
+					 ng-repeat="topic in filteredTopics = (topics | filter:topicFilter)"
+					 dnd-draggable="topic.subtopics" 
+					 dnd-effect-allowed="copy" 
+					 dnd-copied="setWeekProgressBars();"
+					 dnd-disable-if="!isEditable"
+					 >
 					<div class="card-header"
 						 role="tab">
-						<h5 data-toggle="collapse" data-parent="#topicAccordion" data-target="#collapseTopic{{sanitizeString(topic.name)}}">
+						<h5 data-toggle="collapse" 
+							data-parent="#topicAccordion" 
+							data-target="#collapseTopic{{sanitizeString(topic.name)}}"
+							>
 							{{topic.name}}
 						</h5>
 					</div>
-
+					
 					<div id="collapseTopic{{sanitizeString(topic.name)}}" class="collapse" role="tabpanel">
 						<div class="card-block">
 							<ul class="list-group">
@@ -184,7 +227,9 @@
 											<input placeholder="Search {{topic.name}}" type="text" class="form-control" ng-model="subtopicFilter">
 										</div>
 										<div class="col col-md-2">
-											<button class="btn btn-md btn-success" ng-click="newTopic(subtopicFilter, topic.name)" ng-disabled="filteredSubtopics.length">+</button>
+											<button class="btn btn-md btn-success" 
+													ng-click="newTopic(subtopicFilter, topic.name)" 
+													ng-disabled="filteredSubtopics.length">+</button>
 										</div>
 									</div>
 								</li>
@@ -193,7 +238,7 @@
 									ng-repeat="sub in filteredSubtopics = (topic.subtopics | filter:subtopicFilter)"
 									dnd-draggable="sub" 
 									dnd-effect-allowed="copy" 
-									dnd-moved="topic.subtopics.splice($index, 1)"
+									dnd-copied="setWeekProgressBars();"
 									dnd-disable-if="!isEditable"	
 								>
 									{{sub.name}}
