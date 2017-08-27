@@ -26,7 +26,6 @@ app.controller('batchesFutureController', function($scope, SessionService, $root
 	
 	$scope.goToBatch = function(batch){
 		SessionService.set("currentBatch", batch);
-		console.log(batch);
 		$http({
 			
 			url: "rest/api/v1/Calendar/Topics?batchId=" + batch.id,
