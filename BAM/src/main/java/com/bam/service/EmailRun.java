@@ -1,6 +1,7 @@
 package com.bam.service;
 
 import com.bam.bean.BamUser;
+import com.bam.exception.CustomException;
 
 public class EmailRun implements Runnable {
   private BamUser user;
@@ -19,7 +20,7 @@ public class EmailRun implements Runnable {
 
   @Override
   public void run() {
-    MailService.sendMail(user.getEmail(), user.getPwd());
+      MailService.sendMail(user.getEmail(), user.getPwd());
   }
 
 }
