@@ -13,13 +13,13 @@ import com.bam.service.TopicService;
 @RestController
 @RequestMapping(value = "/api/v1/Topic/")
 public class TopicController {
-	@Autowired
-	TopicService topicService;
+  @Autowired
+  TopicService topicService;
 
-	@RequestMapping(value="Add", method=RequestMethod.POST)
-	public void addTopicName(HttpServletRequest request){
-		TopicName topic = new TopicName();
-		topic.setName(request.getParameter("name"));
-		topicService.addOrUpdateTopicName(topic);
-	}
+  @RequestMapping(value = "Add", method = RequestMethod.POST)
+  public void addTopicName(HttpServletRequest request) {
+    TopicName topic = new TopicName();
+    topic.setName(request.getParameter("name"));
+    topicService.addOrUpdateTopicName(topic);
+  }
 }
