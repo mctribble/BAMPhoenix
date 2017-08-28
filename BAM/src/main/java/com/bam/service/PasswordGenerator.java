@@ -1,8 +1,5 @@
 package com.bam.service;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class PasswordGenerator {
 
 	public static String makePassword() {
