@@ -93,7 +93,6 @@ public class BatchController {
     for (Batch b : batches) {
       if (time.after(b.getStartDate()) && time.before(b.getEndDate())) {
         batchesInProgress.add(b);
-        break;
       }
     }
     return batchesInProgress;
