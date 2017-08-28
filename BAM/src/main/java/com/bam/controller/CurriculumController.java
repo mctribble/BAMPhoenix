@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import com.bam.bean.CurriculumSubtopic;
 import com.bam.bean.SubtopicName;
 import com.bam.dto.CurriculumSubtopicDTO;
 import com.bam.dto.DaysDTO;
+import com.bam.logging.LoggerClass;
 import com.bam.service.CurriculumService;
 import com.bam.service.CurriculumSubtopicService;
 import com.bam.service.SubtopicService;
@@ -27,6 +29,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 @RequestMapping(value = "/api/v1/Curriculum/")
 public class CurriculumController {
+	private static final Logger logger = Logger.getLogger(LoggerClass.class);
+
 
 	@Autowired
 	CurriculumService curriculumService;
@@ -101,7 +105,7 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping(value = "MakeMaster", method = RequestMethod.GET)
-	public void markCurriculumAsMaster(HttpServletRequest request){
+	public void markCurriculumAsMaster(HttpServletRequest request)throws NullPointerException{
 		Curriculum c = curriculumService.getCuricullumById(Integer.parseInt(request.getParameter("curriculumId")));
 		c.setIsMaster(1);
 		
@@ -117,7 +121,7 @@ public class CurriculumController {
 			prevMaster.setIsMaster(0);
 			curriculumService.save(prevMaster);
 		} catch(NullPointerException e){
-			e.printStackTrace();
+			logger.error(e);
 		}
 		
 		//save new master curriculum
