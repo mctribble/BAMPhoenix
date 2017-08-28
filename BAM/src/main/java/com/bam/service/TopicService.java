@@ -3,6 +3,7 @@ package com.bam.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bam.bean.Batch;
@@ -12,6 +13,7 @@ import com.bam.repository.BatchRepository;
 import com.bam.repository.TopicNameRepository;
 import com.bam.repository.TopicWeekRepository;
 
+@Service
 @Transactional
 public class TopicService {
 
