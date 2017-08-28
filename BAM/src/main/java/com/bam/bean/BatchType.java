@@ -24,8 +24,7 @@ public class BatchType {
 	@Column(name = "Batch_Type_Name")
 	private String name;
 
-	@Column(name = "Batch_Type_Length") // For now, this defaults to 10 and
-										// can't be changed.
+	@Column(name = "Batch_Type_Length") // For now, this defaults to 10 and can't be changed.
 	private Integer length = 10; // In the future, this field can be editable.
 
 	public BatchType() {
