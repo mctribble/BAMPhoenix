@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -108,8 +109,8 @@ public class CurriculumController {
 		//find the curriculum with same name and isMaster = 1; set to 0; save
 		List<Curriculum> curriculumList = curriculumService.findAllCurriculumByName(c.getCurriculumName());
 		
+		Curriculum prevMaster = null;
 		try{
-			Curriculum prevMaster = null;
 			for(int i = 0; i < curriculumList.size(); i++){
 				if(curriculumList.get(i).getIsMaster() == 1)
 					prevMaster = curriculumList.get(i);
@@ -117,11 +118,11 @@ public class CurriculumController {
 			prevMaster.setIsMaster(0);
 			curriculumService.save(prevMaster);
 		} catch(NullPointerException e){
-			e.printStackTrace();
+			LogManager.getRootLogger().error(e);
 		}
 		
 		//save new master curriculum
 		curriculumService.save(c);
 	}
-	
+
 }
