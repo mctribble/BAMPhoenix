@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -130,9 +131,11 @@ public class CurriculumController {
 	}
 	
 	//syncs a curriculum with batch from Assignforce
-	@RequestMapping(value = "SyncBatch", method = RequestMethod.GET)
-	public void syncBatch(HttpServletRequest request){
-		Batch currBatch = batchService.getBatchById(Integer.parseInt(request.getParameter("batchId")));
+	@RequestMapping(value = "SyncBatch/{id}", method = RequestMethod.GET)
+	public void syncBatch(@PathVariable int id){
+		System.out.println(id);
+		
+		Batch currBatch = batchService.getBatchById(id);
 		String batchType = currBatch.getType().getName();
 		
 		//get curriculums with same batchTypes
