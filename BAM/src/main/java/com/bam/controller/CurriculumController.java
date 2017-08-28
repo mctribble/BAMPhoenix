@@ -19,6 +19,7 @@ import com.bam.bean.CurriculumSubtopic;
 import com.bam.bean.SubtopicName;
 import com.bam.dto.CurriculumSubtopicDTO;
 import com.bam.dto.DaysDTO;
+import com.bam.exception.CustomException;
 import com.bam.service.BatchService;
 import com.bam.service.CurriculumService;
 import com.bam.service.CurriculumSubtopicService;
@@ -132,9 +133,7 @@ public class CurriculumController {
 	
 	//syncs a curriculum with batch from Assignforce
 	@RequestMapping(value = "SyncBatch/{id}", method = RequestMethod.GET)
-	public void syncBatch(@PathVariable int id){
-		System.out.println(id);
-		
+	public void syncBatch(@PathVariable int id) throws CustomException{
 		Batch currBatch = batchService.getBatchById(id);
 		String batchType = currBatch.getType().getName();
 		
@@ -166,7 +165,10 @@ public class CurriculumController {
 		List<CurriculumSubtopic> subtopicList = curriculumSubtopicService.getCurriculumSubtopicForCurriculum(c);
 		
 		//logic goes here to add to calendar
-		batchService.addCurriculumSubtopicsToBatch(subtopicList, currBatch);
+		if(subtopicService.getNumberOfSubtopics(id) == 0)
+			batchService.addCurriculumSubtopicsToBatch(subtopicList, currBatch);
+		else
+			throw new CustomException("Batch already synced");
 		
 	}
 	
