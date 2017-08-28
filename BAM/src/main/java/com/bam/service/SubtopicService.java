@@ -10,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.bam.bean.Batch;
 import com.bam.bean.Subtopic;
@@ -25,7 +24,6 @@ import com.bam.repository.SubtopicStatusRepository;
 import com.bam.repository.SubtopicTypeRepository;
  
 @Service
-@Transactional
 public class SubtopicService {
 
   @Autowired
