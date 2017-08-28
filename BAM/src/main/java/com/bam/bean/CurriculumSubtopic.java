@@ -47,6 +47,7 @@ public class CurriculumSubtopic {
 	private int curriculumSubtopicDay;
 	
 	public CurriculumSubtopic() {
+		//Empty Because No Args
 	}
 
 	public CurriculumSubtopic(int curriculumSubtopicId, SubtopicName curriculumSubtopicNameId,
