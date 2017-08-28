@@ -163,7 +163,7 @@ public class CurriculumController {
 		List<CurriculumSubtopic> subtopicList = curriculumSubtopicService.getCurriculumSubtopicForCurriculum(c);
 		
 		//logic goes here to add to calendar
-		
+		batchService.addCurriculumSubtopicsToBatch(subtopicList, currBatch);
 		
 	}
 	
