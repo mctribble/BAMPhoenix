@@ -6,6 +6,7 @@ public class AssignForceCurriculum {
 	private String name;
 	
 	public AssignForceCurriculum() {
+		//Empty Because No Args
 	}
 
 	public AssignForceCurriculum(Integer currId, String name) {
