@@ -51,6 +51,7 @@ public class Curriculum {
 	private int isMaster;
 	
 	public Curriculum(){
+		//Empty Because No Args
 	}
 
 	public Integer getCurriculumId() {
