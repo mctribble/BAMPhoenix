@@ -13,6 +13,7 @@ import com.bam.bean.Batch;
 import com.bam.bean.BatchType;
 import com.bam.bean.CurriculumSubtopic;
 import com.bam.bean.Subtopic;
+import com.bam.bean.SubtopicStatus;
 import com.bam.repository.BatchRepository;
 import com.bam.repository.BatchTypeRepository;
 import com.bam.repository.SubtopicNameRepository;
@@ -72,6 +73,7 @@ public class BatchService {
 			//set name and batch using given information
 			sub.setBatch(batch);
 			sub.setSubtopicName((subtopicNameRepository.findById(cSTopic.getCurriculumSubtopicId())));
+			sub.setStatus(new SubtopicService().getStatus("Pending"));
 			
 			//Get the absolute day of batch that the subtopic should be added to
 			int sDay = cSTopic.getCurriculumSubtopicDay();
