@@ -15,6 +15,7 @@ public class AssignForceBatch {
 		private Integer id;
 		
 		public AssignForceBatch() {
+			//Empty Because No Args
 		}
 
 		public AssignForceBatch(String name, Timestamp startDate, Timestamp endDate, AssignForceCurriculum curriculum,
