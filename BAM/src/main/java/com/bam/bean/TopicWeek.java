@@ -66,6 +66,7 @@ public class TopicWeek {
 		this.id = id;
 	}
 
+	@Autowired
 	public TopicName getTopic() {
 		return topic;
 	}
@@ -74,6 +75,7 @@ public class TopicWeek {
 		this.topic = topic;
 	}
 
+	@Autowired
 	public Batch getBatch() {
 		return batch;
 	}
