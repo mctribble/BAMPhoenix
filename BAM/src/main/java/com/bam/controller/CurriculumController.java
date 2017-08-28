@@ -101,7 +101,6 @@ public class CurriculumController {
           cs.setCurriculumSubtopicWeek(i + 1);
           cs.setCurriculumSubtopicDay(j + 1);
           curriculumSubtopicService.saveCurriculumSubtopic(cs);
-          System.out.println(cs.toString());
         }
       }
     }
