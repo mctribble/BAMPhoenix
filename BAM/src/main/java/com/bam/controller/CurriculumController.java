@@ -105,7 +105,7 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping(value = "MakeMaster", method = RequestMethod.GET)
-	public void markCurriculumAsMaster(HttpServletRequest request)throws NullPointerException{
+	public void markCurriculumAsMaster(HttpServletRequest request){
 		Curriculum c = curriculumService.getCuricullumById(Integer.parseInt(request.getParameter("curriculumId")));
 		c.setIsMaster(1);
 		
@@ -114,12 +114,17 @@ public class CurriculumController {
 		
 		try{
 			Curriculum prevMaster = null;
+			
 			for(int i = 0; i < curriculumList.size(); i++){
 				if(curriculumList.get(i).getIsMaster() == 1)
 					prevMaster = curriculumList.get(i);
 			}
+			if(prevMaster != null){
 			prevMaster.setIsMaster(0);
-			curriculumService.save(prevMaster);
+			curriculumService.save(prevMaster);}
+			else{
+				logger.error(prevMaster);
+			}
 		} catch(NullPointerException e){
 			logger.error(e);
 		}
