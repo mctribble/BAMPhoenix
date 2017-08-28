@@ -18,31 +18,32 @@ import com.bam.exception.CustomException;
 import com.bam.service.SubtopicService;
 
 @RestController
-@RequestMapping(value="/api/v1/Subtopic/")
+@RequestMapping(value = "/api/v1/Subtopic/")
 public class SubtopicAddController {
-	
-	@Autowired
-	SubtopicService subserv;
-	
-	/**
-	 * 
-	 * @param jsonObj
-	 * @author Samuel Louis-Pierre, Avant Mathur
-	 * 
-	 * REST controller to add existing subtopic to specified batch
-	 * @throws CustomException 
-	 */
-	
-	@RequestMapping(value="addSubtopic", method=RequestMethod.POST, produces="application/json")
-	public void addSubtopic(@RequestBody String jsonObj) throws CustomException{
 
-		Subtopic st = null;
-		try {
-			st = new ObjectMapper().readValue(jsonObj, Subtopic.class);
-		} catch (IOException e) {
-			throw new CustomException(e);
-		}
-		
-		subserv.updateSubtopic(st);
-	}
+  @Autowired
+  SubtopicService subserv;
+
+  /**
+   * 
+   * @param jsonObj
+   * @author Samuel Louis-Pierre, Avant Mathur
+   * 
+   *         REST controller to add existing subtopic to specified batch
+   * @throws CustomException
+   */
+
+  @RequestMapping(value = "addSubtopic", method = RequestMethod.POST, produces = "application/json")
+  public void addSubtopic(@RequestBody String jsonObj) throws CustomException {
+
+    Subtopic st = null;
+    try {
+      st = new ObjectMapper().readValue(jsonObj, Subtopic.class);
+    } catch (IOException e) {
+      throw new CustomException(e);
+    }
+
+    subserv.updateSubtopic(st);
+  }
+
 }
