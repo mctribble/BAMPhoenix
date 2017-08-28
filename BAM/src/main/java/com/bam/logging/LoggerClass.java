@@ -11,14 +11,15 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+import com.bam.exception.CustomException;
+
 @Aspect
 @Component
 public class LoggerClass {
-<<<<<<< HEAD
+
 	
 	//Created Logger for Intercepting Methods and logging that Information
-
-	private static final Logger logger = Logger.getLogger(LoggerClass.class);
+	private static final Logger logger = LogManager.getRootLogger();
 
 
 	private String intercepted = "intercepted method : ";
@@ -476,13 +477,11 @@ public class LoggerClass {
 		logger.info(dataRequest +simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
-}
-=======
->>>>>>> 1b4be4a0bd07a46f66d2974b5da58be887d7b58c
+
+
 
   // Created Logger for Intercepting Methods and logging that Information 
 
-  private static final Logger logger = LogManager.getRootLogger();
 
   /**
    * Logging Methods from the Batch service class

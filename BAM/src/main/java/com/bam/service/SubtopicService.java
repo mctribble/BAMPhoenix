@@ -6,10 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-<<<<<<< HEAD
-=======
+
 import org.apache.logging.log4j.LogManager;
->>>>>>> 1b4be4a0bd07a46f66d2974b5da58be887d7b58c
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
