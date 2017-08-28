@@ -13,7 +13,6 @@ import com.bam.bean.Batch;
 import com.bam.bean.BatchType;
 import com.bam.bean.CurriculumSubtopic;
 import com.bam.bean.Subtopic;
-import com.bam.bean.SubtopicStatus;
 import com.bam.repository.BatchRepository;
 import com.bam.repository.BatchTypeRepository;
 import com.bam.repository.SubtopicNameRepository;
@@ -32,6 +31,9 @@ public class BatchService {
 	
 	@Autowired
 	SubtopicNameRepository subtopicNameRepository;
+	
+	@Autowired
+	SubtopicService subtopicService;
 	
 	public void addOrUpdateBatch(Batch b) {
 		batchRepository.save(b);
@@ -64,7 +66,6 @@ public class BatchService {
 	 * @param batch
 	 */
 	public void addCurriculumSubtopicsToBatch(List<CurriculumSubtopic> currSubtopics, Batch batch){
-		
 		Calendar cal = Calendar.getInstance();
 		
 		for(CurriculumSubtopic cSTopic: currSubtopics){
@@ -72,8 +73,8 @@ public class BatchService {
 			
 			//set name and batch using given information
 			sub.setBatch(batch);
-			sub.setSubtopicName((subtopicNameRepository.findById(cSTopic.getCurriculumSubtopicId())));
-			sub.setStatus(new SubtopicService().getStatus("Pending"));
+			sub.setSubtopicName((subtopicNameRepository.findById(cSTopic.getCurriculumSubtopicNameId().getId())));
+			sub.setStatus(subtopicService.getStatus("Pending"));
 			
 			//Get the absolute day of batch that the subtopic should be added to
 			int sDay = cSTopic.getCurriculumSubtopicDay();
