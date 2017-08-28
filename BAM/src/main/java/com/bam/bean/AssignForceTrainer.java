@@ -10,6 +10,7 @@ public class AssignForceTrainer {
 	private String lastName;
 	
 	public AssignForceTrainer() {
+		//Empty Because No Args
 	}
 
 	
