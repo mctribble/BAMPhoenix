@@ -1,10 +1,7 @@
 package com.bam.service;
 
-import org.springframework.stereotype.Component;
-
 import com.bam.bean.BamUser;
 
-@Component
 public class EmailRun implements Runnable {
   private BamUser user;
 
