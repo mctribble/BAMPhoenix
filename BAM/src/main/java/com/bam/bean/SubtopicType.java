@@ -25,6 +25,7 @@ public class SubtopicType {
 	private String name;
 
 	public SubtopicType() {
+		//Empty Because No Args
 	}
 
 	public SubtopicType(Integer id, String name) {
