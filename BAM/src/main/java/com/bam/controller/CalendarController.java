@@ -42,8 +42,6 @@ public class CalendarController {
 
 	@Autowired
 	TopicService topicService;
-
-	
 	/**
 	 * 
 	 * This uses pagination.
