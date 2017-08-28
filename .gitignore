@@ -74,3 +74,4 @@ nbdist/
 Servers/
 .recommenders
 BAM/src/test/node_modules
+BAM/src/test/package.json
