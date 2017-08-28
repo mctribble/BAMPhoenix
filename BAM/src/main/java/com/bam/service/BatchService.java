@@ -2,8 +2,8 @@ package com.bam.service;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bam.bean.BamUser;
@@ -12,33 +12,33 @@ import com.bam.bean.BatchType;
 import com.bam.repository.BatchRepository;
 import com.bam.repository.BatchTypeRepository;
 
-@Service
 @Transactional
 public class BatchService {
-  @Autowired
-  BatchRepository batchRepository;
+	@Autowired
+	BatchRepository batchRepository;
 
-  @Autowired
-  BatchTypeRepository batchTypeRepository;
+	@Autowired
+	BatchTypeRepository batchTypeRepository;
+	
+	public void addOrUpdateBatch(Batch b) {
+		batchRepository.save(b);
+	}
 
-  public void addOrUpdateBatch(Batch b) {
-    batchRepository.save(b);
-  }
+	public Batch getBatchById(Integer id) {
+		Logger.getLogger(BatchService.class).fatal(batchRepository);
+		return batchRepository.findById(id);
+	}
 
-  public Batch getBatchById(Integer id) {
-    return batchRepository.findById(id);
-  }
+	public List<Batch> getBatchAll() {
+		return batchRepository.findAll();
+	}
 
-  public List<Batch> getBatchAll() {
-    return batchRepository.findAll();
-  }
-
-  public List<Batch> getBatchByTrainer(BamUser trainer) {
-    return batchRepository.findByTrainer(trainer);
-  }
-
-  public List<BatchType> getAllBatchTypes() {
-    return batchTypeRepository.findAll();
-  }
-
+	public List<Batch> getBatchByTrainer(BamUser trainer) {
+		return batchRepository.findByTrainer(trainer);
+	}
+	
+	public List<BatchType> getAllBatchTypes() {
+		return batchTypeRepository.findAll();
+	}
+	
 }
