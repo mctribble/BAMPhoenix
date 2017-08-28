@@ -11,13 +11,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.logging.log4j.LogManager;
- 
+
 public class MailService {
 
   public static void sendMail(String email, String newPassword) {
 
-    // Use "System.getenv" to get the value of the specified environment
-    // variable
     final String EMAILUSERNAME = System.getenv("EMAIL_USERNAME");
     final String EMAILPASSWORD = System.getenv("EMAIL_PASSWORD");
 

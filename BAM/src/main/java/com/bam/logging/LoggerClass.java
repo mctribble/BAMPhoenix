@@ -29,7 +29,7 @@ public class LoggerClass {
    * @author Jonathan Layssard and Troy King
    */
   @Around("execution(* com.bam.service.*.*(..))")
-  public Object interceptService(ProceedingJoinPoint pjp) throws Throwable {
+  public Object interceptService(ProceedingJoinPoint pjp) throws Exception {
     // return to always return join point objects so they are not consumed
     Object proceedObj = null;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -50,7 +50,7 @@ public class LoggerClass {
   }
 
   @Around("execution(* com.bam.controller.*.*(..))")
-  public Object interceptController(ProceedingJoinPoint pjp) throws Throwable {
+  public Object interceptController(ProceedingJoinPoint pjp) throws Exception {
     Object proceedObj = null;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
     String baseString = "(" + simpleDateFormat.format(new Date(System.currentTimeMillis())) + ")"

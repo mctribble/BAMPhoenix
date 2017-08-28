@@ -16,8 +16,8 @@ import com.bam.bean.Batch;
 import com.bam.bean.Subtopic;
 import com.bam.bean.SubtopicName;
 import com.bam.bean.SubtopicStatus;
-import com.bam.bean.SubtopicType;
 import com.bam.exception.CustomException;
+import com.bam.bean.SubtopicType;
 import com.bam.repository.BatchRepository;
 import com.bam.repository.SubtopicNameRepository;
 import com.bam.repository.SubtopicRepository;
@@ -71,13 +71,13 @@ public class SubtopicService {
     subtopicRepository.save(s);
   }
 
-  public List<Subtopic> getSubtopicByBatch(Batch batch) {
-    return subtopicRepository.findByBatch(batch);
-  }
+	public List<Subtopic> getSubtopicByBatch(Batch batch) {
+		return subtopicRepository.findByBatch(batch);
+	}
 
-  public List<Subtopic> getSubtopicByBatchId(int batchId) {
-    return subtopicRepository.findByBatch(batchRepository.findById(batchId));
-  }
+	public List<Subtopic> getSubtopicByBatchId(int batchId) {
+		return subtopicRepository.findByBatch(batchRepository.findById(batchId));
+	}
 
   /**
    * 
@@ -95,9 +95,9 @@ public class SubtopicService {
     subtopicRepository.save(subtopic);
   }
 
-  public SubtopicStatus getStatus(String name) {
-    return subtopicStatusRepository.findByName(name);
-  }
+	public SubtopicStatus getStatus(String name) {
+		return subtopicStatusRepository.findByName(name);
+	}
 
   /**
    * Service method to return the number of Subtopics by matching their ids with
@@ -114,6 +114,10 @@ public class SubtopicService {
 
   public List<SubtopicName> getAllSubtopics() {
     return subtopicNameRepository.findAll();
+  }
+
+  public List<Subtopic> getSubtopics() {
+    return subtopicRepository.findAll();
   }
 
   /**

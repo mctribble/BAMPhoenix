@@ -12,6 +12,8 @@ import com.bam.bean.Subtopic;
 @Repository
 public interface SubtopicRepository extends JpaRepository<Subtopic, Integer> {
 	List<Subtopic> findByBatch(Batch batch);
+	
+	List<Subtopic> findAll();
 
 	/**
 	 * Counts the number of subtopics in the database by matching it with the

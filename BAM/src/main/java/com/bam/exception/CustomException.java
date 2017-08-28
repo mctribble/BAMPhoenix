@@ -1,8 +1,10 @@
 package com.bam.exception;
 
 import javax.mail.MessagingException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import com.bam.logging.LoggerClass;
 
 public class CustomException extends Exception {

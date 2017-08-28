@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.bean.Curriculum;
 import com.bam.bean.CurriculumSubtopic;
+import com.bam.bean.Subtopic;
 import com.bam.bean.SubtopicName;
 import com.bam.dto.CurriculumSubtopicDTO;
 import com.bam.dto.DaysDTO;
@@ -27,7 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 @RequestMapping(value = "/api/v1/Curriculum/")
 public class CurriculumController {
- 
+
   @Autowired
   CurriculumService curriculumService;
 
@@ -62,6 +64,12 @@ public class CurriculumController {
   @ResponseBody
   public List<SubtopicName> getTopicPool() {
     return subtopicService.getAllSubtopics();
+  }
+
+  @RequestMapping(value = "SubtopicPool", method = RequestMethod.GET, produces = "application/json")
+  @ResponseBody
+  public List<Subtopic> getSubtopicPool() {
+    return subtopicService.getSubtopics();
   }
 
   @RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
@@ -109,14 +117,19 @@ public class CurriculumController {
 
     try {
       Curriculum prevMaster = null;
+
       for (int i = 0; i < curriculumList.size(); i++) {
         if (curriculumList.get(i).getIsMaster() == 1)
           prevMaster = curriculumList.get(i);
       }
-      prevMaster.setIsMaster(0);
-      curriculumService.save(prevMaster);
+      if (prevMaster != null) {
+        prevMaster.setIsMaster(0);
+        curriculumService.save(prevMaster);
+      } else {
+        LogManager.getRootLogger().error(prevMaster);
+      }
     } catch (NullPointerException e) {
-      e.printStackTrace();
+      LogManager.getRootLogger().error(e);
     }
 
     // save new master curriculum

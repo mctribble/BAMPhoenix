@@ -2,9 +2,11 @@ package com.bam.bean;
 
 import javax.persistence.*;
 
+
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 
 @Entity
 @Table(name = "USERS")

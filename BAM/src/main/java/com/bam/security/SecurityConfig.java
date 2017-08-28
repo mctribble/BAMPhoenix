@@ -38,7 +38,7 @@ import com.bam.service.BamUserDetailsService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Autowired
+	@Autowired
 	BamUserDetailsService userDetailsService;
 
 	@Autowired
@@ -73,11 +73,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return authProvider;
 	}
 
-	@Override
-	public void configure(WebSecurity web) throws Exception {
+	 @Override
+	 public void configure(WebSecurity web) throws Exception {
 		// Ignore certain URLs.
-	  web.ignoring().antMatchers("/index.html", "/static/**", "/");
-	}
+		web.ignoring().antMatchers("/index.html", "/static/**", "/");
+	 }
 
 
 	/***
@@ -90,26 +90,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	 protected void configure(HttpSecurity http) throws Exception {
 	  http
 	   .headers().disable()
 	   .csrf().disable()
 	   .authorizeRequests()
-	   .antMatchers("/rest/api/v1/Users/Register").permitAll()
-	   .anyRequest().authenticated()
-	   .and()
-	   .formLogin()
-	   .loginPage("/")
-	   .loginProcessingUrl("/authenticate")
-	   .successHandler(restAuthenticationSuccessHandler)
-	   .failureHandler(restAuthenticationFailureHandler)
-	   .usernameParameter("username")
-	   .passwordParameter("password")
-	   .permitAll()
-	   .and()
-	   .logout()
-	   .logoutUrl("/logout")
-	   .deleteCookies("JSESSIONID")
-	   .permitAll();
+	    .antMatchers("/rest/api/v1/Users/Register").permitAll()
+	    .anyRequest().authenticated()
+	    .and()
+	    .formLogin()
+	   	.loginPage("/")
+	    .loginProcessingUrl("/authenticate")
+	    .successHandler(restAuthenticationSuccessHandler)
+	    .failureHandler(restAuthenticationFailureHandler)
+	    .usernameParameter("username")
+	    .passwordParameter("password")
+	    .permitAll()
+	    .and()
+	    .logout()
+	    .logoutUrl("/logout")
+	    .deleteCookies("JSESSIONID")
+	    .permitAll();
 	 }
 }
