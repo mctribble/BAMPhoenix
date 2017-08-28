@@ -23,4 +23,5 @@ public class PasswordGenerator {
 
 		return pass.toString();
 	}
+
 }

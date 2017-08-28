@@ -22,4 +22,5 @@ public class TopicController {
     topic.setName(request.getParameter("name"));
     topicService.addOrUpdateTopicName(topic);
   }
+
 }

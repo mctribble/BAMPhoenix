@@ -10,7 +10,7 @@ import com.bam.bean.BamUser;
 import com.bam.bean.Batch;
 import com.bam.repository.BamUserRepository;
 import com.bam.repository.BatchRepository;
-
+ 
 @Service
 @Transactional
 public class BamUserService {

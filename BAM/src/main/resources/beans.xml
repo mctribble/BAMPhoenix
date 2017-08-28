@@ -18,7 +18,7 @@
 	<mvc:annotation-driven />
 	<mvc:resources location="/static" mapping="/**" />
 	<aop:aspectj-autoproxy proxy-target-class="true" />
-
+ 
 	<bean id="myDataSource" name="myDataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>

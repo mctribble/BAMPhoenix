@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bam.bean.Curriculum;
 import com.bam.repository.CurriculumRepository;
-
+ 
 @Service
 public class CurriculumService {
 

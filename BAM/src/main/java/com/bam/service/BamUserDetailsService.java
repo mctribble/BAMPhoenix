@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.bam.bean.BamUser;
 import com.bam.repository.BamUserRepository;
-
+ 
 @Service
 public class BamUserDetailsService implements UserDetailsService {
 

@@ -11,7 +11,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.logging.log4j.LogManager;
-
+ 
 public class MailService {
 
   public static void sendMail(String email, String newPassword) {

@@ -14,7 +14,7 @@ import com.bam.bean.AssignForceBatch;
 import com.bam.bean.BamUser;
 import com.bam.bean.Batch;
 import com.bam.bean.BatchType;
-
+ 
 /**
  * @author DillonT, GilB
  *         assignForceSyncService pulls the most current information from

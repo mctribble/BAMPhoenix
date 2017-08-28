@@ -20,7 +20,7 @@ import com.bam.bean.Batch;
 import com.bam.bean.BatchType;
 import com.bam.service.BamUserService;
 import com.bam.service.BatchService;
-
+ 
 @RestController
 @RequestMapping(value = "/api/v1/Batches/")
 public class BatchController {

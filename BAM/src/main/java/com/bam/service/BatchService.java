@@ -11,7 +11,7 @@ import com.bam.bean.Batch;
 import com.bam.bean.BatchType;
 import com.bam.repository.BatchRepository;
 import com.bam.repository.BatchTypeRepository;
-
+ 
 @Service
 @Transactional
 public class BatchService {

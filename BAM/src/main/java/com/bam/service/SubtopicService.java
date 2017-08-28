@@ -23,7 +23,7 @@ import com.bam.repository.SubtopicNameRepository;
 import com.bam.repository.SubtopicRepository;
 import com.bam.repository.SubtopicStatusRepository;
 import com.bam.repository.SubtopicTypeRepository;
-
+ 
 @Service
 @Transactional
 public class SubtopicService {

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggerClass {
 
-  // Created Logger for Intercepting Methods and logging that Information
+  // Created Logger for Intercepting Methods and logging that Information 
 
   private static final Logger logger = LogManager.getRootLogger();
 

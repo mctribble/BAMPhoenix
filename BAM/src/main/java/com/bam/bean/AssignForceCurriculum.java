@@ -5,7 +5,8 @@ public class AssignForceCurriculum {
 	private Integer currId;
 	private String name;
 	
-	public AssignForceCurriculum() {}
+	public AssignForceCurriculum() {
+	}
 
 	public AssignForceCurriculum(Integer currId, String name) {
 		super();

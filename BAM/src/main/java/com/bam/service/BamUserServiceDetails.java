@@ -69,6 +69,5 @@ public class BamUserServiceDetails implements UserDetailsService {
 
 		return Result;
 	}
-	
 
 }

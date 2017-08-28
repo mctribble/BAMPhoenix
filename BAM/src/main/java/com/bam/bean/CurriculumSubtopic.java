@@ -46,7 +46,8 @@ public class CurriculumSubtopic {
 	@Column(name = "Curriculum_Day")
 	private int curriculumSubtopicDay;
 	
-	public CurriculumSubtopic(){}
+	public CurriculumSubtopic() {
+	}
 
 	public CurriculumSubtopic(int curriculumSubtopicId, SubtopicName curriculumSubtopicNameId,
 			Curriculum curriculumSubtopicCurriculumID, int curriculumSubtopicWeek, int curriculumSubtopicDay) {

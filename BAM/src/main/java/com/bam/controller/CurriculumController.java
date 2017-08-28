@@ -27,7 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 @RequestMapping(value = "/api/v1/Curriculum/")
 public class CurriculumController {
-
+ 
   @Autowired
   CurriculumService curriculumService;
 

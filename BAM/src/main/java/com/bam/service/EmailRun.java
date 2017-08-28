@@ -1,7 +1,6 @@
 package com.bam.service;
 
 import com.bam.bean.BamUser;
-import com.bam.exception.CustomException;
 
 public class EmailRun implements Runnable {
   private BamUser user;

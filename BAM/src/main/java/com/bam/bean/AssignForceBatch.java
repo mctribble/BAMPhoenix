@@ -14,7 +14,8 @@ public class AssignForceBatch {
 		private AssignForceTrainer trainer;
 		private Integer id;
 		
-		public AssignForceBatch() {}
+		public AssignForceBatch() {
+		}
 
 		public AssignForceBatch(String name, Timestamp startDate, Timestamp endDate, AssignForceCurriculum curriculum,
 				AssignForceTrainer trainer, Integer iD) {

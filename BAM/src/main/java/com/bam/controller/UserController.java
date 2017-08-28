@@ -22,7 +22,7 @@ import com.bam.service.PasswordGenerator;
 @RestController
 @RequestMapping(value = "/api/v1/Users/")
 public class UserController {
-
+ 
   private static final String USERID = "userId";
   private static final String BATCHID = "batchId";
 

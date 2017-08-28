@@ -9,7 +9,8 @@ public class AssignForceTrainer {
 	private String firstName;
 	private String lastName;
 	
-	public AssignForceTrainer() {}
+	public AssignForceTrainer() {
+	}
 
 	
 	public AssignForceTrainer(Integer trainerId, String firstName, String lastName) {

@@ -29,4 +29,5 @@ public class SubTopicController {
     SubtopicName subtopic = new SubtopicName(request.getParameter("subtopicName"), topic, type);
     subTopicService.addOrUpdateSubtopicName(subtopic);
   }
+
 }

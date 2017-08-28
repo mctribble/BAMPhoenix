@@ -90,7 +90,6 @@ public class CalendarController {
   /**
    * Counts the number of Subtopics by matching their ids with the batchId.
    * 
-   * 
    * @param HttpServletRequest
    *          object
    * @return number(Long) of Subtopics

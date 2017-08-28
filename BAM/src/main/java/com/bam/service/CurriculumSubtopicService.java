@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bam.bean.Curriculum;
 import com.bam.bean.CurriculumSubtopic;
 import com.bam.repository.CurriculumSubtopicRepository;
-
+ 
 @Service
 @Transactional
 public class CurriculumSubtopicService {
