@@ -51,7 +51,7 @@ public class Curriculum {
 	private int isMaster;
 	
 	public Curriculum(){
-		// Empty beacuse of No-args constructor
+		//Empty Because No Args
 	}
 
 	public Integer getCurriculumId() {
