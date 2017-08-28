@@ -113,6 +113,10 @@ public class SubtopicService {
 	public List<SubtopicName> getAllSubtopics(){
 		return subtopicNameRepository.findAll();
 	}
+	
+	public List<Subtopic> getSubtopics() {
+		return subtopicRepository.findAll();
+	}
 
 	/**
 	 * Service method to return the pages of json information to the FullCalendar API. 
