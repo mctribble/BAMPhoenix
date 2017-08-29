@@ -17,8 +17,8 @@
         calendars : {}
     })
 
-  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService', 'SubtopicService', '$q',
-        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, SubtopicService, $q) {
+  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService', 'SubtopicService', '$q', '$window',
+        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, SubtopicService, $q, $window) {
 	  		if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
 				$location.path('/noBatch');
@@ -452,6 +452,23 @@
             	          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
             	        ]
             	    };
+            
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------
+            $scope.fillSubtopics = function(){
+            	$window.alert("We are now populating your batch with subtopics.  This may take a few minutes.  You can logout at any time.");
+            	$http({
+               		method : "GET",
+               		url : "rest/api/v1/Curriculum/SyncBatch/"+thisBatchId
+               		
+               	 }).then(function successCallback(response) {
+               		
+               	 }, function errorCallback(response){
+               		 console.log(response);
+               		 $window.alert("Batches already populated with subtopics.")
+               	 }); 
+            }
+            
+            
             /* alert on eventClick */
             $scope.alertOnEventClick = function( event, date, jsEvent, view){
             	var eventDate= new Date(event.start);
