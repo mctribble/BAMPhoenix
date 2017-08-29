@@ -44,7 +44,7 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 		
 			var uniqueTopics = new Set();
 			var topicMap = new Map();
-
+			
 			var subtopicArray = [];
 			for(i in subtopics){
 					if(!uniqueTopics.has(subtopics[i].subtopicName.topic.name)){
