@@ -164,7 +164,7 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 				type: subTopicType
 		}
 		
-		var subtopicDate = $scope.date;
+		var subtopicDate = $scope.selDate;
 
 		var status = {
 			id : 1,
@@ -185,6 +185,9 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 			$scope.msg = 'Subtopic already exists on that day.';
 			$scope.alertClass = 'alert alert-danger';
 		}else{
+			
+			$scope.stDate = $scope.selDate;
+			
 			$http({
 			url: "rest/api/v1/Subtopic/addSubtopic",
 			method: 'POST',
