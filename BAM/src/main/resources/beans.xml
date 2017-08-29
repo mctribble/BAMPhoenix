@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
-		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
  
  	<bean id="myDataSource" name="myDataSource" class="org.apache.commons.dbcp2.BasicDataSource">
  		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
- 		<!-- <property name="dataSource" ref="#{systemEnvironment['LOCAL_DB_USERNAME']=='LOCAL'? localDataSource : productionDataSource}" /> -->
 		<property name="url" value="#{systemEnvironment['DB_CHOICE']=='LOCAL'? systemEnvironment['LOCAL_DB_URL'] :
-		                              systemEnvironment['DB_CHOICE']=='PRODUCTION'? systemEnvironment['DB_URL'] :
+		                              systemEnvironment['DB_CHOICE']=='PRODUCTION'? systemEnvironment['PRODUCTION_DB_URL'] :
 		                              systemEnvironment['DEVELOPMENT_DB_URL']}"></property>
 		<property name="username" value="#{systemEnvironment['DB_CHOICE']=='LOCAL'? systemEnvironment['LOCAL_DB_USERNAME'] :
-		                                   systemEnvironment['DB_CHOICE']=='PRODUCTION'? systemEnvironment['DB_USERNAME'] :
+		                                   systemEnvironment['DB_CHOICE']=='PRODUCTION'? systemEnvironment['PRODUCTION_DB_USERNAME'] :
 		                                   systemEnvironment['DEVELOPMENT_DB_USERNAME']}"></property>
 		<property name="password" value="#{systemEnvironment['DB_CHOICE']=='LOCAL'? systemEnvironment['LOCAL_DB_PASSWORD'] :
-		                                   systemEnvironment['DB_CHOICE']=='PRODUCTION'? systemEnvironment['DB_PASSWORD'] :
+		                                   systemEnvironment['DB_CHOICE']=='PRODUCTION'? systemEnvironment['PRODUCTION_DB_PASSWORD'] :
 		                                   systemEnvironment['DEVELOPMENT_DB_PASSWORD']}"></property>
 		<property name="maxIdle" value="0"></property> 
 		<property name="minIdle" value="10"></property>

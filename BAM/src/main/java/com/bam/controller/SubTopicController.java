@@ -16,17 +16,18 @@ import com.bam.service.TopicService;
 @RestController
 @RequestMapping(value = "/api/v1/Subtopic/")
 public class SubTopicController {
-	@Autowired
-	TopicService topicService;
+  @Autowired
+  TopicService topicService;
 
-	@Autowired
-	SubtopicService subTopicService;
+  @Autowired
+  SubtopicService subTopicService;
 
-	@RequestMapping(value="Add", method= RequestMethod.POST)
-	public void addSubTopicName(HttpServletRequest request){
-		SubtopicType type = subTopicService.getSubtopicType(Integer.parseInt(request.getParameter("typeId")));
-		TopicName topic = topicService.getTopicName(Integer.parseInt(request.getParameter("topicId")));
-		SubtopicName subtopic = new SubtopicName(request.getParameter("subtopicName"), topic, type);
-		subTopicService.addOrUpdateSubtopicName(subtopic);
-	}
+  @RequestMapping(value = "Add", method = RequestMethod.POST)
+  public void addSubTopicName(HttpServletRequest request) {
+    SubtopicType type = subTopicService.getSubtopicType(Integer.parseInt(request.getParameter("typeId")));
+    TopicName topic = topicService.getTopicName(Integer.parseInt(request.getParameter("topicId")));
+    SubtopicName subtopic = new SubtopicName(request.getParameter("subtopicName"), topic, type);
+    subTopicService.addOrUpdateSubtopicName(subtopic);
+  }
+
 }

@@ -9,10 +9,7 @@ import com.bam.bean.Curriculum;
 
 @Repository
 public interface CurriculumRepository extends JpaRepository<Curriculum, Integer> {
-
 	public List<Curriculum> findAll();
-	
 	public Curriculum findById(Integer id);
-	
 	public List<Curriculum> findByCurriculumName(String name);
 }

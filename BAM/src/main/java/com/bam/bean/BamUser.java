@@ -233,5 +233,4 @@ public class BamUser {
 				+ phone2 + ", skype=" + skype + ", pwd2=" + pwd2 + "]";
 	}
 
-
 }
