@@ -1,11 +1,5 @@
 package com.bam.security;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,13 +9,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.bam.service.BamUserDetailsService;
 
@@ -52,6 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AuthenticationFailureHandler restAuthenticationFailureHandler;
+	
+	@Autowired
+	private HttpAuthenticationEntryPoint authenticationEntryPoint;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -78,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		authProvider.setPasswordEncoder(passwordEncoder());
 		return authProvider;
 	}
-
+	
 	 @Override
 	 public void configure(WebSecurity web) throws Exception {
 		// Ignore certain URLs.
@@ -100,6 +95,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	  http
 //	   .headers().disable()
 	   .csrf().disable()
+	   .exceptionHandling()
+	   .authenticationEntryPoint(authenticationEntryPoint)
+	   .and()
 	   .authorizeRequests()
 	    .antMatchers("/rest/api/v1/Users/Register").permitAll()
 	    .antMatchers("**rest*/**").authenticated()
@@ -119,19 +117,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    .permitAll()
 	    .and()
 	    .logout()
-	    .logoutUrl("/logout")
-	    .logoutSuccessHandler(new LogoutSuccessHandler() {
-	    	 @Override
-	    	public void onLogoutSuccess(
-	    	HttpServletRequest request,
-	    	HttpServletResponse response,
-	    	Authentication a) throws IOException, ServletException {
-	    	response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-	    	  }
-
-	    	})
-	    	.deleteCookies("JSESSIONID")
-	    	.invalidateHttpSession(true)
-	    .permitAll();
+	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+	    .logoutSuccessUrl("/logout.done").deleteCookies("JSESSIONID")
+	    .invalidateHttpSession(true);		
 	 }
 }
