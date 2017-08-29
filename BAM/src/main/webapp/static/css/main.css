@@ -595,7 +595,7 @@ body {
 
 /***** 6.0 NEW SUBTOPIC STYLING *****/
 #login-btn {
-	width: auto;
+	width: 75%;
 }
 
 .login-btn-container {
