@@ -2,7 +2,10 @@ package com.bam.controller;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -166,7 +169,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "Recovery", method = RequestMethod.POST, produces = "application/json")
-    public void recoverPassword(@RequestBody String email) {
+    public void recoverPassword(@RequestBody String email) throws CustomException {
         // Lookup user in database by e-mail
         BamUser user = userService.findUserByEmail(email);
         if (user != null) {
@@ -176,8 +179,9 @@ public class UserController {
         	userService.addOrUpdateUser(user);
         	userService.recoverE(user, generate);
         } else { 
-        	throw new IllegalArgumentException("password not changed");
+        	throw new CustomException("User does not exist in the system");
         }
-   }
+    }
+
 
 }

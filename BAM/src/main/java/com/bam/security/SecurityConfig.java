@@ -9,13 +9,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.bam.service.BamUserDetailsService;
 
@@ -46,6 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AuthenticationFailureHandler restAuthenticationFailureHandler;
+	
+	@Autowired
+	private HttpAuthenticationEntryPoint authenticationEntryPoint;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -72,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		authProvider.setPasswordEncoder(passwordEncoder());
 		return authProvider;
 	}
-
+	
 	 @Override
 	 public void configure(WebSecurity web) throws Exception {
 		// Ignore certain URLs.
@@ -94,9 +95,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	  http
 	   .headers().disable()
 	   .csrf().disable()
+//	   .exceptionHandling()
+//	   .authenticationEntryPoint(authenticationEntryPoint)
+//	   .and()
 	   .authorizeRequests()
 	    .antMatchers("/rest/api/v1/Users/Register").permitAll()
+//	    .antMatchers("**rest*/**").authenticated()
+//	    .antMatchers("*rest*/**").authenticated()
+//	    .antMatchers("**/*rest*/**").authenticated()
+//	    .antMatchers("**rest*/**").authenticated()
 	    .anyRequest().authenticated()
+//	    .antMatchers("/rest/api/v1/Curriculum/**").hasAuthority("Trainer")
 	    .and()
 	    .formLogin()
 	   	.loginPage("/")
@@ -108,8 +117,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    .permitAll()
 	    .and()
 	    .logout()
-	    .logoutUrl("/logout")
-	    .deleteCookies("JSESSIONID")
-	    .permitAll();
+	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+	    .logoutSuccessUrl("/logout.done").deleteCookies("JSESSIONID")
+	    .invalidateHttpSession(true);		
 	 }
 }
