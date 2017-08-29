@@ -30,109 +30,127 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping(value = "/api/v1/Curriculum/")
 public class CurriculumController {
 
-  @Autowired
-  CurriculumService curriculumService;
+	@Autowired
+	CurriculumService curriculumService;
+	
+	@Autowired
+	CurriculumSubtopicService curriculumSubtopicService;
+	
+	@Autowired
+	SubtopicService subtopicService;
+	
+	public CurriculumService get(){
+		return curriculumService;
+	}
+	
+	/***
+	 * @author Nam Mai
+	 * Method is needed for injecting mocked services for unit test
+	 */
+	@Autowired
+	public CurriculumController(CurriculumService cs, CurriculumSubtopicService css, SubtopicService ss){
+		curriculumService = cs;
+		curriculumSubtopicService =css;
+		subtopicService = ss;
+	}
+	
+	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public List<Curriculum> getAllCurriculum(){
+		return curriculumService.getAllCurriculum();
+	}
+	
+	@RequestMapping(value = "GetCurriculum", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public Curriculum getCurriculumById(HttpServletRequest request){
+		int curriculumId = Integer.parseInt(request.getParameter("curriculumId"));
+		return curriculumService.getCuricullumById(curriculumId);
+	}
+	
+	@RequestMapping(value = "Schedule", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public List<CurriculumSubtopic> getAllCurriculumSchedules(HttpServletRequest request){
+		Curriculum c = new Curriculum();
+		c.setCurriculumId(Integer.parseInt(request.getParameter("curriculumId")));
+		return curriculumSubtopicService.getCurriculumSubtopicForCurriculum(c);
+	}
+	
+	@RequestMapping(value = "TopicPool", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public List<SubtopicName> getTopicPool(){
+		return subtopicService.getAllSubtopics();
+	}
+	
+	
+	@RequestMapping(value = "SubtopicPool", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public List<Subtopic> getSubtopicPool(){
+		return subtopicService.getSubtopics();
+	}
+	
+	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
+	public void addSchedule(@RequestBody String json) throws JsonParseException, JsonMappingException, IOException{
+		ObjectMapper mapper = new ObjectMapper();
+		CurriculumSubtopicDTO c = mapper.readValue(json, CurriculumSubtopicDTO.class);
+		
+		//save curriculum object first
 
-  @Autowired
-  CurriculumSubtopicService curriculumSubtopicService;
+		Curriculum curriculum = new Curriculum();
+		curriculum.setCurriculumCreator(c.getMeta().getCurriculum().getCurriculumCreator());
+		curriculum.setCurriculumdateCreated(c.getMeta().getCurriculum().getCurriculumdateCreated());
+		curriculum.setCurriculumName(c.getMeta().getCurriculum().getCurriculumName());
+		curriculum.setCurriculumNumberOfWeeks(c.getMeta().getCurriculum().getCurriculumNumberOfWeeks());
+		curriculum.setCurriculumVersion(c.getMeta().getCurriculum().getCurriculumVersion());
+		curriculum.setIsMaster(c.getMeta().getCurriculum().getIsMaster());
 
-  @Autowired
-  SubtopicService subtopicService;
+		curriculumService.save(curriculum);
+		
 
-  @RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
-  @ResponseBody
-  public List<Curriculum> getAllCurriculum() {
-    return curriculumService.getAllCurriculum();
-  }
+		int numWeeks = c.getWeeks().length;
+		for(int i = 0; i < numWeeks; i++){
+			DaysDTO[] days = c.getWeeks()[i].getDays();
+			for(int j = 0; j < days.length; j++){
+				SubtopicName[] subtopic = days[j].getSubtopics();
+				for(int k = 0; k < subtopic.length; k++){
+					CurriculumSubtopic cs = new CurriculumSubtopic();
+					cs.setCurriculumSubtopicCurriculumID(curriculum);
+					cs.setCurriculumSubtopicNameId(subtopic[k]);
+					cs.setCurriculumSubtopicWeek(i + 1);
+					cs.setCurriculumSubtopicDay(j + 1);
+					curriculumSubtopicService.saveCurriculumSubtopic(cs);
+					System.out.println(cs.toString());
+				}
+			}
+		}
+	}
+	
+	@RequestMapping(value = "MakeMaster", method = RequestMethod.GET)
+	public void markCurriculumAsMaster(HttpServletRequest request){
+		Curriculum c = curriculumService.getCuricullumById(Integer.parseInt(request.getParameter("curriculumId")));
+		c.setIsMaster(1);
+		
+		//find the curriculum with same name and isMaster = 1; set to 0; save
+		List<Curriculum> curriculumList = curriculumService.findAllCurriculumByName(c.getCurriculumName());
+		
+	    try {
+	        Curriculum prevMaster = null;
 
-  @RequestMapping(value = "GetCurriculum", method = RequestMethod.GET, produces = "application/json")
-  @ResponseBody
-  public Curriculum getCurriculumById(HttpServletRequest request) {
-    int curriculumId = Integer.parseInt(request.getParameter("curriculumId"));
-    return curriculumService.getCuricullumById(curriculumId);
-  }
-
-  @RequestMapping(value = "Schedule", method = RequestMethod.GET, produces = "application/json")
-  @ResponseBody
-  public List<CurriculumSubtopic> getAllCurriculumSchedules(HttpServletRequest request) {
-    Curriculum c = new Curriculum();
-    c.setCurriculumId(Integer.parseInt(request.getParameter("curriculumId")));
-    return curriculumSubtopicService.getCurriculumSubtopicForCurriculum(c);
-  }
-
-  @RequestMapping(value = "TopicPool", method = RequestMethod.GET, produces = "application/json")
-  @ResponseBody
-  public List<SubtopicName> getTopicPool() {
-    return subtopicService.getAllSubtopics();
-  }
-
-  @RequestMapping(value = "SubtopicPool", method = RequestMethod.GET, produces = "application/json")
-  @ResponseBody
-  public List<Subtopic> getSubtopicPool() {
-    return subtopicService.getSubtopics();
-  }
-
-  @RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
-  public void addSchedule(@RequestBody String json) throws JsonParseException, JsonMappingException, IOException {
-    ObjectMapper mapper = new ObjectMapper();
-    CurriculumSubtopicDTO c = mapper.readValue(json, CurriculumSubtopicDTO.class);
-
-    // save curriculum object first
-
-    Curriculum curriculum = new Curriculum();
-    curriculum.setCurriculumCreator(c.getMeta().getCurriculum().getCurriculumCreator());
-    curriculum.setCurriculumdateCreated(c.getMeta().getCurriculum().getCurriculumdateCreated());
-    curriculum.setCurriculumName(c.getMeta().getCurriculum().getCurriculumName());
-    curriculum.setCurriculumNumberOfWeeks(c.getMeta().getCurriculum().getCurriculumNumberOfWeeks());
-    curriculum.setCurriculumVersion(c.getMeta().getCurriculum().getCurriculumVersion());
-    curriculum.setIsMaster(c.getMeta().getCurriculum().getIsMaster());
-
-    curriculumService.save(curriculum);
-
-    int numWeeks = c.getWeeks().length;
-    for (int i = 0; i < numWeeks; i++) {
-      DaysDTO[] days = c.getWeeks()[i].getDays();
-      for (int j = 0; j < days.length; j++) {
-        SubtopicName[] subtopic = days[j].getSubtopics();
-        for (int k = 0; k < subtopic.length; k++) {
-          CurriculumSubtopic cs = new CurriculumSubtopic();
-          cs.setCurriculumSubtopicCurriculumID(curriculum);
-          cs.setCurriculumSubtopicNameId(subtopic[k]);
-          cs.setCurriculumSubtopicWeek(i + 1);
-          cs.setCurriculumSubtopicDay(j + 1);
-          curriculumSubtopicService.saveCurriculumSubtopic(cs);
-        }
-      }
-    }
-  }
-
-  @RequestMapping(value = "MakeMaster", method = RequestMethod.GET)
-  public void markCurriculumAsMaster(HttpServletRequest request) {
-    Curriculum c = curriculumService.getCuricullumById(Integer.parseInt(request.getParameter("curriculumId")));
-    c.setIsMaster(1);
-
-    // find the curriculum with same name and isMaster = 1; set to 0; save
-    List<Curriculum> curriculumList = curriculumService.findAllCurriculumByName(c.getCurriculumName());
-
-    try {
-      Curriculum prevMaster = null;
-
-      for (int i = 0; i < curriculumList.size(); i++) {
-        if (curriculumList.get(i).getIsMaster() == 1)
-          prevMaster = curriculumList.get(i);
-      }
-      if (prevMaster != null) {
-        prevMaster.setIsMaster(0);
-        curriculumService.save(prevMaster);
-      } else {
-        LogManager.getRootLogger().error(prevMaster);
-      }
-    } catch (NullPointerException e) {
-      LogManager.getRootLogger().error(e);
-    }
-
-    // save new master curriculum
-    curriculumService.save(c);
-  }
-
+	        for (int i = 0; i < curriculumList.size(); i++) {
+	          if (curriculumList.get(i).getIsMaster() == 1)
+	            prevMaster = curriculumList.get(i);
+	        }
+	        if (prevMaster != null) {
+	          prevMaster.setIsMaster(0);
+	          curriculumService.save(prevMaster);
+	        } else {
+	          LogManager.getRootLogger().error(prevMaster);
+	        }
+	      } catch (NullPointerException e) {
+	        LogManager.getRootLogger().error(e);
+	      }
+		
+		//save new master curriculum
+		curriculumService.save(c);
+	}
+	
 }
