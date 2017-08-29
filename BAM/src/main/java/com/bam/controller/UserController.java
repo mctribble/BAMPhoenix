@@ -167,7 +167,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "Recovery", method = RequestMethod.POST, produces = "application/json")
-    public void recoverPassword(@RequestBody String email) {
+    public void recoverPassword(@RequestBody String email) throws CustomException {
         // Lookup user in database by e-mail
         BamUser user = userService.findUserByEmail(email);
         if (user != null) {
@@ -177,7 +177,7 @@ public class UserController {
         	userService.addOrUpdateUser(user);
         	userService.recoverE(user, generate);
         } else { 
-        	throw new IllegalArgumentException("password not changed");
+        	throw new CustomException("User does not exist in the system");
         }
     }
 
