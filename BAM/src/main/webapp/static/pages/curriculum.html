@@ -7,6 +7,9 @@
 			<div class="columnHeader text-center">
 				<h1>Templates</h1>
 				<button class="btn btn-md btn-primary" ng-click="deselectItems(); setTemplate()">New Curriculum Type</button>
+				<!-- Video Button -->
+				<button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#Video">?</button>
+				
 			</div>
 				<!-- ***************************** Begin Curricula Accordion***************************************** -->
 				<div id="curriculaAccordion" role="tablist">
@@ -276,4 +279,22 @@
 	  </div>
 	</div>
 	<!-- end new curriculum type modal -->
+	<div id="Video" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    <!--Video Modal -->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Tutorial Video</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	      <div class="modal-body">
+	        	  <div class="embed-responsive embed-responsive-16by9">
+ 				 	<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/ki0WGB66b8w" allowfullscreen></iframe>
+				</div>
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
 </div>
