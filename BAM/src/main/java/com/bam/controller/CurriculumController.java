@@ -42,6 +42,17 @@ public class CurriculumController {
 	@Autowired
 	SubtopicService subtopicService;
 	
+	/***
+	 * @author Nam Mai
+	 * Method is needed for injecting mocked services for unit test
+	 */
+	@Autowired
+	public CurriculumController(CurriculumService cs, CurriculumSubtopicService css, SubtopicService ss){
+		curriculumService = cs;
+		curriculumSubtopicService =css;
+		subtopicService = ss;
+	}
+	
 	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<Curriculum> getAllCurriculum(){
