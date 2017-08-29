@@ -997,8 +997,10 @@ a.fc-more:hover {
 .fc-basic-view .fc-day-top .fc-week-number {
 	min-width: 1.5em;
 	text-align: center;
-	background-color: #f2f2f2;
-	color: #808080;
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: bold;
+    border-style: outset;
 }
 
 .fc-week {

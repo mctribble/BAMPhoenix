@@ -19,7 +19,7 @@ import com.bam.repository.BamUserRepository;
 
 @Service("userDetailsService")
 public class BamUserServiceDetails implements UserDetailsService {
-
+ 
 
 	@Autowired
 	private BamUserService bamUserService;

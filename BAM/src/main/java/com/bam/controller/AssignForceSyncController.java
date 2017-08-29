@@ -9,20 +9,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.service.AssignForceSyncService;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 @RestController
 public class AssignForceSyncController {
-		
-		@Autowired
-		AssignForceSyncService service;
-		
-		
-		@RequestMapping(value="/refreshBatches", method=RequestMethod.GET)
-		public void refreshBatches() throws JsonParseException, JsonMappingException, IOException {
-		
-			service.assignForceSync();
-			
-		}	
+ 
+  @Autowired
+  AssignForceSyncService service;
+
+  @RequestMapping(value = "/refreshBatches", method = RequestMethod.GET)
+  public void refreshBatches() throws JsonMappingException, IOException {
+    service.assignForceSync();
+  }
+
 }

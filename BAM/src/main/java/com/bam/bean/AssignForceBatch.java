@@ -12,9 +12,11 @@ public class AssignForceBatch {
 		private Timestamp endDate;
 		private AssignForceCurriculum curriculum;
 		private AssignForceTrainer trainer;
-		private Integer ID;
+		private Integer id;
 		
-		public AssignForceBatch() {}
+		public AssignForceBatch() {
+			//Empty Because No Args
+		}
 
 		public AssignForceBatch(String name, Timestamp startDate, Timestamp endDate, AssignForceCurriculum curriculum,
 				AssignForceTrainer trainer, Integer iD) {
@@ -24,33 +26,33 @@ public class AssignForceBatch {
 			this.endDate = endDate;
 			this.curriculum = curriculum;
 			this.trainer = trainer;
-			ID = iD;
+			id = iD;
 		}
 
-		public String getName() {
+		public String getName() {//NOSONAR
 			return name;
 		}
 
-		public void setName(String name) {
+		public void setName(String name) {//NOSONAR
 			this.name = name;
 		}
 
-		public Timestamp getStartDate() {
+		public Timestamp getStartDate() {//NOSONAR
 			return startDate;
 		}
 
 		
-		public void setStartDate(Timestamp startDate) {
+		public void setStartDate(Timestamp startDate) {//NOSONAR
 			this.startDate = startDate;
 		}
 
-		public Timestamp getEndDate() {
+		public Timestamp getEndDate() {//NOSONAR
 			return endDate;
 		}
 
 		public void setEndDate(Timestamp endDate) {
 			this.endDate = endDate;
-		}
+		}//NOSONAR
 
 		public AssignForceTrainer getTrainer() {
 			return trainer;
@@ -69,17 +71,17 @@ public class AssignForceBatch {
 		}
 
 		public Integer getID() {
-			return ID;
+			return id;
 		}
 
 		public void setID(Integer iD) {
-			ID = iD;
+			id = iD;
 		}
 
 		@Override
 		public String toString() {
 			return "AssignForceBatch [name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
-					+ ", curriculum=" + curriculum + ", trainer=" + trainer + ", ID=" + ID + "]";
+					+ ", curriculum=" + curriculum + ", trainer=" + trainer + ", ID=" + id + "]";
 		}
 		
 }

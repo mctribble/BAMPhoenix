@@ -7,6 +7,9 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/batchesAll",{
 		templateUrl:"static/pages/batchesAll.html",
 		controller: "batchesAllController"
+	}).when("/myBatches",{
+		templateUrl:"static/pages/myBatches.html",
+		controller: "myBatchesController"
 	}).when("/register",{
 		templateUrl: "static/pages/register.html",
 		controller: "bamUserRegisterController"
@@ -31,6 +34,9 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/editBatch", {
 		templateUrl: "static/pages/EditBatch.html",
 		controller: "batchEditController"
+	}).when("/addSubtopic", {
+		templateUrl: "static/pages/addSubtopic.html",
+//		controller: "addSubtopicController"
 	}).when("/noBatch",{
 		templateUrl: "static/pages/NoBatch.html",
 		controller: "noBatchController"

@@ -22,6 +22,10 @@
 	padding: 0px;
 }
 
+button{
+	cursor: pointer;
+}
+
 /* LEFT SIDEBAR */
 #curriculaLoaderView{
 	border: 1px solid #ccc;
@@ -51,9 +55,14 @@
 	background-color: #fff;
 }
 
+
 /* MIDDLE */
 #weekAccordion .card-header .weekCardText{
 	color:black;
+	padding:10px;
+}
+
+#weekAccordion .card-header{
 }
 
 #curriculumView{
@@ -63,6 +72,10 @@
 	overflow-y:auto;
 	max-height: 900px;
 	height: 900px;
+}
+
+.readOnly{
+	color: #aaa;
 }
 
 .list-group{
@@ -83,8 +96,15 @@
 }
 
 .day-list-item{
-	/* padding: 0px; */
+	padding: 0px;
+}
+
+.day-list-item .day-list-item-header{
 	
+}
+
+.day-list-item .day-list-item-body{
+	padding: 10px;
 }
 
 .day-header{

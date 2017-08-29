@@ -2,20 +2,17 @@ package com.bam.service;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.bam.bean.AssignForceBatch;
 import com.bam.bean.BamUser;
 import com.bam.bean.Batch;
 import com.bam.bean.BatchType;
-
 
 /**
  * @author DillonT, GilB
@@ -25,15 +22,13 @@ import com.bam.bean.BatchType;
  * These objects are used to hold data from a ResponseEntity, and are later used to 
  * set data in objects relevant to persistence in the BAM database.
  */
-@Service("assignForceSyncService")
-@Transactional
+@Service
 public class AssignForceSyncService {
-	
-	
-	@Resource(name="batchesService")
+
+  @Autowired
 	BatchService bservice;
 	
-	@Resource(name="bamUserService")
+  @Autowired
 	BamUserService uservice;
 	
 	static RestTemplate restTemplate = new RestTemplate();
@@ -45,7 +40,7 @@ public class AssignForceSyncService {
 	public void assignForceSync() {
 		
 		// Object to hold data from AssignForce
-		AssignForceBatch batch = new AssignForceBatch();
+		AssignForceBatch batch;
 		
 		// Object which will be persisted; populated with AssignForceBatch data.
 		Batch currentBatch = new Batch();
@@ -54,7 +49,7 @@ public class AssignForceSyncService {
 		BatchType type = new BatchType();
 		
 		// Object necessary for creation of batch; populated with AssignForceBatch data.
-		BamUser bamUser = new BamUser();
+		BamUser bamUser;
 		
 		// Cycling through all batches received from AssignForce.
 		for(int i = 0; i < batches.getBody().size(); i++) {
@@ -80,16 +75,16 @@ public class AssignForceSyncService {
 				
 				
 				// First and last names pulled from AssignForce trainer to search for current trainers.
-				String first_name = batch.getTrainer().getFirstName();
-				String last_name = batch.getTrainer().getLastName();
+				String firstName = batch.getTrainer().getFirstName();
+				String lastName = batch.getTrainer().getLastName();
 				
 				// List comprised of trainers both in AssignForce and BAM
-				List<BamUser> BAMtrainers = uservice.getByFNameAndLName(first_name, last_name);
+				List<BamUser> bamTrainers = uservice.getByFNameAndLName(firstName, lastName);
 	
 				// If List is not empty and user is a trainer, trainer is assigned to batch.
-				if(!BAMtrainers.isEmpty() && BAMtrainers.get(0).getRole() == 2) {
-					bamUser = BAMtrainers.get(0);
-					bamUser.setAssignForce_ID(batch.getTrainer().getTrainerId());
+				if(!bamTrainers.isEmpty() && bamTrainers.get(0).getRole() == 2) {
+					bamUser = bamTrainers.get(0);
+					bamUser.setAssignForceID(batch.getTrainer().getTrainerId());
 					currentBatch.setTrainer(bamUser);
 				}
 				

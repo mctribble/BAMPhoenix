@@ -1,0 +1,59 @@
+<!-- Authors: Samuel Louis-Pierre, Avant Mathur -->
+
+<ul class="nav nav-tabs" ng-show="user.role>=2">
+	<li class="nav-link"><a href="#/calendar">Calendar</a></li>
+	<li class="nav-link"><a href="#/associates">View Associates</a></li>
+	<li class="nav-link"><a href="#/editBatch">Edit Batch</a></li>
+	<li class="nav-link"><a href="#/addSubtopic">Add Subtopics</a></li>
+</ul>
+<br>
+
+<div class="row login-container" ng-controller="subTopicController">
+	<div class="login col-md-6">
+		<div class="login-vertical-align">
+			<div class="header">
+				<h3 style="text-align: center;">{{currentBatchName}} Add Subtopics</h3>
+			</div>
+			<form>
+				<div class="input-group">
+					<span class="input-group-addon input-tag">Batch Name:</span> <input
+						type="text" class="form-control" ng-model="batch.name"
+						placeholder="{{currentBatchName}}" required readonly/>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon input-tag">Topic Name:</span>
+						<select id="topicname" ng-model="selectedItem" ng-options="topic for topic in utopia" ng-change="viewTopics()">
+							<!--  <option ng-repeat="topic in $scope.topics">{{topic.name}}</option>-->
+
+	    				</select>	    				
+					</div>
+				</div> 
+				<div class="input-group">
+					<span class="input-group-addon input-tag">Subtopic Name:</span>
+						<select id="subtopics">
+
+	    				</select>
+					</div>
+				</div> 
+				<div class="input-group">
+					<span class="input-group-addon input-tag">Start Date:</span> 
+					<input type="date" id = "startDate" class="form-control" width="30%"
+						ng-model="subtopic.startDate" required />
+				</div>
+				<br>
+				<div class="login-btn-container">
+					<button class="btn threeqtr-width" id="login-btn" ng-click="addSubtopic()">SUBMIT</button>
+				</div>
+			</form>
+				<div ng-class="alertClass" ng-show="message" class="alert alert-danger">
+					{{msg}}<br>
+				</div>
+		</div>
+		
+	</div>
+	<div class="login col-md-4">
+		<div class="login-vertical-align">
+			<img src="static/img/revature_logo.png" width="90%"> <img
+				src="static/img/rev_timeline.png" width="90%">
+		</div>
+	</div>

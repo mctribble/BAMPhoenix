@@ -3,12 +3,12 @@ package com.bam.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
 import com.bam.bean.Curriculum;
 import com.bam.repository.CurriculumRepository;
-
-@Transactional
+ 
+@Service
 public class CurriculumService {
 
 	@Autowired
@@ -38,4 +38,7 @@ public class CurriculumService {
 		curriculumRepository.save(c);
 	}
 	
+	public List<Curriculum> findAllCurriculumByName(String name){
+		return curriculumRepository.findByCurriculumName(name);
+	}
 }

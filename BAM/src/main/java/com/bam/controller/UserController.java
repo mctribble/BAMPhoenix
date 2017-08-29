@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bam.bean.BamUser;
 import com.bam.bean.Batch;
-import com.bam.bean.CustomException;
+import com.bam.exception.CustomException;
 import com.bam.service.BamUserService;
 import com.bam.service.BatchService;
 import com.bam.service.PasswordGenerator;
-
 
 @RestController
 @RequestMapping(value = "/api/v1/Users/")
@@ -183,31 +182,6 @@ public class UserController {
         	throw new IllegalArgumentException("password not changed");
         }
     }
-	
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public void logout(HttpServletRequest request,
-	HttpServletResponse response) {
-	/* Getting session and then invalidating it */
-	HttpSession session = request.getSession(false);
-	if (request.isRequestedSessionIdValid() && session != null) {
-	session.invalidate();
-	}
-	//handleLogOutResponse(response);
-	}
-//	/**
-//	 * This method would edit the cookie information and make JSESSIONID empty
-//	 * while responding to logout. This would further help in order to. This would help
-//	 * to avoid same cookie ID each time a person logs in
-//	 * @param response
-//	 */
-//	private void handleLogOutResponse(HttpServletResponse response) {
-//	Cookie[] cookies = request.getCookies();
-//	for (Cookie cookie : cookies) {
-//	cookie.setMaxAge(0);
-//	cookie.setValue(null);
-//	cookie.setPath("/");
-//	response.addCookie(cookie);
-//	}
-//	}
+
 
 }

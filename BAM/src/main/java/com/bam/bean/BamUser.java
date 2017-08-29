@@ -68,7 +68,7 @@ public class BamUser {
 	private String pwd2; // the user needs to reset their password.
 
 	@Column(name="AssignForce_ID")
-	private Integer AssignForce_ID;
+	private Integer assignForceID;
 	
 	
 	public BamUser() {
@@ -76,7 +76,7 @@ public class BamUser {
 	}
 
 	public BamUser(String fName, String mName, String lName, String email, String pwd, int role, Batch batch,
-			String phone, String phone2, String skype, String pwd2) {
+			String phone, String phone2, String skype, String pwd2) {//NOSONAR
 		super();
 		this.fName = fName;
 		this.mName = mName;
@@ -92,7 +92,7 @@ public class BamUser {
 	}
 
 	public BamUser(int userId, String fName, String mName, String lName, String email, String pwd, int role,
-			Batch batch, String phone, String phone2, String skype, String pwd2) {
+			Batch batch, String phone, String phone2, String skype, String pwd2) {//NOSONAR
 		super();
 		this.fName = fName;
 		this.mName = mName;
@@ -109,7 +109,7 @@ public class BamUser {
 	}
 
 	public BamUser(int userId, String fName, String mName, String lName, String email, String pwd, int role,
-			Batch batch, String phone, String phone2, String skype, String pwd2, Integer assignForce_ID) {
+			Batch batch, String phone, String phone2, String skype, String pwd2, Integer AssignForceID) {//NOSONAR
 		super();
 		this.userId = userId;
 		this.fName = fName;
@@ -123,7 +123,7 @@ public class BamUser {
 		this.phone2 = phone2;
 		this.skype = skype;
 		this.pwd2 = pwd2;
-		AssignForce_ID = assignForce_ID;
+		assignForceID = AssignForceID;
 	}
 
 	public int getUserId() {
@@ -231,12 +231,12 @@ public class BamUser {
 		this.pwd2 = pwd2;
 	}
 
-	public Integer getAssignForce_ID() {
-		return AssignForce_ID;
+	public Integer getAssignForceID() {
+		return assignForceID;
 	}
 
-	public void setAssignForce_ID(Integer assignForce_ID) {
-		AssignForce_ID = assignForce_ID;
+	public void setAssignForceID(Integer AssignForceID) {
+		assignForceID = AssignForceID;
 	}
 
 	@Override
@@ -245,6 +245,5 @@ public class BamUser {
 				+ email + ", pwd=" + pwd + ", role=" + role + ", batch=" + batch + ", phone=" + phone + ", phone2="
 				+ phone2 + ", skype=" + skype + ", pwd2=" + pwd2 + "]";
 	}
-
 
 }

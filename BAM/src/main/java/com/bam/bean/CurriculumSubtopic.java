@@ -23,7 +23,7 @@ public class CurriculumSubtopic {
 	
 	@Id
 	@Column(name = "Curriculum_Subtopic_Id")
-	@SequenceGenerator(name = "Curriculum_Subtopic_ID_SEQ", sequenceName = "Curriculum_Subtopic_ID_SEQ")
+	@SequenceGenerator(name = "Curriculum_Subtopic_ID_SEQ", sequenceName = "Curriculum_Subtopic_ID_SEQ", allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Curriculum_Subtopic_ID_SEQ")
 	private int curriculumSubtopicId;
 	
@@ -46,7 +46,9 @@ public class CurriculumSubtopic {
 	@Column(name = "Curriculum_Day")
 	private int curriculumSubtopicDay;
 	
-	public CurriculumSubtopic(){}
+	public CurriculumSubtopic() {
+		//Empty Because No Args
+	}
 
 	public CurriculumSubtopic(int curriculumSubtopicId, SubtopicName curriculumSubtopicNameId,
 			Curriculum curriculumSubtopicCurriculumID, int curriculumSubtopicWeek, int curriculumSubtopicDay) {
