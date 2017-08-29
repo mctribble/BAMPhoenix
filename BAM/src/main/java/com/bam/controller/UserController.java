@@ -2,7 +2,10 @@ package com.bam.controller;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -180,5 +183,31 @@ public class UserController {
         	throw new IllegalArgumentException("password not changed");
         }
     }
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public void logout(HttpServletRequest request,
+	HttpServletResponse response) {
+	/* Getting session and then invalidating it */
+	HttpSession session = request.getSession(false);
+	if (request.isRequestedSessionIdValid() && session != null) {
+	session.invalidate();
+	}
+	//handleLogOutResponse(response);
+	}
+//	/**
+//	 * This method would edit the cookie information and make JSESSIONID empty
+//	 * while responding to logout. This would further help in order to. This would help
+//	 * to avoid same cookie ID each time a person logs in
+//	 * @param response
+//	 */
+//	private void handleLogOutResponse(HttpServletResponse response) {
+//	Cookie[] cookies = request.getCookies();
+//	for (Cookie cookie : cookies) {
+//	cookie.setMaxAge(0);
+//	cookie.setValue(null);
+//	cookie.setPath("/");
+//	response.addCookie(cookie);
+//	}
+//	}
 
 }

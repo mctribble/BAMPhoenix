@@ -1,5 +1,11 @@
 package com.bam.security;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,13 +15,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import com.bam.service.BamUserServiceDetails;
 
@@ -93,11 +99,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	 protected void configure(HttpSecurity http) throws Exception {
 	  http
-	   .headers().disable()
+//	   .headers().disable()
 	   .csrf().disable()
 	   .authorizeRequests()
 	    .antMatchers("/rest/api/v1/Users/Register").permitAll()
+	    .antMatchers("**rest*/**").authenticated()
+	    .antMatchers("*rest*/**").authenticated()
+	    .antMatchers("**/*rest*/**").authenticated()
+	    .antMatchers("**rest*/**").authenticated()
 	    .anyRequest().authenticated()
+//	    .antMatchers("/rest/api/v1/Curriculum/**").hasAuthority("Trainer")
 	    .and()
 	    .formLogin()
 	   	.loginPage("/")
@@ -110,7 +121,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    .and()
 	    .logout()
 	    .logoutUrl("/logout")
-	    .deleteCookies("JSESSIONID")
+	    .logoutSuccessHandler(new LogoutSuccessHandler() {
+	    	 @Override
+	    	public void onLogoutSuccess(
+	    	HttpServletRequest request,
+	    	HttpServletResponse response,
+	    	Authentication a) throws IOException, ServletException {
+	    	response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+	    	  }
+
+	    	})
+	    	.deleteCookies("JSESSIONID")
+	    	.invalidateHttpSession(true)
 	    .permitAll();
 	 }
 }
