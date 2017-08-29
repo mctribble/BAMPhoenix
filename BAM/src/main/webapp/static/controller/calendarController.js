@@ -17,8 +17,8 @@
         calendars : {}
     })
 
-  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService', 'SubtopicService', '$q',
-        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, SubtopicService, $q) {
+  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService', 'SubtopicService', '$q', '$window',
+        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, SubtopicService, $q, $window) {
 	  		if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
 				$location.path('/noBatch');
@@ -462,7 +462,6 @@
             	          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
             	        ]
             	    };
-<<<<<<< Updated upstream
             
             //variable used for tracking if the current calendar view has subtopics populated
             $scope.hasSubtopics = true;
@@ -482,9 +481,6 @@
                	 }); 
             }
             
-            
-=======
->>>>>>> Stashed changes
             /* alert on eventClick */
             $scope.alertOnEventClick = function( event, date, jsEvent, view){
             	var eventDate= new Date(event.start);
