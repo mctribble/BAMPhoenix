@@ -59,6 +59,7 @@
 	letter-spacing: 1.5px;
 }
 
+
 .createPointer{
 	cursor: pointer;
 }
@@ -514,6 +515,14 @@ body {
 	width: 157px;
 }
 
+.makeBigger{
+	width: 100px;
+	margin-left: 40%;
+}
+
+.centerAlert{
+	margin-left: 35%;
+}
 
 /***** Event Legend *****/
 #plannedEvent {

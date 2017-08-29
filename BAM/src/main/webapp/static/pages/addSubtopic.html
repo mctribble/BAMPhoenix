@@ -27,25 +27,27 @@
 
 	    				</select>	    				
 					</div>
-				</div> 
 				<div class="input-group">
 					<span class="input-group-addon input-tag">Subtopic Name:</span>
 						<select id="subtopics">
 
 	    				</select>
 					</div>
-				</div> 
+				</div>
 				<div class="input-group">
 					<span class="input-group-addon input-tag">Start Date:</span> 
 					<input type="date" id = "startDate" class="form-control" width="30%"
 						ng-model="subtopic.startDate" required />
 				</div>
-				<br>
-				<div class="Subtopic-btn-container">
-					<button class="btn threeqtr-width" id="Subtopic-btn" ng-click="addSubtopic()">SUBMIT</button>
 				</div>
+				
+				<div class="input-group login-btn-container">
+					<button class="btn threeqtr-width makeBigger" id="login-btn" ng-click="addSubtopic()">SUBMIT</button>
+				</div>
+				<br>
 			</form>
-				<div ng-class="alertClass" ng-show="message" class="alert">
+				<div ng-class="alertClass" ng-show="message" class="alert alert-danger centerAlert">
+
 					{{msg}}<br>
 				</div>
 		</div>
