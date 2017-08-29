@@ -592,22 +592,3 @@ body {
 	cursor: pointer;
 	background-color: #c1b5d3;
 }
-
-/***** 6.0 NEW SUBTOPIC STYLING *****/
-#login-btn {
-	width: 75%;
-}
-
-.login-btn-container {
-    text-align: center;
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 50px;
-}
-
-.login {
-    text-align: left;
-    display: block;
-    margin: auto;
-    margin-bottom: 60px;
-}
