@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,6 @@ import com.bam.bean.Subtopic;
 import com.bam.bean.SubtopicName;
 import com.bam.dto.CurriculumSubtopicDTO;
 import com.bam.dto.DaysDTO;
-import com.bam.logging.LoggerClass;
 import com.bam.service.CurriculumService;
 import com.bam.service.CurriculumSubtopicService;
 import com.bam.service.SubtopicService;
@@ -134,22 +133,22 @@ public class CurriculumController {
 		//find the curriculum with same name and isMaster = 1; set to 0; save
 		List<Curriculum> curriculumList = curriculumService.findAllCurriculumByName(c.getCurriculumName());
 		
-		try{
-			Curriculum prevMaster = null;
-			
-			for(int i = 0; i < curriculumList.size(); i++){
-				if(curriculumList.get(i).getIsMaster() == 1)
-					prevMaster = curriculumList.get(i);
-			}
-			if(prevMaster != null){
-			prevMaster.setIsMaster(0);
-			curriculumService.save(prevMaster);}
-			else{
-				logger.error(prevMaster);
-			}
-		} catch(NullPointerException e){
-			logger.error(e);
-		}
+	    try {
+	        Curriculum prevMaster = null;
+
+	        for (int i = 0; i < curriculumList.size(); i++) {
+	          if (curriculumList.get(i).getIsMaster() == 1)
+	            prevMaster = curriculumList.get(i);
+	        }
+	        if (prevMaster != null) {
+	          prevMaster.setIsMaster(0);
+	          curriculumService.save(prevMaster);
+	        } else {
+	          LogManager.getRootLogger().error(prevMaster);
+	        }
+	      } catch (NullPointerException e) {
+	        LogManager.getRootLogger().error(e);
+	      }
 		
 		//save new master curriculum
 		curriculumService.save(c);

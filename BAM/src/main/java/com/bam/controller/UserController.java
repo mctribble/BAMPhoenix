@@ -19,7 +19,6 @@ import com.bam.service.BamUserService;
 import com.bam.service.BatchService;
 import com.bam.service.PasswordGenerator;
 
-
 @RestController
 @RequestMapping(value = "/api/v1/Users/")
 public class UserController {
@@ -179,6 +178,6 @@ public class UserController {
         } else { 
         	throw new IllegalArgumentException("password not changed");
         }
-    }
+   }
 
 }

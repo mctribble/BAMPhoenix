@@ -35,7 +35,7 @@ public class TopicName {
 	}
 
 	public TopicName(String name) {
-		super();//NOSONAR
+		super(); //NOSONAR
 		this.name = name;
 	}
 
