@@ -165,11 +165,11 @@ public class CurriculumController {
 		List<CurriculumSubtopic> subtopicList = curriculumSubtopicService.getCurriculumSubtopicForCurriculum(c);
 		
 		//logic goes here to add to calendar
-		if(subtopicService.getNumberOfSubtopics(id) == 0)
+		if(subtopicService.getNumberOfSubtopics(id) ==  0){
 			batchService.addCurriculumSubtopicsToBatch(subtopicList, currBatch);
-		else
+		}else{
 			throw new CustomException("Batch already synced");
-		
+		}
 	}
 	
 }
