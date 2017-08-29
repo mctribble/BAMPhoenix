@@ -3,13 +3,13 @@ package com.bam.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
 import com.bam.bean.Curriculum;
 import com.bam.bean.CurriculumSubtopic;
 import com.bam.repository.CurriculumSubtopicRepository;
 
-@Transactional
+@Service
 public class CurriculumSubtopicService {
 
 	@Autowired

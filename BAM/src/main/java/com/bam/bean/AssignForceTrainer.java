@@ -9,7 +9,9 @@ public class AssignForceTrainer {
 	private String firstName;
 	private String lastName;
 	
-	public AssignForceTrainer() {}
+	public AssignForceTrainer() {
+		//Empty Because No Args
+	}
 
 	
 	public AssignForceTrainer(Integer trainerId, String firstName, String lastName) {

@@ -5,7 +5,9 @@ public class AssignForceCurriculum {
 	private Integer currId;
 	private String name;
 	
-	public AssignForceCurriculum() {}
+	public AssignForceCurriculum() {
+		//Empty Because No Args
+	}
 
 	public AssignForceCurriculum(Integer currId, String name) {
 		super();

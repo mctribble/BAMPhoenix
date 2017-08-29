@@ -93,4 +93,5 @@ public class SubtopicName {
 	public String toString() {
 		return "SubtopicName [id=" + id + ", name=" + name + ", topic=" + topic + "]";
 	}
+
 }
