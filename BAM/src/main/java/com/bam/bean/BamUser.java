@@ -37,9 +37,8 @@ public class BamUser {
 	@Column(name = "Password")
 	@NotEmpty(message="Password cannot be empty")
 	private String pwd;
-
-	@Column(name = "Role") // Role 1 is for associates // Role 2 is for trainers
-							// & QC
+	
+	@Column(name = "Role") // Role 1 is for associates // Role 2 is for trainers & QC
 	private int role; // Role 3 is for admins
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
