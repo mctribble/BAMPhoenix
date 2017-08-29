@@ -6,6 +6,7 @@
     3.0		FONTS
     4.0		TABLES
     5.0		OVERLAYS / LOADERS
+    6.0		NEW SUBTOPIC STYLING
 */
 
 /***** 1.0 LOGIN STYLING *****/
@@ -574,4 +575,23 @@ body {
 .clickable:hover{
 	cursor: pointer;
 	background-color: #c1b5d3;
+}
+
+/***** 6.0 NEW SUBTOPIC STYLING *****/
+#login-btn {
+	width: auto;
+}
+
+.login-btn-container {
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.login {
+    text-align: left;
+    display: block;
+    margin: auto;
+    margin-bottom: 60px;
 }
