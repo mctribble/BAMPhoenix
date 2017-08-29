@@ -37,13 +37,8 @@ public class BamUser {
 	@Column(name = "Password")
 	@NotEmpty(message="Password cannot be empty")
 	private String pwd;
-
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL) // Role 1 is for associates
-	@JoinColumn(name = "ROLE", referencedColumnName = "ROLE_ID")
-	private Role roles;
 	
-	@Column(name = "Role") // Role 1 is for associates // Role 2 is for trainers
-							// & QC
+	@Column(name = "Role") // Role 1 is for associates // Role 2 is for trainers & QC
 	private int role; // Role 3 is for admins
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -172,15 +167,6 @@ public class BamUser {
 
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
-	}
-
-	
-	public Role getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Role roles) {
-		this.roles = roles;
 	}
 
 	public int getRole() {
