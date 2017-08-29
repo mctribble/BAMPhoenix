@@ -376,6 +376,7 @@
              	       if(numberOfPages == 0){
              	    	   $scope.loading = false;
              	    	  SessionService.set("gotSubtopics", false);
+             	    	  $scope.hasSubtopics = false;
              	       }
              	       
 //             	      
@@ -453,18 +454,21 @@
             	        ]
             	    };
             
-            //----------------------------------------------------------------------------------------------------------------------------------------------------------------
+            //variable used for tracking if the current calendar view has subtopics populated
+            $scope.hasSubtopics = true;
+            
+            //Function used to populate a batch with subtopics after clicking on the "Fill Subtopics" button
             $scope.fillSubtopics = function(){
             	$window.alert("We are now populating your batch with subtopics.  This may take a few minutes.  You can logout at any time.");
+            	$scope.hasSubtopics = true;
             	$http({
                		method : "GET",
                		url : "rest/api/v1/Curriculum/SyncBatch/"+thisBatchId
-               		
                	 }).then(function successCallback(response) {
-               		
+               		$window.alert("Batches have been successfully updated!");
                	 }, function errorCallback(response){
                		 console.log(response);
-               		 $window.alert("Batches already populated with subtopics.")
+               		 $window.alert("Batches already populated with subtopics.");
                	 }); 
             }
             
