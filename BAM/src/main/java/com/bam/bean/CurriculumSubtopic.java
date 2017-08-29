@@ -29,8 +29,6 @@ public class CurriculumSubtopic {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "curriculum_Subtopic_Name_Id", referencedColumnName = "Subtopic_Name_Id")
-
-
 	@NotNull(message="Curriculum Subtopic Name cannot be null")
 	private SubtopicName curriculumSubtopicNameId;
 
@@ -46,7 +44,9 @@ public class CurriculumSubtopic {
 	@Column(name = "Curriculum_Day")
 	private int curriculumSubtopicDay;
 	
-	public CurriculumSubtopic(){}
+	public CurriculumSubtopic() {
+		//Empty Because No Args
+	}
 
 	public CurriculumSubtopic(int curriculumSubtopicId, SubtopicName curriculumSubtopicNameId,
 			Curriculum curriculumSubtopicCurriculumID, int curriculumSubtopicWeek, int curriculumSubtopicDay) {

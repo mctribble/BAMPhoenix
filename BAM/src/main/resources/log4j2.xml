@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Http name="HTTP"
+			url="https://prd-p-9hp2hbcv2cnv.cloud.splunk.com:8088/services/collector"
+			token="32C0F7FA-FAF9-4394-86A9-04900224EEE5"
+			disableCertificateValidation="true">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %p %.-1000m%n" />
+		</Http>
+		<RollingFile name="FILE" fileName="log4j_logs/BAM_Phoenix_log.log">
+			<FilePattern>log4j_logs/archive/%d{yyyy-MM-dd}.BAM_Phoenix_log.zip
+			</FilePattern>
+			<PatternLayout pattern="%r %t %p %.-1000m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="INFO">
+			<AppenderRef ref="HTTP" />
+			<AppenderRef ref="FILE" />
+		</Root>
+	</Loggers>
+</Configuration>
+ 
+<!-- Look at https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/EnhancedPatternLayout.html 
+	for information on patternlayout -->

@@ -125,6 +125,13 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
         			
         			$scope.stDate = prevdate;
         			$scope.selDate = newDate;
+        			        			
+        			//displaying previous and selected date for easier testing
+        			//delete after testing
+        			
+        			console.log('Original Date : '+prevdate);
+        			console.log('Selected Date : '+newDate);
+
     
         			if($scope.stDate.getMonth() == $scope.selDate.getMonth() && $scope.stDate.getDate() == $scope.selDate.getDate()){
         				console.log("These dates are equal!")
@@ -157,7 +164,7 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 				type: subTopicType
 		}
 		
-		var subtopicDate = $scope.date;
+		var subtopicDate = $scope.selDate;
 
 		var status = {
 			id : 1,
@@ -178,6 +185,9 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 			$scope.msg = 'Subtopic already exists on that day.';
 			$scope.alertClass = 'alert alert-danger';
 		}else{
+			
+			$scope.stDate = $scope.selDate;
+			
 			$http({
 			url: "rest/api/v1/Subtopic/addSubtopic",
 			method: 'POST',

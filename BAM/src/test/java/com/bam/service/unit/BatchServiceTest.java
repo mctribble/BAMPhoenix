@@ -10,8 +10,6 @@ import static org.mockito.Mockito.mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.spi.LoggingEvent;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -40,10 +38,6 @@ public class BatchServiceTest {
 	
 	@Mock
 	BatchTypeRepository batchTypeRepository;
-	
-	@Mock AppenderSkeleton appender;
-	
-	@Captor ArgumentCaptor<LoggingEvent> logCaptor;
 	
 	private MockMvc mockMvc;
 	
