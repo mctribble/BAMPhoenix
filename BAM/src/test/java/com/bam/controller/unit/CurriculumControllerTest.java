@@ -4,15 +4,20 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.bam.bean.Curriculum;
 import com.bam.controller.CurriculumController;
+import com.bam.repository.CurriculumRepository;
 import com.bam.service.CurriculumService;
 import com.bam.service.CurriculumSubtopicService;
 import com.bam.service.SubtopicService;
@@ -30,6 +35,8 @@ public class CurriculumControllerTest {
 	
 	@InjectMocks
 	CurriculumController curriculumController;
+	
+	List<Curriculum> curriculumList = null;
 	
 	private MockMvc mockMvc;
 	
@@ -56,6 +63,15 @@ public class CurriculumControllerTest {
 	@Test
 	public void getSubtopicPoolTest() throws Exception{
 		mockMvc.perform(get("/api/v1/Curriculum/SubtopicPool")).andExpect(status().isOk()).andExpect(content().contentType("application/json"));
+	}
+
+	/***
+	 * @author Nam Mai
+	 * Note: id can be any number; only have to verify the endpoint is reached correctly
+	 */
+	@Test
+	public void getScheduleTest() throws Exception{
+		mockMvc.perform(get("/api/v1/Curriculum/Schedule?curriculumId=" + 1)).andExpect(status().isOk());
 	}
 	
 }

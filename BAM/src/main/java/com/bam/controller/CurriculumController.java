@@ -32,7 +32,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CurriculumController {
 	private static final Logger logger = Logger.getLogger(LoggerClass.class);
 
-
 	@Autowired
 	CurriculumService curriculumService;
 	
@@ -41,6 +40,10 @@ public class CurriculumController {
 	
 	@Autowired
 	SubtopicService subtopicService;
+	
+	public CurriculumService get(){
+		return curriculumService;
+	}
 	
 	/***
 	 * @author Nam Mai
