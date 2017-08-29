@@ -9,10 +9,7 @@ import com.bam.bean.Curriculum;
 import com.bam.bean.CurriculumSubtopic;
 
 @Repository
-public interface CurriculumSubtopicRepository extends JpaRepository<CurriculumSubtopic, Integer>{
-
+public interface CurriculumSubtopicRepository extends JpaRepository<CurriculumSubtopic, Integer> {
 	public List<CurriculumSubtopic> findAll();
-
 	public List<CurriculumSubtopic> findByCurriculum(Curriculum c);
-	
 }

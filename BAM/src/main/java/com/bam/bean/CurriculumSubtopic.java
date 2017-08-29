@@ -44,7 +44,9 @@ public class CurriculumSubtopic {
 	@Column(name = "Curriculum_Day")
 	private int curriculumSubtopicDay;
 	
-	public CurriculumSubtopic(){}
+	public CurriculumSubtopic() {
+		//Empty Because No Args
+	}
 
 	public CurriculumSubtopic(int curriculumSubtopicId, SubtopicName curriculumSubtopicNameId,
 			Curriculum curriculumSubtopicCurriculumID, int curriculumSubtopicWeek, int curriculumSubtopicDay) {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bam.bean.Batch;
 import com.bam.bean.TopicWeek;
-
+ 
 @Repository
 public interface TopicWeekRepository extends JpaRepository<TopicWeek, Integer> {
 	List<TopicWeek> findByBatch(Batch batch);

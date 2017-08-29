@@ -4,8 +4,9 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bam.bean.BamUser;
@@ -18,7 +19,7 @@ import com.bam.repository.BatchTypeRepository;
 import com.bam.repository.SubtopicNameRepository;
 import com.bam.repository.SubtopicRepository;
 
-@Transactional
+@Service
 public class BatchService {
 	@Autowired
 	BatchRepository batchRepository;
@@ -40,7 +41,7 @@ public class BatchService {
 	}
 
 	public Batch getBatchById(Integer id) {
-		Logger.getLogger(BatchService.class).fatal(batchRepository);
+		LogManager.getLogger(BatchService.class).fatal(batchRepository);
 		return batchRepository.findById(id);
 	}
 
