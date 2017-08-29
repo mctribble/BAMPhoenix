@@ -127,6 +127,8 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
         			$scope.selDate = newDate;
         			        			
         			//displaying previous and selected date for easier testing
+        			//delete after testing
+        			
         			console.log('Original Date : '+prevdate);
         			console.log('Selected Date : '+newDate);
     
