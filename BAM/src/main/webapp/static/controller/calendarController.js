@@ -17,8 +17,8 @@
         calendars : {}
     })
 
-  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService', 'SubtopicService', '$q', '$window',
-        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, SubtopicService, $q, $window) {
+  app.controller('calendarController', ['$rootScope','$scope','$http','$location', '$locale','$compile','uiCalendarConfig', 'SessionService', 'SubtopicService', '$q',
+        function ($rootScope,$scope,$http,$location, $locale,$compile,uiCalendarConfig, SessionService, SubtopicService, $q) {
 	  		if(!SessionService.get("currentUser").batch && SessionService.get("currentUser").role == 1)
 			{  
 				$location.path('/noBatch');
@@ -29,6 +29,15 @@
 		  var date = new Date();		  
 
 		  var thisBatchId = $rootScope.changedBatchId;
+		  
+		  //get batch name for trainer
+		  $http({
+			  method: "GET",
+			  url: "rest/api/v1/Batches/ById?batchId=" + thisBatchId
+		  }).then(function success(response){
+			 $scope.batchInfo = response.data;
+			 $scope.currBatchName = $scope.batchInfo.name;
+		  });
 		  
 		  if(SessionService.get("currentBatch")){
 			  if(SessionService.get("currentBatch").trainer.userId == SessionService.get("currentUser").userId){
@@ -453,6 +462,7 @@
             	          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
             	        ]
             	    };
+<<<<<<< Updated upstream
             
             //variable used for tracking if the current calendar view has subtopics populated
             $scope.hasSubtopics = true;
@@ -473,6 +483,8 @@
             }
             
             
+=======
+>>>>>>> Stashed changes
             /* alert on eventClick */
             $scope.alertOnEventClick = function( event, date, jsEvent, view){
             	var eventDate= new Date(event.start);
