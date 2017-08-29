@@ -6,6 +6,7 @@
     3.0		FONTS
     4.0		TABLES
     5.0		OVERLAYS / LOADERS
+    6.0		NEW SUBTOPIC STYLING
 */
 
 /***** 1.0 LOGIN STYLING *****/
@@ -58,6 +59,7 @@
 	letter-spacing: 1.5px;
 }
 
+
 .createPointer{
 	cursor: pointer;
 }
@@ -69,6 +71,22 @@
 	cursor: pointer;
 	transform: translateX(.5px);
 }
+
+#Subtopic-btn {
+	width: auto;
+	color: #ffffff;
+	box-shadow: 0 4px #999;
+	background-color: #303e74;
+	cursor: pointer;
+}
+
+.Subtopic-btn-container {
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
 
 #login-btn:hover{
 	background-color: #142863;
@@ -497,6 +515,14 @@ body {
 	width: 157px;
 }
 
+.makeBigger{
+	width: 100px;
+	margin-left: 40%;
+}
+
+.centerAlert{
+	margin-left: 35%;
+}
 
 /***** Event Legend *****/
 #plannedEvent {
