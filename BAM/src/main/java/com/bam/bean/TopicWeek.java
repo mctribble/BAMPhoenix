@@ -25,7 +25,7 @@ public class TopicWeek {
 	@SequenceGenerator(name = "Week_ID_SEQ", sequenceName = "Week_ID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Week_ID_SEQ")
 	private Integer id;
-
+ 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Topic_Name_ID", referencedColumnName = "Topic_ID")
 	@Autowired
@@ -66,7 +66,6 @@ public class TopicWeek {
 		this.id = id;
 	}
 
-	@Autowired
 	public TopicName getTopic() {
 		return topic;
 	}
@@ -75,7 +74,6 @@ public class TopicWeek {
 		this.topic = topic;
 	}
 
-	@Autowired
 	public Batch getBatch() {
 		return batch;
 	}

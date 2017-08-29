@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import com.bam.service.BamUserServiceDetails;
+import com.bam.service.BamUserDetailsService;
 
 /**
  * 
@@ -39,7 +39,7 @@ import com.bam.service.BamUserServiceDetails;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	BamUserServiceDetails userDetailsService;
+	BamUserDetailsService userDetailsService;
 
 	@Autowired
 	private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
@@ -50,7 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
-	
 	}
 	
 	/***

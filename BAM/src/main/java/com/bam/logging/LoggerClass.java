@@ -4,22 +4,22 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 
 import com.bam.exception.CustomException;
 
-
-
-
 @Aspect
+@Component
 public class LoggerClass {
+
 	
 	//Created Logger for Intercepting Methods and logging that Information
-
-	private static final Logger logger = Logger.getLogger(LoggerClass.class);
+	private static final Logger logger = LogManager.getRootLogger();
 
 
 	private String intercepted = "intercepted method : ";
@@ -135,7 +135,7 @@ public class LoggerClass {
 		logger.info(interceptedArg + Arrays.toString(jp.getArgs()));
 		try {
 			logger.info(jp.proceed());
-		} catch (Throwable e) {
+		} catch (Throwable e) {//NOSONAR
 			throw new CustomException(e);
 		}
 		logger.info(dataRequest + simpleDateFormat.format(new Date(System.currentTimeMillis())));
@@ -477,5 +477,60 @@ public class LoggerClass {
 		logger.info(dataRequest +simpleDateFormat.format(new Date(System.currentTimeMillis())));
 	}
 	
-}
 
+
+
+  // Created Logger for Intercepting Methods and logging that Information 
+
+
+  /**
+   * Logging Methods from the Batch service class
+   * addOrUpdateBranch()
+   * getBatchById()
+   * getBatchAll()
+   * getBatchByTrainer()
+   * 
+   * @author Jonathan Layssard and Troy King
+   */
+  @Around("execution(* com.bam.service.*.*(..))")
+  public Object interceptService(ProceedingJoinPoint pjp) throws Exception {
+    // return to always return join point objects so they are not consumed
+    Object proceedObj = null;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+    String baseString = "(" + simpleDateFormat.format(new Date(System.currentTimeMillis())) + ")"
+                        + ": " + pjp.getSignature().getDeclaringTypeName()
+                        + " -> " + pjp.getSignature().getName()
+                        + " " + Arrays.toString(pjp.getArgs())
+                        + " => ";
+
+    try {
+      proceedObj = pjp.proceed();
+      logger.info(baseString + proceedObj);
+    } catch (Throwable e) {
+      logger.error(baseString + e);
+    }
+
+    return proceedObj;
+  }
+
+  @Around("execution(* com.bam.controller.*.*(..))")
+  public Object interceptController(ProceedingJoinPoint pjp) throws Exception {
+    Object proceedObj = null;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+    String baseString = "(" + simpleDateFormat.format(new Date(System.currentTimeMillis())) + ")"
+                        + ": " + pjp.getSignature().getDeclaringTypeName()
+                        + " -> " + pjp.getSignature().getName()
+                        + " " + Arrays.toString(pjp.getArgs())
+                        + " => ";
+
+    try {
+      proceedObj = pjp.proceed();
+      logger.info(baseString + proceedObj);
+    } catch (Throwable e) {
+      logger.error(baseString + e);
+    }
+
+    return proceedObj;
+  }
+
+}

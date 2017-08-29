@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bam.bean.Batch;
 import com.bam.bean.Curriculum;
 import com.bam.bean.CurriculumSubtopic;
+import com.bam.bean.Subtopic;
 import com.bam.bean.SubtopicName;
 import com.bam.dto.CurriculumSubtopicDTO;
 import com.bam.dto.DaysDTO;
@@ -31,6 +33,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 @RequestMapping(value = "/api/v1/Curriculum/")
 public class CurriculumController {
+	private static final Logger logger = Logger.getLogger(LoggerClass.class);
 
 	@Autowired
 	CurriculumService curriculumService;
@@ -43,6 +46,21 @@ public class CurriculumController {
 	
 	@Autowired 
 	BatchService batchService;
+
+	public CurriculumService get(){
+		return curriculumService;
+	}
+	
+	/***
+	 * @author Nam Mai
+	 * Method is needed for injecting mocked services for unit test
+	 */
+	@Autowired
+	public CurriculumController(CurriculumService cs, CurriculumSubtopicService css, SubtopicService ss){
+		curriculumService = cs;
+		curriculumSubtopicService =css;
+		subtopicService = ss;
+	}
 	
 	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
@@ -71,6 +89,12 @@ public class CurriculumController {
 		return subtopicService.getAllSubtopics();
 	}
 	
+	@RequestMapping(value = "SubtopicPool", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public List<Subtopic> getSubtopicPool(){
+		return subtopicService.getSubtopics();
+	}
+
 	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
 	public void addSchedule(@RequestBody String json) throws JsonParseException, JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
@@ -115,17 +139,22 @@ public class CurriculumController {
 		//find the curriculum with same name and isMaster = 1; set to 0; save
 		List<Curriculum> curriculumList = curriculumService.findAllCurriculumByName(c.getCurriculumName());
 		
-		try{
-			Curriculum prevMaster = null;
-			for(int i = 0; i < curriculumList.size(); i++){
-				if(curriculumList.get(i).getIsMaster() == 1)
-					prevMaster = curriculumList.get(i);
-			}
-			prevMaster.setIsMaster(0);
-			curriculumService.save(prevMaster);
-		} catch(NullPointerException e){
-			e.printStackTrace();
-		}
+	    try {
+	        Curriculum prevMaster = null;
+
+	        for (int i = 0; i < curriculumList.size(); i++) {
+	          if (curriculumList.get(i).getIsMaster() == 1)
+	            prevMaster = curriculumList.get(i);
+	        }
+	        if (prevMaster != null) {
+	          prevMaster.setIsMaster(0);
+	          curriculumService.save(prevMaster);
+	        } else {
+	          LogManager.getRootLogger().error(prevMaster);
+	        }
+	      } catch (NullPointerException e) {
+	        LogManager.getRootLogger().error(e);
+	      }
 		
 		//save new master curriculum
 		curriculumService.save(c);

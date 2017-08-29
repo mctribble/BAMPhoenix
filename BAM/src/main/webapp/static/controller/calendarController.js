@@ -30,6 +30,15 @@
 
 		  var thisBatchId = $rootScope.changedBatchId;
 		  
+		  //get batch name for trainer
+		  $http({
+			  method: "GET",
+			  url: "rest/api/v1/Batches/ById?batchId=" + thisBatchId
+		  }).then(function success(response){
+			 $scope.batchInfo = response.data;
+			 $scope.currBatchName = $scope.batchInfo.name;
+		  });
+		  
 		  if(SessionService.get("currentBatch")){
 			  if(SessionService.get("currentBatch").trainer.userId == SessionService.get("currentUser").userId){
 				  var end = moment.utc(SessionService.get("currentBatch").endDate);
@@ -469,7 +478,6 @@
                		 console.log(response);
                	 }); 
             }
-            
             
             /* alert on eventClick */
             $scope.alertOnEventClick = function( event, date, jsEvent, view){
