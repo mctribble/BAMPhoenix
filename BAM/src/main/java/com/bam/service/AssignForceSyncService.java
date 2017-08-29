@@ -2,20 +2,17 @@ package com.bam.service;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.bam.bean.AssignForceBatch;
 import com.bam.bean.BamUser;
 import com.bam.bean.Batch;
 import com.bam.bean.BatchType;
-
 
 /**
  * @author DillonT, GilB
@@ -25,15 +22,13 @@ import com.bam.bean.BatchType;
  * These objects are used to hold data from a ResponseEntity, and are later used to 
  * set data in objects relevant to persistence in the BAM database.
  */
-@Service("assignForceSyncService")
-@Transactional
+@Service
 public class AssignForceSyncService {
-	
-	
-	@Resource(name="batchesService")
+
+  @Autowired
 	BatchService bservice;
 	
-	@Resource(name="bamUserService")
+  @Autowired
 	BamUserService uservice;
 	
 	static RestTemplate restTemplate = new RestTemplate();
