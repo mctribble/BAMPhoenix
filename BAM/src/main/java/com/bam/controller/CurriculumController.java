@@ -29,7 +29,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 @RequestMapping(value = "/api/v1/Curriculum/")
 public class CurriculumController {
-	private static final Logger logger = Logger.getLogger(LoggerClass.class);
 
 	@Autowired
 	CurriculumService curriculumService;
