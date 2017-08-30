@@ -468,16 +468,14 @@
             
             //Function used to populate a batch with subtopics after clicking on the "Fill Subtopics" button
             $scope.fillSubtopics = function(){
-            	$window.alert("We are now populating your batch with subtopics.  This may take a few minutes.  You can logout at any time.");
+            	$window.alert("We are now populating your batch with subtopics.  Please logout and log back in.");
             	$scope.hasSubtopics = true;
             	$http({
                		method : "GET",
                		url : "rest/api/v1/Curriculum/SyncBatch/"+thisBatchId
                	 }).then(function successCallback(response) {
-               		$window.alert("Batches have been successfully updated!");
                	 }, function errorCallback(response){
                		 console.log(response);
-               		 $window.alert("Batches already populated with subtopics.");
                	 }); 
             }
             
