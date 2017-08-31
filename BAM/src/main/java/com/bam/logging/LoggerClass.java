@@ -42,7 +42,7 @@ public class LoggerClass {
     try {
       proceedObj = pjp.proceed();
       logger.info(baseString + proceedObj);
-    } catch (Throwable e) {
+    } catch (Throwable e) {//NOSONAR
       logger.error(baseString + e);
     }
 
@@ -62,7 +62,7 @@ public class LoggerClass {
     try {
       proceedObj = pjp.proceed();
       logger.info(baseString + proceedObj);
-    } catch (Throwable e) {
+    } catch (Throwable e) {//NOSONAR
       logger.error(baseString + e);
     }
 

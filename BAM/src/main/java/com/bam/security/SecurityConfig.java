@@ -31,8 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private AuthenticationFailureHandler restAuthenticationFailureHandler;
 	
-	@Autowired
-	private HttpAuthenticationEntryPoint authenticationEntryPoint;
+	//@Autowired
+	//private HttpAuthenticationEntryPoint authenticationEntryPoint;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
