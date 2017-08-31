@@ -127,6 +127,7 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
         			$scope.selDate = newDate;
         			    
         			if($scope.stDate.getMonth() == $scope.selDate.getMonth() && $scope.stDate.getDate() == $scope.selDate.getDate()){
+        			//EMPTY BECAUSE 
         			}
         		});
 			});
