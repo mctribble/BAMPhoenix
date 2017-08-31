@@ -78,7 +78,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	/**
 	 * @author Duncan Hayward
-	 * uncomment to protect rest endpoints, need to fix the roles first
+	 * uncomment to protect rest endpoints, need to fix the roles first 
+	 * logout isn't getting deleting of JSESSIONID
 	 * Don't disable csrf in production
 	 */
 	@Override
