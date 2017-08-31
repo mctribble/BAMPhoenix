@@ -118,13 +118,13 @@ public class CalendarController {
   @RequestMapping(value = "DateUpdate", method = RequestMethod.GET, produces = "application/json")
   public void changeTopicDate(HttpServletRequest request) throws ParseException {
     // Get the batch id from the request
-    String subtopicName = request.getParameter("subtopicId");
+    int subtopicId = Integer.parseInt(request.getParameter("subtopicId"));
 
     int batchId = Integer.parseInt(request.getParameter(BATCHID));
     List<Subtopic> topics = subtopicService.getSubtopicByBatchId(batchId);
     Subtopic sub;
     for (int i = 0; i < topics.size(); i++) {
-      if (topics.get(i).getSubtopicName().getName().equals(subtopicName)) {
+      if (topics.get(i).getSubtopicId() == subtopicId) {
         sub = topics.get(i);
         Long newDate = Long.valueOf(request.getParameter("date")) + 46800000;
         sub.setSubtopicDate(new Timestamp(newDate));
