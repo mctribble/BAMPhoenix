@@ -579,7 +579,7 @@
                 		  // http for blue to green
                       $http({
                    		method : "GET",
-                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+thisBatchId+"&subtopicId="+event.title+"&status=Missed"
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+thisBatchId+"&subtopicId="+event.id+"&status=Missed"
                    	 }).then(function successCallback(response) {
                    	 });
             	}	
@@ -590,13 +590,13 @@
                 		  // http for blue to green
                       $http({
                    		method : "GET",
-                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+thisBatchId+"&subtopicId="+event.title+"&status=Pending"
+                   		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+thisBatchId+"&subtopicId="+event.id+"&status=Pending"
                    	 }).then(function successCallback(response) {
                    	 });
             	}
             	 $http({
              		method : "GET",
-             		url : "rest/api/v1/Calendar/DateUpdate?batchId="+thisBatchId+"&subtopicId="+event.title+"&date="+event.start
+             		url : "rest/api/v1/Calendar/DateUpdate?batchId="+thisBatchId+"&subtopicId="+event.id+"&date="+event.start
              	 }).then(function successCallback(response) {
              	 });
             };
