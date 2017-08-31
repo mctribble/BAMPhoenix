@@ -1,6 +1,8 @@
 /**
  * @Author: Duncan Hayward 
  * Adds google Analytics to site
+ * Tracking different pages 
+ * and how to track different events on a page
  */
   app.controller('analyticsCtrl', function ($rootScope, $location, $window, $analytics) {
 	  $rootScope.$on('$routeChangeSuccess', function () {
