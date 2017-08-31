@@ -221,8 +221,8 @@ public class BamUser {
 		return assignForceID;
 	}
 
-	public void setAssignForceID(Integer AssignForceID) {
-		assignForceID = AssignForceID;
+	public void setAssignForceID(Integer assignForceID) {
+		this.assignForceID = assignForceID;
 	}
 
 	@Override
