@@ -11,6 +11,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+import com.bam.exception.CustomException;
+
 @Aspect
 @Component
 public class LoggerClass {
@@ -29,7 +31,7 @@ public class LoggerClass {
    * @author Jonathan Layssard and Troy King
    */
   @Around("execution(* com.bam.service.*.*(..))")
-  public Object interceptService(ProceedingJoinPoint pjp) throws Exception {
+  public Object interceptService(ProceedingJoinPoint pjp) throws CustomException {
     // return to always return join point objects so they are not consumed
     Object proceedObj = null;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -50,7 +52,7 @@ public class LoggerClass {
   }
 
   @Around("execution(* com.bam.controller.*.*(..))")
-  public Object interceptController(ProceedingJoinPoint pjp) throws Exception {
+  public Object interceptController(ProceedingJoinPoint pjp) throws CustomException {
     Object proceedObj = null;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
     String baseString = "(" + simpleDateFormat.format(new Date(System.currentTimeMillis())) + ")"
