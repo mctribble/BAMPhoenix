@@ -17,21 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.bam.service.BamUserDetailsService;
 
-/**
- * 
- * @author Duncan Hayward
- * Getting user from the database with
- * @Autowired
- * UserDetailsService
- *
-  * LoadUsername() will load the User record from the DB
-  * Pass back a Spring Security User Object NOT BAMUser object
-   * .passwordEncoder(new BCryptPasswordEncoder());
-   * 
-   * Don't disable csrf in production
-   * 
-   *  //.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
- */
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -90,6 +76,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.authenticationProvider(authProvider());
 	}
 	
+	/**
+	 * @author Duncan Hayward
+	 * uncomment to protect rest endpoints, need to fix the roles first
+	 * Don't disable csrf in production
+	 */
 	@Override
 	 protected void configure(HttpSecurity http) throws Exception {
 	  http
@@ -118,7 +109,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    .and()
 	    .logout()
 	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-	    .logoutSuccessUrl("/logout.done").deleteCookies("JSESSIONID")
+	    .logoutSuccessUrl("/logout").deleteCookies("JSESSIONID")
 	    .invalidateHttpSession(true);		
 	 }
 }

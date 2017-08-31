@@ -6,7 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
-
+/**
+ * 
+ * @author Duncan Hayward
+ * This is going to reference the lookup table for a Role, 
+ * Not currently being used but needed to secure rest end points in Spring Security
+ *
+ */
 @Entity
 @Table(name="USER_ROLE")
 @Component
