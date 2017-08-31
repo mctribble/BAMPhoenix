@@ -34,7 +34,7 @@ public class CalendarControllerTest {
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
 		
-		this.mockMvc = MockMvcBuilders.standaloneSetup(CalendarController.class).build();
+		this.setMockMvc(MockMvcBuilders.standaloneSetup(CalendarController.class).build());
 	}
 	
 	/**
@@ -70,5 +70,13 @@ public class CalendarControllerTest {
 		
 		assertEquals(returnValue.longValue(), 0);
 		assertNotNull(returnValue.longValue());
+	}
+
+	public MockMvc getMockMvc() {
+		return mockMvc;
+	}
+
+	public void setMockMvc(MockMvc mockMvc) {
+		this.mockMvc = mockMvc;
 	}
 }
