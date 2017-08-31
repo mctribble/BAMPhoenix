@@ -57,7 +57,7 @@ public class BamUserDetailsService implements UserDetailsService {
     setAuths.add(new SimpleGrantedAuthority("ROLE_" + String.valueOf(user.getRole())));
     //List<GrantedAuthority> result = new ArrayList<>(setAuths);
     //return result;
-    return new ArrayList<GrantedAuthority>(setAuths);
+    return new ArrayList<>(setAuths);
   }
 
 }
