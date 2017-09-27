@@ -176,10 +176,6 @@
 		<!-- Spring core & mvc -->
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
 		<dependency>
@@ -294,13 +290,6 @@
 			<groupId>com.github.noraui</groupId>
 			<artifactId>ojdbc7</artifactId>
 			<version>12.1.0.2</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
