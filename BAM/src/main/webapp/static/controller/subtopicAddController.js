@@ -44,7 +44,7 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 		
 			var uniqueTopics = new Set();
 			var topicMap = new Map();
-
+			
 			var subtopicArray = [];
 			for(i in subtopics){
 					if(!uniqueTopics.has(subtopics[i].subtopicName.topic.name)){
@@ -125,9 +125,9 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
         			
         			$scope.stDate = prevdate;
         			$scope.selDate = newDate;
-    
+        			    
         			if($scope.stDate.getMonth() == $scope.selDate.getMonth() && $scope.stDate.getDate() == $scope.selDate.getDate()){
-        				console.log("These dates are equal!")
+        			//EMPTY BECAUSE 
         			}
         		});
 			});
@@ -157,7 +157,7 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 				type: subTopicType
 		}
 		
-		var subtopicDate = $scope.date;
+		var subtopicDate = $scope.selDate;
 
 		var status = {
 			id : 1,
@@ -178,10 +178,13 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 			$scope.msg = 'Subtopic already exists on that day.';
 			$scope.alertClass = 'alert alert-danger';
 		}else{
+			$scope.stDate = $scope.selDate;
+			
 			$http({
 			url: "rest/api/v1/Subtopic/addSubtopic",
 			method: 'POST',
 			data : subtopic
+			
 		}).then(function success(response){
 			$scope.message = true;
 			$scope.msg = 'Successfully added!';

@@ -69,6 +69,17 @@
 						</execution>
 					</executions>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>2.2</version>
+					<configuration>
+						<url>http://localhost:8080/manager/text</url>
+						<server>Tomcat Server</server>
+						<update>true</update>
+						<path>/bam</path>
+					</configuration>
+				</plugin>
 			</plugins>
 	</build>
 
@@ -103,21 +114,6 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.splunk</groupId>
-			<artifactId>splunk</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.splunk.logging</groupId>
-			<artifactId>splunk-library-javalogging</artifactId>
-			<version>1.5.0</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
-		<dependency>
-			<groupId>com.googlecode.json-simple</groupId>
-			<artifactId>json-simple</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>com.splunk</groupId>
 			<artifactId>splunk</artifactId>
@@ -180,10 +176,6 @@
 		<!-- Spring core & mvc -->
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
 		<dependency>
@@ -228,7 +220,11 @@
 			<artifactId>spring-security-core</artifactId>
 		</dependency>
 		<!-- + + + + + -->
-
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-core</artifactId>
+		    <version>4.3.8.RELEASE</version>
+		</dependency>
 		<!-- Spring Data -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -294,13 +290,6 @@
 			<groupId>com.github.noraui</groupId>
 			<artifactId>ojdbc7</artifactId>
 			<version>12.1.0.2</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->

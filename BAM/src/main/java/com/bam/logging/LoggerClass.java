@@ -1,9 +1,7 @@
 package com.bam.logging;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-
+import com.bam.exception.CustomException;
+import com.splunk.logging.SplunkCimLogEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,7 +9,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
-import com.splunk.logging.SplunkCimLogEvent;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 
 @Aspect
 @Component
@@ -34,7 +34,7 @@ public class LoggerClass {
    * @author Jonathan Layssard and Troy King
    */
   @Around("execution(* com.bam.service.*.*(..))")
-  public Object interceptService(ProceedingJoinPoint pjp) throws Exception {
+  public Object interceptService(ProceedingJoinPoint pjp) throws CustomException {
     // return to always return join point objects so they are not consumed
     Object proceedObj = null;
     SplunkCimLogEvent event = new SplunkCimLogEvent("service", Long.toString(++ServiceCalls));
@@ -55,7 +55,7 @@ public class LoggerClass {
   }
 
   @Around("execution(* com.bam.controller.*.*(..))")
-  public Object interceptController(ProceedingJoinPoint pjp) throws Exception {
+  public Object interceptController(ProceedingJoinPoint pjp) throws CustomException {
     Object proceedObj = null;
     SplunkCimLogEvent event = new SplunkCimLogEvent("controller",  Long.toString(++ControllerCalls));
     event.addField("time", simpleDateFormat.format(new Date(System.currentTimeMillis())));

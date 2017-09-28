@@ -52,11 +52,12 @@ public class BamUserDetailsService implements UserDetailsService {
   }
 
   private List<GrantedAuthority> buildUserAuthority(BamUser user) {
-    Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
+    Set<GrantedAuthority> setAuths = new HashSet<>();
     // Build user's authorities
     setAuths.add(new SimpleGrantedAuthority("ROLE_" + String.valueOf(user.getRole())));
-    List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
-    return Result;
+    //List<GrantedAuthority> result = new ArrayList<>(setAuths);
+    //return result;
+    return new ArrayList<>(setAuths);
   }
 
 }

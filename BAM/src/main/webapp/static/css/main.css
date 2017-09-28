@@ -59,6 +59,7 @@
 	letter-spacing: 1.5px;
 }
 
+
 .createPointer{
 	cursor: pointer;
 }
@@ -70,6 +71,22 @@
 	cursor: pointer;
 	transform: translateX(.5px);
 }
+
+#Subtopic-btn {
+	width: auto;
+	color: #ffffff;
+	box-shadow: 0 4px #999;
+	background-color: #303e74;
+	cursor: pointer;
+}
+
+.Subtopic-btn-container {
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
 
 #login-btn:hover{
 	background-color: #142863;
@@ -498,6 +515,14 @@ body {
 	width: 157px;
 }
 
+.makeBigger{
+	width: 100px;
+	margin-left: 40%;
+}
+
+.centerAlert{
+	margin-left: 35%;
+}
 
 /***** Event Legend *****/
 #plannedEvent {
@@ -575,23 +600,4 @@ body {
 .clickable:hover{
 	cursor: pointer;
 	background-color: #c1b5d3;
-}
-
-/***** 6.0 NEW SUBTOPIC STYLING *****/
-#login-btn {
-	width: auto;
-}
-
-.login-btn-container {
-    text-align: center;
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 50px;
-}
-
-.login {
-    text-align: left;
-    display: block;
-    margin: auto;
-    margin-bottom: 60px;
 }
