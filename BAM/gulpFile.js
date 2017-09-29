@@ -18,5 +18,7 @@ gulp.task('test', function () {
     //run the tests and perform postprocessing
     karma.start({
         configFile: __dirname + '/src/test/karma.conf.ci.js'
-    }, postprocessLCOV);
+    }, function() {
+        postprocessLCOV();
+    });
 });
