@@ -3,9 +3,7 @@ package com.bam.bean.unit;
 import com.bam.bean.Role;
 import org.junit.Test;
 
-import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
-import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToStringFor;
-import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
+import static com.google.code.beanmatchers.BeanMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class RoleTest {
@@ -22,7 +20,6 @@ public class RoleTest {
     //PASS: Ensure all properties on the bean are included in the string value.
     @Test
     public void allPropertiesShouldBeRepresentedInToStringOutput() {
-        assertThat(Role.class, hasValidBeanToStringFor("roleId"));
-        assertThat(Role.class, hasValidBeanToStringFor("userRole"));
+        assertThat(Role.class, hasValidBeanToString());
     }
 }
