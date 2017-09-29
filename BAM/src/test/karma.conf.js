@@ -1,8 +1,9 @@
 // Karma configuration
 // Generated on Tue Aug 15 2017 13:40:17 GMT-0400 (Eastern Daylight Time)
 
-//some sources claim we need this line, but in practice it seems to break things
-//process.env.PHANTOMJS_BIN = './node_modules/phantomjs-prebuilt/lib/phantom/bin/phantomjs.exe';
+//some sources claim we need this line, but others claim we dont
+//it works fine without it, though, so probably safest not to uncomment this
+//process.env.PHANTOMJS_BIN = './node_modules/.bin/phantomjs';
 
 module.exports = function(config) {
   config.set({
