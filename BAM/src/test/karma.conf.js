@@ -12,7 +12,6 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
 
-
     // list of files / patterns to load in the browser
     files: [
     	'node_modules/angular/angular.js',
@@ -70,6 +69,8 @@ module.exports = function(config) {
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome', 'PhantomJS2'],
 
+    // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom) 
+    phantomjsLauncher: { exitOnResourceError: true },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
