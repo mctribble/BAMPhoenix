@@ -1,17 +1,20 @@
 // Karma configuration
 // Generated on Tue Aug 15 2017 13:40:17 GMT-0400 (Eastern Daylight Time)
 
+//some sources claim we need this line, but others claim we dont
+//it works fine without it, though, so probably safest not to uncomment this
+//process.env.PHANTOMJS_BIN = './node_modules/.bin/phantomjs';
+
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: '../../',
 
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
-
 
     // list of files / patterns to load in the browser
     files: [
@@ -24,15 +27,16 @@ module.exports = function(config) {
     	'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
     	'node_modules/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js',
     	'node_modules/angulartics-google-analytics/lib/angulartics-ga.js',
-    	'../../src/main/webapp/static/js/app.js',
-    	'../../src/main/webapp/static/js/service.js',
-    	'../../src/main/webapp/static/controller/*.js',
-    	'tests/js/*Test.js'
+    	'src/main/webapp/static/js/app.js',
+    	'src/main/webapp/static/js/service.js',
+    	'src/main/webapp/static/controller/*.js',
+    	'src/test/tests/js/*Test.js'
     ],
 
 
     // list of files to exclude
     exclude: [
+      'src/test/karma.conf*.js'
     ],
 
 
@@ -67,8 +71,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
-
+    browsers: ['Chrome', 'ChromeHeadless'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

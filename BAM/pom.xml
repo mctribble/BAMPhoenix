@@ -80,6 +80,43 @@
 						<path>/bam</path>
 					</configuration>
 				</plugin>
+				<!-- for running jasmine tests -->
+				<plugin>
+					<groupId>com.github.eirslett</groupId>
+					<artifactId>frontend-maven-plugin</artifactId>
+					<version>1.6</version>
+					<executions>
+						<!-- installs node and npm (for jasmine tests) -->
+						<execution>
+							<id>install node and npm</id>
+							<goals>
+								<goal>install-node-and-npm</goal>
+							</goals>
+							<configuration>
+								<nodeVersion>v6.11.2</nodeVersion>
+								<npmVersion>3.10.10</npmVersion>
+							</configuration>
+						</execution>
+						<!-- installs required node modules (for jasmine tests) -->
+						<execution>
+							<id>npm install</id>
+							<goals>
+								<goal>npm</goal>
+							</goals>
+						</execution>
+						<!-- instructs gulp to run the Jasmine tests -->
+						<execution>
+							<id>gulp build</id>
+							<goals>
+								<goal>gulp</goal>
+							</goals>
+							<phase>test</phase>
+							<configuration>
+								<arguments>test</arguments>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
 			</plugins>
 	</build>
 
