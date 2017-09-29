@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Tue Aug 15 2017 13:40:17 GMT-0400 (Eastern Daylight Time)
 
-//process.env.PHANTOMJS_BIN = './node_modules/.bin/phantomjs';
+process.env.PHANTOMJS_BIN = './node_modules/phantomjs-prebuilt/lib/phantom/bin/phantomjs.exe';
 
 module.exports = function(config) {
   config.set({
