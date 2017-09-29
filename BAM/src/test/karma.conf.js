@@ -1,6 +1,8 @@
 // Karma configuration
 // Generated on Tue Aug 15 2017 13:40:17 GMT-0400 (Eastern Daylight Time)
 
+//process.env.PHANTOMJS_BIN = './node_modules/.bin/phantomjs';
+
 module.exports = function(config) {
   config.set({
 
@@ -67,10 +69,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'PhantomJS2'],
-
-    // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom) 
-    phantomjsLauncher: { exitOnResourceError: true },
+    browsers: ['Chrome', 'PhantomJS'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
