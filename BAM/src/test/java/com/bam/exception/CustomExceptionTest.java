@@ -42,4 +42,37 @@ public class CustomExceptionTest
             assert(e.getMessage().contains(expectedMessage));
         }
     }
+
+    @Test
+    public void exceptionsShouldHaveStackTraces() throws Exception
+    {
+        final String expectedMessage = "exception message";
+
+        try
+        {
+            throw new CustomException(new Exception(expectedMessage));
+        }
+        catch (CustomException e)
+        {
+            assertNotNull(e.getStackTrace());
+        }
+
+        try
+        {
+            throw new CustomException(new MessagingException(expectedMessage));
+        }
+        catch (CustomException e)
+        {
+            assertNotNull(e.getStackTrace());
+        }
+
+        try
+        {
+            throw new CustomException(expectedMessage);
+        }
+        catch (CustomException e)
+        {
+            assertNotNull(e.getStackTrace());
+        }
+    }
 }
