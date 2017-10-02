@@ -16,8 +16,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 public class BamUserServiceTest
@@ -39,6 +39,7 @@ public class BamUserServiceTest
     private BamUser testAssociate2;
     private BamUser testAssociate3;
     private List<BamUser> testUsersInBatch;
+    private List<BamUser> testUsersNotInBatch;
 
     @Before
     public void setUp() throws Exception
@@ -113,8 +114,12 @@ public class BamUserServiceTest
         testUsersInBatch.add(testAssociate1);
         testUsersInBatch.add(testAssociate2);
 
+        testUsersNotInBatch = new ArrayList<>();
+        testUsersNotInBatch.add(testAssociate3);
+
         when(batchRepository.findById(testBatch.getId())).thenReturn(testBatch);
         when(userRepository.findByBatch(testBatch)).thenReturn(testUsersInBatch);
+        when(userRepository.findByBatch(null)).thenReturn(testUsersNotInBatch);
     }
 
     @Test
@@ -130,7 +135,10 @@ public class BamUserServiceTest
                 fail();
 
         //given the data above, there should be two returned
-        assert(result.size() == 2);
+        assertEquals(2, result.size());
+
+        //everything returned should be in the original list
+        assertThat(testUsersInBatch, containsInAnyOrder(result));
     }
 
     @Test
@@ -146,9 +154,10 @@ public class BamUserServiceTest
                 fail();
 
         //given the data above, there should be one returned
-        assert(result.size() == 1);
-    }
+        assertEquals(1, result.size());
 
-    
+        //everything returned should be in the original list
+        assertThat(testUsersNotInBatch, containsInAnyOrder(result));
+    }
 
 }
