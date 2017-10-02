@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bam.bean.*;
 import com.bam.repository.SubtopicNameRepository;
 import com.bam.repository.SubtopicRepository;
 import com.bam.service.SubtopicService;
@@ -20,12 +21,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.bam.bean.BamUser;
-import com.bam.bean.Batch;
-import com.bam.bean.BatchType;
 import com.bam.repository.BatchRepository;
 import com.bam.repository.BatchTypeRepository;
 import com.bam.service.BatchService;
+
+import javax.validation.constraints.Null;
 
 /**
  * Author: Christopher Hake
@@ -61,14 +61,25 @@ public class BatchServiceTest
 	private List<Batch> allBatches;
 	private List<Batch> batchesWithTrainer1;
 	private List<BatchType> allBatchTypes;
+	private TopicName testTopicName;
+	private SubtopicType testSubtopicType;
+	private SubtopicName testSubtopicName1;
+	private SubtopicName testSubtopicName2;
+	private SubtopicName testSubtopicName3;
+	private List<SubtopicName> testSubtopicNames;
+	private Curriculum testCurriculum;
+	private CurriculumSubtopic testSubtopic1;
+	private CurriculumSubtopic testSubtopic2;
+	private CurriculumSubtopic testSubtopic3;
+	private List<CurriculumSubtopic> testSubtopics;
+	private SubtopicStatus testPendingStatus;
 
 	@Before
 	public void setUp() throws Exception
 	{
 		MockitoAnnotations.initMocks(this);
 
-		//trainer
-		//associates
+		//trainers
 		testTrainer1 = new BamUser(
 				1,                                         //userId
 				"August", null, "Duet",      //names
@@ -95,7 +106,11 @@ public class BatchServiceTest
 		testBatchType1 = new BatchType(1, "TEST1", 10);
 		testBatchType2 = new BatchType(2, "TEST2", 10);
 
-		//batch
+		allBatchTypes = new ArrayList<>();
+		allBatchTypes.add(testBatchType1);
+		allBatchTypes.add(testBatchType2);
+
+		//batches
 		testBatch1 = new Batch
 				(
 						1,                                                                          //ID
@@ -123,11 +138,39 @@ public class BatchServiceTest
 		batchesWithTrainer1 = new ArrayList<>();
 		batchesWithTrainer1.add(testBatch1);
 
+		//subtopic names
+		testTopicName = new TopicName(1, "unit testing");
+		testSubtopicType = new SubtopicType(1, "testing subtopic");
+		testSubtopicName1 = new SubtopicName(1, "Test topic 1", testTopicName, testSubtopicType);
+		testSubtopicName2 = new SubtopicName(2, "Test topic 2", testTopicName, testSubtopicType);
+		testSubtopicName3 = new SubtopicName(3, "Test topic 3", testTopicName, testSubtopicType);
+		testSubtopicNames = new ArrayList<>();
+		testSubtopicNames.add(testSubtopicName1);
+		testSubtopicNames.add(testSubtopicName2);
+		testSubtopicNames.add(testSubtopicName3);
+
+		//subtopics
+		testCurriculum = new Curriculum();
+		testCurriculum.setCurriculumId(1);
+		testSubtopic1 = new CurriculumSubtopic(1, testSubtopicName1, testCurriculum, 1, 1);
+		testSubtopic2 = new CurriculumSubtopic(2, testSubtopicName2, testCurriculum, 2, 2);
+		testSubtopic3 = new CurriculumSubtopic(3, testSubtopicName3, testCurriculum, 3, 3);
+		testPendingStatus = new SubtopicStatus(1, "Pending");
+		testSubtopics = new ArrayList<>();
+		testSubtopics.add(testSubtopic1);
+		testSubtopics.add(testSubtopic2);
+		testSubtopics.add(testSubtopic3);
+
 		when(batchRepository.findById(testBatch1.getId())).thenReturn(testBatch1);
 		when(batchRepository.findById(testBatch2.getId())).thenReturn(testBatch2);
 		when(batchRepository.findAll()).thenReturn(allBatches);
 		when(batchRepository.findByTrainer(testTrainer1)).thenReturn(batchesWithTrainer1);
 		when(batchTypeRepository.findAll()).thenReturn(allBatchTypes);
+
+		when(subtopicNameRepository.findById(testSubtopicName1.getId())).thenReturn(testSubtopicName1);
+		when(subtopicNameRepository.findById(testSubtopicName2.getId())).thenReturn(testSubtopicName2);
+		when(subtopicNameRepository.findById(testSubtopicName3.getId())).thenReturn(testSubtopicName3);
+		when(subtopicService.getStatus("Pending")).thenReturn(testPendingStatus);
 	}
 
 	//cant update null
@@ -151,7 +194,7 @@ public class BatchServiceTest
 		List<Batch> result = batchRepository.findAll();		//the result must...
 		assertThat(result, notNullValue());					//not be null
 		assertThat(result, hasSize(allBatches.size()));		//have the expected number of items
-		assertThat(result, containsInAnyOrder(allBatches)); //have all the expected items
+		assertThat(result, containsInAnyOrder(allBatches.toArray())); //have all the expected items
 	}
 
 	//happy path
@@ -167,12 +210,39 @@ public class BatchServiceTest
 
 	//happy path
 	@Test
-	public void getAllBatchTypesTest(){
-		List<Batch> result = batchRepository.findByTrainer(testTrainer1); //the result must...
+	public void getAllBatchTypesTest()
+	{
+		List<BatchType> result = batchTypeRepository.findAll();           //the result must...
 		assertThat(result, notNullValue());								  //not be null
 		assertThat(result, hasSize(2));									  //have the expected number of items
-		assertThat(result, containsInAnyOrder(allBatchTypes)); 			  //have all expected items
+		assertThat(result, containsInAnyOrder(allBatchTypes.toArray()));  //have all expected items
 	}
 
-	
+	//happy path
+	@Test
+	public void addCurriculumSubtopicsToBatch()
+	{
+		batchService.addCurriculumSubtopicsToBatch(testSubtopics, testBatch1);
+	}
+
+	//empty list
+	@Test
+	public void addCurriciulmSubtopicsToBatchEmptyList()
+	{
+		batchService.addCurriculumSubtopicsToBatch(new ArrayList<>(), testBatch1);
+	}
+
+	//null list
+	@Test (expected = NullPointerException.class)
+	public void addCurriculumSubtopicsToBatchNullList()
+	{
+		batchService.addCurriculumSubtopicsToBatch(null, testBatch1);
+	}
+
+	//null list
+	@Test (expected = NullPointerException.class)
+	public void addCurriculumSubtopicsToBatchNullBatch()
+	{
+		batchService.addCurriculumSubtopicsToBatch(testSubtopics, null);
+	}
 }

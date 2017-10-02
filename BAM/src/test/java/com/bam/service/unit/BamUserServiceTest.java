@@ -138,7 +138,7 @@ public class BamUserServiceTest
         assertEquals(2, result.size());
 
         //everything returned should be in the original list
-        assertThat(testUsersInBatch, containsInAnyOrder(result));
+        assertThat(testUsersInBatch, containsInAnyOrder(result.toArray()));
     }
 
     @Test
@@ -157,7 +157,7 @@ public class BamUserServiceTest
         assertEquals(1, result.size());
 
         //everything returned should be in the original list
-        assertThat(testUsersNotInBatch, containsInAnyOrder(result));
+        assertThat(testUsersNotInBatch, containsInAnyOrder(result.toArray()));
     }
 
     //make sure an exception is thrown if this gets null: it shouldnt pretend to succeed.
