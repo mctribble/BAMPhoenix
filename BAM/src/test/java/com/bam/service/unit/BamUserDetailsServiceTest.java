@@ -1,17 +1,17 @@
-package com.bam.service;
+package com.bam.service.unit;
 
 import com.bam.bean.BamUser;
 import com.bam.bean.Batch;
 import com.bam.bean.BatchType;
 import com.bam.repository.BamUserRepository;
+import com.bam.service.BamUserDetailsService;
+import com.bam.service.BamUserService;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
