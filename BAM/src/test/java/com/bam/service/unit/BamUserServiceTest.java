@@ -160,4 +160,27 @@ public class BamUserServiceTest
         assertThat(testUsersNotInBatch, containsInAnyOrder(result));
     }
 
+    //make sure an exception is thrown if this gets null: it shouldnt pretend to succeed.
+    @Test(expected = NullPointerException.class)
+    public void recoverENullArgs()
+    {
+        userService.recoverE(null, "swordfish");
+    }
+
+    //make sure an exception is thrown if this user's email is invalid: it shouldn't pretend to succeed.
+    @Test (expected = Exception.class)
+    public void recoverEBadEmail()
+    {
+        String goodEmail = testAssociate1.getEmail();
+        String badEmail = "this is not an email!";
+        testAssociate1.setEmail(badEmail);
+        try
+        {
+            userService.recoverE(testAssociate1, "swordfish");
+        }
+        finally
+        {
+            testAssociate1.setEmail(goodEmail);
+        }
+    }
 }
