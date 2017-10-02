@@ -20,7 +20,7 @@ import com.bam.bean.Batch;
 import com.bam.bean.BatchType;
 import com.bam.service.BamUserService;
 import com.bam.service.BatchService;
- 
+
 @RestController
 @RequestMapping(value = "/api/v1/Batches/")
 public class BatchController {
@@ -32,6 +32,15 @@ public class BatchController {
 
   @Autowired
   BamUserService bamUserService;
+
+  public BatchController() {
+
+  }
+
+  public BatchController (BatchService batchService, BamUserService bamUserService) {
+      this.batchService = batchService;
+      this.bamUserService = bamUserService;
+  }
 
   @RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
@@ -127,4 +136,11 @@ public class BatchController {
     return batchService.getAllBatchTypes();
   }
 
+  public void setBatchService(BatchService batchService) {
+    this.batchService = batchService;
+  }
+
+  public void setBamUserService(BamUserService bamUserService) {
+    this.bamUserService = bamUserService;
+  }
 }
