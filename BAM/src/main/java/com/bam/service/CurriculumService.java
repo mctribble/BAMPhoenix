@@ -47,6 +47,17 @@ public class CurriculumService {
 	}
 	
 	public List<Curriculum> findAllCurriculumByName(String name){
-		return curriculumRepository.findByCurriculumName(name);
+		List<Curriculum> curriculumList = curriculumRepository.findByCurriculumName(name);
+		//obfuscate password
+		for(Curriculum element : curriculumList){
+			element.getCurriculumCreator().setPwd("");
+			element.getCurriculumCreator().setPwd2("");
+			if(element.getCurriculumModifier() != null)
+			{
+				element.getCurriculumModifier().setPwd("");
+				element.getCurriculumModifier().setPwd2("");
+			}
+		}
+		return curriculumList;
 	}
 }
