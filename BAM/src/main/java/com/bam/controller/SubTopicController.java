@@ -39,6 +39,12 @@ public class SubTopicController {
   public List<Subtopic> getAllSubTopics(){
     return subTopicService.getSubtopics();
   }
+  
+  @RequestMapping(value = "ByStatus", method = RequestMethod.GET, produces = "application/json")
+  @ResponseBody
+  public List<Subtopic> getAllSubTopicsByStatus(HttpServletRequest request){
+	  return subTopicService.getSubtopicsByStatus(Integer.parseInt(request.getParameter("statusId")));
+  }
 
 
 }

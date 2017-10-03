@@ -165,4 +165,10 @@ public class SubtopicService {
   public void addOrUpdateSubtopicName(SubtopicName subtopicName) {
     subtopicNameRepository.save(subtopicName);
   }
+  
+  public List<Subtopic> getSubtopicsByStatus(int statusId){
+	  SubtopicStatus status = subtopicStatusRepository.findById(statusId);
+	  List<Subtopic> list = subtopicRepository.findByStatus(status);
+	  return list;
+  }
 }
