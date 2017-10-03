@@ -28,6 +28,7 @@ public class CurriculumServiceTest
 
     //test data
     private BamUser testCreator;
+    private BamUser testModifier;
     private Curriculum testCurriculum1;
     private Curriculum testCurriculum2;
     private Curriculum testCurriculum3;
@@ -48,8 +49,20 @@ public class CurriculumServiceTest
                 2,                                           //role
                 null,                                       //current batch (associates only!)
                 "555-5555-5555", null, null,   //contact info
-                null,                                       //for password resets
+                "changeMe",                                       //for password resets
                 1                                     //ID of the same user in assignForce
+        );
+
+        //a user tos et as the modifier for a curriculum
+        testModifier = new BamUser(
+                2,                                         //userId
+                "Some", "Other", "Guy",      //names
+                "SomeGuy@fakemail.com", "password", //login info
+                2,                                           //role
+                null,                                       //current batch (associates only!)
+                "555-5555-5556", null, null,   //contact info
+                "temp",                                       //for password resets
+                2                                     //ID of the same user in assignForce
         );
 
         //curriculums
@@ -71,7 +84,7 @@ public class CurriculumServiceTest
         testCurriculum2.setCurriculumName("Test Name 1");
         testCurriculum2.setCurriculumNumberOfWeeks(6);
         testCurriculum2.setCurriculumVersion(1);
-        testCurriculum2.setCurriculumModifier(null);
+        testCurriculum2.setCurriculumModifier(testModifier);
 
         testCurriculum3 = new Curriculum();
         testCurriculum3.setCurriculumId(3);
@@ -114,20 +127,24 @@ public class CurriculumServiceTest
         assertThat(result, notNullValue());                                //not be null
         assertThat(result, hasSize(testCurriculums.size()));               //be the expected size
         assertThat(result, containsInAnyOrder(testCurriculums.toArray())); //contain all expected items
+        assertNoPasswords(result);
     }
 
     //happy path
     @Test
     public void getCuricullumById() throws Exception
     {
-        Curriculum result = curriculumService.getCuricullumById(testCurriculum1.getCurriculumId());
-        assertThat(result, equalTo(testCurriculum1));
-
-        result = curriculumService.getCuricullumById(testCurriculum2.getCurriculumId());
+        Curriculum result = curriculumService.getCuricullumById(testCurriculum2.getCurriculumId());
         assertThat(result, equalTo(testCurriculum2));
+        assertNoPasswords(result);
+
+        result = curriculumService.getCuricullumById(testCurriculum1.getCurriculumId());
+        assertThat(result, equalTo(testCurriculum1));
+        assertNoPasswords(result);
 
         result = curriculumService.getCuricullumById(testCurriculum3.getCurriculumId());
         assertThat(result, equalTo(testCurriculum3));
+        assertNoPasswords(result);
     }
 
     //no curriculum with that id should return null
@@ -160,12 +177,14 @@ public class CurriculumServiceTest
         assertThat(result, notNullValue());                                                                       //not be null
         assertThat(result, hasSize(testCurriculumsName1.size()));                                                 //be the expected size
         assertThat(result, containsInAnyOrder(testCurriculumsName1.toArray()));                                   //contain all expected items
+        assertNoPasswords(result);
 
         //curriculum 3 has the name "Test Name 2", and we expect just that one on this list
         result = curriculumService.findAllCurriculumByName(testCurriculum3.getCurriculumName()); //the result must...
         assertThat(result, notNullValue());                                                      //not be null
         assertThat(result, hasSize(testCurriculumsName2.size()));                                //be the expected size
         assertThat(result, containsInAnyOrder(testCurriculumsName2.toArray()));                  //contain all expected items
+        assertNoPasswords(result);
     }
 
     //null arg should return empty list
@@ -181,4 +200,24 @@ public class CurriculumServiceTest
     {
         assertThat(curriculumService.findAllCurriculumByName("Not an actual name"), hasSize(0));
     }
+
+    //helper: asserts that no passwords are visible in the curriculum
+    private void assertNoPasswords(Curriculum c)
+    {
+        assertThat(c.getCurriculumCreator().getPwd(), isEmptyOrNullString());
+        assertThat(c.getCurriculumCreator().getPwd2(), isEmptyOrNullString());
+        if (c.getCurriculumModifier() != null)
+        {
+            assertThat(c.getCurriculumModifier().getPwd(), isEmptyOrNullString());
+            assertThat(c.getCurriculumModifier().getPwd2(), isEmptyOrNullString());
+        }
+    }
+
+    //helper: list version of the above
+    private void assertNoPasswords(List<Curriculum> cl)
+    {
+        for (Curriculum c : cl)
+            assertNoPasswords(c);
+    }
+
 }
