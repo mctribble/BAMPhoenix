@@ -40,6 +40,9 @@ public class BamUserServiceTest
     private BamUser testAssociate3;
     private List<BamUser> testUsersInBatch;
     private List<BamUser> testUsersNotInBatch;
+    private List<BamUser> testUsersAssociates;
+    private List<BamUser> testUsersTrainers;
+    private List<BamUser> testUsersAll;
 
     @Before
     public void setUp() throws Exception
@@ -116,12 +119,123 @@ public class BamUserServiceTest
 
         testUsersNotInBatch = new ArrayList<>();
         testUsersNotInBatch.add(testAssociate3);
+        testUsersNotInBatch.add(testTrainer);
+
+        testUsersAssociates = new ArrayList<>();
+        testUsersAssociates.add(testAssociate1);
+        testUsersAssociates.add(testAssociate2);
+        testUsersAssociates.add(testAssociate3);
+
+        testUsersTrainers = new ArrayList<>();
+        testUsersTrainers.add(testTrainer);
+
+        testUsersAll = new ArrayList<>();
+        testUsersAll.add(testAssociate1);
+        testUsersAll.add(testAssociate2);
+        testUsersAll.add(testAssociate3);
+        testUsersAll.add(testTrainer);
 
         when(batchRepository.findById(testBatch.getId())).thenReturn(testBatch);
+
+        when(userRepository.findByUserId(testAssociate1.getUserId())).thenReturn(testAssociate1);
+        when(userRepository.findByUserId(testAssociate2.getUserId())).thenReturn(testAssociate2);
+        when(userRepository.findByUserId(testAssociate3.getUserId())).thenReturn(testAssociate3);
+        when(userRepository.findByUserId(testTrainer.getUserId())).thenReturn(testTrainer);
+        when(userRepository.findByEmail(testAssociate1.getEmail())).thenReturn(testAssociate1);
+        when(userRepository.findByEmail(testAssociate2.getEmail())).thenReturn(testAssociate2);
+        when(userRepository.findByEmail(testAssociate3.getEmail())).thenReturn(testAssociate3);
+        when(userRepository.findByEmail(testTrainer.getEmail())).thenReturn(testTrainer);
         when(userRepository.findByBatch(testBatch)).thenReturn(testUsersInBatch);
         when(userRepository.findByBatch(null)).thenReturn(testUsersNotInBatch);
+        when(userRepository.findByRole(1)).thenReturn(testUsersAssociates);
+        when(userRepository.findByRole(2)).thenReturn(testUsersTrainers);
+        when(userRepository.findAll()).thenReturn(testUsersAll);
+        when(userRepository.findByFNameAndLName(testAssociate1.getfName(), testAssociate1.getlName())).thenAnswer(invocationOnMock -> { List<BamUser> l = new ArrayList<>(); l.add(testAssociate1); return l; }); //this just creates a list with only one user: testAssociate1.
     }
 
+    //happy path
+    @Test
+    public void addOrUpdateUser() throws Exception
+    {
+        userService.addOrUpdateUser(testAssociate1);
+    }
+
+    //save null should throw an exception
+    @Test (expected = RuntimeException.class) //realistically this should probably be either NullPointerException or IllegalArgumentException, but any runtimeException will do
+    public void addOrUpdateUserNull() throws Exception
+    {
+        userService.addOrUpdateUser(null);
+    }
+
+    //happy path
+    @Test
+    public void findAllUsers() throws Exception
+    {
+        List<BamUser> result = userService.findAllUsers();    //the result must...
+        assertThat(result, notNullValue());                   //not be null
+        assertThat(result, hasSize(testUsersAll.size()));     //have the expected number of items
+        assertThat(result, containsInAnyOrder(testUsersAll.toArray())); //contain all expected items
+    }
+
+    //happy path
+    @Test
+    public void findByRole() throws Exception
+    {
+        List<BamUser> result = userService.findByRole(1);            //the result must...
+        assertThat(result, notNullValue());                          //not be null
+        assertThat(result, hasSize(testUsersAssociates.size()));     //have the expected number of items
+        assertThat(result, containsInAnyOrder(testUsersAssociates.toArray())); //contain all expected items
+
+        result = userService.findByRole(2);                        //the result must...
+        assertThat(result, notNullValue());                        //not be null
+        assertThat(result, hasSize(testUsersTrainers.size()));     //have the expected number of items
+        assertThat(result, containsInAnyOrder(testUsersTrainers.toArray())); //contain all expected items
+    }
+
+    //bad role should return empty list
+    @Test
+    public void findByRoleBadRole() throws Exception
+    {
+        List<BamUser> result = userService.findByRole(0);
+        assertThat(result, notNullValue());
+        assertThat(result, hasSize(0));
+    }
+
+    //happy path
+    @Test
+    public void findUserById() throws Exception
+    {
+        assertThat(userService.findUserById(testAssociate1.getUserId()), is(testAssociate1));
+        assertThat(userService.findUserById(testAssociate2.getUserId()), is(testAssociate2));
+        assertThat(userService.findUserById(testAssociate3.getUserId()), is(testAssociate3));
+        assertThat(userService.findUserById(testTrainer.getUserId()), is(testTrainer));
+    }
+
+    //bad id
+    @Test
+    public void findUserByIdBadId() throws Exception
+    {
+        assertThat(userService.findUserById(0), nullValue());
+    }
+
+    //happy path
+    @Test
+    public void findUserByEmail() throws Exception
+    {
+        assertThat(userService.findUserByEmail(testAssociate1.getEmail()), is(testAssociate1));
+        assertThat(userService.findUserByEmail(testAssociate2.getEmail()), is(testAssociate2));
+        assertThat(userService.findUserByEmail(testAssociate3.getEmail()), is(testAssociate3));
+        assertThat(userService.findUserByEmail(testTrainer.getEmail()), is(testTrainer));
+    }
+
+    //bad id
+    @Test
+    public void findUserByEmailBadEmail() throws Exception
+    {
+        assertThat(userService.findUserByEmail("not a real email"), nullValue());
+    }
+
+    //happy path
     @Test
     public void findUsersInBatch() throws Exception
     {
@@ -182,5 +296,15 @@ public class BamUserServiceTest
         {
             testAssociate1.setEmail(goodEmail);
         }
+    }
+
+    //happy path
+    @Test
+    public void getByFNameAndLName() throws Exception
+    {
+        List<BamUser> result = userService.getByFNameAndLName(testAssociate1.getfName(), testAssociate1.getlName());
+        assertThat(result, notNullValue());
+        assertThat(result, hasSize(1));
+        assertThat(result, contains(testAssociate1));
     }
 }
