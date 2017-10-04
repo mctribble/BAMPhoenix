@@ -12,7 +12,8 @@ module.exports = function (config) {
         autoWatch: false,
         reporters: ['progress', 'junit', 'coverage'],
         preprocessors:    {
-            'src/main/webapp/static/js/**/*.js':   ['coverage']
+            'src/main/webapp/static/**/**/*.js':   ['coverage']
+
         },
         browsers:  ['PhantomJS2'],
         junitReporter: {
