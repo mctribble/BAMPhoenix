@@ -9,14 +9,16 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
+    // this means all paths will be relative to the BAM folder, instead of the test folder where this config resides
     basePath: '../../',
-
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
+    // this should include all files that need to be tested
+    // and any of their dependencies
     files: [
     	'node_modules/angular/angular.js',
         'https://code.jquery.com/jquery-1.11.2.min.js',
@@ -36,7 +38,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-      'src/test/karma.conf*.js'
+      'src/test/karma.conf*.js' //dont include the config files themselves
     ],
 
 
@@ -53,6 +55,7 @@ module.exports = function(config) {
 
 
     // web server port
+    // this is the port karma uses for testing, NOT the port the application normally runs on
     port: 9876,
 
 
