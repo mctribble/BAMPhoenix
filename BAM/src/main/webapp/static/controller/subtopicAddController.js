@@ -65,7 +65,7 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
 					var topicnameevent = angular.element( document.querySelector( '#topicname' ));
 
         			//loading topics in the dropdown menu
-        			for(topic of uniqueTopics){
+        			for(topic in uniqueTopics){
         				
         				var top = angular.element("<option>" + topic + "</option>");
         				var topic = $compile(top)($scope);
@@ -82,7 +82,7 @@ app.controller("subTopicController",function($scope, SessionService, $location, 
         			
         			var subIDs = 0;
         					//adding subtopics to the subtopics dropdown menu
-        					for(subtopic of Array.from(topicMap.get(selection))){
+        					for(subtopic in Array.from(topicMap.get(selection))){
         	        			var ev = angular.element("<option id = events"+ subIDs++ +">" + subtopic + "</option>");
         	    				var sub = $compile(ev)($scope);
         	    				subTopicsMenu.append(sub);

@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: '../../',
 
 
     // frameworks to use
@@ -24,15 +24,16 @@ module.exports = function(config) {
     	'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
     	'node_modules/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js',
     	'node_modules/angulartics-google-analytics/lib/angulartics-ga.js',
-    	'../../src/main/webapp/static/js/app.js',
-    	'../../src/main/webapp/static/js/service.js',
-    	'../../src/main/webapp/static/controller/*.js',
-    	'tests/js/*Test.js'
+    	'src/main/webapp/static/js/app.js',
+    	'src/main/webapp/static/js/service.js',
+    	'src/main/webapp/static/controller/*.js',
+    	'src/test/tests/js/*Test.js'
     ],
 
 
     // list of files to exclude
     exclude: [
+      'src/test/karma.conf*.js'
     ],
 
 
@@ -67,7 +68,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['Chrome', 'PhantomJS2'],
 
 
     // Continuous Integration mode

@@ -44,6 +44,13 @@ instantiating it and then calling its $get service factory function to get the i
 		
 		});
 
+	it('should fail for wrong user', function() {
+
+	    sampleServiceObject.set("user", "jaydeep");
+	    expect(sampleServiceObject.get("user")).toBe("wrongperson");
+
+	});
+
 	it('should return null value when calling the get method on a key which was never set', function(){
 		 
 		expect(sampleServiceObject.get("nonKey")).toBe(null);

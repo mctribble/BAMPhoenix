@@ -73,7 +73,8 @@ nbdist/
 .metadata/
 Servers/
 .recommenders
-BAM/src/test/node_modules
+node_modules/
 
-BAM/src/test/package.json
-
+reports/
+PhantomJS_2.1.1_(Windows_8_0.0.0)/
+node/

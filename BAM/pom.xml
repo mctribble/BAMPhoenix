@@ -69,6 +69,54 @@
 						</execution>
 					</executions>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>2.2</version>
+					<configuration>
+						<url>http://localhost:8080/manager/text</url>
+						<server>Tomcat Server</server>
+						<update>true</update>
+						<path>/bam</path>
+					</configuration>
+				</plugin>
+				<!-- for running jasmine tests -->
+				<plugin>
+					<groupId>com.github.eirslett</groupId>
+					<artifactId>frontend-maven-plugin</artifactId>
+					<version>1.6</version>
+					<executions>
+						<!-- installs node and npm (for jasmine tests) -->
+						<execution>
+							<id>install node and npm</id>
+							<goals>
+								<goal>install-node-and-npm</goal>
+							</goals>
+							<configuration>
+								<nodeVersion>v6.11.2</nodeVersion>
+								<npmVersion>3.10.10</npmVersion>
+							</configuration>
+						</execution>
+						<!-- installs required node modules (for jasmine tests) -->
+						<execution>
+							<id>npm install</id>
+							<goals>
+								<goal>npm</goal>
+							</goals>
+						</execution>
+						<!-- instructs gulp to run the Jasmine tests -->
+						<execution>
+							<id>gulp build</id>
+							<goals>
+								<goal>gulp</goal>
+							</goals>
+							<phase>test</phase>
+							<configuration>
+								<arguments>test</arguments>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
 			</plugins>
 	</build>
 
@@ -163,10 +211,6 @@
 		</dependency>
 
 		<!-- Spring core & mvc -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -283,13 +327,6 @@
 			<groupId>com.github.noraui</groupId>
 			<artifactId>ojdbc7</artifactId>
 			<version>12.1.0.2</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
