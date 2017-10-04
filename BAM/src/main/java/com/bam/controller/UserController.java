@@ -89,22 +89,12 @@ public class UserController {
 	
 	@RequestMapping(value="Register", method=RequestMethod.POST, produces="application/json")
 	public void addUser(@RequestBody BamUser currentUser) throws CustomException {
-		System.out.println("~~~~REACHED ADDUSER POINT");
 		if(userService.findUserByEmail(currentUser.getEmail())==null){
-			System.out.println("~~~~~REACHED INSIDE IF-BLOCK OF ADDUSER");
 			currentUser.setRole(1);
 			String password = currentUser.getPwd();
 			String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
 			currentUser.setPwd(hashed);
-			try {
-				userService.addOrUpdateUser(currentUser);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-			finally {
-				System.out.println("REACHED FINALLY BLOCK OF ADDUSER IF-BLOCK.");
-			}
+			userService.addOrUpdateUser(currentUser);
 		} else {
 			throw new CustomException("Email exists in database");
 		}	
