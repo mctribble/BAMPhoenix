@@ -27,11 +27,11 @@ public class AssignForceSyncControllerTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(mockAssignForceSyncController).build();
-        doNothing().when(mockAssignForceSyncService).assignForceSync();
     }
 
     @Test
     public void refreshBatchesTest() throws Exception {
+        doNothing().when(mockAssignForceSyncService).assignForceSync();
         mockMvc.perform(get("/refreshBatches")).andExpect(status().isOk());
     }
 }

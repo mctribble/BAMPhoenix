@@ -19,6 +19,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -105,6 +109,11 @@ public class BatchControllerTest {
                 .thenReturn(batchTestList);
         when(batchService.getBatchById(1)).thenReturn(testBatch);
         when(batchService.getAllBatchTypes()).thenReturn(batchTypeTestList);
+    }
+
+    @Test
+    public void shouldHaveANoArgsConstructor() {
+        assertThat(BatchController.class, hasValidBeanConstructor());
     }
 
     @Test
