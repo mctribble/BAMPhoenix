@@ -6,6 +6,10 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-    maxIdle: 0
-    minIdle: 10
-    minEvictableIdleTimeMillis: 10
+    max-idle: 0
+    min-idle: 10
+    min-evictable-idle-time-millis: 10
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+
