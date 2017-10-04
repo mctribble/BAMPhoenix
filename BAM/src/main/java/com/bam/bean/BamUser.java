@@ -30,7 +30,7 @@ public class BamUser {
 	@NotEmpty(message = "Last name cannot be empty")
 	private String lName;
 
-	@Column(name = "eMail")
+	@Column(name = "Email")
 	@NotEmpty(message = "e-mail address cannot be empty")
 	private String email;
 
@@ -62,7 +62,7 @@ public class BamUser {
 									// used when
 	private String pwd2; // the user needs to reset their password.
 
-	@Column(name="AssignForce_ID")
+	@Column(name="Assignforce_ID")
 	private Integer assignForceID;
 	
 	

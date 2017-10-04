@@ -248,10 +248,10 @@
 			<!--<groupId>org.springframework</groupId>-->
 			<!--<artifactId>spring-webmvc</artifactId>-->
 		<!--</dependency>-->
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>commons-logging</groupId>-->
+			<!--<artifactId>commons-logging</artifactId>-->
+		<!--</dependency>-->
 
 		<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
 		<dependency>
@@ -336,14 +336,14 @@
 			<!--<groupId>org.springframework.data</groupId>-->
 			<!--<artifactId>spring-data-jpa</artifactId>-->
 		<!--</dependency>-->
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>commons-dbcp</groupId>-->
+			<!--<artifactId>commons-dbcp</artifactId>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>commons-io</groupId>-->
+			<!--<artifactId>commons-io</artifactId>-->
+		<!--</dependency>-->
 		<!--<dependency>-->
 			<!--<groupId>org.springframework</groupId>-->
 			<!--<artifactId>spring-expression</artifactId>-->
@@ -357,10 +357,10 @@
 			<artifactId>javax.el</artifactId>
 			<version>2.2.4</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-dbcp2</artifactId>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.apache.commons</groupId>-->
+			<!--<artifactId>commons-dbcp2</artifactId>-->
+		<!--</dependency>-->
 
 		<dependency>
 			<groupId>com.sun.mail</groupId>
