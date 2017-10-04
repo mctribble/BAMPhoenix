@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,13 +167,35 @@ public class SubtopicService {
     subtopicNameRepository.save(subtopicName);
   }
   
-  public List<Subtopic> getSubtopicsByStatus(int statusId){
-	  SubtopicStatus status = subtopicStatusRepository.findById(statusId);
+  public List<Subtopic> getSubtopicsByStatus(String statusName){
+	  SubtopicStatus status = subtopicStatusRepository.findByName(statusName);
 	  List<Subtopic> list = subtopicRepository.findByStatus(status);
 	  return list;
   }
   
   public List<Subtopic> getSubtopicsByBatchId(int batchId){
 	  return subtopicRepository.findByBatch(batchRepository.findById(batchId));
+  }
+  
+  public List<Subtopic> getSubtopicsByBatchAndStatusId(int batchId, int statusId){
+	  
+	 List<Subtopic> bList = getSubtopicsByBatchId(batchId);
+	 
+	 List<Subtopic> result = bList.stream()
+			 .filter(subtopic -> subtopic.getStatus().getId() == statusId)
+			 .collect(Collectors.toList());
+	  
+	 return result;
+  }
+  
+  public List<Subtopic> getSubtopicsByBatchAndStatus(int batchId, String status){
+	  
+	 List<Subtopic> bList = getSubtopicsByBatchId(batchId);
+	 
+	 List<Subtopic> result = bList.stream()
+			 .filter(subtopic -> status.equals(subtopic.getStatus().getName()))
+			 .collect(Collectors.toList());
+	  
+	 return result;
   }
 }
