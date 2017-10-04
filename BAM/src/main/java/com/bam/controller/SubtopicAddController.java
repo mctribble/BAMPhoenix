@@ -4,8 +4,9 @@ package com.bam.controller;
  * 
  */
 
-import java.io.IOException;
-
+import com.bam.bean.Subtopic;
+import com.bam.exception.CustomException;
+import com.bam.service.SubtopicService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bam.bean.Subtopic;
-import com.bam.exception.CustomException;
-import com.bam.service.SubtopicService;
+import java.io.IOException;
 
 @RestController
-@RequestMapping(value = "/api/v1/Subtopic/")
+@RequestMapping(value = "/rest/api/v1/Subtopic/")
 public class SubtopicAddController {
 
   @Autowired

@@ -20,7 +20,7 @@ import com.bam.service.BatchService;
 import com.bam.service.PasswordGenerator;
 
 @RestController
-@RequestMapping(value = "/api/v1/Users/")
+@RequestMapping(value = "/rest/api/v1/Users/")
 public class UserController {
 	
 	private static final String USERID = "userId";
@@ -89,12 +89,22 @@ public class UserController {
 	
 	@RequestMapping(value="Register", method=RequestMethod.POST, produces="application/json")
 	public void addUser(@RequestBody BamUser currentUser) throws CustomException {
+		System.out.println("~~~~REACHED ADDUSER POINT");
 		if(userService.findUserByEmail(currentUser.getEmail())==null){
+			System.out.println("~~~~~REACHED INSIDE IF-BLOCK OF ADDUSER");
 			currentUser.setRole(1);
 			String password = currentUser.getPwd();
 			String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
 			currentUser.setPwd(hashed);
-			userService.addOrUpdateUser(currentUser);
+			try {
+				userService.addOrUpdateUser(currentUser);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				System.out.println("REACHED FINALLY BLOCK OF ADDUSER IF-BLOCK.");
+			}
 		} else {
 			throw new CustomException("Email exists in database");
 		}	
