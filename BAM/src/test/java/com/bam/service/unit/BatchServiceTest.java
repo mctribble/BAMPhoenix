@@ -1,5 +1,7 @@
 package com.bam.service.unit;
 
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
+import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSettersFor;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
@@ -191,7 +193,7 @@ public class BatchServiceTest
 	@Test
 	public void getBatchAllTest()
 	{
-		List<Batch> result = batchRepository.findAll();		//the result must...
+		List<Batch> result = batchService.getBatchAll();		//the result must...
 		assertThat(result, notNullValue());					//not be null
 		assertThat(result, hasSize(allBatches.size()));		//have the expected number of items
 		assertThat(result, containsInAnyOrder(allBatches.toArray())); //have all the expected items
@@ -201,7 +203,7 @@ public class BatchServiceTest
 	@Test
 	public void getBatchByTrainerTest()
 	{
-		List<Batch> result = batchRepository.findByTrainer(testTrainer1); //the result must...
+		List<Batch> result = batchService.getBatchByTrainer(testTrainer1); //the result must...
 		assertThat(result, notNullValue());								  //not be null
 		assertThat(result, hasSize(1));									  //have the expected number of items
 		assertThat(result, contains(testBatch1)); 			  			  //have the first test batch
@@ -212,7 +214,7 @@ public class BatchServiceTest
 	@Test
 	public void getAllBatchTypesTest()
 	{
-		List<BatchType> result = batchTypeRepository.findAll();           //the result must...
+		List<BatchType> result = batchService.getAllBatchTypes();         //the result must...
 		assertThat(result, notNullValue());								  //not be null
 		assertThat(result, hasSize(2));									  //have the expected number of items
 		assertThat(result, containsInAnyOrder(allBatchTypes.toArray()));  //have all expected items
@@ -244,5 +246,11 @@ public class BatchServiceTest
 	public void addCurriculumSubtopicsToBatchNullBatch()
 	{
 		batchService.addCurriculumSubtopicsToBatch(testSubtopics, null);
+	}
+
+	@Test
+	public void hasValidGettersSetters()
+	{
+		assertThat(BatchService.class, hasValidGettersAndSettersFor("batchRepository", "batchTypeRepository", "subtopicRepository", "subtopicNameRepository", "subtopicService"));
 	}
 }

@@ -102,6 +102,8 @@ public class BatchService {
 		}
 	}
 
+	public BatchService() {}
+
 	public void setBatchRepository(BatchRepository batchRepository) {
 		this.batchRepository = batchRepository;
 	}
@@ -120,5 +122,30 @@ public class BatchService {
 
 	public void setSubtopicService(SubtopicService subtopicService) {
 		this.subtopicService = subtopicService;
+	}
+
+	public BatchRepository getBatchRepository()
+	{
+		return batchRepository;
+	}
+
+	public BatchTypeRepository getBatchTypeRepository()
+	{
+		return batchTypeRepository;
+	}
+
+	public SubtopicRepository getSubtopicRepository()
+	{
+		return subtopicRepository;
+	}
+
+	public SubtopicNameRepository getSubtopicNameRepository()
+	{
+		return subtopicNameRepository;
+	}
+
+	public SubtopicService getSubtopicService()
+	{
+		return subtopicService;
 	}
 }
