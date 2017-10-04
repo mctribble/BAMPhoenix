@@ -122,7 +122,6 @@ public class BatchControllerTest {
                 .andExpect(content().contentType("application/json")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
-
     }
 
     @Test
@@ -161,6 +160,18 @@ public class BatchControllerTest {
     }
 
     @Test
+    public void updateUser() throws Exception {
+        mockMvc.perform(post("/api/v1/Batches/Edit").content(asJsonString(new BamUser()))
+                .contentType("application/json")).andExpect(status().isOk());
+    }
+
+    @Test
+    public void updateBatchTest() throws Exception {
+        mockMvc.perform(post("/api/v1/Batches/UpdateBatch").content(asJsonString(new Batch()))
+                .contentType("application/json")).andExpect(status().isOk());
+    }
+
+    @Test
     public void getAllBatchTypesTest() throws Exception {
         MvcResult result = mockMvc.perform(get("/api/v1/Batches/BatchTypes")).andExpect(status().isOk())
                 .andExpect(content().contentType("application/json")).andReturn();
@@ -172,10 +183,10 @@ public class BatchControllerTest {
         this.mockMvc = mockMvc;
     }
 
-    public static String asJsonString(final Object obj) {
+    public static String asJsonString(Object obj) {
         try {
-            final ObjectMapper mapper = new ObjectMapper();
-            final String jsonContent = mapper.writeValueAsString(obj);
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonContent = mapper.writeValueAsString(obj);
             return jsonContent;
         } catch (Exception e) {
             throw new RuntimeException(e);
