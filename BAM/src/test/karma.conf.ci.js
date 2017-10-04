@@ -15,7 +15,7 @@ module.exports = function (config) {
             'src/main/webapp/static/**/**/*.js':   ['coverage']
 
         },
-        browsers:  ['PhantomJS2'],
+        browsers:  ['ChromeHeadless'],
         junitReporter: {
             outputFile: 'reports/junit/TESTS-xunit.xml'
         },
