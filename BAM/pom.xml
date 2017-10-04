@@ -3,15 +3,30 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>BAM</groupId>
 	<artifactId>BAM</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<version>0.0.2-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.7.RELEASE</version>
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>io.spring.platform</groupId>
-				<artifactId>platform-bom</artifactId>
-				<version>2.0.3.RELEASE</version>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>1.5.7.RELEASE</version>
+				<!--<groupId>io.spring.platform</groupId>-->
+				<!--<artifactId>platform-bom</artifactId>-->
+				<!--<version>2.0.3.RELEASE</version>-->
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -36,20 +51,25 @@
 	<build>
 			<plugins>
 				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.5.1</version>
-					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
-					</configuration>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
 				</plugin>
-				<plugin>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>3.0.0</version>
-					<configuration>
-						<warSourceDirectory>src/main/webapp</warSourceDirectory>
-					</configuration>
-				</plugin>
+
+				<!--<plugin>-->
+					<!--<artifactId>maven-compiler-plugin</artifactId>-->
+					<!--<version>3.5.1</version>-->
+					<!--<configuration>-->
+						<!--<source>1.8</source>-->
+						<!--<target>1.8</target>-->
+					<!--</configuration>-->
+				<!--</plugin>-->
+				<!--<plugin>-->
+					<!--<artifactId>maven-war-plugin</artifactId>-->
+					<!--<version>3.0.0</version>-->
+					<!--<configuration>-->
+						<!--<warSourceDirectory>src/main/webapp</warSourceDirectory>-->
+					<!--</configuration>-->
+				<!--</plugin>-->
 				<plugin>
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
@@ -69,17 +89,17 @@
 						</execution>
 					</executions>
 				</plugin>
-				<plugin>
-					<groupId>org.apache.tomcat.maven</groupId>
-					<artifactId>tomcat7-maven-plugin</artifactId>
-					<version>2.2</version>
-					<configuration>
-						<url>http://localhost:8080/manager/text</url>
-						<server>Tomcat Server</server>
-						<update>true</update>
-						<path>/bam</path>
-					</configuration>
-				</plugin>
+				<!--<plugin>-->
+					<!--<groupId>org.apache.tomcat.maven</groupId>-->
+					<!--<artifactId>tomcat7-maven-plugin</artifactId>-->
+					<!--<version>2.2</version>-->
+					<!--<configuration>-->
+						<!--<url>http://localhost:8080/manager/text</url>-->
+						<!--<server>Tomcat Server</server>-->
+						<!--<update>true</update>-->
+						<!--<path>/bam</path>-->
+					<!--</configuration>-->
+				<!--</plugin>-->
 				<!-- for running jasmine tests -->
 				<plugin>
 					<groupId>com.github.eirslett</groupId>
@@ -123,11 +143,15 @@
 
 	<!-- https://mvnrepository.com/artifact/org.jasypt/jasypt -->
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework</groupId>-->
+			<!--<artifactId>spring-tx</artifactId>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>org.jasypt</groupId>
 			<artifactId>jasypt</artifactId>
@@ -212,13 +236,18 @@
 
 		<!-- Spring core & mvc -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency>
+
+		<!--<dependency>-->
+			<!--<groupId>org.springframework</groupId>-->
+			<!--<artifactId>spring-context</artifactId>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework</groupId>-->
+			<!--<artifactId>spring-webmvc</artifactId>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
@@ -236,61 +265,77 @@
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.springframework</groupId>-->
+			<!--<artifactId>spring-jdbc</artifactId>-->
+		<!--</dependency>-->
 
 		<!-- Spring Security -->
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
 		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.security</groupId>-->
+			<!--<artifactId>spring-security-web</artifactId>-->
+		<!--</dependency>-->
 
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.security</groupId>-->
+			<!--<artifactId>spring-security-config</artifactId>-->
+		<!--</dependency>-->
+
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.security</groupId>-->
+			<!--<artifactId>spring-security-core</artifactId>-->
+		<!--</dependency>-->
 		<!-- + + + + + -->
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-core</artifactId>
-		    <version>4.3.8.RELEASE</version>
-		</dependency>
+		<!--<dependency>-->
+		    <!--<groupId>org.springframework</groupId>-->
+		    <!--<artifactId>spring-core</artifactId>-->
+		    <!--<version>4.3.8.RELEASE</version>-->
+		<!--</dependency>-->
 		<!-- Spring Data -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
-			<!-- <version>1.9.13</version> -->
+			 <version>1.9.13</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
-			<!-- <version>1.9.13</version> -->
+			 <version>1.9.13</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<!-- <version>2.4.3</version> -->
+			 <version>2.9.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
+
+		<!-- Via Spring Boot -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-		</dependency>
+
+		<!--<dependency>-->
+			<!--<groupId>org.springframework</groupId>-->
+			<!--<artifactId>spring-orm</artifactId>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.data</groupId>-->
+			<!--<artifactId>spring-data-jpa</artifactId>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
@@ -299,10 +344,10 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.springframework</groupId>-->
+			<!--<artifactId>spring-expression</artifactId>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>javax.el</groupId>
 			<artifactId>javax.el-api</artifactId>
@@ -349,9 +394,20 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework</groupId>-->
+			<!--<artifactId>spring-test</artifactId>-->
+			<!--<scope>test</scope>-->
+		<!--</dependency>-->
+
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
