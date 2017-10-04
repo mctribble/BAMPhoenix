@@ -1,11 +1,10 @@
 package com.bam.bean;
 
-import javax.persistence.*;
-
-
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
 
 
 @Entity
@@ -30,7 +29,11 @@ public class BamUser {
 	@NotEmpty(message = "Last name cannot be empty")
 	private String lName;
 
+<<<<<<< HEAD
 	@Column(name = "Email")
+=======
+	@Column(name = "email")
+>>>>>>> 8901152eb5e8c4b24efc6459aca8c3b433aa4b18
 	@NotEmpty(message = "e-mail address cannot be empty")
 	private String email;
 

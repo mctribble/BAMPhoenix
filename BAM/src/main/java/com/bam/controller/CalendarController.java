@@ -26,7 +26,7 @@ import com.bam.service.SubtopicService;
 import com.bam.service.TopicService;
 
 @RestController
-@RequestMapping(value = "/api/v1/Calendar/")
+@RequestMapping(value = "/rest/api/v1/Calendar/")
 public class CalendarController {
 
   private static final String BATCHID = "batchId";
