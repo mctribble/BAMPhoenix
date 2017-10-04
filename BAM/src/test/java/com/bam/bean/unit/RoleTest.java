@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static com.google.code.beanmatchers.BeanMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 public class RoleTest {
     //PASS: Ensures a bean has a working no-args constructor.
@@ -21,5 +22,13 @@ public class RoleTest {
     @Test
     public void allPropertiesShouldBeRepresentedInToStringOutput() {
         assertThat(Role.class, hasValidBeanToString());
+    }
+
+    @Test
+    public void testParameterizedConstructor()
+    {
+        Role testRole = new Role(1, "test");
+        assertEquals(1, testRole.getRoleId());
+        assertEquals("test", testRole.getUserRole());
     }
 }

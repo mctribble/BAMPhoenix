@@ -2,9 +2,11 @@ package com.bam.bean.unit;
 
 import static com.google.code.beanmatchers.BeanMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 import com.bam.bean.Batch;
 import com.bam.bean.BatchType;
+import com.google.code.beanmatchers.BeanMatchers;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -101,6 +103,67 @@ public class BamUserTest {
         );
 
         testTrainer.setBatch(testBatch);
+    }
+
+    @Test
+    public void testParameterizedConstructors() throws Exception
+    {
+        //params
+        int userId = 2;
+        String fName = "John", mName =  null, lName = "Doe";
+        String email = "JohnDoe@fakemail.com", pwd = "password";
+        int role = 1;
+        Batch batch = new Batch();
+        String phone = "555-5555-5556", phone2 = null, skype = null;
+        String pwd2 = null;
+        Integer AssignForceId = 2;
+
+        //objects
+        BamUser testUser1 = new BamUser(fName, mName, lName, email, pwd, role, batch, phone, phone2, skype, pwd2);
+        BamUser testUser2 = new BamUser(userId, fName, mName, lName, email, pwd, role, batch, phone, phone2, skype, pwd2);
+        BamUser testUser3 = new BamUser(userId, fName, mName, lName, email, pwd, role, batch, phone, phone2, skype, pwd2, AssignForceId);
+
+        //test 1
+        assertEquals(fName,         testUser1.getfName());
+        assertEquals(mName,         testUser1.getmName());
+        assertEquals(lName,         testUser1.getlName());
+        assertEquals(email,         testUser1.getEmail());
+        assertEquals(pwd,           testUser1.getPwd());
+        assertEquals(role,          testUser1.getRole());
+        assertEquals(batch,         testUser1.getBatch());
+        assertEquals(phone,         testUser1.getPhone());
+        assertEquals(phone2,        testUser1.getPhone2());
+        assertEquals(skype,         testUser1.getSkype());
+        assertEquals(pwd2,          testUser1.getPwd2());
+
+        //test 2
+        assertEquals(userId,        testUser2.getUserId());
+        assertEquals(fName,         testUser2.getfName());
+        assertEquals(mName,         testUser2.getmName());
+        assertEquals(lName,         testUser2.getlName());
+        assertEquals(email,         testUser2.getEmail());
+        assertEquals(pwd,           testUser2.getPwd());
+        assertEquals(role,          testUser2.getRole());
+        assertEquals(batch,         testUser2.getBatch());
+        assertEquals(phone,         testUser2.getPhone());
+        assertEquals(phone2,        testUser2.getPhone2());
+        assertEquals(skype,         testUser2.getSkype());
+        assertEquals(pwd2,          testUser2.getPwd2());
+
+        //test 3
+        assertEquals(userId,        testUser3.getUserId());
+        assertEquals(fName,         testUser3.getfName());
+        assertEquals(mName,         testUser3.getmName());
+        assertEquals(lName,         testUser3.getlName());
+        assertEquals(email,         testUser3.getEmail());
+        assertEquals(pwd,           testUser3.getPwd());
+        assertEquals(role,          testUser3.getRole());
+        assertEquals(batch,         testUser3.getBatch());
+        assertEquals(phone,         testUser3.getPhone());
+        assertEquals(phone2,        testUser3.getPhone2());
+        assertEquals(skype,         testUser3.getSkype());
+        assertEquals(pwd2,          testUser3.getPwd2());
+        assertEquals(AssignForceId, testUser3.getAssignForceID());
     }
 }
 
