@@ -171,4 +171,8 @@ public class SubtopicService {
 	  List<Subtopic> list = subtopicRepository.findByStatus(status);
 	  return list;
   }
+  
+  public List<Subtopic> getSubtopicsByBatchId(int batchId){
+	  return subtopicRepository.findByBatch(batchRepository.findById(batchId));
+  }
 }
