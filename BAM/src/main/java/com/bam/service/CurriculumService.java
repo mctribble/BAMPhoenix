@@ -19,8 +19,12 @@ public class CurriculumService {
 		//obfuscate password
 		for(Curriculum element : curriculumList){
 			element.getCurriculumCreator().setPwd("");
+			element.getCurriculumCreator().setPwd2("");
 			if(element.getCurriculumModifier() != null)
+			{
 				element.getCurriculumModifier().setPwd("");
+				element.getCurriculumModifier().setPwd2("");
+			}
 		}
 		return curriculumList;
 	}
@@ -29,8 +33,12 @@ public class CurriculumService {
 		//obfuscate password
 		Curriculum curriculum = curriculumRepository.findById(id);
 		curriculum.getCurriculumCreator().setPwd("");
+		curriculum.getCurriculumCreator().setPwd2("");
 		if(curriculum.getCurriculumModifier() != null)
+		{
 			curriculum.getCurriculumModifier().setPwd("");
+			curriculum.getCurriculumModifier().setPwd2("");
+		}
 		return curriculum;
 	}
 	
@@ -39,6 +47,17 @@ public class CurriculumService {
 	}
 	
 	public List<Curriculum> findAllCurriculumByName(String name){
-		return curriculumRepository.findByCurriculumName(name);
+		List<Curriculum> curriculumList = curriculumRepository.findByCurriculumName(name);
+		//obfuscate password
+		for(Curriculum element : curriculumList){
+			element.getCurriculumCreator().setPwd("");
+			element.getCurriculumCreator().setPwd2("");
+			if(element.getCurriculumModifier() != null)
+			{
+				element.getCurriculumModifier().setPwd("");
+				element.getCurriculumModifier().setPwd2("");
+			}
+		}
+		return curriculumList;
 	}
 }

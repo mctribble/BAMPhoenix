@@ -43,12 +43,17 @@ describe('curriculumController', function () {
     describe('get topic color', function () {
         it ('it should return the topic color', function(){
             var $scope = {};
+            topics = [
+                {
+                    name: "Java"
+                }
+            ];
             var controller = $controller('curriculumController', {$scope: $scope });
-            $scope.setTopicColors($scope.topics);
+            $scope.setTopicColors(topics);
             var color = $scope.getTopicColor("Java");
             
             expect(color).toBe("Hello_World")
-
+// this test will always fail because it gives a random color
         });
 
         
