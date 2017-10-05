@@ -2,6 +2,34 @@ describe('calendarController', function()
 {
     beforeEach(module('bam')); //load the app
 
+    //sample data from BAMPhoenix wiki
+    var testTrainer =
+        {
+            "userId": 3,
+            "fName": "Ryan",
+            "mName": "R",
+            "lName": "Lessley",
+            "email": "rl@revature.com",
+            "pwd": "*****************************",
+            "role": 2,
+            "batch": null,
+            "phone": "1234567890",
+            "phone2": "8675309",
+            "skype": "rl@revature.com",
+            "pwd2": null,
+            "assignForceID": 9
+        };
+    var testBatchType = { id: 1, name: "Java", length: 10 };
+    var testBatch =
+        {
+            "id": 5,
+            "name": "1705-java-batch",
+            "startDate": 1493769600000,
+            "endDate": 1505433600000,
+            "trainer": testTrainer,
+            "type": testBatchType
+        };
+
     //mock data for the SessionService
     var mockSessionCurrent = {};
 
@@ -27,10 +55,7 @@ describe('calendarController', function()
                 {
                     role: 1,
 
-                    batch:
-                        {
-                            id: 1
-                        }
+                    batch: testBatch
                 }
         };
 
