@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bam.bean.Batch;
 import com.bam.bean.Subtopic;
+import com.bam.bean.SubtopicStatus;
 
 @Repository
 public interface SubtopicRepository extends JpaRepository<Subtopic, Integer> {
@@ -38,4 +39,6 @@ public interface SubtopicRepository extends JpaRepository<Subtopic, Integer> {
 	 * @author  Michael Garza, Gary LaMountain
 	 */
 	List<Subtopic> findByBatch(Batch batch, Pageable pageable);
+	
+	List<Subtopic> findByStatus(SubtopicStatus status);
 }

@@ -7,6 +7,10 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+
+
 @Entity
 @Table(name = "USERS")
 @Component
@@ -35,6 +39,7 @@ public class BamUser {
 
 	@Column(name = "Password")
 	@NotEmpty(message="Password cannot be empty")
+	@JsonIgnore
 	private String pwd;
 	
 	@Column(name = "Role") // Role 1 is for associates // Role 2 is for trainers & QC
