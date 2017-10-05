@@ -1,5 +1,7 @@
 package com.bam.bean;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,12 +12,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "USERS")
 @Component
+@ApiModel("User")
 public class BamUser {
 
 	@Id
 	@Column(name = "User_Id")
 	@SequenceGenerator(name = "USERID_SEQ", sequenceName = "USERID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERID_SEQ")
+	@ApiModelProperty(notes = "User ID")
 	private int userId;
 
 	@Column(name = "First_Name")

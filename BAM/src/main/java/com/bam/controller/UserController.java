@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +25,7 @@ import com.bam.service.PasswordGenerator;
 
 @RestController
 @RequestMapping(value = "/rest/api/v1/Users/")
+@Api(value="user catalog", description="user catalog description", tags="user tag")
 public class UserController {
 	
 	private static final String USERID = "userId";
@@ -34,6 +39,11 @@ public class UserController {
 
 	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+	@ApiOperation(value="find all users")
+	@ApiResponses({
+			@ApiResponse(code=200, message="find all user success"),
+			@ApiResponse(code=401, message="find all user fail")
+	})
 	public List<BamUser> getAllUsers() {
 		return userService.findAllUsers();
 	}
