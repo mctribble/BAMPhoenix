@@ -29,11 +29,7 @@ public class BamUser {
 	@NotEmpty(message = "Last name cannot be empty")
 	private String lName;
 
-<<<<<<< HEAD
-	@Column(name = "Email")
-=======
 	@Column(name = "email")
->>>>>>> 8901152eb5e8c4b24efc6459aca8c3b433aa4b18
 	@NotEmpty(message = "e-mail address cannot be empty")
 	private String email;
 
