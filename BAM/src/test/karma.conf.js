@@ -1,19 +1,24 @@
 // Karma configuration
 // Generated on Tue Aug 15 2017 13:40:17 GMT-0400 (Eastern Daylight Time)
 
+//some sources claim we need this line, but others claim we dont
+//it works fine without it, though, so probably safest not to uncomment this
+//process.env.PHANTOMJS_BIN = './node_modules/.bin/phantomjs';
+
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
-
+    // this means all paths will be relative to the BAM folder, instead of the test folder where this config resides
+    basePath: '../../',
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
 
-
     // list of files / patterns to load in the browser
+    // this should include all files that need to be tested
+    // and any of their dependencies
     files: [
     	'node_modules/angular/angular.js',
         'https://code.jquery.com/jquery-1.11.2.min.js',
@@ -24,15 +29,16 @@ module.exports = function(config) {
     	'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
     	'node_modules/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js',
     	'node_modules/angulartics-google-analytics/lib/angulartics-ga.js',
-    	'../../src/main/webapp/static/js/app.js',
-    	'../../src/main/webapp/static/js/service.js',
-    	'../../src/main/webapp/static/controller/*.js',
-    	'tests/js/*Test.js'
+    	'src/main/webapp/static/js/app.js',
+    	'src/main/webapp/static/js/service.js',
+    	'src/main/webapp/static/controller/*.js',
+    	'src/test/tests/js/*Test.js'
     ],
 
 
     // list of files to exclude
     exclude: [
+      'src/test/karma.conf*.js' //dont include the config files themselves
     ],
 
 
@@ -49,6 +55,7 @@ module.exports = function(config) {
 
 
     // web server port
+    // this is the port karma uses for testing, NOT the port the application normally runs on
     port: 9876,
 
 
@@ -67,8 +74,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
-
+    browsers: ['Chrome', 'ChromeHeadless'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
