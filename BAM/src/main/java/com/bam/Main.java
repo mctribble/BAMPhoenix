@@ -6,8 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
 
 @SpringBootApplication
+@EnableOAuth2Sso
 public class Main {
 
     @Autowired
@@ -15,17 +24,7 @@ public class Main {
 
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
+
     }
 
-    public CommandLineRunner run() {
-        return args -> {
-            try {
-                BamUser u = bus.findUserById(1);
-                System.out.println(u.getEmail());
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-        };
-    }
 }
