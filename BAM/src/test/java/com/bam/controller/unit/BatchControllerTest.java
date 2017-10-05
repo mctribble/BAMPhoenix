@@ -9,9 +9,11 @@ import com.bam.service.BatchService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -29,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.Mockito.*;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 public class BatchControllerTest {
     @Mock
     private BatchService batchService;
@@ -118,34 +121,34 @@ public class BatchControllerTest {
 
     @Test
     public void getAllBatchesTest() throws Exception {
-        MvcResult result = mockMvc.perform(get("/api/v1/Batches/All"))
-                .andExpect(status().isOk()).andExpect(content().contentType("application/json")).andReturn();
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/All"))
+                .andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
 
     @Test
     public void getPastBatchesTest() throws Exception {
-        MvcResult result = mockMvc.perform(get("/api/v1/Batches/Past")
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/Past")
                 .param("email", "jc@revature.com")).andExpect(status().isOk())
-                .andExpect(content().contentType("application/json")).andReturn();
+                .andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
 
     @Test
     public void getFutureBatchesTest() throws Exception {
-        MvcResult result = mockMvc.perform(get("/api/v1/Batches/Future")
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/Future")
                 .param("email", "jc@revature.com")).andExpect(status().isOk())
-                .andExpect(content().contentType("application/json")).andReturn();
+                .andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
 
     @Test
     public void getBatchInProgressTest() throws Exception {
-        MvcResult result = mockMvc.perform(get("/api/v1/Batches/InProgress")
-                .param("email", "jc@revature.com").contentType("application/json"))
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/InProgress")
+                .param("email", "jc@revature.com").contentType("application/json;charset=utf8"))
                 .andExpect(status().isOk()).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
@@ -153,37 +156,37 @@ public class BatchControllerTest {
 
     @Test
     public void getAllBatchesInProgressTest() throws Exception {
-        MvcResult result = mockMvc.perform(get("/api/v1/Batches/AllInProgress")
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/AllInProgress")
                 .param("email", "jc@revature.com")).andExpect(status().isOk())
-                .andExpect(content().contentType("application/json")).andReturn();
+                .andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
 
     @Test
     public void getBatchByIdTest() throws Exception {
-        MvcResult result = mockMvc.perform(get("/api/v1/Batches/ById").param("batchId", "1")
-                .contentType("application/json")).andExpect(status().isOk()).andReturn();
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/ById").param("batchId", "1")
+                .contentType("application/json;charset=utf8")).andExpect(status().isOk()).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
 
     @Test
     public void updateUser() throws Exception {
-        mockMvc.perform(post("/api/v1/Batches/Edit").content(asJsonString(new BamUser()))
-                .contentType("application/json")).andExpect(status().isOk());
+        mockMvc.perform(post("/rest/api/v1/Batches/Edit").content(asJsonString(new BamUser()))
+                .contentType("application/json;charset=utf8")).andExpect(status().isOk());
     }
 
     @Test
     public void updateBatchTest() throws Exception {
-        mockMvc.perform(post("/api/v1/Batches/UpdateBatch").content(asJsonString(new Batch()))
-                .contentType("application/json")).andExpect(status().isOk());
+        mockMvc.perform(post("/rest/api/v1/Batches/UpdateBatch").content(asJsonString(new Batch()))
+                .contentType("application/json;charset=utf8")).andExpect(status().isOk());
     }
 
     @Test
     public void getAllBatchTypesTest() throws Exception {
-        MvcResult result = mockMvc.perform(get("/api/v1/Batches/BatchTypes")).andExpect(status().isOk())
-                .andExpect(content().contentType("application/json")).andReturn();
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/BatchTypes")).andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
