@@ -48,10 +48,10 @@ public class SubtopicAddControllerTest {
 
     @Test
     public void addSubtopicTest() throws Exception {
-        mockMvc.perform(post("/api/v1/Subtopic/addSubtopic")
+        mockMvc.perform(post("/rest/api/v1/Subtopic/addSubtopic")
                 .content(asJsonString(new Subtopic(1, new SubtopicName(), new Batch(),
                         new SubtopicStatus(), timestamp)))
-        .contentType("application/json")).andExpect(status().isOk());
+        .contentType("application/json;charset=UTF-8")).andExpect(status().isOk());
     }
 
     public static String asJsonString(final Object obj) {

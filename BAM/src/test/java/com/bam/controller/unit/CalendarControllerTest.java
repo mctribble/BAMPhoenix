@@ -89,9 +89,9 @@ public class CalendarControllerTest {
 	@Test
 	public void getSubtopicsByBatchTest() throws Exception {
 		when(subtopicService.getSubtopicByBatchId(1)).thenReturn(testList);
-		MvcResult result = mockMvc.perform(get("/api/v1/Calendar/Subtopics")
+		MvcResult result = mockMvc.perform(get("/rest/api/v1/Calendar/Subtopics")
 				.param("batchId","1")).andExpect(status().isOk())
-				.andExpect(content().contentType("application/json")).andReturn();
+				.andExpect(content().contentType("application/json;charset=UTF-8")).andReturn();
 		String content = result.getResponse().getContentAsString();
 		System.out.println(content);
 	}
@@ -118,9 +118,9 @@ public class CalendarControllerTest {
 	@Test
 	public void getTopicsByBatchPagTest() throws Exception {
 		when(testTopicService.getTopicByBatchId(1)).thenReturn(testWeekList);
-		MvcResult result = mockMvc.perform(get("/api/v1/Calendar/Topics")
+		MvcResult result = mockMvc.perform(get("/rest/api/v1/Calendar/Topics")
 				.param("batchId","1")).andExpect(status().isOk())
-				.andExpect(content().contentType("application/json")).andReturn();
+				.andExpect(content().contentType("application/json;charset=UTF-8")).andReturn();
 		String content = result.getResponse().getContentAsString();
 		System.out.println(content);
 	}
@@ -129,20 +129,20 @@ public class CalendarControllerTest {
 	public void changeTopicDateTest() throws Exception {
 		when(subtopicService.getSubtopicByBatchId(1)).thenReturn(testList);
 		doNothing().when(subtopicService).updateSubtopic(testSubtopic1);
-		mockMvc.perform(get("/api/v1/Calendar/DateUpdate")
+		mockMvc.perform(get("/rest/api/v1/Calendar/DateUpdate")
 				.param("subtopicId","1").param("batchId", "1")
 				.param("date", "2000")
-				.contentType("application/json")).andExpect(status().isOk());
+				.contentType("application/json;charset=UTF-8")).andExpect(status().isOk());
 	}
 
 	@Test
 	public void updateTopicStatusTest() throws Exception {
 		when(subtopicService.getSubtopicByBatchId(1)).thenReturn(testList);
 		when(subtopicService.getStatus("Pending")).thenReturn(testSubtopicStatus);
-		mockMvc.perform(get("/api/v1/Calendar/StatusUpdate")
+		mockMvc.perform(get("/rest/api/v1/Calendar/StatusUpdate")
 				.param("subtopicId","1").param("batchId", "1")
 				.param("status", "Pending")
-				.contentType("application/json")).andExpect(status().isOk());
+				.contentType("application/json;charset=UTF-8")).andExpect(status().isOk());
 	}
 
 //	@Test

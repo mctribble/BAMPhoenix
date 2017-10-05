@@ -29,31 +29,31 @@ public class TopicControllerTest {
 
     @Test
     public void addTopicNameTest() throws Exception {
-        mockMvc.perform(post("/api/v1/Topic/Add").param("name", "test"))
+        mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", "test"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void addTopicNameBreakTest() throws Exception {
-        mockMvc.perform(post("/api/v1/Topic/Add").param("name", ""))
+        mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", ""))
                 .andExpect(status().is4xxClientError());
     }
 
     @Test
     public void addTopicNameBreakTest2() throws Exception {
-        mockMvc.perform(post("/api/v1/Topic/Add").param("name", "5"))
+        mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", "5"))
                 .andExpect(status().is4xxClientError());
     }
 
     @Test
     public void addTopicNameBreakTest3() throws Exception {
-        mockMvc.perform(post("/api/v1/Topic/Add").param("name", "            "))
+        mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", "            "))
                 .andExpect(status().is4xxClientError());
     }
 
     @Test
     public void addTopicNameBreakTest4() throws Exception {
-        mockMvc.perform(post("/api/v1/Topic/Add").param("name", ":^"))
+        mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", ":^"))
                 .andExpect(status().is4xxClientError());
     }
 
