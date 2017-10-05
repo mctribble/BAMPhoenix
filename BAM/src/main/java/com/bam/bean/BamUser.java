@@ -1,11 +1,10 @@
 package com.bam.bean;
 
-import javax.persistence.*;
-
-
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
 
 
 @Entity
@@ -30,7 +29,7 @@ public class BamUser {
 	@NotEmpty(message = "Last name cannot be empty")
 	private String lName;
 
-	@Column(name = "eMail")
+	@Column(name = "email")
 	@NotEmpty(message = "e-mail address cannot be empty")
 	private String email;
 
@@ -62,7 +61,7 @@ public class BamUser {
 									// used when
 	private String pwd2; // the user needs to reset their password.
 
-	@Column(name="AssignForce_ID")
+	@Column(name="Assignforce_ID")
 	private Integer assignForceID;
 	
 	

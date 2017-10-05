@@ -64,6 +64,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Ignore certain URLs.
 		web.ignoring().antMatchers("/index.html", "/static/**", "/");
 	 }
+	 
+	 
 
 
 	/***
@@ -84,32 +86,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	 protected void configure(HttpSecurity http) throws Exception {
 	  http
-	   .headers().disable()
-	   .csrf().disable()
-//	   .exceptionHandling()
-//	   .authenticationEntryPoint(authenticationEntryPoint)
-//	   .and()
+	   .headers().disable().csrf().disable().exceptionHandling()
+	 //.authenticationEntryPoint(authenticationEntryPoint)
+	   .and()
 	   .authorizeRequests()
 	    .antMatchers("/rest/api/v1/Users/Register").permitAll()
-//	    .antMatchers("**rest*/**").authenticated()
-//	    .antMatchers("*rest*/**").authenticated()
-//	    .antMatchers("**/*rest*/**").authenticated()
-//	    .antMatchers("**rest*/**").authenticated()
+	    .antMatchers("**rest*/**").authenticated()
+	    .antMatchers("*rest*/**").authenticated()
+	    .antMatchers("**/*rest*/**").authenticated()
+	    .antMatchers("**rest*/**").authenticated()
 	    .anyRequest().authenticated()
-//	    .antMatchers("/rest/api/v1/Curriculum/**").hasAuthority("Trainer")
+	    .antMatchers("/rest/api/v1/Curriculum/**").hasAuthority("Trainer")
 	    .and()
 	    .formLogin()
 	   	.loginPage("/")
-	    .loginProcessingUrl("/authenticate")
+	   	.loginProcessingUrl("/authenticate")
 	    .successHandler(restAuthenticationSuccessHandler)
 	    .failureHandler(restAuthenticationFailureHandler)
 	    .usernameParameter("username")
 	    .passwordParameter("password")
-	    .permitAll()
+	   // .permitAll()
 	    .and()
 	    .logout()
 	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 	    .logoutSuccessUrl("/logout").deleteCookies("JSESSIONID")
-	    .invalidateHttpSession(true);		
+	    .invalidateHttpSession(true);	
+	   	
 	 }
 }
