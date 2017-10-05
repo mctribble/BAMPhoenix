@@ -1,7 +1,6 @@
-
-beforeEach(angular.mock.module('bam'));
 describe('curriculumController', function () {
-    
+    beforeEach(angular.mock.module('bam'));
+
     var $controller;
     
     beforeEach(angular.mock.inject(function(_$controller_){
