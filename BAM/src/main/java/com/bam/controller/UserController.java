@@ -20,7 +20,7 @@ import com.bam.service.BatchService;
 import com.bam.service.PasswordGenerator;
 
 @RestController
-@RequestMapping(value = "/api/v1/Users/")
+@RequestMapping(value = "/rest/api/v1/Users/")
 public class UserController {
 	
 	private static final String USERID = "userId";

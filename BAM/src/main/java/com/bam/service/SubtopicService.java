@@ -177,17 +177,6 @@ public class SubtopicService {
 	  return subtopicRepository.findByBatch(batchRepository.findById(batchId));
   }
   
-  public List<Subtopic> getSubtopicsByBatchAndStatusId(int batchId, int statusId){
-	  
-	 List<Subtopic> bList = getSubtopicsByBatchId(batchId);
-	 
-	 List<Subtopic> result = bList.stream()
-			 .filter(subtopic -> subtopic.getStatus().getId() == statusId)
-			 .collect(Collectors.toList());
-	  
-	 return result;
-  }
-  
   public List<Subtopic> getSubtopicsByBatchAndStatus(int batchId, String status){
 	  
 	 List<Subtopic> bList = getSubtopicsByBatchId(batchId);

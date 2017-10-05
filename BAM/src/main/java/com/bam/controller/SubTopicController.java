@@ -9,16 +9,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.bam.bean.SubtopicName;
 import com.bam.bean.SubtopicType;
 import com.bam.bean.TopicName;
 import com.bam.service.SubtopicService;
 import com.bam.service.TopicService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/Subtopic/")
+@RequestMapping(value = "/rest/api/v1/Subtopic/")
 public class SubTopicController {
   @Autowired
   TopicService topicService;
@@ -68,12 +75,6 @@ public class SubTopicController {
   @ResponseBody
   public List<Subtopic> getAllSubtopicsByStatus(HttpServletRequest request){
 	  return subTopicService.getSubtopicsByBatchId(Integer.parseInt(request.getParameter("batchId")));
-  }
-  
-  @RequestMapping(value = "ByBatchStatus", method = RequestMethod.GET, produces = "application/json")
-  @ResponseBody
-  public List<Subtopic> getAllSubtopicsByBatchAndStatus(HttpServletRequest request){
-	  return subTopicService.getSubtopicsByBatchAndStatusId(Integer.parseInt(request.getParameter("batchId")), Integer.parseInt(request.getParameter("statusId")));
   }
   
   @RequestMapping(value = "ByBatchCompleted", method = RequestMethod.GET, produces = "application/json")
