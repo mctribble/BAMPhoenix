@@ -1,12 +1,15 @@
 
-beforeEach(angular.mock.module('bam'));
+beforeEach(module('bam'));
 describe('curriculumController', function () {
     
     var $controller;
     
     beforeEach(angular.mock.inject(function(_$controller_){
       $controller = _$controller_;
+      spyOn(window, 'confirm').and.returnValue(true);
     }));
+
+    
 
     describe('sanitizeString', function () {
         it ('it should replace spaces with underscores in the string', function(){
@@ -56,11 +59,33 @@ describe('curriculumController', function () {
 // this test will always fail because it gives a random color
         });
 
-        
-
-
     })
 
+        describe('add a week', function () {
+            it ('checks if the curriculumNumber is updated', function(){
+                var $scope = {};
+                var controller = $controller('curriculumController', {$scope: $scope });
+                $scope.displayedCurriculum.meta.curriculumNumberOfWeeks = 0;
+                $scope.addWeek();
+                
+                expect($scope.displayedCurriculum.meta.curriculumNumberOfWeeks).toBe(1);
+            });   
+        })
 
 
-})
+
+        
+        
+
+        describe('delete a week', function () {
+            it ('checks if the curriculumNumber is updated', function(){
+                var $scope = {};
+                var controller = $controller('curriculumController', {$scope: $scope});
+                $scope.displayedCurriculum.meta.curriculumNumberOfWeeks = 1;
+                
+                $scope.deleteWeek(1);
+                
+                expect($scope.displayedCurriculum.meta.curriculumNumberOfWeeks).toBe(1);
+            });   
+        })
+});
