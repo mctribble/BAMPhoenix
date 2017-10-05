@@ -15,3 +15,18 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.Oracle10gDialect
 
+security:
+  oauth2:
+    client:
+      clientId: ${CLIENT_ID}
+      clientSecret: ${CLIENT_SECRET}
+      accessTokenUri: ${ACCESS_TOKEN_URI}
+      userAuthorizationUri: ${USER_AUTH_URI}
+      tokenName: authorization_code
+      authenticationScheme: form
+      clientAuthenticationScheme: header
+      grantType: authorization_code
+      useCurrentUri: false
+    resource:
+      userInfoUri: ${USER_INFO_URI}
+
