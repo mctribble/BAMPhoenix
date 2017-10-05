@@ -69,8 +69,8 @@ public class UserControllerTest {
     @Test
     public void getAllUsersTest() throws Exception {
         when(mockBamUserService.findAllUsers()).thenReturn(testList);
-        MvcResult result = mockMvc.perform(get("/api/v1/Users/All"))
-                .andExpect(status().isOk()).andExpect(content().contentType("application/json")).andReturn();
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Users/All"))
+                .andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
@@ -78,8 +78,8 @@ public class UserControllerTest {
     @Test
     public void getAllTrainersTest() throws Exception {
         when(mockBamUserService.findByRole(2)).thenReturn(testTrainerList);
-        MvcResult result = mockMvc.perform(get("/api/v1/Users/AllTrainers"))
-                .andExpect(status().isOk()).andExpect(content().contentType("application/json")).andReturn();
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Users/AllTrainers"))
+                .andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
@@ -87,8 +87,8 @@ public class UserControllerTest {
     @Test
     public void getAllAssociatesTest() throws Exception {
         when(mockBamUserService.findByRole(1)).thenReturn(testAssociateList);
-        MvcResult result = mockMvc.perform(get("/api/v1/Users/AllAssociates"))
-                .andExpect(status().isOk()).andExpect(content().contentType("application/json")).andReturn();
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Users/AllAssociates"))
+                .andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
@@ -96,8 +96,8 @@ public class UserControllerTest {
     @Test
     public void getUsersInBatchTest() throws Exception {
         when(mockBamUserService.findUsersInBatch(10)).thenReturn(testAssociateList);
-        MvcResult result = mockMvc.perform(get("/api/v1/Users/InBatch").param("batchId", "10"))
-                .andExpect(status().isOk()).andExpect(content().contentType("application/json")).andReturn();
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Users/InBatch").param("batchId", "10"))
+                .andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
@@ -107,8 +107,8 @@ public class UserControllerTest {
         when(mockBamUserService.findUserById(1)).thenReturn(testUser1);
         doNothing().when(mockBamUserService).addOrUpdateUser(testUser1);
         when(mockBamUserService.findUsersInBatch(1)).thenReturn(testList);
-        MvcResult result = mockMvc.perform(post("/api/v1/Users/Drop").param("userId", "1"))
-                .andExpect(status().isOk()).andExpect(content().contentType("application/json")).andReturn();
+        MvcResult result = mockMvc.perform(post("/rest/api/v1/Users/Drop").param("userId", "1"))
+                .andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
@@ -117,24 +117,24 @@ public class UserControllerTest {
     public void updateUserTest() throws Exception {
         when(mockBamUserService.findUserByEmail("test1@email.com")).thenReturn(testUser1);
         doNothing().when(mockBamUserService).addOrUpdateUser(testUser1);
-        mockMvc.perform(post("/api/v1/Users/Update").content(asJsonString(testUser1))
-                .contentType("application/json")).andExpect(status().isOk());
+        mockMvc.perform(post("/rest/api/v1/Users/Update").content(asJsonString(testUser1))
+                .contentType("application/json;charset=utf8")).andExpect(status().isOk());
     }
 
 //    @Test
 //    public void addUserTest() throws Exception {
 //        when(mockBamUserService.findUserById(1)).thenReturn(testUser1);
 //        doNothing().when(mockBamUserService).addOrUpdateUser(testUser1);
-//        mockMvc.perform(post("/api/v1/Users/Register").content(asJsonString(testUser1))
-//                .contentType("application/json")).andExpect(status().isOk());
+//        mockMvc.perform(post("/rest/api/v1/Users/Register").content(asJsonString(testUser1))
+//                .contentType("application/json;charset=utf8")).andExpect(status().isOk());
 //    }
 
 //    @Test
 //    public void resetPasswordTest() throws Exception {
 //    when(mockBamUserService.findUserByEmail("test1@email.com")).thenReturn(null);
 //    when(mockBamUserService.findUserByEmail("test1@email.com")).thenReturn(testUser1);
-//        mockMvc.perform(post("/api/v1/Users/Register").content(asJsonString(testUser1))
-//                .contentType("application/json")).andExpect(status().isOk());
+//        mockMvc.perform(post("/rest/api/v1/Users/Register").content(asJsonString(testUser1))
+//                .contentType("application/json;charset=utf8")).andExpect(status().isOk());
 //    }
 
     @Test
@@ -142,8 +142,8 @@ public class UserControllerTest {
         when(mockBamUserService.findUserById(1)).thenReturn(testUser1);
         doNothing().when(mockBamUserService).addOrUpdateUser(testUser1);
         when(mockBamUserService.findUsersInBatch(1)).thenReturn(testList);
-        MvcResult result = mockMvc.perform(post("/api/v1/Users/Remove").param("userId", "1"))
-                .andExpect(status().isOk()).andExpect(content().contentType("application/json")).andReturn();
+        MvcResult result = mockMvc.perform(post("/rest/api/v1/Users/Remove").param("userId", "1"))
+                .andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
@@ -154,9 +154,9 @@ public class UserControllerTest {
         when(mockBatchService.getBatchById(1)).thenReturn(testBatch);
         doNothing().when(mockBamUserService).addOrUpdateUser(testUser4);
         when(mockBamUserService.findUsersNotInBatch()).thenReturn(testList);
-        MvcResult result = mockMvc.perform(post("/api/v1/Users/Remove").param("userId", "4")
+        MvcResult result = mockMvc.perform(post("/rest/api/v1/Users/Remove").param("userId", "4")
                 .param("batchId", "1")).andExpect(status().isOk())
-                .andExpect(content().contentType("application/json")).andReturn();
+                .andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }
@@ -164,8 +164,8 @@ public class UserControllerTest {
     @Test
     public void getUsersNotInBatchTest() throws Exception {
         when(mockBamUserService.findUsersNotInBatch()).thenReturn(testList);
-        MvcResult result = mockMvc.perform(get("/api/v1/Users/NotInABatch")).andExpect(status().isOk())
-                .andExpect(content().contentType("application/json")).andReturn();
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Users/NotInABatch")).andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
     }

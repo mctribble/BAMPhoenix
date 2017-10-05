@@ -39,21 +39,21 @@ public class SubTopicControllerTest {
 
     @Test
     public void addSubtopicNameTest() throws Exception {
-        mockMvc.perform(post("/api/v1/Subtopic/Add").param("typeId", "1")
+        mockMvc.perform(post("/rest/api/v1/Subtopic/Add").param("typeId", "1")
                 .param("topicId", "1").param("subtopicName", ""))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void addSubtopicNameBreakTest() throws Exception{
-        mockMvc.perform(post("/api/v1/Subtopic/Add").param("typeId", "e")
+        mockMvc.perform(post("/rest/api/v1/Subtopic/Add").param("typeId", "e")
                 .param("topicId", "1").param("subtopicName", ""))
                 .andExpect(status().is4xxClientError());
     }
 
     @Test
     public void addSubtopicNameBreakTest2() throws Exception{
-        mockMvc.perform(post("/api/v1/Subtopic/Add").param("typeId", "1")
+        mockMvc.perform(post("/rest/api/v1/Subtopic/Add").param("typeId", "1")
                 .param("topicId", "e").param("subtopicName", ""))
                 .andExpect(status().is4xxClientError());
     }
