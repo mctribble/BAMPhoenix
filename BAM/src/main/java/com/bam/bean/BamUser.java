@@ -4,6 +4,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 
@@ -35,6 +37,7 @@ public class BamUser {
 
 	@Column(name = "Password")
 	@NotEmpty(message="Password cannot be empty")
+	@JsonIgnore
 	private String pwd;
 	
 	@Column(name = "Role") // Role 1 is for associates // Role 2 is for trainers & QC
