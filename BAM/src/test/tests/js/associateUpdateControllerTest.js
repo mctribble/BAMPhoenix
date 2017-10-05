@@ -1,5 +1,5 @@
-beforeEach(module('bam'));
 describe('associateUpdateControllerTest', function() {
+    beforeEach(module('bam'));
     var $controller;
 
     beforeEach(inject(function(_$controller_) {

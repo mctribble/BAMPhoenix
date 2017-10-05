@@ -1,7 +1,9 @@
 
-beforeEach(module('bam'));
+
+
 describe('curriculumController', function () {
-    
+    beforeEach(module('bam'));
+    beforeEach(angular.mock.module('bam'));
     var $controller;
     
     beforeEach(angular.mock.inject(function(_$controller_){
@@ -71,10 +73,6 @@ describe('curriculumController', function () {
                 expect($scope.displayedCurriculum.meta.curriculumNumberOfWeeks).toBe(1);
             });   
         })
-
-
-
-        
         
 
         describe('delete a week', function () {
@@ -85,7 +83,11 @@ describe('curriculumController', function () {
                 
                 $scope.deleteWeek(1);
                 
-                expect($scope.displayedCurriculum.meta.curriculumNumberOfWeeks).toBe(1);
+                expect($scope.displayedCurriculum.meta.curriculumNumberOfWeeks).toBe(0);
             });   
         })
+
+
+
+
 });
