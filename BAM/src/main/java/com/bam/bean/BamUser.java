@@ -64,12 +64,7 @@ public class BamUser {
 							// trainers and admins. A trainer is assigned in the
 							// Batches table.
 	@Column(name = "Main_Phone")
-<<<<<<< HEAD
 //	@NotEmpty(message = "Primary phone cannot be empty")
-=======
-	@NotEmpty(message = "Primary phone cannot be empty")
-	@ApiModelProperty(notes = "Primary phone number.")
->>>>>>> c7baa48ba4906bbb4d04f163a756d3d0c8b17088
 	private String phone;
 
 	@Column(name = "Second_Phone")

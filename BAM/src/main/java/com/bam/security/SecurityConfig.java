@@ -62,9 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 @Override
 	 public void configure(WebSecurity web) throws Exception {
 		// Ignore certain URLs.
-<<<<<<< HEAD
-		web.ignoring().antMatchers("/index.html", "/static/js/**", "/static/css/**");
-=======
 		web.ignoring().antMatchers(
 				"/v2/api-docs",
 				"/configuration/ui",
@@ -74,9 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/swagger-resources/configuration/security",
 				"/swagger-ui.html",
 				"/webjars/**",
-				"/index.html", "/static/**", "/");
->>>>>>> c7baa48ba4906bbb4d04f163a756d3d0c8b17088
-	 }
+				"/index.html", "/static/**","/static/js/**", "/static/css/**", "/");
+}
 
 	/***
 	 * @author Nam Mai
@@ -107,27 +103,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    .anyRequest().authenticated()
 	    .antMatchers("/rest/api/v1/Curriculum/**").hasAuthority("Trainer")
 	    .and()
-<<<<<<< HEAD
-=======
-	    .formLogin()
-	   	.loginPage("/")
-	   	.loginProcessingUrl("/authenticate")
-	    .successHandler(restAuthenticationSuccessHandler)
-	    .failureHandler(restAuthenticationFailureHandler)
-	    .usernameParameter("username")
-	    .passwordParameter("password")
-//	    .permitAll()
-	    .and()
->>>>>>> c7baa48ba4906bbb4d04f163a756d3d0c8b17088
 	    .logout()
 	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 	    .logoutSuccessUrl("/logout").deleteCookies("JSESSIONID")
 	    .invalidateHttpSession(true);
-
-<<<<<<< HEAD
-=======
-	   	
->>>>>>> c7baa48ba4906bbb4d04f163a756d3d0c8b17088
 	 }
 }
 
