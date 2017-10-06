@@ -87,8 +87,9 @@ public class SubtopicService {
    * @author Samuel Louis-Pierre, Avant Mathur
    */
   public void updateSubtopic(Subtopic subtopic) {
-    Long newDate = subtopic.getSubtopicDate().getTime() + 46800000;
-    subtopic.setSubtopicDate(new Timestamp(newDate));
+    //Removed code that caused the date of events to change
+    //with every click on the calender
+    // By Matthew Hill
 
     subtopicRepository.save(subtopic);
   }
