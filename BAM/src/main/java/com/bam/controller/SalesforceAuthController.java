@@ -2,42 +2,33 @@ package com.bam.controller;
 
 import com.bam.bean.BamUser;
 import com.bam.bean.Force;
+import com.bam.service.BamUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(value = "/rest/api/v1/Salesforce/")
 public class SalesforceAuthController {
 
     @Autowired
     private Force force;
 
     @Autowired
-    private OAuth2RestTemplate restTemplate;
+    private BamUserService bamUserService;
 
-    @RequestMapping(path="/test")
-    public ResponseEntity<String> test(OAuth2Authentication principal) {
-//        String token = restTemplate.getAccessToken().toString();
-//        Authentication auth = principal.getUserAuthentication();
-
-        return ResponseEntity.ok(principal.toString());
-    }
-
-    @RequestMapping(path="/userget", method = RequestMethod.GET)
-    public ResponseEntity<String> accounts(OAuth2Authentication principal) {
-        System.out.println("Called userget");
-        BamUser bu = null;
-        try {
-            bu = force.getCurrentBamUser(principal);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("bu=" + bu);
-        return ResponseEntity.ok(bu == null ? "null" : bu.toString());
+    /**
+     * Gets the user's Salesforce information and populates the Bam database with that information.
+     * @param principal
+     * @return The BamUser object.
+     */
+    @RequestMapping(value="salesforceSync", method=RequestMethod.GET)
+    public ResponseEntity<BamUser> salesforceSync(OAuth2Authentication principal) {
+        BamUser bamUser = force.getCurrentBamUser(principal);
+        bamUserService.addOrUpdateUser(bamUser);
+        return ResponseEntity.ok(bamUser);
     }
 }

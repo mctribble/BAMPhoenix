@@ -14,7 +14,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 	
 	$scope.initPage = function() {
 		$http({
-			url: 'rest/api/v1/Users/FixedUser',
+			url: 'rest/api/v1/Salesforce/salesforceSync',//Users/FixedUser',
 			method: 'GET'
 		}).then(function(response) {
 			SessionService.set("currentUser", response.data);
