@@ -5,19 +5,19 @@ describe('calendarController', function()
     //sample data from BAMPhoenix wiki
     var testTrainer =
         {
-            "userId": 3,
-            "fName": "Ryan",
-            "mName": "R",
-            "lName": "Lessley",
-            "email": "rl@revature.com",
-            "pwd": "*****************************",
-            "role": 2,
-            "batch": null,
-            "phone": "1234567890",
-            "phone2": "8675309",
-            "skype": "rl@revature.com",
-            "pwd2": null,
-            "assignForceID": 9
+            userId: 3,
+            fName: "Ryan",
+            mName: "R",
+            lName: "Lessley",
+            email: "rl@revature.com",
+            pwd: "*****************************",
+            role: 2,
+            batch: null,
+            phone: "1234567890",
+            phone2: "8675309",
+            skype: "rl@revature.com",
+            pwd2: null,
+            assignForceID: 9
         };
     var testBatchType = { id: 1, name: "Java", length: 10 };
     var testBatchCompleted =
@@ -87,14 +87,15 @@ describe('calendarController', function()
     beforeEach(angular.mock.module({
         'SessionService' :
             {
+                //these treat objects as arrays, which allow
                 set : function(key, value) {
-                    eval("mockSessionCurrent." + key + " = " + value);
+                    mockSessionCurrent[key] = value;
                 },
                 get : function(key) {
-                    return eval("mockSessionCurrent." + key);
+                    return mockSessionCurrent[key];
                 },
                 unset : function(key) {
-                    eval("delete mockSessionCurrent." + key);
+                    delete mockSessionCurrent[key];
                 }
             },
 
@@ -126,7 +127,7 @@ describe('calendarController', function()
     }));
 
     //variables used in multiple tests
-    var $scope, $rootScope, controller;
+    var $scope, $rootScope, controller, uiCalendarConfig;
 
     //perform tests
     describe("test:", function()
@@ -141,6 +142,7 @@ describe('calendarController', function()
             //reset these objects
             $scope = {};
             $rootScope = {};
+            uiCalendarConfig = { calendars : {myCalendar : {fullCalendar : function(){}}}}; //force this function to exist so we can stub it
         });
 
         //clean up jasmine-ajax
@@ -152,7 +154,7 @@ describe('calendarController', function()
         //helper to instantiate in the same manner for every test
         var instantiateController = function()
         {
-            controller = $controller('calendarController', {$scope:$scope, $rootScope:$rootScope});
+            controller = $controller('calendarController', {$scope:$scope, $rootScope:$rootScope, uiCalendarConfig:uiCalendarConfig});
         };
 
         describe("trainer", function()
@@ -160,7 +162,7 @@ describe('calendarController', function()
             //do this for every trainer test
             beforeEach(function()
             {
-                mockSessionCurrent = mockSessionTrainer;
+                mockSessionCurrent = Object.create(mockSessionTrainer);
             });
 
             it ("should not be redirected", function()
@@ -172,12 +174,47 @@ describe('calendarController', function()
                 instantiateController();
             });
 
-            it ("should store the correct id in $rootScope", function()
+            it ("should store the correct id in $rootScope and unset currentBatch", function()
             {
                instantiateController();
 
                expect($rootScope.changedBatchId).toBe(testBatchOngoing.id);
+               expect(!mockSessionCurrent.currentBatch);
             });
+
+            it ("with a batch that starts in the future should store the correct id in $rootScope and leave a copy of the batch in the session and unset currentBatch", function()
+            {
+               mockSessionCurrent.currentBatch = Object.create(testBatchFuture);
+
+               instantiateController();
+
+               expect($rootScope.changedBatchId).toBe(testBatchFuture.id);
+               expect(mockSessionCurrent.futureBatch.id).toBe(testBatchFuture.id);
+               expect(!mockSessionCurrent.currentBatch);
+            });
+
+            it ("changeDateKeyPress should call changeDate", function()
+            {
+               instantiateController();
+
+               spyOn($scope, 'changeDate');
+               $scope.changeDateKeyPress({which : 13});
+               expect($scope.changeDate).toHaveBeenCalled();
+            });
+
+            it ("changeDate should change the date and reset the search box", function ()
+            {
+                instantiateController();
+
+                var searchDate    = new Date(2015, 10, 5);
+                var today         = new Date();
+                $scope.searchDate = new Date(2015, 10, 5);
+
+                spyOn(uiCalendarConfig.calendars["myCalendar"], "fullCalendar");
+                $scope.changeDate();
+                expect(uiCalendarConfig.calendars["myCalendar"].fullCalendar).toHaveBeenCalledWith('gotoDate', searchDate);
+                expect($scope.searchDate).toEqual(today);
+            })
         });
 
         describe("associate", function()
