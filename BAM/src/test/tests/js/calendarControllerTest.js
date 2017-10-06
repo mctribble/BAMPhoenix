@@ -127,7 +127,7 @@ describe('calendarController', function()
     }));
 
     //variables used in multiple tests
-    var $scope, $rootScope, controller;
+    var $scope, $rootScope, controller, uiCalendarConfig;
 
     //perform tests
     describe("test:", function()
@@ -142,6 +142,7 @@ describe('calendarController', function()
             //reset these objects
             $scope = {};
             $rootScope = {};
+            uiCalendarConfig = { calendars : {myCalendar : {fullCalendar : function(){}}}}; //force this function to exist so we can stub it
         });
 
         //clean up jasmine-ajax
@@ -153,7 +154,7 @@ describe('calendarController', function()
         //helper to instantiate in the same manner for every test
         var instantiateController = function()
         {
-            controller = $controller('calendarController', {$scope:$scope, $rootScope:$rootScope});
+            controller = $controller('calendarController', {$scope:$scope, $rootScope:$rootScope, uiCalendarConfig:uiCalendarConfig});
         };
 
         describe("trainer", function()
@@ -191,6 +192,29 @@ describe('calendarController', function()
                expect(mockSessionCurrent.futureBatch.id).toBe(testBatchFuture.id);
                expect(!mockSessionCurrent.currentBatch);
             });
+
+            it ("changeDateKeyPress should call changeDate", function()
+            {
+               instantiateController();
+
+               spyOn($scope, 'changeDate');
+               $scope.changeDateKeyPress({which : 13});
+               expect($scope.changeDate).toHaveBeenCalled();
+            });
+
+            it ("changeDate should change the date and reset the search box", function ()
+            {
+                instantiateController();
+
+                var searchDate    = new Date(2015, 10, 5);
+                var today         = new Date();
+                $scope.searchDate = new Date(2015, 10, 5);
+
+                spyOn(uiCalendarConfig.calendars["myCalendar"], "fullCalendar");
+                $scope.changeDate();
+                expect(uiCalendarConfig.calendars["myCalendar"].fullCalendar).toHaveBeenCalledWith('gotoDate', searchDate);
+                expect($scope.searchDate).toEqual(today);
+            })
         });
 
         describe("associate", function()
