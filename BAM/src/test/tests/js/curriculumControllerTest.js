@@ -86,6 +86,27 @@ describe('curriculumController', function () {
             });   
         })
 
+        // describe('request Curriculum', function () {
+        //     it ('check if the curriculum is collected', inject(function($httpBackend) {
+        //         var $scope = {};
+        //         var controller = $controller('curriculumController', {$scope: $scope});
+        //         var curriculum = {
+        //             meta:{
+        //                 curriculumId : "1"
+        //             }
+        //         }
+        //         var tempcurriculum = $scope.requestCurriculum(curriculum);
+        //         $httpBackend
+        //         .expectGET('rest/api/v1/Curriculum/Schedule?curriculumId=1');
+                
+
+        //         expect(tempcurriculum).toBe('');
+        //     }));   
+        // })
+
+
+        
+
 
 
 
