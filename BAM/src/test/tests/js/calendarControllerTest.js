@@ -5,19 +5,19 @@ describe('calendarController', function()
     //sample data from BAMPhoenix wiki
     var testTrainer =
         {
-            "userId": 3,
-            "fName": "Ryan",
-            "mName": "R",
-            "lName": "Lessley",
-            "email": "rl@revature.com",
-            "pwd": "*****************************",
-            "role": 2,
-            "batch": null,
-            "phone": "1234567890",
-            "phone2": "8675309",
-            "skype": "rl@revature.com",
-            "pwd2": null,
-            "assignForceID": 9
+            userId: 3,
+            fName: "Ryan",
+            mName: "R",
+            lName: "Lessley",
+            email: "rl@revature.com",
+            pwd: "*****************************",
+            role: 2,
+            batch: null,
+            phone: "1234567890",
+            phone2: "8675309",
+            skype: "rl@revature.com",
+            pwd2: null,
+            assignForceID: 9
         };
     var testBatchType = { id: 1, name: "Java", length: 10 };
     var testBatchCompleted =
@@ -87,14 +87,15 @@ describe('calendarController', function()
     beforeEach(angular.mock.module({
         'SessionService' :
             {
+                //these treat objects as arrays, which allow
                 set : function(key, value) {
-                    eval("mockSessionCurrent." + key + " = " + value);
+                    mockSessionCurrent[key] = value;
                 },
                 get : function(key) {
-                    return eval("mockSessionCurrent." + key);
+                    return mockSessionCurrent[key];
                 },
                 unset : function(key) {
-                    eval("delete mockSessionCurrent." + key);
+                    delete mockSessionCurrent[key];
                 }
             },
 
@@ -172,11 +173,23 @@ describe('calendarController', function()
                 instantiateController();
             });
 
-            it ("should store the correct id in $rootScope", function()
+            it ("should store the correct id in $rootScope and unset currentBatch", function()
             {
                instantiateController();
 
                expect($rootScope.changedBatchId).toBe(testBatchOngoing.id);
+               expect(!mockSessionCurrent.currentBatch);
+            });
+
+            it ("with a batch that starts in the future should store the correct id in $rootScope and leave a copy of the batch in the session and unset currentBatch", function()
+            {
+               mockSessionCurrent.currentBatch = Object.create(testBatchFuture);
+
+               instantiateController();
+
+               expect($rootScope.changedBatchId).toBe(testBatchFuture.id);
+               expect(mockSessionCurrent.futureBatch.id).toBe(testBatchFuture.id);
+               expect(!mockSessionCurrent.currentBatch);
             });
         });
 
