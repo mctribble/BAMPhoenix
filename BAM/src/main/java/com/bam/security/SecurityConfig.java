@@ -22,6 +22,7 @@ import com.bam.service.BamUserDetailsService;
 //@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
 //	@Autowired
 //	BamUserDetailsService userDetailsService;
 //
