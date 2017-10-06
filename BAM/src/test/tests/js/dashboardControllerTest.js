@@ -33,7 +33,7 @@ describe('Dashboard Controller', function(){
 
 
      describe('Current Batch:', function(){
-        it('Current Batch should reponde to 200 response', inject(function($httpBackend){
+        it('Current Batch should respond to 200 response', inject(function($httpBackend){
             var $scope = {};
             var controller = dashboard('dashboardController', {$scope:$scope});
             $scope.currentBatch();
