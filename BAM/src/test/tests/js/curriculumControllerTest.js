@@ -104,8 +104,44 @@ describe('curriculumController', function () {
         //     }));   
         // })
 
+        describe('set master', function () {
+            it ('checks if the currriculum master has been updated', inject(function($httpBackend) {
+                var $scope = {};
+                var controller = $controller('curriculumController', {$scope: $scope});
+                var curriculum = {
+                        meta:{
+                            curriculumId : "1",
+                            curriculumVersion : "1",
+                            isMaster : "false"
+                            }
+                }
+                $scope.setMaster(curriculum);
+                $httpBackend
+                .expectGET('rest/api/v1/Curriculum/MakeMaster?curriculumId=1');
+                expect(curriculum.meta.isMaster).toBe(true);
+            }));   
+        })
 
-        
+        describe('new curriculum', function () {
+            it ('checks if the is Editable has been changed', function() {
+                var $scope = {};
+                var controller = $controller('curriculumController', {$scope: $scope});
+                var type = {
+                        meta:{
+                            curriculumId : "1",
+                            curriculumVersion : "1",
+                            isMaster : "false"
+                            }
+                }
+                $scope.newCurriculum(type);
+
+                $scope.isEditable = false;
+                expect($scope.isEditable).toBe(0);
+            });   
+        })
+
+
+
 
 
 
