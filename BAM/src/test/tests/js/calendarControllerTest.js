@@ -214,7 +214,39 @@ describe('calendarController', function()
                 $scope.changeDate();
                 expect(uiCalendarConfig.calendars["myCalendar"].fullCalendar).toHaveBeenCalledWith('gotoDate', searchDate);
                 expect($scope.searchDate).toEqual(today);
-            })
+            });
+
+            //alter this test to be more thorough if/when the currentBatch() function is actually used
+            it ("unused and incomplete function currentBatch() should not throw exceptions", function()
+            {
+                instantiateController();
+                $scope.currentBatch();
+            });
+
+            it ("eventFingerprint should handle dates as well as moments", function()
+            {
+                instantiateController();
+
+                var testMoment = moment().subtract(1, 'days');
+                var testDate = new Date();
+
+                var result = controller.eventFingerprint(
+                    {
+                        _id : 7,
+                        start : testMoment,
+                        end : testDate,
+                        title : "test event",
+                        url : "some/test/url"
+                    });
+
+                expect(result).toContain(7);
+                expect(result).toContain("test event");
+                expect(result).toContain(testMoment.unix());
+                expect(result).toContain(moment(testDate).unix());
+                expect(result).toContain("some/test/url");
+            });
+
+            
         });
 
         describe("associate", function()
