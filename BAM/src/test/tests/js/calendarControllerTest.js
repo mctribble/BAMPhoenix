@@ -2,15 +2,59 @@ describe('calendarController', function()
 {
     beforeEach(module('bam')); //load the app
 
+    //sample data from BAMPhoenix wiki
+    var testTrainer =
+        {
+            "userId": 3,
+            "fName": "Ryan",
+            "mName": "R",
+            "lName": "Lessley",
+            "email": "rl@revature.com",
+            "pwd": "*****************************",
+            "role": 2,
+            "batch": null,
+            "phone": "1234567890",
+            "phone2": "8675309",
+            "skype": "rl@revature.com",
+            "pwd2": null,
+            "assignForceID": 9
+        };
+    var testBatchType = { id: 1, name: "Java", length: 10 };
+    var testBatchCompleted =
+        {
+            id: 3,
+            name: "test-batch-completed",
+            startDate: moment().subtract(18, 'weeks'),
+            endDate: moment().subtract(6, 'weeks'),
+            trainer: testTrainer,
+            type: testBatchType
+        };
+    var testBatchOngoing =
+        {
+            id: 5,
+            name: "test-batch-future",
+            startDate: moment().subtract(6, 'weeks'),
+            endDate: moment().add(6, 'weeks'),
+            trainer: testTrainer,
+            type: testBatchType
+        };
+    var testBatchFuture =
+        {
+            "id": 18,
+            "name": "test-batch-ongoing",
+            "startDate": moment().add(6, 'weeks'),
+            "endDate": moment().add(18, 'weeks'),
+            "trainer": testTrainer,
+            "type": testBatchType
+        };
+
     //mock data for the SessionService
     var mockSessionCurrent = {};
 
     var mockSessionTrainer =
         {
-            currentUser:
-                {
-                    role: 2
-                }
+            currentUser:Object.create(testTrainer),
+            currentBatch:Object.create(testBatchOngoing)
         };
 
     var mockSessionAssociateWithoutBatch =
@@ -27,10 +71,7 @@ describe('calendarController', function()
                 {
                     role: 1,
 
-                    batch:
-                        {
-                            id: 1
-                        }
+                    batch: testBatchOngoing
                 }
         };
 
@@ -51,6 +92,9 @@ describe('calendarController', function()
                 },
                 get : function(key) {
                     return eval("mockSessionCurrent." + key);
+                },
+                unset : function(key) {
+                    eval("delete mockSessionCurrent." + key);
                 }
             },
 
@@ -90,9 +134,19 @@ describe('calendarController', function()
         //declare these for every test
         beforeEach(function()
         {
+            //use jasmine-ajax
+            //(see https://github.com/jasmine/jasmine-ajax)
+            jasmine.Ajax.install();
+
             //reset these objects
             $scope = {};
             $rootScope = {};
+        });
+
+        //clean up jasmine-ajax
+        afterEach(function()
+        {
+           jasmine.Ajax.uninstall();
         });
 
         //helper to instantiate in the same manner for every test
@@ -116,6 +170,13 @@ describe('calendarController', function()
 
                 //instantiate the controller with the above objects
                 instantiateController();
+            });
+
+            it ("should store the correct id in $rootScope", function()
+            {
+               instantiateController();
+
+               expect($rootScope.changedBatchId).toBe(testBatchOngoing.id);
             });
         });
 
