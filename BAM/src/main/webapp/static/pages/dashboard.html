@@ -1,5 +1,5 @@
 <div class="jumbotron container1" ng-controller="dashboardController">
-	<div ng-init = "getData()"  ng-model="getData">
+	<div ng-init="initPage()" ng-model="getData">
 		<div class="pan">
 		<h1 class="display-3">Welcome, {{user.fName}}</h1>
 		<p class="lead"> Pick up where you left off</p>
@@ -7,7 +7,7 @@
 		<div ng-show="batchCount > 1">
 		Select Batch:
 			<div class="row justify-content-between">
-  				<select id="batchDropdown" ng-init="currentBatch(this)" class="styled-select blue semi-square">
+  				<select id="batchDropdown" class="styled-select blue semi-square">
   				</select>
   				<a href="#/calendar" class="btn btn-primary myAttribute2 col-3">View Calendar</a>
 			</div>
@@ -50,7 +50,7 @@
 		</div>
 		</div>
 		
-		<div class="col-md-12" id="pan4" ng-init="returnMissed()" ng-show="trainerHasBatch || userHasBatch">
+		<div class="col-md-12" id="pan4" ng-show="trainerHasBatch || userHasBatch">
 			<h3 ng-show= "user.role == 1 || count == 0">Batch Progress <img ng-show="loading" src="static/img/loading.gif" id="loadingPic"></img></h3>
 			<!-- Progress completed by day -->
 			<div ng-show="userHasBatch && !loading || trainerHasBatch && !loading">

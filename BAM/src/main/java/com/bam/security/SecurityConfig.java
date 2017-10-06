@@ -22,93 +22,83 @@ import com.bam.service.BamUserDetailsService;
 //@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	BamUserDetailsService userDetailsService;
 
-//	@Autowired
-//	BamUserDetailsService userDetailsService;
-//
-//	@Autowired
-//	private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
-//
-//	@Autowired
-//	private AuthenticationFailureHandler restAuthenticationFailureHandler;
-//
-//
-//
-//	@Autowired
-//	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.userDetailsService(userDetailsService);
-//	}
-//
-//	/***
-//	 * @author Nam Mai
-//	 * Configure the passwordEncoder to use the BCrypt hashing algorithm
-//	 */
-//	@Bean
-//	public PasswordEncoder passwordEncoder(){
-//		return new BCryptPasswordEncoder();
-//	}
-//
-//	/***
-//	 * @author Nam Mai
-//	 * This method encodes the password upon authentication
-//	 */
-//	@Bean
-//	public DaoAuthenticationProvider authProvider(){
-//		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//		authProvider.setUserDetailsService(userDetailsService);
-//		authProvider.setPasswordEncoder(passwordEncoder());
-//		return authProvider;
-//	}
-//
-//	 @Override
-//	 public void configure(WebSecurity web) throws Exception {
-//		// Ignore certain URLs.
-//		web.ignoring().antMatchers("/index.html", "/static/js/**", "/static/css/**");
-//	 }
-//
-//	/***
-//	 * @author Nam Mai
-//	 * References the authProvider to enable hashing
-//	 */
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth){
-//		auth.authenticationProvider(authProvider());
-//	}
-//
-//	/**
-//	 * @author Duncan Hayward
-//	 * uncomment to protect rest endpoints, need to fix the roles first
-//	 * logout isn't getting deleting of JSESSIONID
-//	 * Don't disable csrf in production
-//	 */
-//	@Override
-//	 protected void configure(HttpSecurity http) throws Exception {
-//	  http
-//	   .headers().disable().csrf().disable().exceptionHandling()
-//	   .and()
-//	   .authorizeRequests()
-//	    .antMatchers("/rest/api/v1/Users/Register").permitAll()
-//	    .antMatchers("**rest*/**").authenticated()
-//	    .antMatchers("*rest*/**").authenticated()
-//	    .antMatchers("**/*rest*/**").authenticated()
-//	    .antMatchers("**rest*/**").authenticated()
-//	    .anyRequest().authenticated()
-//	    .antMatchers("/rest/api/v1/Curriculum/**").hasAuthority("Trainer")
-//	    .and()
-//	    .formLogin()
-//	   	.loginPage("/")
-//	   	.loginProcessingUrl("/authenticate")
-//	    .successHandler(restAuthenticationSuccessHandler)
-//	    .failureHandler(restAuthenticationFailureHandler)
-//	    .usernameParameter("username")
-//	    .passwordParameter("password")
-//	    .permitAll()
-//	    .and()
-//	    .logout()
-//	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//	    .logoutSuccessUrl("/logout").deleteCookies("JSESSIONID")
-//	    .invalidateHttpSession(true);
-//
-//	 }
+	@Autowired
+	private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
+
+	@Autowired
+	private AuthenticationFailureHandler restAuthenticationFailureHandler;
+
+
+
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService);
+	}
+
+	/***
+	 * @author Nam Mai
+	 * Configure the passwordEncoder to use the BCrypt hashing algorithm
+	 */
+	@Bean
+	public PasswordEncoder passwordEncoder(){
+		return new BCryptPasswordEncoder();
+	}
+
+	/***
+	 * @author Nam Mai
+	 * This method encodes the password upon authentication
+	 */
+	@Bean
+	public DaoAuthenticationProvider authProvider(){
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userDetailsService);
+		authProvider.setPasswordEncoder(passwordEncoder());
+		return authProvider;
+	}
+
+	 @Override
+	 public void configure(WebSecurity web) throws Exception {
+		// Ignore certain URLs.
+		web.ignoring().antMatchers("/index.html", "/static/js/**", "/static/css/**");
+	 }
+
+	/***
+	 * @author Nam Mai
+	 * References the authProvider to enable hashing
+	 */
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth){
+		auth.authenticationProvider(authProvider());
+	}
+
+	/**
+	 * @author Duncan Hayward
+	 * uncomment to protect rest endpoints, need to fix the roles first
+	 * logout isn't getting deleting of JSESSIONID
+	 * Don't disable csrf in production
+	 */
+	@Override
+	 protected void configure(HttpSecurity http) throws Exception {
+	  http
+	   .headers().disable().csrf().disable().exceptionHandling()
+	   .and()
+	   .authorizeRequests()
+	    .antMatchers("/rest/api/v1/Users/Register").permitAll()
+	    .antMatchers("**rest*/**").authenticated()
+	    .antMatchers("*rest*/**").authenticated()
+	    .antMatchers("**/*rest*/**").authenticated()
+	    .antMatchers("**rest*/**").authenticated()
+	    .anyRequest().authenticated()
+	    .antMatchers("/rest/api/v1/Curriculum/**").hasAuthority("Trainer")
+	    .and()
+	    .logout()
+	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+	    .logoutSuccessUrl("/logout").deleteCookies("JSESSIONID")
+	    .invalidateHttpSession(true);
+
+	 }
 }
 

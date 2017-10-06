@@ -86,6 +86,4 @@ app.controller('loginController', function($rootScope, $window, $scope, $locatio
 			$scope.msg2 = 'Enter Valid Email';
 		});
 	}
-	
-	
 });

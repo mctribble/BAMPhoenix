@@ -1,9 +1,6 @@
 package com.bam.bean;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
@@ -19,6 +16,7 @@ import java.util.*;
 public class Force {
 
     private static final String REST_VERSION = "40.0";
+    private static final String ROLE_TRAINER = "00Ei0000000ccV0EAI";
 
     @Bean
     private OAuth2RestTemplate oAuth2RestTemplate(OAuth2ProtectedResourceDetails detail, OAuth2ClientContext context) {
@@ -36,7 +34,7 @@ public class Force {
 
     public BamUser getCurrentBamUser(OAuth2Authentication auth) {
         HashMap<String, String> details = (HashMap<String, String>) auth.getUserAuthentication().getDetails();
-        String query = "SELECT Id, Name, FirstName, LastName, Email," +
+        String query = "SELECT Id, Name, FirstName, LastName, Email, Phone, MobilePhone, " +
                 "UserRole.Id, UserRole.Name FROM User WHERE Id = '"
                 + details.get("user_id") + "'";
 
@@ -59,19 +57,6 @@ public class Force {
         return responseEntity.getBody();
     }
 
-//      this.userId = userId;
-//		this.fName = fName;
-//		this.mName = mName;
-//		this.lName = lName;
-//		this.email = email;
-//		this.pwd = pwd;
-//		this.role = role;
-//		this.batch = batch;
-//		this.phone = phone;
-//		this.phone2 = phone2;
-//		this.skype = skype;
-//		this.pwd2 = pwd2;
-//      assignForceID = AssignForceID;
     private List<BamUser> parseSalesforceQueryResponse(String response) {
         List<BamUser> bamUsers = new ArrayList<>();
         JsonObject object = new Gson().fromJson(response, JsonElement.class).getAsJsonObject();
@@ -79,18 +64,26 @@ public class Force {
 
         arr.forEach(jsonElement -> {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
+
             BamUser bamUser = new BamUser();
-//            bamUser.setUserId(jsonObject.get("Id").getAsInt());
+
             bamUser.setfName(jsonObject.get("FirstName").getAsString());
             bamUser.setlName(jsonObject.get("LastName").getAsString());
             bamUser.setEmail(jsonObject.get("Email").getAsString());
 
+            JsonElement phone = jsonObject.get("Phone");
+            bamUser.setPhone(phone instanceof JsonNull ? null : phone.getAsString());
+
+            JsonElement mobilePhone = jsonObject.get("MobilePhone");
+            bamUser.setPhone2(mobilePhone instanceof JsonNull ? null : mobilePhone.getAsString());
+
             JsonObject jsonRole = jsonObject.get("UserRole").getAsJsonObject();
-            String roleName = jsonRole.get("Name").getAsString();
+            String roleName = jsonRole.get("Id").getAsString();
             int roleId = 1;
-            if (roleName.equalsIgnoreCase("Trainers")) {
+            if (roleName.equalsIgnoreCase(ROLE_TRAINER)) {
                 roleId = 2;
             }
+
             bamUser.setRole(roleId);
             bamUsers.add(bamUser);
         });
