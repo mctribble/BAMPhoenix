@@ -1,34 +1,29 @@
-describe("Dashboard Controller", function(){
+describe('Dashboard Controller', function(){
     beforeEach(module('bam'));
     var dashboard;
 
-    beforeEach(function(){
-        // module(function($provide){
-        //     $provide.service('SessionService', function(){
-        //         $provide.service( function(){
-        //             this.set= jasmine.createSpy('set');
-        //         });
+    var mockSession = {
+        currentUser:{
+            name:"test User",
+            userId:11
+        }
+    }
 
-        //     });
+    beforeEach(angular.mock.module({
+        'SessionService' : {
+            set: function(key, value) {
+                eval("mockSession." + key + " = " + value);
+            },
+            get : function(key) {
+                return eval("mockSession." + key);
+            }
+        }
+    }));
 
-        //Mocked Session Service
-        SessionService = jasmine.createSpyObj('SessionService', [
-            'get',
-            'set',
-            'unset',
-            'remove'
-        ]);
-
-//        module(function($provide){
-//            $provide.value('SessionService', SessionService);
-//        });
-
-
+    beforeEach(
         inject(function($controller){
             dashboard = $controller;
-
-        });
-    });
+        }));
 
      it('should not be null', function(){
             var $scope = {};
