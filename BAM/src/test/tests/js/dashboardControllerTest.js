@@ -1,5 +1,5 @@
 describe("Dashboard Controller", function(){
-    var $http, scope, $analytics, SessionService, rootScope, dashboard;
+    var scope, SessionService, rootScope, dashboard;
 
     beforeEach(function(){
         // module(function($provide){
@@ -7,7 +7,7 @@ describe("Dashboard Controller", function(){
         //         $provide.service( function(){
         //             this.set= jasmine.createSpy('set');
         //         });
-              
+
         //     });
         SessionService = jasmine.createSpyObj('SessionService', [
             'get',
@@ -20,9 +20,7 @@ describe("Dashboard Controller", function(){
 //            $provide.value('SessionService', SessionService);
 //        });
 
-        inject(function($rootScope, $controller, _$http_, _$analytics_, _$rootScope_){
-        $http = _$http_;
-        $analytics = _$analytics_;
+        inject(function($rootScope, $controller, _$rootScope_){
         scope = $rootScope.$new();
         rootScope = _$rootScope_;
             dashboard = function(){
@@ -36,9 +34,20 @@ describe("Dashboard Controller", function(){
      it('should not be null', function(){
             var controller = dashboard();
             expect(controller).toBeDefined();
-            expect(SessionService.get).toHaveBeenCalled();
-            expect(SessionService.set).toHaveBeenCalled();
+     });
+
+     it(': Current Batch should reponde to 200 response', inject(function($httpBackend){
+        var controller = dashboard();
+        scope.currentBatch();
+        $httpBackend
+        .whenGET('rest/api/v1/Batches/All')
+        .respond(function(){
+            return [200,[{id: '23298'}, {name: '1611 Sep28 SDET'}, {startDate: '28-SEP-17 12.00.00.000000000 AM'},
+                         {endDate: '28-SEP-17 12.00.00.000000000 AM'}, {trainer: {userId: '11'}}, {type: '1'}]];
         });
+        $httpBackend.flush();
+        expect(scope.getData).toBeCalled();
+     }));
 
 //    it(': get data function should be inhabited and output the correct batch', function(){
 //        expect(scope.getData).not.toBe('N/A');
