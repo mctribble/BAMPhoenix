@@ -48,7 +48,7 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 					$scope.msg = 'Batch Acquisition failed';
 					console.log("Batch Acquisition Failed");
 				});
-			} else if(SessionService.gt("currentUser").role == 1) {
+			} else if(SessionService.get("currentUser").role == 1) {
 				console.log("Role is 1");
 				SessionService.set("userRole", "(Associate)");
 				$rootScope.userRole = SessionService.get("userRole");

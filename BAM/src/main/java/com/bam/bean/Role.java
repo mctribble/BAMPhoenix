@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
 /**
  * 
@@ -16,13 +18,16 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name="USER_ROLE")
 @Component
+@ApiModel("User Role")
 public class Role {
 
 	@Id
 	@Column(name = "ROLE_ID")
+	@ApiModelProperty(notes = "User role id")
 	private int roleId;
 	
 	@Column(name= "USER_ROLE")
+	@ApiModelProperty(notes = "Role name")
 	private String userRole;
 
 

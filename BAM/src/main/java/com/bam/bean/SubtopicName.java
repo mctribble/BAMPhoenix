@@ -11,31 +11,38 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @Entity
 @Table(name = "Subtopic_Name")
+@ApiModel("Subtopic Name")
 public class SubtopicName {
 
 	@Id
 	@Column(name = "Subtopic_Name_ID")
 	@SequenceGenerator(name = "SUBTOPIC_NAME_ID_SEQ", sequenceName = "SUBTOPIC_NAME_ID_SEQ", allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUBTOPIC_NAME_ID_SEQ")
+	@ApiModelProperty(notes = "Subtopic name id")
 	private Integer id;
 
 	@Column(name = "Subtopic_Name")
+	@ApiModelProperty(notes = "Subtopic name")
 	private String name;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Subtopic_Topic", referencedColumnName = "Topic_ID")
 	@Autowired
+	@ApiModelProperty(notes = "Topic subtopic belongs to")
 	private TopicName topic;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Subtopic_Type", referencedColumnName = "Type_ID")
 	@Autowired
+	@ApiModelProperty(notes = "Subtopic type")
 	private SubtopicType type;
 
 	public SubtopicName() {
