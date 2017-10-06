@@ -2,7 +2,10 @@ package com.bam.bean.unit;
 
 import static com.google.code.beanmatchers.BeanMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 
+import com.bam.bean.Batch;
+import com.bam.bean.TopicName;
 import org.junit.Test;
 
 import com.bam.bean.TopicWeek;
@@ -31,5 +34,19 @@ public class TopicWeekTest {
         assertThat(TopicWeek.class, hasValidBeanToStringFor("topic"));
         assertThat(TopicWeek.class, hasValidBeanToStringFor("batch"));
         assertThat(TopicWeek.class, hasValidBeanToStringFor("weekNumber"));
+    }
+
+    @Test
+    public void testParameterizedConstructors()
+    {
+        TopicName testName = new TopicName("teset");
+        Batch testBatch = new Batch();
+        TopicWeek testWeek1 = new TopicWeek(1, testName, testBatch, 2);
+        TopicWeek testWeek2 = new TopicWeek(testName, testBatch, 2);
+
+        assertEquals(new Integer(1), testWeek1.getId());
+        assert(testName.equals(testWeek1.getTopic()) && testName.equals(testWeek2.getTopic()));
+        assert(testBatch.equals(testWeek1.getBatch()) && testBatch.equals(testWeek2.getBatch()));
+        assertEquals(2, testWeek1.getWeekNumber(), testWeek2.getWeekNumber());
     }
 }

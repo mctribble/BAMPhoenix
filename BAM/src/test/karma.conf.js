@@ -29,6 +29,8 @@ module.exports = function(config) {
     	'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
     	'node_modules/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js',
     	'node_modules/angulartics-google-analytics/lib/angulartics-ga.js',
+        'node_modules/jasmine-ajax/lib/mock-ajax.js',
+        'node_modules/moment/moment.js',
     	'src/main/webapp/static/js/app.js',
     	'src/main/webapp/static/js/service.js',
     	'src/main/webapp/static/controller/*.js',
@@ -74,7 +76,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'ChromeHeadless'],
+    browsers: ['Chrome'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

@@ -38,12 +38,12 @@ public class Role {
 	}
 
 
-	public int getUserId() {
+	public int getRoleId() {
 		return roleId;
 	}
 
 
-	public void setUserId(int userId) {
+	public void setRoleId(int userId) {
 		this.roleId = userId;
 	}
 
