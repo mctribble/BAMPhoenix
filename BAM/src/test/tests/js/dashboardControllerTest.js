@@ -1,5 +1,6 @@
 describe("Dashboard Controller", function(){
-    var scope, SessionService, rootScope, dashboard;
+    beforeEach(module('bam'));
+    var dashboard;
 
     beforeEach(function(){
         // module(function($provide){
@@ -23,27 +24,24 @@ describe("Dashboard Controller", function(){
 //        });
 
 
-        inject(function($rootScope, $controller, _$rootScope_){
-        scope = $rootScope.$new();
-        rootScope = _$rootScope_;
-            dashboard = function(){
-                return $controller('dashboardController', {
-                '$scope': scope
-                });
-            };
+        inject(function($controller){
+            dashboard = $controller;
+
         });
     });
 
      it('should not be null', function(){
-            var controller = dashboard();
+            var $scope = {};
+            var controller = dashboard('dashboardController', {$scope:$scope});
             expect(controller).toBeDefined();
      });
 
 
      describe('Current Batch:', function(){
         it('Current Batch should reponde to 200 response', inject(function($httpBackend){
-            var controller = dashboard();
-            scope.currentBatch();
+            var $scope = {};
+            var controller = dashboard('dashboardController', {$scope:$scope});
+            $scope.currentBatch();
             $httpBackend
                 .whenGET('rest/api/v1/Batches/All')
                 .respond(function(){
@@ -51,7 +49,7 @@ describe("Dashboard Controller", function(){
                          {endDate: '28-SEP-17 12.00.00.000000000 AM'}, {trainer: {userId: '11'}}, {type: '1'}]];
                 });
             $httpBackend.flush();
-            expect(scope.getData).toBeCalled();
+            expect($scope.getData).toBeCalled();
         }));
      });
 });
