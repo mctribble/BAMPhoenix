@@ -2,16 +2,25 @@ package com.bam.bean;
 
 import java.sql.Timestamp;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
 
 @Component
+@ApiModel("AssignForce Batch")
 public class AssignForceBatch {
-		
+
+		@ApiModelProperty(notes = "Name")
 		private String name;
+		@ApiModelProperty(notes = "Start Date")
 		private Timestamp startDate;
+		@ApiModelProperty(notes = "End Date")
 		private Timestamp endDate;
+		@ApiModelProperty(notes = "Curriculum")
 		private AssignForceCurriculum curriculum;
+		@ApiModelProperty(notes = "Trainer")
 		private AssignForceTrainer trainer;
+		@ApiModelProperty(notes = "AssignForce batch id")
 		private Integer id;
 		
 		public AssignForceBatch() {

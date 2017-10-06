@@ -20,17 +20,17 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.bam.controller"))
-                .paths(PathSelectors.any())
+                .paths(regex("/rest.*"))
                 .build();
     }
-    public ApiInfo metaDat() {
+    public ApiInfo metaData() {
         ApiInfo info = new ApiInfo(
-                "Bam Catalog API",
-                "BAM Catalog API for Library Services",
-                "1.0.0",
-                "Terms of Service",
-                new Contact("theara", "someURL", "email"),
-                "Apache License Version 2.0",
+                "Bam API", //title
+                "Bam Api for Curriculum Services", //desc
+                "1.0.0", //version
+                "Terms of Service", //terms of service url
+                new Contact("john doe", "http://google.com", "johndoe@email.com"),
+                "Apache License Version 2.0", //license info
                 "https://apache.org/licenses/LICENSE-2.0");
         return info;
     }

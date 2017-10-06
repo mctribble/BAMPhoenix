@@ -4,6 +4,8 @@ import com.bam.bean.Batch;
 import com.bam.bean.BatchType;
 import com.bam.service.BamUserService;
 import com.bam.service.BatchService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.logging.log4j.LogManager;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import java.util.List;
  
 @RestController
 @RequestMapping(value = "/rest/api/v1/Batches/")
+@Api(value = "catalog", tags = "Batch", description = "Operations about batches")
 public class BatchController {
 
   private static final String EMAIL = "email";
@@ -29,12 +32,14 @@ public class BatchController {
 
   @RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Find all batches")
   public List<Batch> getBatchAll() {
     return batchService.getBatchAll();
   }
 
   @RequestMapping(value = "Past", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Find all batches by trainer email and return only batches that have ended")
   public List<Batch> getPastBatches(HttpServletRequest request) {
     List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
 
@@ -49,6 +54,7 @@ public class BatchController {
 
   @RequestMapping(value = "Future", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Find all batches by trainer email and return batches not yet started")
   public List<Batch> getFutureBatches(HttpServletRequest request) {
     List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
 
@@ -63,6 +69,7 @@ public class BatchController {
 
   @RequestMapping(value = "InProgress", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Find all batches by trainer email and return the first batch currently in progress")
   public Batch getBatchInProgress(HttpServletRequest request) {
     List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
 
@@ -79,6 +86,7 @@ public class BatchController {
 
   @RequestMapping(value = "AllInProgress", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Find all batches by trainer email and return all batches currently in progress")
   public List<Batch> getAllBatchesInProgress(HttpServletRequest request) {
     List<Batch> batches = batchService.getBatchByTrainer(bamUserService.findUserByEmail(request.getParameter(EMAIL)));
 
@@ -93,6 +101,7 @@ public class BatchController {
   }
 
   @RequestMapping(value = "Edit", method = RequestMethod.POST, produces = "application/json")
+  @ApiOperation(value = "Updates a batch by mapping JSON to a batch object")
   public void updateUser(@RequestBody String jsonObject) {
     Batch currentBatch = null;
     try {
@@ -106,17 +115,20 @@ public class BatchController {
 
   @RequestMapping(value = "ById", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Find a batch by id")
   public Batch getBatchById(HttpServletRequest request) {
     return batchService.getBatchById(Integer.parseInt(request.getParameter("batchId")));
   }
 
   @RequestMapping(value = "UpdateBatch", method = RequestMethod.POST)
+  @ApiOperation(value = "Updates a batch")
   public void updateBatch(@RequestBody Batch batch) {
     batchService.addOrUpdateBatch(batch);
   }
 
   @RequestMapping(value = "BatchTypes", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Find all batch types")
   public List<BatchType> getAllBatchTypes() {
     return batchService.getAllBatchTypes();
   }

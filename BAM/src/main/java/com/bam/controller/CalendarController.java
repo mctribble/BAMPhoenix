@@ -8,6 +8,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.logging.log4j.LogManager;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import com.bam.service.TopicService;
 
 @RestController
 @RequestMapping(value = "/rest/api/v1/Calendar/")
+@Api(value = "catalog", tags = "Calendar", description = "Operations about calendar")
 public class CalendarController {
 
   private static final String BATCHID = "batchId";
@@ -67,6 +70,7 @@ public class CalendarController {
    */
   @RequestMapping(value = "SubtopicsPagination", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Find all subtopics by batch id using pagination")
   public List<Subtopic> getSubtopicsByBatchPagination(HttpServletRequest request) {
     int batchId = Integer.parseInt(request.getParameter(BATCHID));
     int pageNum = Integer.parseInt(request.getParameter(PAGENUMBER));
@@ -77,6 +81,7 @@ public class CalendarController {
 
   @RequestMapping(value = "Subtopics", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Find all subtopics by batch id")
   public List<Subtopic> getSubtopicsByBatch(HttpServletRequest request) {
 
     // Get the batch id from the request
@@ -98,6 +103,7 @@ public class CalendarController {
    */
   @RequestMapping(value = "GetNumberOfSubtopics", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Find all subtopics by batch id and return the sum")
   public Long getNumberOfSubTopicsByBatch(HttpServletRequest request) {
     int batchId = Integer.parseInt(request.getParameter(BATCHID));
 
@@ -106,6 +112,7 @@ public class CalendarController {
 
   @RequestMapping(value = "Topics", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Find all topics by batch id")
   public List<TopicWeek> getTopicsByBatchPag(HttpServletRequest request) {
 
     // Get the batch id from the request
@@ -116,6 +123,7 @@ public class CalendarController {
   }
 
   @RequestMapping(value = "DateUpdate", method = RequestMethod.GET, produces = "application/json")
+  @ApiOperation(value = "Updates the date of the subtopic will be covered on")
   public void changeTopicDate(HttpServletRequest request) throws ParseException {
     // Get the batch id from the request
     int subtopicId = Integer.parseInt(request.getParameter("subtopicId"));
@@ -137,6 +145,7 @@ public class CalendarController {
   }
 
   @RequestMapping(value = "StatusUpdate", method = RequestMethod.GET, produces = "application/json")
+  @ApiOperation(value = "Updates the status of a subtopic")
   public void updateTopicStatus(HttpServletRequest request) throws ParseException {
     // Get the batch id from the request
     int subtopicId = Integer.parseInt(request.getParameter("subtopicId"));
@@ -157,6 +166,7 @@ public class CalendarController {
   }
 
   @RequestMapping(value = "AddTopics", method = RequestMethod.POST, produces = "application/json")
+  @ApiOperation(value = "Add new topics to the system")
   public void addTopics(@RequestBody String jsonObject, HttpSession session) {
     List<TopicName> topicsFromStub = null;
 

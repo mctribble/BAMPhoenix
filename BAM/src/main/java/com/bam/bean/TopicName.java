@@ -8,20 +8,25 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
 
 @Component
 @Entity
 @Table(name = "Topic_Name")
+@ApiModel("Topic Name")
 public class TopicName {
 
 	@Id
 	@Column(name = "Topic_ID")
 	@SequenceGenerator(name = "TOPIC_NAME_ID_SEQ", sequenceName = "TOPIC_NAME_ID_SEQ", allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TOPIC_NAME_ID_SEQ")
+	@ApiModelProperty(notes = "Topic name id")
 	private Integer id;
 
 	@Column(name = "Topic_Name")
+	@ApiModelProperty(notes = "Name")
 	private String name;
 
 	public TopicName() {
