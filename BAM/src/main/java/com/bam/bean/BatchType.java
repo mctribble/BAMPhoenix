@@ -8,23 +8,29 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
 
 @Component
 @Entity
 @Table(name = "Batch_Type")
+@ApiModel("Batch Type")
 public class BatchType {
 
 	@Id
 	@Column(name = "Batch_Type_ID")
 	@SequenceGenerator(name = "BATCH_TYPE_ID_SEQ", sequenceName = "BATCH_TYPE_ID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BATCH_TYPE_ID_SEQ")
+	@ApiModelProperty(notes = "Batch type id")
 	private Integer id;
 
 	@Column(name = "Batch_Type_Name")
+	@ApiModelProperty(notes = "Name")
 	private String name;
 
 	@Column(name = "Batch_Type_Length") // For now, this defaults to 10 and can't be changed.
+	@ApiModelProperty(notes = "Duration of batch in weeks")
 	private Integer length = 10; // In the future, this field can be editable.
 
 	public BatchType() {

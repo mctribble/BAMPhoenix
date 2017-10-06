@@ -15,6 +15,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,29 +25,35 @@ import org.springframework.stereotype.Component;
 @Component
 @Entity
 @Table(name = "batches")
+@ApiModel("Batch")
 public class Batch {
 
 	@Id
 	@Column(name = "Batch_ID")
 	@SequenceGenerator(name = "BATCH_ID_SEQ", sequenceName = "BATCH_ID_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BATCH_ID_SEQ")
+	@ApiModelProperty(notes = "Batch id")
 	private Integer id;
 
 	@Column(name = "Batch_Name")
 	@NotEmpty(message = "Batch name cannot be empty")
+	@ApiModelProperty(notes = "Name")
 	private String name;
 
 	@Column(name = "Start_Date")
 	@NotNull(message = "Start date cannot be empty")
+	@ApiModelProperty(notes = "Start date")
 	private Timestamp startDate;
 
 	@Column(name = "End_Date")
 	@NotNull(message = "End date cannot be empty")
+	@ApiModelProperty(notes = "End date")
 	private Timestamp endDate;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Trainer_ID", referencedColumnName = "User_Id")
 	@Autowired
+	@ApiModelProperty(notes = "Trainer assigned to batch")
 	private BamUser trainer;
 	
 		/*
@@ -57,6 +66,7 @@ public class Batch {
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "Batch_Type_ID", referencedColumnName = "Batch_Type_ID")
 	@Autowired
+	@ApiModelProperty(notes = "Batch type")
 	private BatchType type;
 
 	public Batch() {
