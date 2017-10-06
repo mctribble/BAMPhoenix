@@ -111,7 +111,7 @@ app.controller("curriculumController",
 				if(topic.type == topicName){
 					return topic.color;
 				}
-			}
+			}			
 		}
 		
 		$scope.setTopicColors = function(topics){
@@ -457,7 +457,7 @@ app.controller("curriculumController",
 							delete curriculum.weeks;
 							var newCurriculum = {meta:curriculum, weeks:[]};
 							$scope.curricula[j].versions.splice(curriculum.curriculumVersion - 1, 1, newCurriculum);
-							break;
+							break; 
 						}
 					}
 					
