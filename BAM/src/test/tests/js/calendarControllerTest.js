@@ -160,7 +160,7 @@ describe('calendarController', function()
             //do this for every trainer test
             beforeEach(function()
             {
-                mockSessionCurrent = mockSessionTrainer;
+                mockSessionCurrent = Object.create(mockSessionTrainer);
             });
 
             it ("should not be redirected", function()
