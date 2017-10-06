@@ -17,10 +17,10 @@ public class HttpAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException authException) throws IOException {
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-         
+
         PrintWriter writer = response.getWriter();
         writer.println("HTTP Status 401 : " + authException.getMessage());
     }
-     
+
 
 }
