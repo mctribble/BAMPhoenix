@@ -4,6 +4,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;

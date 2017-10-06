@@ -35,7 +35,9 @@ public class AssignForceSyncService {
 	static String baseUrl = "http://assignforce.revaturelabs.com/api/v2/";
 	
 	// Makes a call to the AssignForce API and builds POJOs from the returned JSON String.
-	static ResponseEntity<List<AssignForceBatch>> batches = restTemplate.exchange(baseUrl + "batch/",HttpMethod.GET,null, new ParameterizedTypeReference<List<AssignForceBatch>>(){});
+	static ResponseEntity<List<AssignForceBatch>> batches = restTemplate.exchange(baseUrl + "batch/",
+			HttpMethod.GET,null,
+			new ParameterizedTypeReference<List<AssignForceBatch>>(){});
 	
 	public void assignForceSync() {
 		
