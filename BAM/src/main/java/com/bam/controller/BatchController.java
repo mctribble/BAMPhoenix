@@ -1,20 +1,26 @@
 package com.bam.controller;
 
-import com.bam.bean.Batch;
-import com.bam.bean.BatchType;
-import com.bam.service.BamUserService;
-import com.bam.service.BatchService;
-import org.apache.logging.log4j.LogManager;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
- 
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.logging.log4j.LogManager;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.bam.bean.Batch;
+import com.bam.bean.BatchType;
+import com.bam.service.BamUserService;
+import com.bam.service.BatchService;
+
 @RestController
 @RequestMapping(value = "/rest/api/v1/Batches/")
 public class BatchController {
@@ -26,6 +32,15 @@ public class BatchController {
 
   @Autowired
   BamUserService bamUserService;
+
+  public BatchController() {
+
+  }
+
+  public BatchController (BatchService batchService, BamUserService bamUserService) {
+      this.batchService = batchService;
+      this.bamUserService = bamUserService;
+  }
 
   @RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
@@ -121,4 +136,11 @@ public class BatchController {
     return batchService.getAllBatchTypes();
   }
 
+  public void setBatchService(BatchService batchService) {
+    this.batchService = batchService;
+  }
+
+  public void setBamUserService(BamUserService bamUserService) {
+    this.bamUserService = bamUserService;
+  }
 }

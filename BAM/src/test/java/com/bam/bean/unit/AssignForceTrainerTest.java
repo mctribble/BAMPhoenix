@@ -3,6 +3,7 @@ package com.bam.bean.unit;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToStringFor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.Test;
@@ -10,7 +11,7 @@ import org.junit.Test;
 import com.bam.bean.AssignForceTrainer;
 
 /**
- * @author Ramses
+ * @author Ramses, Christopher Hake
  * Testing the AssignForceTrainer Bean's setter and getters, no-args constructor
  * and toString method using JUnit.
  */
@@ -34,5 +35,13 @@ public class AssignForceTrainerTest {
         assertThat(AssignForceTrainer.class, hasValidBeanToStringFor("firstName"));
         assertThat(AssignForceTrainer.class, hasValidBeanToStringFor("lastName"));
     }
-	
+
+    @Test
+    public void testParameterizedConstructor()
+    {
+        AssignForceTrainer test = new AssignForceTrainer(1, "John", "Doe");
+        assertThat(test.getTrainerId(), equalTo(1));
+        assertThat(test.getFirstName(), equalTo("John"));
+        assertThat(test.getLastName(), equalTo("Doe"));
+    }
 }

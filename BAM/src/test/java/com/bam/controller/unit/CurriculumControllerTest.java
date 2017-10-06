@@ -50,17 +50,17 @@ public class CurriculumControllerTest {
 	 */
 	@Test
 	public void getAllCurriculumTest() throws Exception{
-		mockMvc.perform(get("/api/v1/Curriculum/All")).andExpect(status().isOk()).andExpect(content().contentType("application/json"));
+		mockMvc.perform(get("/rest/api/v1/Curriculum/All")).andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8"));
 	}
 
 	@Test
 	public void getTopicPoolTest() throws Exception{
-		mockMvc.perform(get("/api/v1/Curriculum/TopicPool")).andExpect(status().isOk()).andExpect(content().contentType("application/json"));
+		mockMvc.perform(get("/rest/api/v1/Curriculum/TopicPool")).andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8"));
 	}
 
 	@Test
 	public void getSubtopicPoolTest() throws Exception{
-		mockMvc.perform(get("/api/v1/Curriculum/SubtopicPool")).andExpect(status().isOk()).andExpect(content().contentType("application/json"));
+		mockMvc.perform(get("/rest/api/v1/Curriculum/SubtopicPool")).andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8"));
 	}
 
 	/***
@@ -69,7 +69,7 @@ public class CurriculumControllerTest {
 	 */
 	@Test
 	public void getScheduleTest() throws Exception{
-		mockMvc.perform(get("/api/v1/Curriculum/Schedule?curriculumId=" + 1)).andExpect(status().isOk());
+		mockMvc.perform(get("/rest/api/v1/Curriculum/Schedule?curriculumId=" + 1)).andExpect(status().isOk());
 	}
 
 }
