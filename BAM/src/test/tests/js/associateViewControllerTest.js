@@ -11,11 +11,11 @@ describe('associateViewController', function() {
 
     beforeEach(angular.mock.module({
         'SessionService' : {
-            set: function(key, value) {
-                eval("mockSession." + key + " = " + value);
+            set : function(key, value) {
+                mockSession[key] = value;
             },
             get : function(key) {
-                return eval("mockSession." + key);
+                return mockSession[key];
             }
         }
     }));
