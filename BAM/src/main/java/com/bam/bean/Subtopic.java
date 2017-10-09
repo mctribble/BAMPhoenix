@@ -13,36 +13,44 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name = "SUBTOPIC")
 @Component
+@ApiModel("Subtopic")
 public class Subtopic {
 
 	@Id
 	@Column(name = "Subtopic_Id")
 	@SequenceGenerator(name = "SUBTOPIC_SEQ", sequenceName = "SUBTOPIC_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUBTOPIC_SEQ")
+	@ApiModelProperty(notes = "Subtopic id")
 	private int subtopicId;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SUBTOPIC_NAME_ID", referencedColumnName = "SUBTOPIC_NAME_ID")
 	@Autowired
+	@ApiModelProperty(notes = "Name")
 	private SubtopicName subtopicName;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SUBTOPIC_BATCH_ID", referencedColumnName = "BATCH_ID")
 	@Autowired
+	@ApiModelProperty(notes = "Actual batch that is covering this subtopic")
 	private Batch batch;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SUBTOPIC_STATUS_ID", referencedColumnName = "STATUS_ID")
 	@Autowired
+	@ApiModelProperty(notes = "Status of subtopic")
 	private SubtopicStatus status;
 
 	@Column(name = "Subtopic_Date")
+	@ApiModelProperty(notes = "Actual date of subtopic")
 	private Timestamp subtopicDate;
 
 	public Subtopic() {

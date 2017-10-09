@@ -62,7 +62,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 @Override
 	 public void configure(WebSecurity web) throws Exception {
 		// Ignore certain URLs.
-		web.ignoring().antMatchers("/index.html", "/static/**", "/");
+		web.ignoring().antMatchers(
+				"/v2/api-docs",
+				"/configuration/ui",
+				"/swagger-resources",
+				"/cofiguration/security",
+				"/swagger-resources/configuration/ui",
+				"/swagger-resources/configuration/security",
+				"/swagger-ui.html",
+				"/webjars/**",
+				"/index.html", "/static/**", "/");
 	 }
 	 
 	 
@@ -105,12 +114,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    .failureHandler(restAuthenticationFailureHandler)
 	    .usernameParameter("username")
 	    .passwordParameter("password")
-	   // .permitAll()
+//	    .permitAll()
 	    .and()
 	    .logout()
 	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 	    .logoutSuccessUrl("/logout").deleteCookies("JSESSIONID")
-	    .invalidateHttpSession(true);	
+	    .invalidateHttpSession(true);
+
 	   	
 	 }
 }

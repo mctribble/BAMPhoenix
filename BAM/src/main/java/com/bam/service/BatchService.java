@@ -34,6 +34,17 @@ public class BatchService {
 	
 	@Autowired
 	SubtopicService subtopicService;
+
+	public BatchService(BatchRepository batchRepository, BatchTypeRepository batchTypeRepository,
+						SubtopicRepository subtopicRepository, SubtopicNameRepository subtopicNameRepository,
+						SubtopicService subtopicService) {
+		this.batchRepository = batchRepository;
+		this.batchTypeRepository = batchTypeRepository;
+		this.subtopicRepository = subtopicRepository;
+		this.subtopicNameRepository = subtopicNameRepository;
+		this.subtopicService = subtopicService;
+
+	}
 	
 	public void addOrUpdateBatch(Batch b) {
 		batchRepository.save(b);
@@ -89,5 +100,52 @@ public class BatchService {
 			
 			subtopicRepository.save(sub);
 		}
+	}
+
+	public BatchService() {}
+
+	public void setBatchRepository(BatchRepository batchRepository) {
+		this.batchRepository = batchRepository;
+	}
+
+	public void setBatchTypeRepository(BatchTypeRepository batchTypeRepository) {
+		this.batchTypeRepository = batchTypeRepository;
+	}
+
+	public void setSubtopicRepository(SubtopicRepository subtopicRepository) {
+		this.subtopicRepository = subtopicRepository;
+	}
+
+	public void setSubtopicNameRepository(SubtopicNameRepository subtopicNameRepository) {
+		this.subtopicNameRepository = subtopicNameRepository;
+	}
+
+	public void setSubtopicService(SubtopicService subtopicService) {
+		this.subtopicService = subtopicService;
+	}
+
+	public BatchRepository getBatchRepository()
+	{
+		return batchRepository;
+	}
+
+	public BatchTypeRepository getBatchTypeRepository()
+	{
+		return batchTypeRepository;
+	}
+
+	public SubtopicRepository getSubtopicRepository()
+	{
+		return subtopicRepository;
+	}
+
+	public SubtopicNameRepository getSubtopicNameRepository()
+	{
+		return subtopicNameRepository;
+	}
+
+	public SubtopicService getSubtopicService()
+	{
+		return subtopicService;
 	}
 }

@@ -15,6 +15,7 @@ var download = function (content, filename, contentType) {
  */
 app.controller("curriculumController",
 
+
     function ($scope, $http, $q, SessionService) {
         /* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
 
@@ -133,11 +134,7 @@ app.controller("curriculumController",
             }
             if ($scope.displayedCurriculum.meta.curriculumNumberOfWeeks) {
 
-                // var bars = document.getElementsByClassName("progress");
-                //clear the bars of their children
-                // for(x in bars){
-                // 	bars[x].innerHTML = '';
-                // }
+
                 for (var i in $scope.displayedCurriculum.weeks) {
                     var week = $scope.displayedCurriculum.weeks[i];
 
@@ -164,34 +161,18 @@ app.controller("curriculumController",
                             }
                         }
                     }
-                    //calculate percentages and apply then to the progress bars:
-                    // var bar = bars[i];
-                    //template: <div class="progress-bar" role="progressbar" style="width: 0%;"></div>
                     $scope.weekBars[i] = [];
                     if (!total) {
-                        // $scope.weekBars[i] = [];
-                        // var progress = document.createElement("div");
-                        // progress.classList.add("progress-bar");
-                        // progress.setAttribute("role", "progressbar");
-                        // progress.setAttribute("style", "padding:6px; width:100%; background-color:red");
-                        // // progress.innerText = "No Topics";
-                        // bar.appendChild(progress);
+
                         $scope.weekBars[i].push({name: "No Topics", width: "100%", color: "red"});
                     } else {
                         $scope.weekBars[i] = [];
-                        //add a progress section for each parent topic:
-                        // $scope.weekBars[i] = [];
+
                         for (m in topicCounts) {
 
                             var topic = topicCounts[m];
                             var percent = (topic.count / total) * 100;
-                            // var progress = document.createElement("div");
                             var color = $scope.getTopicColor(topic.name);
-                            // progress.classList.add("progress-bar");
-                            // progress.setAttribute("role", "progressbar");
-                            // progress.setAttribute("style", "padding:6px; width:" + percent + "%; background-color:" + color + ";");
-                            // progress.innerText = topic.name;
-                            // bar.appendChild(progress);
                             $scope.weekBars[i].push({name: topic.name, width: "" + percent + "%", color: color});
 
 
@@ -529,6 +510,7 @@ app.controller("curriculumController",
                     }
                 }
             }
+
 //				$scope.displayedCurriculum = null;
 //				$scope.template = null;
         };
