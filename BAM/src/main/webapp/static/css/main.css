@@ -464,7 +464,7 @@ background-color: #fea100 !important;
 }
 
 html {
-	    height: -webkit-fill-available;
+	    height: 100%;
 }
 #page-wrap{
 	
