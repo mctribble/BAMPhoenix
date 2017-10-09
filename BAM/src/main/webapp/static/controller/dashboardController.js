@@ -11,10 +11,14 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 	        window.location.reload();
 	    }
 	}
-	
+
+	/**
+	* function that grabs user information from Salesforce and retrieves batches from the
+	* database based on the role associated with the user
+	*/
 	$scope.initPage = function() {
 		$http({
-			url: 'rest/api/v1/Salesforce/salesforceSync',//Users/FixedUser',
+			url: 'rest/api/v1/Salesforce/salesforceSync',
 			method: 'GET'
 		}).then(function(response) {
 			SessionService.set("currentUser", response.data);
