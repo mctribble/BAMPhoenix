@@ -86,7 +86,8 @@
 							<button type="button" class="btn btn-md btn-success" ng-disabled="!displayedCurriculum.meta.curriculumNumberOfWeeks || !isEditable" ng-click="saveCurriculum()">Save Curriculum</button>
 							<button type="button" class="btn btn-md btn-danger" ng-click="clearCurriculumView()" ng-disabled="displayedCurriculum.meta.isMaster">X</button>
 						</div>
-						<a href="" class="btn btn-md btn-primary" ng-show="showBtn" id="xlsDownload">Download Curriculum</a>
+						<button href="" class="btn btn-md btn-primary" ng-show="showBtn" id="xlsDownload">Download Curriculum</button>
+						<button type="button" ng-show="showBtn" class="btn btn-md btn-primary" ng-click="downloadPDF()">Download PDF</button>
 					</div>
 				</div>
 				
