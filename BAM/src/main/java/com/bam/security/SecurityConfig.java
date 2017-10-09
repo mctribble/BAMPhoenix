@@ -17,6 +17,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.bam.service.BamUserDetailsService;
 
+/**
+ * This class is not used to configure Spring Security currently. It can be used to create
+ * method level security or to further specify restrictions on requests.
+ */
 
 //@Configuration
 //@EnableWebSecurity

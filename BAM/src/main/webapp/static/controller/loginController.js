@@ -1,3 +1,4 @@
+//This Controller is deprecated since the addition of OAuth2 with Salesforce
 app.controller('loginController', function($rootScope, $window, $scope, $location, $analytics, $http, SessionService) {
 	$(document).ready(function(){
 		$(".navbar").hide();
