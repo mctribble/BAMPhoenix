@@ -111,7 +111,7 @@ public class BamUserTest {
         //params
         int userId = 2;
         String fName = "John", mName =  null, lName = "Doe";
-        String email = "JohnDoe@fakemail.com", pwd = "password";
+        String email = "JohnDoe@fakemail.com", pwd = "password"; //NOSONAR
         int role = 1;
         Batch batch = new Batch();
         String phone = "555-5555-5556", phone2 = null, skype = null;
