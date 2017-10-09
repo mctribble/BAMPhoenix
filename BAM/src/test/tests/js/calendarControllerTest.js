@@ -213,7 +213,7 @@ describe('calendarController', function()
                 spyOn(uiCalendarConfig.calendars["myCalendar"], "fullCalendar");
                 $scope.changeDate();
                 expect(uiCalendarConfig.calendars["myCalendar"].fullCalendar).toHaveBeenCalledWith('gotoDate', searchDate);
-                expect($scope.searchDate).toEqual(today);
+                expect($scope.searchDate.getTime()).toEqual(today.getTime());
             });
 
             //alter this test to be more thorough if/when the currentBatch() function is actually used
@@ -246,7 +246,67 @@ describe('calendarController', function()
                 expect(result).toContain("some/test/url");
             });
 
-            
+            it ("sourceFingerprint should handle event objects with multiple formats without throwing exceptions", function ()
+            {
+               instantiateController();
+
+               controller.sourceFingerprint({ __id : 5, events : {__id : 3, someData: 7}});
+               controller.sourceFingerprint({           events : {__id : 3, someData: 7}});
+               controller.sourceFingerprint({ __id : 5, events : {          someData: 7}});
+               controller.sourceFingerprint({           events : {          someData: 7}});
+               controller.sourceFingerprint({ __id : 5, events : {__id : 3             }});
+               controller.sourceFingerprint({           events : {__id : 3             }});
+               controller.sourceFingerprint({ __id : 5, events : {                     }});
+               controller.sourceFingerprint({           events : {                     }});
+
+            });
+
+            it("sourceFingerprint should handle multiple non-objects wihthout throwing exceptions", function()
+            {
+               instantiateController();
+
+               controller.sourceFingerprint(17);
+               controller.sourceFingerprint(1.7);
+               controller.sourceFingerprint("17");
+            });
+
+            it("allEvents should not throw exception even if it has no data", function()
+            {
+               instantiateController();
+
+               var result = controller.allEvents();
+               expect(result).toEqual([]);
+            });
+
+            it("allEvents should return all events across multiple sources with multiple data formats", function()
+            {
+                //note that not all of this data is supposed to show up in the result
+               $scope.eventSources =
+                   [
+                       [],
+                       ["I", "am", "a", "string", "array!"],
+                       [{someKey:"someValue"}, {someOtherKey:"someOtherValue"}],
+                       {},
+                       {events : "not an object"},
+                       {events : ["some", "other", "string", "array"]},
+                       {events : {_id:4, someKey:"someValue", events:{_id:7, someSubKey:98}}},
+                       {events : [{_id:5, someKey:"someValue", events:{_id:8, someSubKey:99}}]}
+                   ];
+
+               instantiateController();
+
+               var result = controller.allEvents();
+               expect(result).toContain("I");
+               expect(result).toContain("array!");
+               expect(result).toContain({someKey:"someValue"});
+               expect(result).toContain({someOtherKey:"someOtherValue"});
+               expect(result).toContain({_id:5, someKey:"someValue", events:{_id:8, someSubKey:99}});
+               expect(result).not.toContain([]);
+               expect(result).not.toContain({});
+               expect(result).not.toContain("not an object");
+               expect(result).not.toContain({_id:4, someKey:"someValue", events:{_id:7, someSubKey:98}});
+            });
+
         });
 
         describe("associate", function()
