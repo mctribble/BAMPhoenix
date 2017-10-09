@@ -38,7 +38,6 @@ app.controller("subTopicController", function ($scope, SessionService, $location
             method: "GET", //Getting the subtopics
         }).then(function (response) {
             var subtopics = response.data;
-            console.log(subtopics);
             var uniqueTopics = new Set();
             var topicMap = new Map();
 

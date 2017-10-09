@@ -43,10 +43,12 @@ public class CurriculumController {
 	 * Method is needed for injecting mocked services for unit test
 	 */
 	@Autowired
-	public CurriculumController(CurriculumService cs, CurriculumSubtopicService css, SubtopicService ss){
+	public CurriculumController(CurriculumService cs, CurriculumSubtopicService css, SubtopicService ss, BatchService bs, BCMService bcm){
 		curriculumService = cs;
 		curriculumSubtopicService =css;
 		subtopicService = ss;
+		batchService = bs;
+		bcmService = bcm;
 	}
 
 	/**
@@ -86,9 +88,9 @@ public class CurriculumController {
 	
 	@RequestMapping(value = "Schedule", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public List<CurriculumSubtopic> getAllCurriculumSchedules(HttpServletRequest request){
+	public List<CurriculumSubtopic> getAllCurriculumSchedules(){
 		Curriculum c = new Curriculum();
-		c.setCurriculumId(Integer.parseInt(request.getParameter("curriculumId")));
+		c.setCurriculumId(1);
 		return curriculumSubtopicService.getCurriculumSubtopicForCurriculum(c);
 	}
 	
