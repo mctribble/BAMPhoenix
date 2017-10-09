@@ -55,7 +55,7 @@ public class CurriculumControllerTest {
 	@Test
 	public void getAllCurriculumTest() throws Exception{
 
-		mockMvc.perform(get("/rest/api/v1/Curriculum/All")).andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8"));
+		mockMvc.perform(get("/rest/api/v1/Curriculum/All").param("bid", "1")).andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8"));
 
 	}
 
