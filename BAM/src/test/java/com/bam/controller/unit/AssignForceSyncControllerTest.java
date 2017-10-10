@@ -23,12 +23,19 @@ public class AssignForceSyncControllerTest {
 
     private MockMvc mockMvc;
 
+    /**
+     * Initialization of variables.
+     */
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(mockAssignForceSyncController).build();
     }
 
+    /**
+     * Checks if request mapping, /refreshBatches, works.
+     * @throws Exception
+     */
     @Test
     public void refreshBatchesTest() throws Exception {
         doNothing().when(mockAssignForceSyncService).assignForceSync();

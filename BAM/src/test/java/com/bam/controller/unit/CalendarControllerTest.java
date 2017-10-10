@@ -40,6 +40,9 @@ public class CalendarControllerTest {
 	@InjectMocks
 	CalendarController calendarController;
 
+	/**
+	 * Declaration of variables.
+	 */
 	private MockMvc mockMvc;
 	private Subtopic testSubtopic1 = new Subtopic();
 	private Subtopic testSubtopic2 = new Subtopic();
@@ -53,6 +56,9 @@ public class CalendarControllerTest {
 	private List<TopicName> testNameList = new ArrayList<>();
 	private Batch testBatch = new Batch();
 
+	/**
+	 * Initialization of variables.
+	 */
 	@Before
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
@@ -86,6 +92,11 @@ public class CalendarControllerTest {
 		assertEquals(returnResults, new ArrayList<Subtopic>());
 	}
 
+	/**
+	 * Checks if the request mapping, /rest/api/v1/Calendar/Subtopics, works
+	 * and returns a list of subtopics based on the batchId.
+	 * @throws Exception
+	 */
 	@Test
 	public void getSubtopicsByBatchTest() throws Exception {
 		when(subtopicService.getSubtopicByBatchId(1)).thenReturn(testList);
@@ -115,6 +126,11 @@ public class CalendarControllerTest {
 		assertNotNull(returnValue.longValue());
 	}
 
+	/**
+	 * Checks if the request mapping, /rest/api/v1/Calendar/Topics, works
+	 * and returns a list of topics based on the batchId.
+	 * @throws Exception
+	 */
 	@Test
 	public void getTopicsByBatchPagTest() throws Exception {
 		when(testTopicService.getTopicByBatchId(1)).thenReturn(testWeekList);
@@ -125,6 +141,11 @@ public class CalendarControllerTest {
 		System.out.println(content);
 	}
 
+	/**
+	 * Checks if the request mapping, /rest/api/v1/Calendar/DateUpdate, works
+	 * and that the information is passed through the method correctly.
+	 * @throws Exception
+	 */
 	@Test
 	public void changeTopicDateTest() throws Exception {
 		when(subtopicService.getSubtopicByBatchId(1)).thenReturn(testList);
@@ -135,6 +156,12 @@ public class CalendarControllerTest {
 				.contentType("application/json;charset=UTF-8")).andExpect(status().isOk());
 	}
 
+	/**
+	 * Checks if the request mapping, /rest/api/v1/Calendar/StatusUpdate, works
+	 * and checks if the information is passed correctly through
+	 * the method.
+	 * @throws Exception
+	 */
 	@Test
 	public void updateTopicStatusTest() throws Exception {
 		when(subtopicService.getSubtopicByBatchId(1)).thenReturn(testList);
@@ -145,30 +172,19 @@ public class CalendarControllerTest {
 				.contentType("application/json;charset=UTF-8")).andExpect(status().isOk());
 	}
 
-//	@Test
-//	public void addTopicsTest() throws Exception {
-//		when(testTopicService.getTopics()).thenReturn(testNameList);
-//		doNothing().when(testTopicService).addOrUpdateTopicName(new TopicName());
-//		mockMvc.perform(post("/api/v1/Calendar/AddTopics").content(asJsonString(testNameList))
-//				.contentType("application/json")).andExpect(status().isOk());
-//	}
-
+	/**
+	 * Returns the mockMvc variable.
+	 * @return
+	 */
 	public MockMvc getMockMvc() {
 		return mockMvc;
 	}
 
+	/**
+	 * Sets the mockMvc variable.
+	 * @param mockMvc
+	 */
 	public void setMockMvc(MockMvc mockMvc) {
 		this.mockMvc = mockMvc;
 	}
-
-	public static String asJsonString(Object obj) {
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			String jsonContent = mapper.writeValueAsString(obj);
-			return jsonContent;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 }

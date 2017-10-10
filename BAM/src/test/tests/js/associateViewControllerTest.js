@@ -32,7 +32,6 @@ describe('associateViewController', function() {
             var controller = $controller('associateViewController', {$scope:$scope});
 
             expect($scope.currentBatchName).toBe(mockSession.currentBatch.name);
-        })
+        });
     });
-
 });

@@ -19,38 +19,64 @@ public class TopicControllerTest {
     @InjectMocks
     TopicController mockTopicController;
 
+    /**
+     * Declaration of variables.
+     */
     private MockMvc mockMvc;
 
+    /**
+     * Initialization of variables.
+     */
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(mockTopicController).build();
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Topic/Add, works.
+     * @throws Exception
+     */
     @Test
     public void addTopicNameTest() throws Exception {
         mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", "test"))
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Checks if the method throws an exception for an empty input.
+     * @throws Exception
+     */
     @Test
     public void addTopicNameBreakTest() throws Exception {
         mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", ""))
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Checks if the method throws an exception for a number input.
+     * @throws Exception
+     */
     @Test
     public void addTopicNameBreakTest2() throws Exception {
         mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", "5"))
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Checks if the method throws an exception for a whitespace input.
+     * @throws Exception
+     */
     @Test
     public void addTopicNameBreakTest3() throws Exception {
         mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", "            "))
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Checks if the method throws an exception for a symbol input.
+     * @throws Exception
+     */
     @Test
     public void addTopicNameBreakTest4() throws Exception {
         mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", ":^"))
