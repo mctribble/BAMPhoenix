@@ -74,7 +74,7 @@ app.controller("curriculumController",
                 }
             }
             download(jsonToSsXml(angular.toJson(xlsArray)), 'Curriculum.xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        }
+        };
 
         /* END XLS FUNCTION */
 
@@ -212,9 +212,9 @@ app.controller("curriculumController",
                         newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopicNameId);
                     }
                     return newCurriculum;
-                })
+                });
 
-            $scope.setWeekProgressBars();
+
         };
 
 
@@ -293,6 +293,7 @@ app.controller("curriculumController",
 
                 return $scope.requestCurriculum(curriculum)
                     .then(function (newCurriculum) {
+
                         //set the newCurriculum object as the $scope.template
                         $scope.template = newCurriculum;
                         //add newCurriculum as a version to the curricula type:
@@ -301,7 +302,8 @@ app.controller("curriculumController",
                                 $scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
                             }
                         }
-                        $scope.setWeekProgressBars();
+
+                    }).then(function () {
                     });
 
             } else {
@@ -317,13 +319,18 @@ app.controller("curriculumController",
                     $scope.displayedCurriculum = $scope.template;
                     $scope.isEditable = false;
                     $scope.showBtn = true;
-                    $scope.downloadXLS();
 
 
 
                 }).then(function () {
+
                 $scope.setWeekProgressBars();
-            });
+
+            }).then(function () {
+
+                $scope.downloadXLS();
+
+            })
 
         };
 
@@ -619,9 +626,11 @@ app.controller("curriculumController",
         /* END  TOPIC POOL FUNCTION DEFINITIONS */
 
         /* BEGIN CONTROLLER BODY - EXECUTED ON PAGE LOAD */
-
+        $scope.run = true;
         //load the topic pool on page load
-        if ($scope.topics = []) {
+        console.log($scope.topics);
+        if ($scope.run) {
+            $scope.run = false;
             $scope.getTopicPool().then(function () {
 
 
@@ -632,29 +641,33 @@ app.controller("curriculumController",
                         for (i in $scope.curricula) {
                             var curriculumType = $scope.curricula[i];
                             var masterVersion = {};
+                            var mv = {};
                             for (j in curriculumType.versions) {
+                                $scope.requestCurriculum(curriculumType.versions[j]);
                                 if (curriculumType.versions[j].meta.isMaster) {
                                     masterVersion = curriculumType.versions[j];
+                                    $scope.requestCurriculum(masterVersion)
+                                        .then(function (newCurriculum) {
+                                            //add newCurriculum as a version to the curricula type:
+                                            for (j in $scope.curricula) {
+                                                if ($scope.curricula[j].type == newCurriculum.meta.curriculumName) {
+                                                    $scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
+                                                    //load default master curriculum version on page load
+                                                    if (newCurriculum.meta.curriculumName == $scope.DEFAULT_TYPE && newCurriculum.meta.isMaster) {
+                                                        $scope.displayedCurriculum = newCurriculum;
+                                                        setTimeout($scope.setWeekProgressBars(), 5000);
+                                                    }
+                                                }
+
+                                            }
+
+
+                                        });
                                 }
                             }
 
-                            $scope.requestCurriculum(masterVersion)
-                                .then(function (newCurriculum) {
-                                    //add newCurriculum as a version to the curricula type:
-                                    for (j in $scope.curricula) {
-                                        if ($scope.curricula[j].type == newCurriculum.meta.curriculumName) {
-                                            $scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
-                                            //load default master curriculum version on page load
-                                            if (newCurriculum.meta.curriculumName == $scope.DEFAULT_TYPE && newCurriculum.meta.isMaster) {
-                                                $scope.displayedCurriculum = newCurriculum;
-                                                setTimeout($scope.setWeekProgressBars(), 5000);
-                                            }
-                                        }
-
-                                    }
 
 
-                                });
                         }
 
                     });
