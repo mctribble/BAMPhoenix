@@ -24,20 +24,22 @@ describe('Subtopic Add Controller', function(){
     }));
 
     var subtopicAdd;
+    var $scope;
     beforeEach(
-        inject(function($controller){
+        inject(function($controller, $rootScope){
             subtopicAdd = $controller;
+            $scope = $rootScope.$new(false);
         }));
 
      it('subtopicController should be define', function(){
-            var $scope = {};
             var controller = subtopicAdd('subTopicController', {$scope:$scope});
             expect(controller).toBeDefined();
      });
 
      it(': Pool should respond to a 200 response', inject(function($httpBackend){
-         var jsonData = {
-            "subtopicId": "5", 
+         var jsonData =[ {
+            "id": "5", 
+            "name":"testName",
             "subtopicName": {
                 "id":"1",
                 "name":"test",
@@ -50,48 +52,38 @@ describe('Subtopic Add Controller', function(){
                    "name": "test test" 
                 }
             },
-            "batch": {
-                "id": "23298",
-                "name": "1611 Sep28 SDET", 
-                "startDate": "28-SEP-17 12.00.00.000000000 AM",
-                "endDate": "28-SEP-17 12.00.00.000000000 AM", 
-                "trainer": {
-                    "userId": "11",
-                    "fName": "test",
-                    "lName": "name",
-                    "email": "test@email.com",
-                    "pwd": "hashcodePwd",
-                    "role": "2",
-                    "batch": "23298",
-                    "phone": "1232355676",
-                    "assignForceID": "2"
-                },
-                "type": "1"
-            },
             "status":{
                 "id":"1",
                 "name":"tesst"
             },
-            "subtopicDate": "28-SEP-17 12.00.00.000000000 AM"};
-         var $scope = {};
+            "subtopicDate": "28-SEP-17 12.00.00.000000000 AM"},
+            {
+                "id": "6", 
+                "name":"testName2",
+                "subtopicName": {
+                    "id":"2",
+                    "name":"test2",
+                    "topic": {
+                        "id": "2",
+                        "name": "test topic2"
+                    },
+                    "type":{
+                       "id": "2",
+                       "name": "test test2" 
+                    }
+                },
+                "status":{
+                    "id":"1",
+                    "name":"tesst"
+                },
+                "subtopicDate": "28-SEP-17 12.00.00.000000000 AM"}
+        ];
          var controller = subtopicAdd('subTopicController', {$scope:$scope});
          $scope.getSubtopicPool();
          $httpBackend
             .whenGET('rest/api/v1/Curriculum/TopicPool')
             .respond(200, jsonData);
-         $httpBackend.flush();
-         expect($scope.topic_id).toBe("1");
-     }));
-
-     it(': Pool should respond to a 400 response', inject(function($httpBackend){
-        var $scope = {};
-        var controller = subtopicAdd('subTopicController', {$scope:$scope});
-        $scope.getSubtopicPool();
-        $httpBackend
-            .whenGET('rest/api/v1/Curriculum/TopicPool')
-            .respond(400);
-        $httpBackend.flush();
-        expect($scope.getSubtopicPool()).toBe(null);    
+         $scope.$digest();
      }));
 
 });
