@@ -45,12 +45,39 @@ describe('Subtopic Add Controller', function(){
                 return {"status":200, "Subtopic":{
                     "subtopicId": "5", 
                     "subtopicName": {
+                        "id":"1",
                         "name":"test",
                         "topic": {
                             "id": "1",
                             "name": "test topic"
+                        },
+                        "type":{
+                           "id": "1",
+                           "name": "test test" 
                         }
-                    }, 
+                    },
+                    "batch": {
+                        "id": "23298",
+                        "name": "1611 Sep28 SDET", 
+                        "startDate": "28-SEP-17 12.00.00.000000000 AM",
+                        "endDate": "28-SEP-17 12.00.00.000000000 AM", 
+                        "trainer": {
+                            "userId": "11",
+                            "fName": "test",
+                            "lName": "name",
+                            "email": "test@email.com",
+                            "pwd": "hashcodePwd",
+                            "role": "2",
+                            "batch": "23298",
+                            "phone": "1232355676",
+                            "assignForceID": "2"
+                        },
+                        "type": "1"
+                    },
+                    "status":{
+                        "id":"1",
+                        "name":"tesst"
+                    },
                     "subtopicDate": "28-SEP-17 12.00.00.000000000 AM"}
                 };
             });
