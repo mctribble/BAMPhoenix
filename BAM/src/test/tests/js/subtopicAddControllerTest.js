@@ -1,16 +1,15 @@
 describe('Subtopic Add Controller', function(){
     beforeEach(module('bam'));
-    var add;
 
     var mockSession = {
         currentBatch:{
-            name:'test Batch',
+            name:"test Batch",
             id: 1
-        }
-        trainerBatch:{
-            name:'test trainer Batch',
-            id: 2
-        }
+        },
+       trainerBatch:{
+           name:"test trainer Batch",
+           id: 2
+       }
     }
 
     beforeEach(angular.mock.module({
@@ -24,22 +23,30 @@ describe('Subtopic Add Controller', function(){
         }
     }));
 
+    var subtopicAdd;
     beforeEach(
         inject(function($controller){
-            add = $controller;
+            subtopicAdd = $controller;
         }));
 
      it('should not be null', function(){
             var $scope = {};
-            var controller = add('subtopicAddController', {$scope:$scope});
+            var controller = subtopicAdd('subTopicController', {$scope:$scope});
             expect(controller).toBeDefined();
      });
 
-     it('should respond to a 200 response', function(){
+     it(': Pool should respond to a 200 response', inject(function($httpBackend){
          var $scope = {};
-         var controller = add('subtopicAddController', {$scope:$scope});
-         expect(batchId).not.toBe(0);
-     });
+         var controller = subtopicAdd('subTopicController', {$scope:$scope});
+         $scope.getSubtopicPool();
+         $httpBackend
+            .whenGET('rest/api/v1/Curriculum/SubtopicPool')
+            respond(function(){
+                return [200,[{subtopicId: '5'}, {subtopicName: [{name:''}, {topic: {name: ''}}]}, {subtopicDate: '28-SEP-17 12.00.00.000000000 AM'}]];
+            });
+         $httpBackend.flush();
+         expect($scope.message).toBe(true);
+     }));
 
 
 //     describe('getSubtopicPool:', function(){
