@@ -34,10 +34,16 @@ public class SubtopicAddControllerTest {
     @InjectMocks
     SubtopicAddController subtopicAddController;
 
+    /**
+     * Declaration of variables.
+     */
     private MockMvc mockMvc;
     private Calendar calendar = Calendar.getInstance();
     private Timestamp timestamp = new java.sql.Timestamp(calendar.getTime().getTime());
 
+    /**
+     * Initialization of variables.
+     */
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -46,6 +52,10 @@ public class SubtopicAddControllerTest {
                 new SubtopicStatus(), timestamp));
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Subtopic/addSubtopic, mapping.
+     * @throws Exception
+     */
     @Test
     public void addSubtopicTest() throws Exception {
         mockMvc.perform(post("/rest/api/v1/Subtopic/addSubtopic")
@@ -54,6 +64,11 @@ public class SubtopicAddControllerTest {
         .contentType("application/json;charset=UTF-8")).andExpect(status().isOk());
     }
 
+    /**
+     * Converts an object to a string for use as a parameter.
+     * @param obj
+     * @return
+     */
     public static String asJsonString(final Object obj) {
         try {
             ObjectMapper mapper = new ObjectMapper();

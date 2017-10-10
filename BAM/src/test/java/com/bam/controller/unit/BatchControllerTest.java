@@ -42,22 +42,25 @@ public class BatchControllerTest {
     @InjectMocks
     private BatchController batchController;
 
+    //Declaration of testing variables.
     private MockMvc mockMvc;
     private List<Batch> batchTestList = new ArrayList<Batch>();
     private List<BatchType> batchTypeTestList = new ArrayList<BatchType>();
     private Calendar calendar = Calendar.getInstance();
     private Timestamp startTime = new java.sql.Timestamp(calendar.getTime().getTime());
     private Timestamp endTime = new java.sql.Timestamp(calendar.getTime().getTime());
+    private Batch testBatch = new Batch();
+    private Batch testBatch2 = new Batch();
+    private Batch testBatch3 = new Batch();
+    private Batch testBatch4 = new Batch();
 
-
+    /**
+     * Initialization of variables.
+     */
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(new BatchController(batchService, bamUserService)).build();
-        Batch testBatch = new Batch();
-        Batch testBatch2 = new Batch();
-        Batch testBatch3 = new Batch();
-        Batch testBatch4 = new Batch();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(batchController).build();
         BatchType testBatchType = new BatchType(1, "type1", 10);
         BatchType testBatchType2 = new BatchType(2, "type2", 12);
         BatchType testBatchType3 = new BatchType( 3, "type3", 10);
@@ -114,11 +117,19 @@ public class BatchControllerTest {
         when(batchService.getAllBatchTypes()).thenReturn(batchTypeTestList);
     }
 
+    /**
+     * Checks if the class has a no constructor that takes no arguments.
+     */
     @Test
     public void shouldHaveANoArgsConstructor() {
         assertThat(BatchController.class, hasValidBeanConstructor());
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Batches/All, works
+     * and that the method returns a list.
+     * @throws Exception
+     */
     @Test
     public void getAllBatchesTest() throws Exception {
         MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/All"))
@@ -127,6 +138,11 @@ public class BatchControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Batches/Past, works
+     * and that the method returns a list.
+     * @throws Exception
+     */
     @Test
     public void getPastBatchesTest() throws Exception {
         MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/Past")
@@ -136,6 +152,11 @@ public class BatchControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Batches/Future, works
+     * and that the method returns a list.
+     * @throws Exception
+     */
     @Test
     public void getFutureBatchesTest() throws Exception {
         MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/Future")
@@ -145,6 +166,12 @@ public class BatchControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Batches/InProgress, works
+     * and that the method returns a batch in progress
+     * based off the email of the trainer .
+     * @throws Exception
+     */
     @Test
     public void getBatchInProgressTest() throws Exception {
         MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/InProgress")
@@ -154,6 +181,11 @@ public class BatchControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Batches/AllInProgress, works
+     * and that the method returns a list.
+     * @throws Exception
+     */
     @Test
     public void getAllBatchesInProgressTest() throws Exception {
         MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/AllInProgress")
@@ -163,6 +195,11 @@ public class BatchControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Batches/ById, works
+     * and that the method returns a batch based on the batchId.
+     * @throws Exception
+     */
     @Test
     public void getBatchByIdTest() throws Exception {
         MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/ById").param("batchId", "1")
@@ -171,18 +208,31 @@ public class BatchControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request, /rest/api/v1/Batches/Edit, mapping works.
+     * @throws Exception
+     */
     @Test
     public void updateUser() throws Exception {
         mockMvc.perform(post("/rest/api/v1/Batches/Edit").content(asJsonString(new BamUser()))
                 .contentType("application/json;charset=utf8")).andExpect(status().isOk());
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Batches/UpdateBatch, works.
+     * @throws Exception
+     */
     @Test
     public void updateBatchTest() throws Exception {
         mockMvc.perform(post("/rest/api/v1/Batches/UpdateBatch").content(asJsonString(new Batch()))
                 .contentType("application/json;charset=utf8")).andExpect(status().isOk());
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Batches/BatchTypes, works
+     * and that the method returns a list.
+     * @throws Exception
+     */
     @Test
     public void getAllBatchTypesTest() throws Exception {
         MvcResult result = mockMvc.perform(get("/rest/api/v1/Batches/BatchTypes")).andExpect(status().isOk())
@@ -191,10 +241,19 @@ public class BatchControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Sets the mockMvc variable.
+     * @param mockMvc
+     */
     public void setMockMvc(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
     }
 
+    /**
+     * Converts an object into a string for use as a parameter.
+     * @param obj
+     * @return
+     */
     public static String asJsonString(Object obj) {
         try {
             ObjectMapper mapper = new ObjectMapper();

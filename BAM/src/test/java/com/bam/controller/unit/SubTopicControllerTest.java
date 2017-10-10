@@ -35,7 +35,9 @@ public class SubTopicControllerTest {
 
     @InjectMocks
     SubTopicController mockSubtopicController;
-
+    /**
+     * Declaration of variable.
+     */
     private MockMvc mockMvc;
     private List<Subtopic> mockList = new ArrayList<>();
     private Subtopic mockSubTopic = new Subtopic();
@@ -50,6 +52,10 @@ public class SubTopicControllerTest {
     private SubtopicStatus mockStatus2 = new SubtopicStatus(1,"Missed");
     private SubtopicStatus mockStatus3= new SubtopicStatus(2,"Cancelled");
     private SubtopicStatus mockStatus4 = new SubtopicStatus(3,"InProgress");
+
+    /**
+     * Initialization of variables.
+     */
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -72,6 +78,10 @@ public class SubTopicControllerTest {
         mockList.add(mockSubTopic4);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Subtopic/Add, works.
+     * @throws Exception
+     */
     @Test
     public void addSubtopicNameTest() throws Exception {
         mockMvc.perform(post("/rest/api/v1/Subtopic/Add").param("typeId", "1")
@@ -79,6 +89,10 @@ public class SubTopicControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Checks if an exception is thrown from an invalid input for the first parse int.
+     * @throws Exception
+     */
     @Test
     public void addSubtopicNameBreakTest() throws Exception{
         mockMvc.perform(post("/rest/api/v1/Subtopic/Add").param("typeId", "e")
@@ -86,6 +100,10 @@ public class SubTopicControllerTest {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Checks if an exception is thrown from an invalid input for the second parse int.
+     * @throws Exception
+     */
     @Test
     public void addSubtopicNameBreakTest2() throws Exception{
         mockMvc.perform(post("/rest/api/v1/Subtopic/Add").param("typeId", "1")
@@ -93,6 +111,11 @@ public class SubTopicControllerTest {
                 .andExpect(status().is4xxClientError());
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Subtopic/All, works
+     * and returns a list.
+     * @throws Exception
+     */
     @Test
     public void getAllSubTopicsTest() throws Exception {
         when(mockSubtopicService.getSubtopics()).thenReturn(mockList);
@@ -102,6 +125,11 @@ public class SubTopicControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Subtopic/Completed, works
+     * and returns a list.
+     * @throws Exception
+     */
     @Test
     public void getAllCompletedSubtopicsTest() throws Exception {
         when(mockSubtopicService.getSubtopicsByStatus("Completed")).thenReturn(mockList);
@@ -111,6 +139,11 @@ public class SubTopicControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Subtopic/Pending, works
+     * and returns a list.
+     * @throws Exception
+     */
     @Test
     public void getAllPendingSubTopicsTest() throws Exception {
         when(mockSubtopicService.getSubtopicsByStatus("Pending")).thenReturn(mockList);
@@ -120,6 +153,11 @@ public class SubTopicControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Subtopic/AllMissed, works
+     * and returns a list.
+     * @throws Exception
+     */
     @Test
     public void getAllMissedSubTopicsTest() throws Exception {
         when(mockSubtopicService.getSubtopicsByStatus("Missed")).thenReturn(mockList);
@@ -129,6 +167,11 @@ public class SubTopicControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Subtopic/AllCanceled, works
+     * and returns a list.
+     * @throws Exception
+     */
     @Test
     public void getAllCancelledSubTopics() throws Exception {
         when(mockSubtopicService.getSubtopicsByStatus("Canceled")).thenReturn(mockList);
@@ -138,6 +181,11 @@ public class SubTopicControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Subtopic/ByBatchId, works
+     * and returns a list.
+     * @throws Exception
+     */
     @Test
     public void getAllSubtopicsByStatusTest() throws Exception {
         when(mockSubtopicService.getSubtopicsByBatchId(0)).thenReturn(mockList);
@@ -147,6 +195,11 @@ public class SubTopicControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Subtopic/ByBatchCompleted, works
+     * and returns a list.
+     * @throws Exception
+     */
     @Test
     public void getAllSubtopicsByBatchCompletedTest() throws Exception {
         when(mockSubtopicService.getSubtopicsByBatchAndStatus(0, "Completed")).thenReturn(mockList);
@@ -157,6 +210,11 @@ public class SubTopicControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Subtopic/ByBatchPending, works
+     * and returns a list.
+     * @throws Exception
+     */
     @Test
     public void getAllSubtopicsByBatchPendingTest() throws Exception {
         when(mockSubtopicService.getSubtopicsByBatchAndStatus(0, "Pending")).thenReturn(mockList);
@@ -167,6 +225,11 @@ public class SubTopicControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Subtopic/ByBatchMissed, works
+     * and returns a list.
+     * @throws Exception
+     */
     @Test
     public void getAllSubtopicsByBatchMissedTest() throws Exception {
         when(mockSubtopicService.getSubtopicsByBatchAndStatus(0, "Missed")).thenReturn(mockList);
@@ -177,6 +240,11 @@ public class SubTopicControllerTest {
         System.out.println(content);
     }
 
+    /**
+     * Checks if the request mapping, /rest/api/v1/Subtopic/ByBatchCanceled, works
+     * and returns a list.
+     * @throws Exception
+     */
     @Test
     public void getAllSubtopicsByBatchCancelledTest() throws Exception {
         when(mockSubtopicService.getSubtopicsByBatchAndStatus(0, "Canceled")).thenReturn(mockList);
