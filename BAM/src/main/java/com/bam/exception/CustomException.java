@@ -17,6 +17,7 @@ public class CustomException extends Exception {
   }
 
   public CustomException(MessagingException e) {
+    super(e);
     logger.error(e);
   }
 

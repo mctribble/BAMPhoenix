@@ -43,7 +43,10 @@ public class BamUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     BamUser user = bamUserService.findUserByEmail(email);
-    return buildUserForAuthentication(user, buildUserAuthority(user));
+    if (user == null)
+      return null;
+    else
+      return buildUserForAuthentication(user, buildUserAuthority(user));
   }
 
   // Converts Users user to org.springframework.security.core.userdetails.User

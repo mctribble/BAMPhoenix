@@ -51,7 +51,14 @@ describe('curriculumController', function () {
             var $scope = {};
             var controller = $controller('curriculumController', {$scope: $scope });
             var date = $scope.getDate();
-            expect(date).toBe("Hello_World")
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+            var format = mm + '/' + dd + '/' + yyyy;
+            expect(date).toBe(format);
 
         });
 
@@ -71,7 +78,7 @@ describe('curriculumController', function () {
             $scope.setTopicColors(topics);
             var color = $scope.getTopicColor("Java");
             
-            expect(color).toBe("Hello_World")
+            expect(color).not.toBeNull();
 // this test will always fail because it gives a random color
         });
 
@@ -101,44 +108,27 @@ describe('curriculumController', function () {
             });   
         })
 
-        // describe('request Curriculum', function () {
-        //     it ('check if the curriculum is collected', inject(function($httpBackend) {
-        //         var $scope = {};
-        //         var controller = $controller('curriculumController', {$scope: $scope});
-        //         var curriculum = {
-        //             meta:{
-        //                 curriculumId : "1"
-        //             }
-        //         }
-        //         var tempcurriculum = $scope.requestCurriculum(curriculum);
-        //         $httpBackend
-        //         .expectGET('rest/api/v1/Curriculum/Schedule?curriculumId=1');
-                
-
-        //         expect(tempcurriculum).toBe('');
-        //     }));   
-        // })
-
-        describe('set master', function () {
-            
-            
-            
-            it ('checks if the currriculum master has been updated', inject(function($httpBackend) {
-                var $scope = {};
-                var controller = $controller('curriculumController', {$scope: $scope});
-                var curriculum = {
-                        meta:{
-                            curriculumId : "1",
-                            curriculumVersion : "1",
-                            isMaster : "false",
-                            bid : "1"
-                            }
+        
+        
+        
+        
+     describe('set master', function () {
+        it ('checks if the currriculum master has been updated', inject(function($httpBackend) {
+            var $scope = {};
+            var controller = $controller('curriculumController', {$scope: $scope});
+            var curriculum = {
+                meta:{
+                    curriculumId : "1",
+                    curriculumVersion : "1",
+                    isMaster : "false",
+                    bid : "1"
+                    }
                 }
-                $scope.setMaster(curriculum);
-                $httpBackend
-                .expectGET('rest/api/v1/Curriculum/MakeMaster?curriculumId=1');
+            $scope.setMaster(curriculum);
+            $httpBackend
+                .expectPOST('rest/api/v1/Curriculum/MakeMaster?curriculumId=1');
                 expect(curriculum.meta.isMaster).toBe(true);
-            }));   
-        })
+        }));   
+    })
 
 });

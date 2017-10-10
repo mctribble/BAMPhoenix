@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -62,6 +63,13 @@ public class SubtopicService {
     st = subtopicNameRepository.findById(subtopic);
     ss = subtopicStatusRepository.findById(1);
 
+    if (b == null)
+        throw new NoSuchElementException("that batch does not exist!");
+    if (st == null)
+        throw new NoSuchElementException("that subtopic name does not exist!");
+    if (ss == null)
+        throw new NoSuchElementException("that subtopic status does not exist!");
+
     s.setBatch(b);
     s.setSubtopicName(st);
     s.setStatus(ss);
@@ -91,6 +99,8 @@ public class SubtopicService {
     //Removed code that caused the date of events to change
     //with every click on the calender
     // By Matthew Hill
+    if (subtopic == null)
+        throw new IllegalArgumentException("can't update null!");
 
     subtopicRepository.save(subtopic);
   }
@@ -165,6 +175,9 @@ public class SubtopicService {
    * @author Brian McKalip
    */
   public void addOrUpdateSubtopicName(SubtopicName subtopicName) {
+      if (subtopicName == null)
+          throw new IllegalArgumentException("Can't add or update null!");
+
     subtopicNameRepository.save(subtopicName);
   }
   

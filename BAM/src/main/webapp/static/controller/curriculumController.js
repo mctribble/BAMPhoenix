@@ -15,7 +15,6 @@ var download = function (content, filename, contentType) {
  */
 app.controller("curriculumController",
 
-
     function ($scope, $http, $q, SessionService) {
         /* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
 
@@ -75,6 +74,68 @@ app.controller("curriculumController",
             }
             download(jsonToSsXml(angular.toJson(xlsArray)), 'Curriculum.xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         };
+
+        /*
+            Grab the Revature logo to be loaded onto PDF
+        */
+        var logo = new Image();
+        logo.src = 'static/img/revature_logo.png'
+
+        /**
+        *   Function to generate PDF file that displays the templated curriculum
+        *   that is currently being viewed using jsPDF library
+        */
+        $scope.downloadPDF = function() {
+            //create new jsPDF instance
+            var pdf = new jsPDF()
+            var WORKDAYS = 5;
+            var newLine = 60;
+            var pageHeight = pdf.internal.pageSize.height - 20
+
+            //Add Revature logo in top right corner
+            pdf.addImage(logo,'PNG',110,10,90,30,'logo')
+            pdf.setFontSize(25)
+            pdf.text($scope.displayedCurriculum.meta.curriculumName + " Curriculum",10,37)
+
+            //Iterate over the curriculum data and load it onto the created pdf
+            for(var i = 0; i < $scope.displayedCurriculum.weeks.length; i++){
+
+                if(newLine >= pageHeight){
+                    pdf.addPage()
+                    newLine = 20
+                }
+                pdf.setFontSize(20)
+                pdf.text('Week '+ (i + 1) ,10,newLine)
+                newLine+=10
+
+                for(var j = 0; j < WORKDAYS; j++){
+                    if(newLine >= pageHeight){
+                        pdf.addPage()
+                        newLine = 20
+                    }
+                    pdf.setFontSize(15)
+                    pdf.text($scope.weekdays[j],20,newLine)
+                    newLine += 10
+
+                    for(var k = 0; k < $scope.displayedCurriculum.weeks[i].days[j].subtopics.length; k++){
+                        if(newLine >= pageHeight){
+                            pdf.addPage()
+                            newLine = 20
+                        }
+                        pdf.setFontSize(10)
+                        var subtopic = $scope.displayedCurriculum.weeks[i].days[j].subtopics[k];
+
+                        pdf.text(subtopic.topic.name + ": " + subtopic.name,30,newLine)
+                        newLine += 10
+                    }
+                }
+                newLine += 20
+            }
+
+            //Download the file
+            pdf.save('Curriculum.pdf')
+        }
+
 
         /* END XLS FUNCTION */
 
