@@ -117,8 +117,8 @@ app.controller("subTopicController", function ($scope, SessionService, $location
                 var start = new Date($scope.batch.startDate);
                 // var prevdate = new Date($scope.prevDate);
 
-                var timestamp = new Date(selection);
-                var newDate = new Date(timestamp);
+                var timestamp = new Date(selection).getTime() + 46800000;
+                var newDate = new Date(new Date(timestamp).setHours(0,0,0,0));
 
                 // $scope.stDate = prevdate;
                 if (newDate < start || newDate > end)
