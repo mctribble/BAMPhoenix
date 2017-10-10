@@ -40,12 +40,22 @@ describe('Subtopic Add Controller', function(){
          var controller = subtopicAdd('subTopicController', {$scope:$scope});
          $scope.getSubtopicPool();
          $httpBackend
-            .expectGET('rest/api/v1/Curriculum/TopicPool')
+            .whenGET('rest/api/v1/Curriculum/TopicPool')
             .respond(function(){
-                return [200, [{subtopicId: '5'}, {subtopicName: [{name:'test'}, {topic: [{id: '1'},{name: 'test topic'}]}]}, {subtopicDate: '28-SEP-17 12.00.00.000000000 AM'}]];
+                return {"status":200, "Subtopic":{
+                    "subtopicId": "5", 
+                    "subtopicName": {
+                        "name":"test",
+                        "topic": {
+                            "id": "1",
+                            "name": "test topic"
+                        }
+                    }, 
+                    "subtopicDate": "28-SEP-17 12.00.00.000000000 AM"}
+                };
             });
          $httpBackend.flush();
-         expect($scope.topic_id).toBe('1');
+         expect($scope.topic_id).toBe("1");
      }));
 
 });
