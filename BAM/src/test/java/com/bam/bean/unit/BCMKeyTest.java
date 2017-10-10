@@ -4,10 +4,9 @@ import com.bam.bean.BCMKey;
 import org.junit.Test;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
-import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class BCMKeyTest
 {
@@ -15,9 +14,18 @@ public class BCMKeyTest
     public void shouldHaveANoArgsConstructor() {
         assertThat(BCMKey.class, hasValidBeanConstructor());
     }
-    //PASS: Ensure all properties on the bean have working getters and setters.
+
     @Test
     public void gettersAndSettersShouldWorkForEachProperty() {
         assertThat(BCMKey.class, hasValidGettersAndSetters());
+    }
+
+    @Test
+    public void testParameterizedConstructors()
+    {
+        BCMKey test = new BCMKey(1, "test name");
+
+        assertEquals(1, test.getBid());
+        assertEquals("test name", test.getCname());
     }
 }
