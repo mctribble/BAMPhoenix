@@ -1,6 +1,8 @@
 package com.bam.service;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class BamUserService {
   BatchRepository batchRepository;
 
   public void addOrUpdateUser(BamUser user) {
+    if (user == null)
+      throw new IllegalArgumentException("cant add or update null!");
     bamUserRepository.save(user);
   }
 
@@ -58,10 +62,23 @@ public class BamUserService {
     return users;
   }
 
+  //regex to identify valid email addresses.  See https://stackoverflow.com/questions/8204680/java-regex-email
+  public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+          Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+  public static boolean validate(String emailStr) {
+    Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+    return matcher.find();
+  }
+
   /*
    * Author: Adeo Salam
    */
   public void recoverE(BamUser user, String unhashedPwd) {
+
+    if (!validate(user.getEmail()))
+      throw new IllegalArgumentException("That user seems to have an invalid email address");
+
     EmailRun er = new EmailRun();
     user.setPwd(unhashedPwd);
     er.setUser(user);
