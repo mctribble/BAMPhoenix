@@ -46,11 +46,11 @@ public class BamUser {
 	private String email;
 
 	@Column(name = "Password")
-	@NotEmpty(message="Password cannot be empty")
+//	@NotEmpty(message="Password cannot be empty")
 	@JsonIgnore
 	@ApiModelProperty("Password")
 	private String pwd;
-	
+
 	@Column(name = "Role") // Role 1 is for associates // Role 2 is for trainers & QC
 	@ApiModelProperty("Role id")
 	private int role; // Role 3 is for admins
@@ -64,8 +64,7 @@ public class BamUser {
 							// trainers and admins. A trainer is assigned in the
 							// Batches table.
 	@Column(name = "Main_Phone")
-	@NotEmpty(message = "Primary phone cannot be empty")
-	@ApiModelProperty(notes = "Primary phone number.")
+//	@NotEmpty(message = "Primary phone cannot be empty")
 	private String phone;
 
 	@Column(name = "Second_Phone")

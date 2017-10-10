@@ -17,110 +17,102 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.bam.service.BamUserDetailsService;
 
+/**
+ * This class is not used to configure Spring Security currently. It can be used to create
+ * method level security or to further specify restrictions on requests. Use the overridden
+ * configure methods to configure your particular security on top of the already existing salesforce
+ * oAuth2 authentication.
+ */
 
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//@Configuration
+//@EnableWebSecurity
+//public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//
+//	@Autowired
+//	BamUserDetailsService userDetailsService;
+//
+//	@Autowired
+//	private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
+//
+//	@Autowired
+//	private AuthenticationFailureHandler restAuthenticationFailureHandler;
+//
+//
+//
+//	@Autowired
+//	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//		auth.userDetailsService(userDetailsService);
+//	}
+//
+//	/***
+//	 * @author Nam Mai
+//	 * Configure the passwordEncoder to use the BCrypt hashing algorithm
+//	 */
+//	@Bean
+//	public PasswordEncoder passwordEncoder(){
+//		return new BCryptPasswordEncoder();
+//	}
+//
+//	/***
+//	 * @author Nam Mai
+//	 * This method encodes the password upon authentication
+//	 */
+//	@Bean
+//	public DaoAuthenticationProvider authProvider(){
+//		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//		authProvider.setUserDetailsService(userDetailsService);
+//		authProvider.setPasswordEncoder(passwordEncoder());
+//		return authProvider;
+//	}
+//
+//	 @Override
+//	 public void configure(WebSecurity web) throws Exception {
+//		// Ignore certain URLs.
+//		web.ignoring().antMatchers(
+//				"/v2/api-docs",
+//				"/configuration/ui",
+//				"/swagger-resources",
+//				"/cofiguration/security",
+//				"/swagger-resources/configuration/ui",
+//				"/swagger-resources/configuration/security",
+//				"/swagger-ui.html",
+//				"/webjars/**",
+//				"/index.html", "/static/**","/static/js/**", "/static/css/**", "/");
+//	}
+//
+//	/***
+//	 * @author Nam Mai
+//	 * References the authProvider to enable hashing
+//	 */
+//	@Override
+//	protected void configure(AuthenticationManagerBuilder auth){
+//		auth.authenticationProvider(authProvider());
+//	}
+//
+//	/**
+//	 * @author Duncan Hayward
+//	 * uncomment to protect rest endpoints, need to fix the roles first
+//	 * logout isn't getting deleting of JSESSIONID
+//	 * Don't disable csrf in production
+//	 */
+//	@Override
+//	 protected void configure(HttpSecurity http) throws Exception {
+//	  http
+//	   .headers().disable().csrf().disable().exceptionHandling()
+//	   .and()
+//	   .authorizeRequests()
+//	    .antMatchers("/rest/api/v1/Users/Register").permitAll()
+//	    .antMatchers("**rest*/**").authenticated()
+//	    .antMatchers("*rest*/**").authenticated()
+//	    .antMatchers("**/*rest*/**").authenticated()
+//	    .antMatchers("**rest*/**").authenticated()
+//	    .anyRequest().authenticated()
+//	    .antMatchers("/rest/api/v1/Curriculum/**").hasAuthority("Trainer")
+//	    .and()
+//	    .logout()
+//	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//	    .logoutSuccessUrl("/logout").deleteCookies("JSESSIONID")
+//	    .invalidateHttpSession(true);
+//	 }
+//}
 
-	@Autowired
-	BamUserDetailsService userDetailsService;
-
-	@Autowired
-	private AuthenticationSuccessHandler restAuthenticationSuccessHandler;
-
-	@Autowired
-	private AuthenticationFailureHandler restAuthenticationFailureHandler;
-	
-	
-
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
-	}
-	
-	/***
-	 * @author Nam Mai
-	 * Configure the passwordEncoder to use the BCrypt hashing algorithm
-	 */
-	@Bean
-	public PasswordEncoder passwordEncoder(){
-		return new BCryptPasswordEncoder();
-	}
-	
-	/***
-	 * @author Nam Mai
-	 * This method encodes the password upon authentication
-	 */
-	@Bean
-	public DaoAuthenticationProvider authProvider(){
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(userDetailsService);
-		authProvider.setPasswordEncoder(passwordEncoder());
-		return authProvider;
-	}
-	
-	 @Override
-	 public void configure(WebSecurity web) throws Exception {
-		// Ignore certain URLs.
-		web.ignoring().antMatchers(
-				"/v2/api-docs",
-				"/configuration/ui",
-				"/swagger-resources",
-				"/cofiguration/security",
-				"/swagger-resources/configuration/ui",
-				"/swagger-resources/configuration/security",
-				"/swagger-ui.html",
-				"/webjars/**",
-				"/index.html", "/static/**", "/");
-	 }
-	 
-	 
-
-
-	/***
-	 * @author Nam Mai
-	 * References the authProvider to enable hashing
-	 */
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth){
-		auth.authenticationProvider(authProvider());
-	}
-	
-	/**
-	 * @author Duncan Hayward
-	 * uncomment to protect rest endpoints, need to fix the roles first 
-	 * logout isn't getting deleting of JSESSIONID
-	 * Don't disable csrf in production
-	 */
-	@Override
-	 protected void configure(HttpSecurity http) throws Exception {
-	  http
-	   .headers().disable().csrf().disable().exceptionHandling()
-	 //.authenticationEntryPoint(authenticationEntryPoint)
-	   .and()
-	   .authorizeRequests()
-	    .antMatchers("/rest/api/v1/Users/Register").permitAll()
-	    .antMatchers("**rest*/**").authenticated()
-	    .antMatchers("*rest*/**").authenticated()
-	    .antMatchers("**/*rest*/**").authenticated()
-	    .antMatchers("**rest*/**").authenticated()
-	    .anyRequest().authenticated()
-	    .antMatchers("/rest/api/v1/Curriculum/**").hasAuthority("Trainer")
-	    .and()
-	    .formLogin()
-	   	.loginPage("/")
-	   	.loginProcessingUrl("/authenticate")
-	    .successHandler(restAuthenticationSuccessHandler)
-	    .failureHandler(restAuthenticationFailureHandler)
-	    .usernameParameter("username")
-	    .passwordParameter("password")
-//	    .permitAll()
-	    .and()
-	    .logout()
-	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-	    .logoutSuccessUrl("/logout").deleteCookies("JSESSIONID")
-	    .invalidateHttpSession(true);
-
-	   	
-	 }
-}

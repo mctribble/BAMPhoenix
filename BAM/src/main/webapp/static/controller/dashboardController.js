@@ -1,17 +1,86 @@
-	/**
+/**
  * @author Sarah Kummerfeldt 
  * @author Kosiba Oshodi-Glover
  */
 
 app.controller('dashboardController', function($http, $scope, $analytics, SessionService, $rootScope) {
-	 $analytics.pageTrack('/home');
+	 $analytics.pageTrack('/');
 	window.onload = function() {
 	    if(!window.location.hash) {
 	        window.location = window.location + '#loaded';
 	        window.location.reload();
 	    }
 	}
-	
+
+	/**
+	* function that grabs user information from Salesforce and retrieves batches from the
+	* database based on the role associated with the user
+	*/
+	$scope.initPage = function() {
+		$http({
+			url: 'rest/api/v1/Salesforce/salesforceSync',
+			method: 'GET'
+		}).then(function(response) {
+			SessionService.set("currentUser", response.data);
+			$rootScope.user = SessionService.get("currentUser");
+			console.log(response.data);
+			
+			if(SessionService.get("currentUser").role == 3){
+				console.log("Role is 3, getting data and stuff");
+				SessionService.set("userRole", "(Quality Control)");
+				$rootScope.userRole = SessionService.get("userRole");
+				$scope.getData();
+				$scope.currentBatch(this);
+				$scope.returnMissed();
+			} else if(SessionService.get("currentUser").role == 2){
+				console.log("Role is 2");
+				SessionService.set("userRole", '(Trainer)');
+				$rootScope.userRole = SessionService.get("userRole");
+
+				$http({
+					url: 'rest/api/v1/Batches/InProgress',
+					method: 'GET',
+					params: {email: SessionService.get("currentUser").email}
+				}).then(function(response){
+					console.log("Got Batches, and data");
+					SessionService.set("trainerBatch", response.data);
+					SessionService.set("gotSubtopics", false);
+					$scope.getData();
+					$scope.currentBatch(this);
+					$scope.returnMissed();
+				}, function(response){
+					$scope.msg = 'Batch Acquisition failed';
+					console.log("Batch Acquisition Failed");
+				});
+			} else if(SessionService.get("currentUser").role == 1) {
+				console.log("Role is 1");
+				SessionService.set("userRole", "(Associate)");
+				$rootScope.userRole = SessionService.get("userRole");
+
+				if(!SessionService.get("currentUser").batch){
+					$location.path("/noBatch");
+				} else{
+					console.log("Getting Number of Subtopics, and data");
+					SessionService.set("gotSubtopics", false);
+					$scope.getData();
+					$scope.currentBatch(this);
+					$scope.returnMissed();
+
+					$http({
+						url: "rest/api/v1/Calendar/GetNumberOfSubtopics?batchId=" + SessionService.get("currentUser").batch.id,
+						method: "GET"
+					}).then(function(response){
+						SessionService.set("numberOfSubtopics", response.data);
+					});
+				}
+			} else {
+				$location.path("/batchesAll");
+			}
+		}, function(response) {
+			console.log("This Did Not Run Correctly")
+		});
+	}
+
 	/**
 	 * rootScope used to pass a variable between controllers
 	 */

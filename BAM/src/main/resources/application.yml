@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 80
 
 spring:
   datasource:
@@ -14,4 +14,21 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.Oracle10gDialect
+
+security:
+  oauth2:
+    client:
+      clientId: ${CLIENT_ID}
+      clientSecret: ${CLIENT_SECRET}
+      clientAuthenticationScheme: form
+      authenticationScheme: header
+      tokenName: authorization_code
+      accessTokenUri: https://revature--int1.cs17.my.salesforce.com/services/oauth2/token
+      userAuthorizationUri: https://revature--int1.cs17.my.salesforce.com/services/oauth2/authorize
+      grantType: authorizationCode
+      preEstablishedRedirectUri: http://localhost:8080/home
+
+    resource:
+      userInfoUri: https://revature--int1.cs17.my.salesforce.com/services/oauth2/userinfo
+
 

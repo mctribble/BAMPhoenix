@@ -122,24 +122,6 @@ describe('curriculumController', function () {
             }));   
         })
 
-        describe('new curriculum', function () {
-            it ('checks if the is Editable has been changed', function() {
-                var $scope = {};
-                var controller = $controller('curriculumController', {$scope: $scope});
-                var type = {
-                        meta:{
-                            curriculumId : "1",
-                            curriculumVersion : "1",
-                            isMaster : "false"
-                            }
-                }
-                $scope.newCurriculum(type);
-
-                $scope.isEditable = false;
-                expect($scope.isEditable).toBe(0);
-            });   
-        })
-
 
 
 

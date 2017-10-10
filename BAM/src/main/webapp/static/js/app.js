@@ -1,18 +1,12 @@
 var app = angular.module('bam', ['ngRoute', 'dndLists','angulartics', 'angulartics.google.analytics']);
 app.config(function($routeProvider, $locationProvider){
 	$locationProvider.html5Mode(false).hashPrefix('');
-	$routeProvider.when("/",{
-		templateUrl: "static/pages/login.html",
-		controller: 'loginController'
-	}).when("/batchesAll",{
+	$routeProvider.when("/batchesAll",{
 		templateUrl:"static/pages/batchesAll.html",
 		controller: "batchesAllController"
 	}).when("/myBatches",{
 		templateUrl:"static/pages/myBatches.html",
 		controller: "myBatchesController"
-	}).when("/register",{
-		templateUrl: "static/pages/register.html",
-		controller: "bamUserRegisterController"
 	}).when("/calendar",{
 		templateUrl: "static/pages/calendar.html",
 		controller: "calendarController"
@@ -43,10 +37,7 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/curriculum",{
 		templateUrl: "static/pages/curriculum.html",
 		controller: "curriculumController"
-	}).when("/logout", {
-	    templateUrl: "static/pages/login.html", 
-	    controller: 'loginController'
-	}).when("/home", {
+	}).when("/", {
 	    templateUrl: "static/pages/dashboard.html", 
 	    controller: 'dashboardController'
 	}).when("/documentation", {
