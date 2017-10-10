@@ -81,15 +81,5 @@ describe('Dashboard Controller', function(){
             $scope.$digest();
             expect($scope.batchCount).not.toBe(0);
         }));
-        it('Current Batch should respond to a 400 response', inject(function($httpBackend){
-            var $scope = {};
-            var controller = dashboard('dashboardController', {$scope:$scope});
-            $scope.currentBatch();
-            $httpBackend
-                .whenGET('rest/api/v1/Batches/All')
-                .respond(400);
-            $httpBackend.flush();
-            expect($scope.currentBatch()).toBe(null);    
-         }));
      });
 });
