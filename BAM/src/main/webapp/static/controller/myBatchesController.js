@@ -3,7 +3,7 @@
  */
 app.controller('myBatchesController', function($scope, SessionService, $rootScope, $location, $http)
 {
-	$scope.msg;
+	$scope.msg = null;
 	
 	$scope.getmyBatches = function(){
 		var emailer = SessionService.get("currentUser").email;
