@@ -7,9 +7,6 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/myBatches",{
 		templateUrl:"static/pages/myBatches.html",
 		controller: "myBatchesController"
-	}).when("/register",{
-		templateUrl: "static/pages/register.html",
-		controller: "bamUserRegisterController"
 	}).when("/calendar",{
 		templateUrl: "static/pages/calendar.html",
 		controller: "calendarController"
@@ -40,9 +37,6 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/curriculum",{
 		templateUrl: "static/pages/curriculum.html",
 		controller: "curriculumController"
-	}).when("/logout", {
-	    templateUrl: "static/pages/login.html", 
-	    controller: 'loginController'
 	}).when("/", {
 	    templateUrl: "static/pages/dashboard.html", 
 	    controller: 'dashboardController'
