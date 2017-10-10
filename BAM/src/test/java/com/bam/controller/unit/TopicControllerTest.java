@@ -44,7 +44,7 @@ public class TopicControllerTest {
     }
 
     /**
-     * Checks if the method throws an exception for an empty input.
+     * Checks if the method returns 400 for an empty input.
      * @throws Exception
      */
     @Test
@@ -54,32 +54,12 @@ public class TopicControllerTest {
     }
 
     /**
-     * Checks if the method throws an exception for a number input.
+     * Checks if the method returns 400 for a whitespace input.
      * @throws Exception
      */
     @Test
     public void addTopicNameBreakTest2() throws Exception {
-        mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", "5"))
-                .andExpect(status().is4xxClientError());
-    }
-
-    /**
-     * Checks if the method throws an exception for a whitespace input.
-     * @throws Exception
-     */
-    @Test
-    public void addTopicNameBreakTest3() throws Exception {
         mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", "            "))
-                .andExpect(status().is4xxClientError());
-    }
-
-    /**
-     * Checks if the method throws an exception for a symbol input.
-     * @throws Exception
-     */
-    @Test
-    public void addTopicNameBreakTest4() throws Exception {
-        mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", ":^"))
                 .andExpect(status().is4xxClientError());
     }
 
