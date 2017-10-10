@@ -92,6 +92,10 @@ public class BamUser {
 	public BamUser(String fName, String mName, String lName, String email, String pwd, int role, Batch batch,
 			String phone, String phone2, String skype, String pwd2) {//NOSONAR
 		super();
+
+		if ( (role == 2) && (batch != null) )
+			throw new IllegalStateException("Trainers cannot have a batch!");
+
 		this.fName = fName;
 		this.mName = mName;
 		this.lName = lName;
@@ -108,6 +112,10 @@ public class BamUser {
 	public BamUser(int userId, String fName, String mName, String lName, String email, String pwd, int role,
 			Batch batch, String phone, String phone2, String skype, String pwd2) {//NOSONAR
 		super();
+
+		if ( (role == 2) && (batch != null) )
+			throw new IllegalStateException("Trainers cannot have a batch!");
+
 		this.fName = fName;
 		this.mName = mName;
 		this.lName = lName;
@@ -125,6 +133,10 @@ public class BamUser {
 	public BamUser(int userId, String fName, String mName, String lName, String email, String pwd, int role,
 			Batch batch, String phone, String phone2, String skype, String pwd2, Integer AssignForceID) {//NOSONAR
 		super();
+
+		if ( (role == 2) && (batch != null) )
+			throw new IllegalStateException("Trainers cannot have a batch!");
+
 		this.userId = userId;
 		this.fName = fName;
 		this.mName = mName;
@@ -201,6 +213,10 @@ public class BamUser {
 	}
 
 	public void setBatch(Batch batch) {
+
+		if ( (role == 2) && (batch != null) )
+			throw new IllegalStateException("Trainers cannot have a batch!");
+
 		this.batch = batch;
 	}
 

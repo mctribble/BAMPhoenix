@@ -20,6 +20,9 @@ public class CurriculumSubtopicService {
 	}
 	
 	public void saveCurriculumSubtopic(CurriculumSubtopic cs){
+		if (cs == null)
+			throw new IllegalArgumentException("Can't save null!");
+
 		curriculumSubtopic.save(cs);
 	}
 	

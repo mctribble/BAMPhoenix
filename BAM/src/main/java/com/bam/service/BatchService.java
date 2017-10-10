@@ -47,6 +47,9 @@ public class BatchService {
 	}
 	
 	public void addOrUpdateBatch(Batch b) {
+		if (b == null)
+			throw new IllegalArgumentException("Can't add or update null!");
+
 		batchRepository.save(b);
 	}
 
