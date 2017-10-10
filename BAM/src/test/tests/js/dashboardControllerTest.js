@@ -20,13 +20,14 @@ describe('Dashboard Controller', function(){
         }
     }));
 
+    var $scope;
     beforeEach(
-        inject(function($controller){
+        inject(function($controller, $rootScope){
             dashboard = $controller;
+            $scope = $rootScope.$new(false);
         }));
 
      it('dashboardController should be defined', function(){
-            var $scope = {};
             var controller = dashboard('dashboardController', {$scope:$scope});
             expect(controller).toBeDefined();
      });
@@ -52,24 +53,13 @@ describe('Dashboard Controller', function(){
                 },
                 "type": "1"
             };
-            var $scope = {};
             var controller = dashboard('dashboardController', {$scope:$scope});
             $scope.currentBatch();
             $httpBackend
                 .whenGET('rest/api/v1/Batches/All')
                 .respond(200, jsonData);
-            $httpBackend.flush();
-            expect($scope.batchCount).not.toBeCalled(0);
+            $scope.$digest();
+            expect($scope.batchCount).not.toBe(0);
         }));
-        it('Current Batch should respond to a 400 response', inject(function($httpBackend){
-            var $scope = {};
-            var controller = dashboard('dashboardController', {$scope:$scope});
-            $scope.currentBatch();
-            $httpBackend
-                .whenGET('rest/api/v1/Batches/All')
-                .respond(400);
-            $httpBackend.flush();
-            expect($scope.currentBatch()).toBe(null);    
-         }));
      });
 });
