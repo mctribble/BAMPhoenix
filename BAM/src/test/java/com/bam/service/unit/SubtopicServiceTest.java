@@ -146,7 +146,7 @@ public class SubtopicServiceTest
     @Test (expected = RuntimeException.class) //realistically this should probably be either NullPointerException or IllegalArgumentException, but any runtimeException will do
     public void addSubtopicBadBatch() throws Exception
     {
-        subtopicService.addSubtopic(testSubtopicName1.getId(), testBatch.getId());
+        subtopicService.addSubtopic(testSubtopicName1.getId(), 0);
     }
 
     //happy path
@@ -191,7 +191,7 @@ public class SubtopicServiceTest
     }
 
     //update null
-    @Test (expected = NullPointerException.class)
+    @Test (expected = IllegalArgumentException.class)
     public void updateSubtopicNull() throws Exception
     {
         subtopicService.updateSubtopic(null);
@@ -218,11 +218,11 @@ public class SubtopicServiceTest
         assertThat( subtopicService.getNumberOfSubtopics(testBatch.getId()).intValue(), equalTo(testSubtopics.size()));
     }
 
-    //bad batch id
-    @Test (expected = RuntimeException.class) //realistically this should probably be either NullPointerException or IllegalArgumentException, but any runtimeException will do
+    //bad batch id should return 0
+    @Test
     public void getNumberOfSubtopicsBadId() throws Exception
     {
-        subtopicService.getNumberOfSubtopics(0);
+        assertThat( subtopicService.getNumberOfSubtopics(0), equalTo(0L));
     }
 
     //happy path

@@ -44,8 +44,8 @@ public class UserControllerTest {
     private Batch testBatch = new Batch();
     private BamUser testUser1 = new BamUser(1, "first", "","last", "test1@email.com", "password", 1,
     new Batch(), "1111111111", "1012223333", "", "" ,5);
-    private BamUser testUser2 = new BamUser(2, "first", "","last", "test2@email.com", "password", 2,
-            new Batch(), "1111111111", "1012223333", "", "" ,15);
+    private BamUser testUser2 = new BamUser(2, "first", "","last", "test2@email.com", "password", 1,
+            null, "1111111111", "1012223333", "", "" ,15);
     private BamUser testUser3 = new BamUser(3, "first", "","last", "test3@email.com", "password", 1,
             new Batch(), "1111111111", "1012223333", "", "" ,25);
     private BamUser testUser4 = new BamUser(4, "first", "","last", "test3@email.com", "password", 1,

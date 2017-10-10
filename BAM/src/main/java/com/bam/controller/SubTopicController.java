@@ -3,7 +3,11 @@ package com.bam.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import com.bam.bean.Subtopic;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,13 +33,24 @@ public class SubTopicController {
   @Autowired
   SubtopicService subTopicService;
 
+  private static final Logger logger = LogManager.getRootLogger();
+
   @RequestMapping(value = "Add", method = RequestMethod.POST)
   @ApiOperation(value = "Add a new subtopic to a topic")
-  public void addSubTopicName(HttpServletRequest request) {
-    SubtopicType type = subTopicService.getSubtopicType(Integer.parseInt(request.getParameter("typeId")));
-    TopicName topic = topicService.getTopicName(Integer.parseInt(request.getParameter("topicId")));
-    SubtopicName subtopic = new SubtopicName(request.getParameter("subtopicName"), topic, type);
-    subTopicService.addOrUpdateSubtopicName(subtopic);
+  public ResponseEntity addSubTopicName(HttpServletRequest request) {
+    try {
+      SubtopicType type = subTopicService.getSubtopicType(Integer.parseInt(request.getParameter("typeId")));
+      TopicName topic = topicService.getTopicName(Integer.parseInt(request.getParameter("topicId")));
+      SubtopicName subtopic = new SubtopicName(request.getParameter("subtopicName"), topic, type);
+      subTopicService.addOrUpdateSubtopicName(subtopic);
+    }
+    catch (NumberFormatException e) {
+      logger.debug(e);
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+
+    return ResponseEntity.status(HttpStatus.OK).body(null);
+
   }
 
   /**

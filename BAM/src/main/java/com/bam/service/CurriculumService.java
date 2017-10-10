@@ -32,6 +32,10 @@ public class CurriculumService {
 	public Curriculum getCuricullumById(Integer id){
 		//obfuscate password
 		Curriculum curriculum = curriculumRepository.findById(id);
+
+		if (curriculum == null)
+			return null;
+
 		curriculum.getCurriculumCreator().setPwd("");
 		curriculum.getCurriculumCreator().setPwd2("");
 		if(curriculum.getCurriculumModifier() != null)
@@ -43,6 +47,9 @@ public class CurriculumService {
 	}
 	
 	public void save(Curriculum c){
+		if (c == null)
+			throw new IllegalArgumentException("Can't save null!");
+
 		curriculumRepository.save(c);
 	}
 	

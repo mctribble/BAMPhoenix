@@ -7,7 +7,7 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ForceTest {
-    
+
     @Test
     public void shouldHaveANoArgsConstructor() {
         assertThat(Force.class, hasValidBeanConstructor());
