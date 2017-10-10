@@ -53,28 +53,23 @@ public class SalesforceAuthController {
 
         String salesforceUrl = "https://revature--int1.cs17.my.salesforce.com";
         String revokeUrl = salesforceUrl + "/services/oauth2/revoke";
-        try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-            MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-            map.add("token", restTemplate.getAccessToken().toString());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-            HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("token", restTemplate.getAccessToken().toString());
 
-            ResponseEntity<String> response = restTemplate.postForEntity(revokeUrl, request, String.class);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
 
+        ResponseEntity<String> response = restTemplate.postForEntity(revokeUrl, request, String.class);
 
-            principal.getUserAuthentication().setAuthenticated(false);
+        principal.getUserAuthentication().setAuthenticated(false);
 
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-            if (auth != null) {
-                new SecurityContextLogoutHandler().logout(req, resp, auth);
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(req, resp, auth);
         }
 
         return new ModelAndView("redirect:" + salesforceUrl + "/secur/logout.jsp");

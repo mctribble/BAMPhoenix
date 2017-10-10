@@ -40,8 +40,24 @@ describe('Dashboard Controller', function(){
             $httpBackend
                 .whenGET('rest/api/v1/Batches/All')
                 .respond(function(){
-                    return [200,[{id: '23298'}, {name: '1611 Sep28 SDET'}, {startDate: '28-SEP-17 12.00.00.000000000 AM'},
-                         {endDate: '28-SEP-17 12.00.00.000000000 AM'}, {trainer: {userId: '11'}}, {type: '1'}]];
+                    return {"status":200, "Batch":{
+                        "id": "23298",
+                        "name": "1611 Sep28 SDET", 
+                        "startDate": "28-SEP-17 12.00.00.000000000 AM",
+                        "endDate": "28-SEP-17 12.00.00.000000000 AM", 
+                        "trainer": {
+                            "userId": "11",
+                            "fName": "test",
+                            "lName": "name",
+                            "email": "test@email.com",
+                            "pwd": "hashcodePwd",
+                            "role": "2",
+                            "batch": "23298",
+                            "phone": "1232355676",
+                            "assignForceID": "2"
+                        },
+                        "type": "1"
+                    }};
                 });
             $httpBackend.flush();
             expect($scope.batchCount).not.toBeCalled(0);
