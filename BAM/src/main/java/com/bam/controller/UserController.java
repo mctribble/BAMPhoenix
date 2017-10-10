@@ -200,5 +200,12 @@ public class UserController {
         }
     }
 
+	@RequestMapping(value = "FixedUser", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public BamUser getFixedUser() {
+		BamUser retUser = userService.findUserById(12251);
+		return retUser;
+	}
+
 
 }

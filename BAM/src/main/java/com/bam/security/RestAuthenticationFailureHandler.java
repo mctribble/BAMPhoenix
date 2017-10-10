@@ -19,6 +19,6 @@ public class RestAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
 			AuthenticationException exception) throws IOException, ServletException {
 		response.setContentType("application/json;charset=UTF-8");
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		
+
 	}
 }
