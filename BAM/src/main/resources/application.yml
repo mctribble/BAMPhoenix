@@ -1,6 +1,5 @@
 server:
-  port: 8080
-#  context-path: /bam
+  port: 80
 
 spring:
   datasource:
