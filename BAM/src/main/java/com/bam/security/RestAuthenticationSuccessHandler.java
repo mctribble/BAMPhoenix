@@ -17,7 +17,7 @@ import com.bam.repository.BamUserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * 
+ *
  * @author Duncan Hayward
  * Retrieve user object
  * Check for successful login in console
@@ -39,17 +39,17 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws ServletException, IOException {
 
-		
+
 		BamUser user = userService.findByEmail(authentication.getName());
-		
-		
+
+
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter writer = response.getWriter();
-		
+
 		writer.write(mapper.writeValueAsString(user));
-		
+
 		response.setStatus(HttpServletResponse.SC_OK);
-		
+
 		writer.flush();
 		writer.close();
 	}

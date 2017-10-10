@@ -17,9 +17,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.bam.service.BamUserDetailsService;
 
+/**
+ * This class is not used to configure Spring Security currently. It can be used to create
+ * method level security or to further specify restrictions on requests.
+ */
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -30,14 +34,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AuthenticationFailureHandler restAuthenticationFailureHandler;
-	
-	
+
+
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
 	}
-	
+
 	/***
 	 * @author Nam Mai
 	 * Configure the passwordEncoder to use the BCrypt hashing algorithm
@@ -46,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	/***
 	 * @author Nam Mai
 	 * This method encodes the password upon authentication
@@ -58,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		authProvider.setPasswordEncoder(passwordEncoder());
 		return authProvider;
 	}
-	
+
 	 @Override
 	 public void configure(WebSecurity web) throws Exception {
 		// Ignore certain URLs.
@@ -71,11 +75,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/swagger-resources/configuration/security",
 				"/swagger-ui.html",
 				"/webjars/**",
-				"/index.html", "/static/**", "/");
-	 }
-	 
-	 
-
+				"/index.html", "/static/**","/static/js/**", "/static/css/**", "/");
+}
 
 	/***
 	 * @author Nam Mai
@@ -85,10 +86,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth){
 		auth.authenticationProvider(authProvider());
 	}
-	
+
 	/**
 	 * @author Duncan Hayward
-	 * uncomment to protect rest endpoints, need to fix the roles first 
+	 * uncomment to protect rest endpoints, need to fix the roles first
 	 * logout isn't getting deleting of JSESSIONID
 	 * Don't disable csrf in production
 	 */
@@ -96,7 +97,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 protected void configure(HttpSecurity http) throws Exception {
 	  http
 	   .headers().disable().csrf().disable().exceptionHandling()
-	 //.authenticationEntryPoint(authenticationEntryPoint)
 	   .and()
 	   .authorizeRequests()
 	    .antMatchers("/rest/api/v1/Users/Register").permitAll()
@@ -107,20 +107,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    .anyRequest().authenticated()
 	    .antMatchers("/rest/api/v1/Curriculum/**").hasAuthority("Trainer")
 	    .and()
-	    .formLogin()
-	   	.loginPage("/")
-	   	.loginProcessingUrl("/authenticate")
-	    .successHandler(restAuthenticationSuccessHandler)
-	    .failureHandler(restAuthenticationFailureHandler)
-	    .usernameParameter("username")
-	    .passwordParameter("password")
-//	    .permitAll()
-	    .and()
 	    .logout()
 	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 	    .logoutSuccessUrl("/logout").deleteCookies("JSESSIONID")
 	    .invalidateHttpSession(true);
-
-	   	
 	 }
 }
+
