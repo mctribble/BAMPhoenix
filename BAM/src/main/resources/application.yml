@@ -26,7 +26,6 @@ security:
       accessTokenUri: https://revature--int1.cs17.my.salesforce.com/services/oauth2/token
       userAuthorizationUri: https://revature--int1.cs17.my.salesforce.com/services/oauth2/authorize
       grantType: authorizationCode
-      preEstablishedRedirectUri: http://localhost:8080/home
 
     resource:
       userInfoUri: https://revature--int1.cs17.my.salesforce.com/services/oauth2/userinfo
