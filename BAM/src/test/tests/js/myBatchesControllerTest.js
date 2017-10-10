@@ -45,7 +45,11 @@ describe('myBatchesControllerTest', function() {
 
             $httpBackend
                 .when('GET', 'rest/api/v1/Batches/AllInProgress')
-                .respond(200, 'response');
+                .respond(function() {
+                    return [200];
+                });
+
+            $httpBackend.flush();
 
             expect($scope.message).toBe(true);
         }));
