@@ -46,5 +46,7 @@ app.config(function($routeProvider, $locationProvider){
 	}).when("/", {
 	    templateUrl: "static/pages/dashboard.html", 
 	    controller: 'dashboardController'
+	}).when("/documentation", {
+	    templateUrl: "static/pages/swagger-ui.html"
 	}).otherwise({redirectTo: '/'});
 });

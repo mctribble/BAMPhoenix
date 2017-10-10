@@ -4,12 +4,11 @@ import com.bam.bean.*;
 import com.bam.dto.CurriculumSubtopicDTO;
 import com.bam.dto.DaysDTO;
 import com.bam.exception.CustomException;
-import com.bam.service.BatchService;
-import com.bam.service.CurriculumService;
-import com.bam.service.CurriculumSubtopicService;
-import com.bam.service.SubtopicService;
+import com.bam.service.*;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/rest/api/v1/Curriculum/")
+@Api(value="catalog", tags="Curriculum", description = "Operations about curriculums")
 public class CurriculumController {
 
 	@Autowired
@@ -34,6 +34,9 @@ public class CurriculumController {
 	@Autowired 
 	BatchService batchService;
 
+	@Autowired
+	BCMService bcmService;
+
 	public CurriculumService get(){
 		return curriculumService;
 	}
@@ -43,27 +46,56 @@ public class CurriculumController {
 	 * Method is needed for injecting mocked services for unit test
 	 */
 	@Autowired
-	public CurriculumController(CurriculumService cs, CurriculumSubtopicService css, SubtopicService ss){
+	public CurriculumController(CurriculumService cs, CurriculumSubtopicService css, SubtopicService ss, BatchService bs, BCMService bcm){
 		curriculumService = cs;
 		curriculumSubtopicService =css;
 		subtopicService = ss;
+		batchService = bs;
+		bcmService = bcm;
 	}
-	
+
+	/**
+	 * Matthew Hill
+	 * Slight modification of the original method to use the newly created
+	 * Batch_curr_master table that represents an individual batch's master version
+	 */
 	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public List<Curriculum> getAllCurriculum(){
-		return curriculumService.getAllCurriculum();
+	@ApiOperation(value = "Find all curriculums")
+	public List<Curriculum> getAllCurriculum(HttpServletRequest request){
+
+		List<Curriculum> l = curriculumService.getAllCurriculum();
+
+		int bid = Integer.parseInt(request.getParameter("bid"));
+
+		for (Curriculum c : l)
+		{
+			c.setIsMaster(bcmService.getMaster(bid, c.getCurriculumName()) == c.getCurriculumVersion()? 1 : 0);
+		}
+		System.out.println(l);
+		return l;
+
 	}
-	
+
+	/**
+	 * Matthew Hill
+	 * Slight modification of the original method to use the newly created
+	 * Batch_curr_master table that represents an individual batch's master version
+	 */
 	@RequestMapping(value = "GetCurriculum", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+	@ApiOperation(value = "Find a curriculum by id")
 	public Curriculum getCurriculumById(HttpServletRequest request){
 		int curriculumId = Integer.parseInt(request.getParameter("curriculumId"));
-		return curriculumService.getCuricullumById(curriculumId);
+		int bid = Integer.parseInt(request.getParameter("bid"));
+		Curriculum c = curriculumService.getCuricullumById(curriculumId);
+		c.setIsMaster(bcmService.getMaster(bid, c.getCurriculumName()) == c.getCurriculumVersion()? 1 : 0);
+		return c;
 	}
 	
 	@RequestMapping(value = "Schedule", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+	@ApiOperation(value = "Find all subtopics for a curriculum")
 	public List<CurriculumSubtopic> getAllCurriculumSchedules(HttpServletRequest request){
 		Curriculum c = new Curriculum();
 		c.setCurriculumId(Integer.parseInt(request.getParameter("curriculumId")));
@@ -72,17 +104,20 @@ public class CurriculumController {
 	
 	@RequestMapping(value = "TopicPool", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+	@ApiOperation(value = "Find all subtopics")
 	public List<SubtopicName> getTopicPool(){
 		return subtopicService.getAllSubtopics();
 	}
 	
 	@RequestMapping(value = "SubtopicPool", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+	@ApiOperation(value = "Find all subtopic being covered by batches")
 	public List<Subtopic> getSubtopicPool(){
 		return subtopicService.getSubtopics();
 	}
 
 	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
+	@ApiOperation(value = "Add a new curriculum to the system")
 	public void addSchedule(@RequestBody String json) throws JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
 		CurriculumSubtopicDTO c = mapper.readValue(json, CurriculumSubtopicDTO.class);
@@ -116,38 +151,23 @@ public class CurriculumController {
 			}
 		}
 	}
-	
-	@RequestMapping(value = "MakeMaster", method = RequestMethod.GET)
-	public void markCurriculumAsMaster(HttpServletRequest request){
-		Curriculum c = curriculumService.getCuricullumById(Integer.parseInt(request.getParameter("curriculumId")));
-		c.setIsMaster(1);
-		
-		//find the curriculum with same name and isMaster = 1; set to 0; save
-		List<Curriculum> curriculumList = curriculumService.findAllCurriculumByName(c.getCurriculumName());
-		
-	    try {
-	        Curriculum prevMaster = null;
 
-	        for (int i = 0; i < curriculumList.size(); i++) {
-	          if (curriculumList.get(i).getIsMaster() == 1)
-	            prevMaster = curriculumList.get(i);
-	        }
-	        if (prevMaster != null) {
-	          prevMaster.setIsMaster(0);
-	          curriculumService.save(prevMaster);
-	        } else {
-	          LogManager.getRootLogger().error(prevMaster);
-	        }
-	      } catch (NullPointerException e) {
-	        LogManager.getRootLogger().error(e);
-	      }
-		
-		//save new master curriculum
-		curriculumService.save(c);
+	@RequestMapping(value = "MakeMaster", method = RequestMethod.POST)
+	@ApiOperation("Updates a curriculum to be the master curriculum")
+	public void markCurriculumAsMaster(HttpServletRequest request){
+
+
+		Integer bid = Integer.parseInt(request.getParameter("bid"));
+		String cname = request.getParameter("cname");
+		Integer version = Integer.parseInt(request.getParameter("version"));
+		bcmService.setMaster(bid, cname, version);
+		//find the curriculum with same name and isMaster = 1; set to 0; save
+
 	}
 	
 	//syncs a curriculum with batch from Assignforce
 	@RequestMapping(value = "SyncBatch/{id}", method = RequestMethod.GET)
+	@ApiOperation(value = "Syncs a curriculum with batch from AssignForce")
 	public void syncBatch(@PathVariable int id) throws CustomException{
 		Batch currBatch = batchService.getBatchById(id);
 		String batchType = currBatch.getType().getName();

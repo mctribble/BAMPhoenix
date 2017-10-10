@@ -1,8 +1,13 @@
 package com.bam.bean;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel("AssignForce Curriculum")
 public class AssignForceCurriculum {
-	
+	@ApiModelProperty(notes = "AssignForce curriculum id")
 	private Integer currId;
+	@ApiModelProperty(notes = "Name")
 	private String name;
 	
 	public AssignForceCurriculum() {

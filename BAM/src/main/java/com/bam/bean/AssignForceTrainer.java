@@ -1,12 +1,18 @@
 package com.bam.bean;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
 
 @Component
+@ApiModel("AssignForce Trainer")
 public class AssignForceTrainer {
 
+	@ApiModelProperty(notes = "AssignForce trainer id")
 	private Integer trainerId;
+	@ApiModelProperty(notes = "First name")
 	private String firstName;
+	@ApiModelProperty(notes = "Last name")
 	private String lastName;
 	
 	public AssignForceTrainer() {

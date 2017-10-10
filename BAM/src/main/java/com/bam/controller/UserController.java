@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +25,7 @@ import com.bam.service.PasswordGenerator;
 
 @RestController
 @RequestMapping(value = "/rest/api/v1/Users/")
+@Api(value="catalog", description="Operations about users", tags="User")
 public class UserController {
 	
 	private static final String USERID = "userId";
@@ -34,24 +39,31 @@ public class UserController {
 
 	@RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+	@ApiOperation(value="Find all users")
+	@ApiResponses({
+			@ApiResponse(code=200, message="Successful operation")
+	})
 	public List<BamUser> getAllUsers() {
 		return userService.findAllUsers();
 	}
 
 	@RequestMapping(value = "AllTrainers", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+	@ApiOperation(value="Find all trainers")
 	public List<BamUser> getAllTrainers() {
 		return userService.findByRole(2);
 	}
 
 	@RequestMapping(value = "AllAssociates", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+	@ApiOperation(value="Find all associates")
 	public List<BamUser> getAllAssociates() {
 		return userService.findByRole(1);
 	}
 
 	@RequestMapping(value = "InBatch", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+	@ApiOperation(value="Find all users by batch id")
 	public List<BamUser> getUsersInBatch(HttpServletRequest request) {
 
 		//Get the batch id from the request
@@ -63,6 +75,7 @@ public class UserController {
 
 	@RequestMapping(value = "Drop", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
+	@ApiOperation("Delete user from their batch")
 	public List<BamUser> dropUserFromBatch(HttpServletRequest request) {
 
 		//Get the user id from the request
@@ -81,6 +94,7 @@ public class UserController {
 
 	
 	@RequestMapping(value="Update", method=RequestMethod.POST, produces="application/json")
+	@ApiOperation(value="Update user password, password not hashed")
 	public void updateUser(@RequestBody BamUser currentUser) {
 		BamUser user = userService.findUserByEmail(currentUser.getEmail());
 		currentUser.setPwd(user.getPwd());
@@ -88,6 +102,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="Register", method=RequestMethod.POST, produces="application/json")
+	@ApiOperation(value="Add a new associate to the system")
 	public void addUser(@RequestBody BamUser currentUser) throws CustomException {
 		if(userService.findUserByEmail(currentUser.getEmail())==null){
 			currentUser.setRole(1);
@@ -116,6 +131,7 @@ public class UserController {
 	 */
 
 	@RequestMapping(value="Reset", method=RequestMethod.POST, produces="application/java")
+	@ApiOperation(value="Update user password")
 	public void resetPassword(@RequestBody BamUser userNewPass) throws CustomException{
 		BamUser currentUser = userService.findUserByEmail(userNewPass.getEmail());
 		if(BCrypt.checkpw(userNewPass.getPwd(), currentUser.getPwd())){
@@ -129,6 +145,7 @@ public class UserController {
 
 	@RequestMapping(value = "Remove", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
+	@ApiOperation(value = "Same as dropping user from batch")
 	public List<BamUser> removeUser(HttpServletRequest request) {
 
 		//Get the user id from the request
@@ -147,6 +164,7 @@ public class UserController {
 
 	@RequestMapping(value = "Add", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
+	@ApiOperation(value="Add user to a batch")
 	public List<BamUser> addUserToBatch(HttpServletRequest request) {
 		//Get the user id from the request
 		int userId = Integer.parseInt( request.getParameter(USERID) );
@@ -161,11 +179,13 @@ public class UserController {
 
 	@RequestMapping(value = "NotInABatch", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+	@ApiOperation(value="Find all users not in a batch")
 	public List<BamUser> getUsersNotInBatch(HttpServletRequest request) {
 		return userService.findUsersNotInBatch();
 	}
 	
 	@RequestMapping(value = "Recovery", method = RequestMethod.POST, produces = "application/json")
+	@ApiOperation(value="Reset user password and send the new password to the user email")
     public void recoverPassword(@RequestBody String email) throws CustomException {
         // Lookup user in database by e-mail
         BamUser user = userService.findUserByEmail(email);
