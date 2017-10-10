@@ -78,7 +78,7 @@ describe('Subtopic Add Controller', function(){
             .whenGET('rest/api/v1/Curriculum/TopicPool')
             .respond(200, jsonData);
          $httpBackend.flush();
-         expect($scope.topic_id).toBe("1");
+         expect(this.subtopics).not.toBe(null);
      }));
 
 

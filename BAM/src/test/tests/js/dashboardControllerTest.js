@@ -78,7 +78,7 @@ describe('Dashboard Controller', function(){
                 .whenGET('rest/api/v1/Batches/All')
                 .respond(200, jsonData);
             $httpBackend.flush();
-            expect($scope.batchCount).not.toBeCalled(0);
+            expect($scope.batchCount).not.toBe(0);
         }));
      });
 });
