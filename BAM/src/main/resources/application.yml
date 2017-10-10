@@ -1,6 +1,5 @@
 server:
-  port: 8080
-#  context-path: /bam
+  port: 80
 
 spring:
   datasource:
@@ -26,7 +25,9 @@ security:
       tokenName: authorization_code
       accessTokenUri: https://revature--int1.cs17.my.salesforce.com/services/oauth2/token
       userAuthorizationUri: https://revature--int1.cs17.my.salesforce.com/services/oauth2/authorize
-      grantType: authorization_code
+      grantType: authorizationCode
+
     resource:
       userInfoUri: https://revature--int1.cs17.my.salesforce.com/services/oauth2/userinfo
+
 

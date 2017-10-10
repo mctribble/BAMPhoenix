@@ -17,11 +17,17 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.bam.service.BamUserDetailsService;
 
+/**
+ * This class is not used to configure Spring Security currently. It can be used to create
+ * method level security or to further specify restrictions on requests. Use the overridden
+ * configure methods to configure your particular security on top of the already existing salesforce
+ * oAuth2 authentication.
+ */
 
 //@Configuration
 //@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
+//public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//
 //	@Autowired
 //	BamUserDetailsService userDetailsService;
 //
@@ -62,8 +68,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //	 @Override
 //	 public void configure(WebSecurity web) throws Exception {
 //		// Ignore certain URLs.
-//		web.ignoring().antMatchers("/index.html", "/static/js/**", "/static/css/**");
-//	 }
+//		web.ignoring().antMatchers(
+//				"/v2/api-docs",
+//				"/configuration/ui",
+//				"/swagger-resources",
+//				"/cofiguration/security",
+//				"/swagger-resources/configuration/ui",
+//				"/swagger-resources/configuration/security",
+//				"/swagger-ui.html",
+//				"/webjars/**",
+//				"/index.html", "/static/**","/static/js/**", "/static/css/**", "/");
+//	}
 //
 //	/***
 //	 * @author Nam Mai
@@ -94,19 +109,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //	    .anyRequest().authenticated()
 //	    .antMatchers("/rest/api/v1/Curriculum/**").hasAuthority("Trainer")
 //	    .and()
-//	    .formLogin()
-//	   	.loginPage("/")
-//	   	.loginProcessingUrl("/authenticate")
-//	    .successHandler(restAuthenticationSuccessHandler)
-//	    .failureHandler(restAuthenticationFailureHandler)
-//	    .usernameParameter("username")
-//	    .passwordParameter("password")
-//	    .permitAll()
-//	    .and()
 //	    .logout()
 //	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 //	    .logoutSuccessUrl("/logout").deleteCookies("JSESSIONID")
 //	    .invalidateHttpSession(true);
-//
 //	 }
-}
+//}
+

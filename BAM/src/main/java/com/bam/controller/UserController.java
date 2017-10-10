@@ -100,48 +100,6 @@ public class UserController {
 		currentUser.setPwd(user.getPwd());
 		userService.addOrUpdateUser(currentUser);
 	}
-	
-	@RequestMapping(value="Register", method=RequestMethod.POST, produces="application/json")
-	@ApiOperation(value="Add a new associate to the system")
-	public void addUser(@RequestBody BamUser currentUser) throws CustomException {
-		if(userService.findUserByEmail(currentUser.getEmail())==null){
-			currentUser.setRole(1);
-			String password = currentUser.getPwd();
-			String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
-			currentUser.setPwd(hashed);
-			userService.addOrUpdateUser(currentUser);
-		} else {
-			throw new CustomException("Email exists in database");
-		}	
-	}
-
-	/**
-	 * @author Tom Scheffer
-	 * @param jsonObject
-	 *            - object being passed in
-	 * @param session
-	 *            - current session
-	 * @throws Exception
-	 *             - for when previous password is wrong
-	 * @param jsonObject - object being passed in
-	 * @throws Exception - for when previous password is wrong
-	 * 
-	 *             Updates the user's password from the update view. Updates
-	 *             password to pwd2 when pwd equals their old pwd
-	 */
-
-	@RequestMapping(value="Reset", method=RequestMethod.POST, produces="application/java")
-	@ApiOperation(value="Update user password")
-	public void resetPassword(@RequestBody BamUser userNewPass) throws CustomException{
-		BamUser currentUser = userService.findUserByEmail(userNewPass.getEmail());
-		if(BCrypt.checkpw(userNewPass.getPwd(), currentUser.getPwd())){
-			String hashed =  BCrypt.hashpw(userNewPass.getPwd2(), BCrypt.gensalt());
-			currentUser.setPwd(hashed);
-			userService.addOrUpdateUser(currentUser);
-		}else{
-			throw new CustomException("Wrong password, password not changed");
-		}
-	}
 
 	@RequestMapping(value = "Remove", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody

@@ -1,6 +1,9 @@
 package com.bam.logging;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -34,8 +37,8 @@ public class LoggerClass {
   public Object interceptService(ProceedingJoinPoint pjp) throws CustomException {
     // return to always return join point objects so they are not consumed
     Object proceedObj = null;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-    String baseString = "(" + simpleDateFormat.format(new Date(System.currentTimeMillis())) + ")"
+    DateTimeFormatter f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+    String baseString = "(" + LocalDateTime.now().format(f) + ")"
                         + ": " + pjp.getSignature().getDeclaringTypeName()
                         + " -> " + pjp.getSignature().getName()
                         + " " + Arrays.toString(pjp.getArgs())
@@ -54,8 +57,8 @@ public class LoggerClass {
   @Around("execution(* com.bam.controller.*.*(..))")
   public Object interceptController(ProceedingJoinPoint pjp) throws CustomException {
     Object proceedObj = null;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-    String baseString = "(" + simpleDateFormat.format(new Date(System.currentTimeMillis())) + ")"
+    DateTimeFormatter f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+    String baseString = "(" + LocalDateTime.now().format(f) + ")"
                         + ": " + pjp.getSignature().getDeclaringTypeName()
                         + " -> " + pjp.getSignature().getName()
                         + " " + Arrays.toString(pjp.getArgs())
@@ -70,5 +73,4 @@ public class LoggerClass {
 
     return proceedObj;
   }
-
 }

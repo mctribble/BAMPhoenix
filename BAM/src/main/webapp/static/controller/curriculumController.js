@@ -189,6 +189,7 @@ app.controller("curriculumController",
         };
 
         $scope.setWeekProgressBars = function () {
+
             if ($scope.topicColors.length <= 0) {
 
                 return;
@@ -273,6 +274,8 @@ app.controller("curriculumController",
                     }
                     return newCurriculum;
                 })
+
+            $scope.setWeekProgressBars();
         };
 
 
@@ -308,7 +311,7 @@ app.controller("curriculumController",
                 //unset master in type:
                 $http({
                     url: "rest/api/v1/Curriculum/MakeMaster",
-                    method: "POST",
+                    method: "GET",
                     params: {
                         curriculumId: curriculum.meta.curriculumId,
                         cname: curriculum.meta.curriculumName,
@@ -359,6 +362,7 @@ app.controller("curriculumController",
                                 $scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
                             }
                         }
+                        $scope.setWeekProgressBars();
                     });
 
             } else {
@@ -375,6 +379,8 @@ app.controller("curriculumController",
                     $scope.isEditable = false;
                     $scope.showBtn = true;
                     $scope.downloadXLS();
+
+
 
                 }).then(function () {
                 $scope.setWeekProgressBars();
@@ -692,6 +698,7 @@ app.controller("curriculumController",
                                     masterVersion = curriculumType.versions[j];
                                 }
                             }
+
                             $scope.requestCurriculum(masterVersion)
                                 .then(function (newCurriculum) {
                                     //add newCurriculum as a version to the curricula type:

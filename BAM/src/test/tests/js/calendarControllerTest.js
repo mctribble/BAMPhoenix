@@ -1,8 +1,13 @@
+//each describe is a logical combination of tests
+//this file intentionally nests multiple layers of describes together, because beforeEach() calls apply
+//to every test in the describe
+//this means we can define "all of this applies to every test"
+//and also "these things apply only to trainer tests"
 describe('calendarController', function()
 {
     beforeEach(module('bam')); //load the app
 
-    //sample data from BAMPhoenix wiki
+    //define test data (some of this is based on the project wiki)
     var testTrainer =
         {
             userId: 3,
@@ -49,14 +54,16 @@ describe('calendarController', function()
         };
 
     //mock data for the SessionService
-    var mockSessionCurrent = {};
+    var mockSessionCurrent = {}; //this will be set to one of the other blocks based on the test
 
+    //for tests that should happen in the context of a trainer
     var mockSessionTrainer =
         {
             currentUser:Object.create(testTrainer),
             currentBatch:Object.create(testBatchOngoing)
         };
 
+    //for tests that should happen in the context of an associate without a batch
     var mockSessionAssociateWithoutBatch =
         {
             currentUser:
@@ -65,6 +72,7 @@ describe('calendarController', function()
                 }
         };
 
+    //for tests that should happen in the context of an associate with a batch
     var mockSessionAssociateWithBatch =
         {
             currentUser:
@@ -87,7 +95,7 @@ describe('calendarController', function()
     beforeEach(angular.mock.module({
         'SessionService' :
             {
-                //these treat objects as arrays, which allow
+                //these treat objects as arrays, which allow you to access a property even if you only have that property's name as a string
                 set : function(key, value) {
                     mockSessionCurrent[key] = value;
                 },
@@ -97,6 +105,7 @@ describe('calendarController', function()
                 unset : function(key) {
                     delete mockSessionCurrent[key];
                 }
+
             },
 
         'SubtopicService' :
@@ -111,19 +120,17 @@ describe('calendarController', function()
             }
     }));
 
-    //get the service responsible for instantiating controllers
-    var $controller;
+    //get important services
+    var $controller, $location, $httpBackend;
 
-    beforeEach(inject(function(_$controller_)
+    //this gets angular to inject services for us
+    //angular ignores the _'s around each variable when performing injection
+    //this means that, for example, it will inject the $controller service into the _$controller_ param
+    beforeEach(inject(function(_$controller_, _$location_, _$httpBackend_)
     {
         $controller = _$controller_;
-    }));
-
-    //get the location service
-    var $location;
-    beforeEach(inject(function(_$location_)
-    {
         $location = _$location_;
+        $httpBackend = _$httpBackend_;
     }));
 
     //variables used in multiple tests
@@ -135,21 +142,18 @@ describe('calendarController', function()
         //declare these for every test
         beforeEach(function()
         {
-            //use jasmine-ajax
-            //(see https://github.com/jasmine/jasmine-ajax)
-            jasmine.Ajax.install();
-
             //reset these objects
-            $scope = {};
             $rootScope = {};
             uiCalendarConfig = { calendars : {myCalendar : {fullCalendar : function(){}}}}; //force this function to exist so we can stub it
         });
 
-        //clean up jasmine-ajax
-        afterEach(function()
+        //reset $scope with all the proper angular stuff attached to it
+        //this gives us access to things like $watch
+        //note that this constructs a scope object for us.  it is NOT storing a reference to rootScope.
+        beforeEach(inject(function($rootScope)
         {
-           jasmine.Ajax.uninstall();
-        });
+            $scope = $rootScope.$new(false);
+        }));
 
         //helper to instantiate in the same manner for every test
         var instantiateController = function()
@@ -213,9 +217,219 @@ describe('calendarController', function()
                 spyOn(uiCalendarConfig.calendars["myCalendar"], "fullCalendar");
                 $scope.changeDate();
                 expect(uiCalendarConfig.calendars["myCalendar"].fullCalendar).toHaveBeenCalledWith('gotoDate', searchDate);
-                expect($scope.searchDate).toEqual(today);
-            })
-        });
+
+                //slight amount of wiggle room to account for one second gaps
+                //this is so that the test doesn't fail if time rolls over to the next second between
+                //the Date() being constructed here and the controller constructing a new Date() to set the search box
+                //if you find this line fails whenever the test machine is under heavy load, you can
+                //adjust this to be more lenient
+                expect( Math.abs($scope.searchDate.getTime() - today.getTime()) < 2 );
+            });
+
+            //alter this test to be more thorough if/when the currentBatch() function is actually used
+            it ("unused and incomplete function currentBatch() should not throw exceptions", function()
+            {
+                instantiateController();
+                $scope.currentBatch();
+            });
+
+            it ("eventFingerprint should handle dates as well as moments", function()
+            {
+                instantiateController();
+
+                var testMoment = moment().subtract(1, 'days');
+                var testDate = new Date();
+
+                var result = controller.eventFingerprint(
+                    {
+                        _id : 7,
+                        start : testMoment,
+                        end : testDate,
+                        title : "test event",
+                        url : "some/test/url"
+                    });
+
+                expect(result).toContain(7);
+                expect(result).toContain("test event");
+                expect(result).toContain(testMoment.unix());
+                expect(result).toContain(moment(testDate).unix());
+                expect(result).toContain("some/test/url");
+            });
+
+            it ("sourceFingerprint should handle event objects with multiple formats without throwing exceptions", function ()
+            {
+               instantiateController();
+
+               controller.sourceFingerprint({ __id : 5, events : {__id : 3, someData: 7}});
+               controller.sourceFingerprint({           events : {__id : 3, someData: 7}});
+               controller.sourceFingerprint({ __id : 5, events : {          someData: 7}});
+               controller.sourceFingerprint({           events : {          someData: 7}});
+               controller.sourceFingerprint({ __id : 5, events : {__id : 3             }});
+               controller.sourceFingerprint({           events : {__id : 3             }});
+               controller.sourceFingerprint({ __id : 5, events : {                     }});
+               controller.sourceFingerprint({           events : {                     }});
+
+            });
+
+            it("sourceFingerprint should handle multiple non-objects wihthout throwing exceptions", function()
+            {
+               instantiateController();
+
+               controller.sourceFingerprint(17);
+               controller.sourceFingerprint(1.7);
+               controller.sourceFingerprint("17");
+            });
+
+            it("allEvents should not throw exception even if it has no data", function()
+            {
+               instantiateController();
+
+               var result = controller.allEvents();
+               expect(result).toEqual([]);
+            });
+
+            it("allEvents should return all events across multiple sources with multiple data formats", function()
+            {
+                //note that not all of this data is supposed to show up in the result.  See below.
+               $scope.eventSources =
+                   [
+                       [],
+                       ["I", "am", "a", "string", "array!"],
+                       [{someKey:"someValue"}, {someOtherKey:"someOtherValue"}],
+                       {},
+                       {events : "not an object"},
+                       {events : ["some", "other", "string", "array"]},
+                       {events : {_id:4, someKey:"someValue", events:{_id:7, someSubKey:98}}},
+                       {events : [{_id:5, someKey:"someValue", events:{_id:8, someSubKey:99}}]}
+                   ];
+
+               instantiateController();
+
+               var result = controller.allEvents();
+
+               //things we want in the result
+               expect(result).toContain("I");
+               expect(result).toContain("array!");
+               expect(result).toContain({someKey:"someValue"});
+               expect(result).toContain({someOtherKey:"someOtherValue"});
+               expect(result).toContain({_id:5, someKey:"someValue", events:{_id:8, someSubKey:99}});
+
+               //things we do not want in the result
+               expect(result).not.toContain([]);
+               expect(result).not.toContain({});
+               expect(result).not.toContain("not an object");
+               expect(result).not.toContain({_id:4, someKey:"someValue", events:{_id:7, someSubKey:98}});
+            });
+
+            //changeWatcher() returns an object containing functions
+            //tests in this suite are related to created such an object and testing its behavior
+            describe("changeWatcher()", function()
+            {
+                beforeEach(function()
+                {
+                   //test data for changeWatcher tests
+                   $scope.arraySource =
+                   [
+                       {token : 1, value : 1, anotherValue : 1},
+                       {token : 2, value : 2, anotherValue : 2},
+                       {token : 3, value : "3"}
+                   ];
+
+                   arraySourceFn = function(){return $scope.arraySource;};
+                   tokenFn = function(obj){return obj.token;};
+
+                   instantiateController();
+
+                   $scope.onChanged = function(){return true;};
+                });
+
+                describe("declared with array", function()
+                {
+                    beforeEach(function()
+                    {
+                        cw = controller.changeWatcher($scope.arraySource, tokenFn);
+                        cw.subscribe($scope, $scope.onChanged);
+                    });
+
+                    it("onAdded", function()
+                    {
+                        spyOn(cw, "onAdded");
+
+                        //the $digest() calls will process the request from controller instantiation
+                        //so even though other tests were able to ignore it, this has to pay attention
+                        $httpBackend.expectGET("rest/api/v1/Batches/ById?batchId=undefined").respond("");
+
+                        //update data
+                        $scope.$digest();
+                        $scope.arraySource.push({token : 4});
+                        $scope.$digest();
+
+                        expect(cw.onAdded).toHaveBeenCalledWith({token : 4});
+                    });
+
+                    it("onChanged", function()
+                    {
+                        spyOn(cw, "onChanged");
+
+                        //the $digest() calls will process the request from controller instantiation
+                        //so even though other tests were able to ignore it, this has to pay attention
+                        $httpBackend.expectGET("rest/api/v1/Batches/ById?batchId=undefined").respond("");
+
+                        //update data
+                        $scope.$digest();
+                        $scope.arraySource[0].token = 99;
+                        $scope.arraySource[0].value = 99;
+                        $scope.arraySource[0].anotherValue = 99;
+                        $scope.$digest();
+
+                        expect(cw.onChanged).toHaveBeenCalledWith({ token: 99, value: 99, anotherValue: 99 });
+                    });
+                });//end describe("declared with array")
+
+                describe("declared with function that returns an array", function()
+                {
+                    beforeEach(function()
+                    {
+                        cw = controller.changeWatcher(arraySourceFn, tokenFn);
+                        cw.subscribe($scope, $scope.onChanged);
+                    });
+
+                    it("onAdded", function()
+                    {
+                        spyOn(cw, "onAdded");
+
+                        //the $digest() calls will process the request from controller instantiation
+                        //so even though other tests were able to ignore it, this has to pay attention
+                        $httpBackend.expectGET("rest/api/v1/Batches/ById?batchId=undefined").respond("");
+
+                        //update data
+                        $scope.$digest();
+                        $scope.arraySource.push({token : 4});
+                        $scope.$digest();
+
+                        expect(cw.onAdded).toHaveBeenCalledWith({token : 4});
+                    });
+
+                    it("onChanged", function()
+                    {
+                        spyOn(cw, "onChanged");
+
+                        //the $digest() calls will process the request from controller instantiation
+                        //so even though other tests were able to ignore it, this has to pay attention
+                        $httpBackend.expectGET("rest/api/v1/Batches/ById?batchId=undefined").respond("");
+
+                        //update data
+                        $scope.$digest();
+                        $scope.arraySource[0].token = 99;
+                        $scope.arraySource[0].value = 99;
+                        $scope.arraySource[0].anotherValue = 99;
+                        $scope.$digest();
+
+                        expect(cw.onChanged).toHaveBeenCalledWith({ token: 99, value: 99, anotherValue: 99 });
+                    });
+                })//end describe("declared with function that returns an array"
+            }); //end describe("changeWatcher()")
+        }); //end describe("trainer")
 
         describe("associate", function()
         {
@@ -255,6 +469,6 @@ describe('calendarController', function()
                 //instantiate the controller with the above objects
                 instantiateController();
             });
-        });
-    });
-});
+        });//end describe("associate")
+    }); //end describe("tests: ")
+}); //end describe("calendarController")

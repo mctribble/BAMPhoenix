@@ -1,16 +1,31 @@
 
 
-
 describe('curriculumController', function () {
     beforeEach(module('bam'));
     var $controller;
     
-    beforeEach(angular.mock.inject(function(_$controller_){
-      $controller = _$controller_;
-      spyOn(window, 'confirm').and.returnValue(true);
-    }));
-
+    var mockSession = {
+        trainerBatch:{
+            name:"test batch",
+            id:1
+        }
+    }
     
+    beforeEach(angular.mock.module({
+        'SessionService' : {
+            set : function(key, value) {
+                mockSession[key] = value;
+            },
+            get : function(key) {
+                return mockSession[key];
+            }
+        }
+    }));
+    
+    beforeEach(inject(function(_$controller_){
+        $controller = _$controller_;
+        spyOn(window, 'confirm').and.returnValue(true);
+      }));
 
     describe('sanitizeString', function () {
         it ('it should replace spaces with underscores in the string', function(){
@@ -105,6 +120,9 @@ describe('curriculumController', function () {
         // })
 
         describe('set master', function () {
+            
+            
+            
             it ('checks if the currriculum master has been updated', inject(function($httpBackend) {
                 var $scope = {};
                 var controller = $controller('curriculumController', {$scope: $scope});
@@ -112,7 +130,8 @@ describe('curriculumController', function () {
                         meta:{
                             curriculumId : "1",
                             curriculumVersion : "1",
-                            isMaster : "false"
+                            isMaster : "false",
+                            bid : "1"
                             }
                 }
                 $scope.setMaster(curriculum);
@@ -121,29 +140,5 @@ describe('curriculumController', function () {
                 expect(curriculum.meta.isMaster).toBe(true);
             }));   
         })
-
-        describe('new curriculum', function () {
-            it ('checks if the is Editable has been changed', function() {
-                var $scope = {};
-                var controller = $controller('curriculumController', {$scope: $scope});
-                var type = {
-                        meta:{
-                            curriculumId : "1",
-                            curriculumVersion : "1",
-                            isMaster : "false"
-                            }
-                }
-                $scope.newCurriculum(type);
-
-                $scope.isEditable = false;
-                expect($scope.isEditable).toBe(0);
-            });   
-        })
-
-
-
-
-
-
 
 });

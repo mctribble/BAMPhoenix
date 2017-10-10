@@ -70,9 +70,14 @@ public class CurriculumController {
 
 		for (Curriculum c : l)
 		{
-			c.setIsMaster(bcmService.getMaster(bid, c.getCurriculumName()) == c.getCurriculumVersion()? 1 : 0);
+			Integer ver = bcmService.getMaster(bid, c.getCurriculumName());
+			if (ver != null) {
+				c.setIsMaster(ver == c.getCurriculumVersion() ? 1 : 0);
+			}
+			else
+				c.setIsMaster(0);
 		}
-		System.out.println(l);
+
 		return l;
 
 	}
@@ -89,7 +94,7 @@ public class CurriculumController {
 		int curriculumId = Integer.parseInt(request.getParameter("curriculumId"));
 		int bid = Integer.parseInt(request.getParameter("bid"));
 		Curriculum c = curriculumService.getCuricullumById(curriculumId);
-		c.setIsMaster(bcmService.getMaster(bid, c.getCurriculumName()) == c.getCurriculumVersion()? 1 : 0);
+		c.setIsMaster(bcmService.getMaster(bid, c.getCurriculumName()) == c.getCurriculumVersion()? 1 : 0 );
 		return c;
 	}
 	
@@ -152,7 +157,7 @@ public class CurriculumController {
 		}
 	}
 
-	@RequestMapping(value = "MakeMaster", method = RequestMethod.POST)
+	@RequestMapping(value = "MakeMaster", method = RequestMethod.GET)
 	@ApiOperation("Updates a curriculum to be the master curriculum")
 	public void markCurriculumAsMaster(HttpServletRequest request){
 
