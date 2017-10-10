@@ -38,62 +38,77 @@ public class SubTopicController {
     subTopicService.addOrUpdateSubtopicName(subtopic);
   }
 
+  /**
+   * @author Jeremy Wagner
+   * Endpoints to gain access to the relevant subtopics of a batch and
+   * their statuses
+   */
   @RequestMapping(value = "All", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Get all subtopics regardless of batch")
   public List<Subtopic> getAllSubTopics(){
     return subTopicService.getSubtopics();
   }
 
   @RequestMapping(value = "AllCompleted", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Get all completed subtopics regardless of batch")
   public List<Subtopic> getAllCompletedSubtopics(){
 	  return subTopicService.getSubtopicsByStatus("Completed");
   }
 
   @RequestMapping(value = "AllPending", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Get all pending subtopics regardless of batch")
   public List<Subtopic> getAllPendingSubTopics(){
 	  return subTopicService.getSubtopicsByStatus("Pending");
   }
 
   @RequestMapping(value = "AllMissed", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Get all missed subtopics regardless of batch")
   public List<Subtopic> getAllMissedSubTopics(){
 	  return subTopicService.getSubtopicsByStatus("Missed");
   }
 
   @RequestMapping(value = "AllCanceled", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Get all canceled subtopics regardless of batch")
   public List<Subtopic> getAllCancelledSubTopics(){
 	  return subTopicService.getSubtopicsByStatus("Canceled");
   }
 
   @RequestMapping(value = "ByBatchId", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
-  public List<Subtopic> getAllSubtopicsByStatus(HttpServletRequest request){
+  @ApiOperation(value = "Get all completed subtopics associated with a batch")
+  public List<Subtopic> getAllSubtopicsByBatch(HttpServletRequest request){
 	  return subTopicService.getSubtopicsByBatchId(Integer.parseInt(request.getParameter("batchId")));
   }
 
   @RequestMapping(value = "ByBatchCompleted", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Get all completed subtopics associated with a  batch")
   public List<Subtopic> getAllSubtopicsByBatchCompleted(HttpServletRequest request){
 	  return subTopicService.getSubtopicsByBatchAndStatus(Integer.parseInt(request.getParameter("batchId")), "Completed");
   }
 
   @RequestMapping(value = "ByBatchPending", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Get all pending subtopics associated with a  batch")
   public List<Subtopic> getAllSubtopicsByBatchPending(HttpServletRequest request){
 	  return subTopicService.getSubtopicsByBatchAndStatus(Integer.parseInt(request.getParameter("batchId")), "Pending");
   }
 
   @RequestMapping(value = "ByBatchMissed", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Get all missed subtopics associated with a  batch")
   public List<Subtopic> getAllSubtopicsByBatchMissed(HttpServletRequest request){
 	  return subTopicService.getSubtopicsByBatchAndStatus(Integer.parseInt(request.getParameter("batchId")), "Missed");
   }
 
   @RequestMapping(value = "ByBatchCanceled", method = RequestMethod.GET, produces = "application/json")
   @ResponseBody
+  @ApiOperation(value = "Get all canceled subtopics associated with a  batch")
   public List<Subtopic> getAllSubtopicsByBatchCancelled(HttpServletRequest request){
 	  return subTopicService.getSubtopicsByBatchAndStatus(Integer.parseInt(request.getParameter("batchId")), "Canceled");
   }

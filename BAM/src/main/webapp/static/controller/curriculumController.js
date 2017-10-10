@@ -129,6 +129,7 @@ app.controller("curriculumController",
                         newLine += 10
                     }
                 }
+                newLine += 20
             }
 
             //Download the file
@@ -490,7 +491,6 @@ app.controller("curriculumController",
                 }
             });
 
->>>>>>> 6943fe60f5f388a86096cd360911607c510c682e
 //			$scope.displayedCurriculum = null;
             $scope.template = null;
         };
