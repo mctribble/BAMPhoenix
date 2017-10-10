@@ -5,7 +5,7 @@ describe('Dashboard Controller', function(){
     var mockSession = {
         currentUser:{
             name:"test User",
-            userId:11
+            userId:'11'
         }
     }
 
@@ -33,7 +33,7 @@ describe('Dashboard Controller', function(){
 
 
      describe('Current Batch:', function(){
-        it('Current Batch should reponde to 200 response', inject(function($httpBackend){
+        it('Current Batch should respond to 200 response', inject(function($httpBackend){
             var $scope = {};
             var controller = dashboard('dashboardController', {$scope:$scope});
             $scope.currentBatch();
@@ -44,7 +44,7 @@ describe('Dashboard Controller', function(){
                          {endDate: '28-SEP-17 12.00.00.000000000 AM'}, {trainer: {userId: '11'}}, {type: '1'}]];
                 });
             $httpBackend.flush();
-            expect($scope.getData).toBeCalled();
+            expect($scope.batchCount).not.toBeCalled(0);
         }));
      });
 });
