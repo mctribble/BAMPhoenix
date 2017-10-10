@@ -20,6 +20,7 @@ describe('Dashboard Controller', function(){
         }
     }));
 
+    var $scope;
     beforeEach(
         inject(function($controller, $rootScope){
             dashboard = $controller;
@@ -34,7 +35,7 @@ describe('Dashboard Controller', function(){
 
      describe('Current Batch:', function(){
         it('Current Batch should respond to 200 response', inject(function($httpBackend){
-            var jsonData =[ 
+            var jsonData =[
                 {
                 "id": "23298",
                 "name": "1611 Sep28 SDET", 
@@ -55,9 +56,9 @@ describe('Dashboard Controller', function(){
             },
             {
                 "id": "24298",
-                "name": "1611 Sep29 SDET", 
+                "name": "1611 Sep29 SDET",
                 "startDate": "29-SEP-17 12.00.00.000000000 AM",
-                "endDate": "29-SEP-17 12.00.00.000000000 AM", 
+                "endDate": "29-SEP-17 12.00.00.000000000 AM",
                 "trainer": {
                     "userId": "12",
                     "fName": "test2",
@@ -77,8 +78,18 @@ describe('Dashboard Controller', function(){
             $httpBackend
                 .whenGET('rest/api/v1/Batches/All')
                 .respond(200, jsonData);
-            $httpBackend.flush();
+            $scope.$digest();
             expect($scope.batchCount).not.toBe(0);
         }));
+        it('Current Batch should respond to a 400 response', inject(function($httpBackend){
+            var $scope = {};
+            var controller = dashboard('dashboardController', {$scope:$scope});
+            $scope.currentBatch();
+            $httpBackend
+                .whenGET('rest/api/v1/Batches/All')
+                .respond(400);
+            $httpBackend.flush();
+            expect($scope.currentBatch()).toBe(null);    
+         }));
      });
 });
