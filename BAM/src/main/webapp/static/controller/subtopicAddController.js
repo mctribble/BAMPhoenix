@@ -113,15 +113,22 @@ app.controller("subTopicController", function ($scope, SessionService, $location
             $('#startDate').change(function () {
                 var selection = this.value;
                 $scope.date = selection;
-
+                var end = new Date($scope.batch.endDate);
+                var start = new Date($scope.batch.startDate);
                 // var prevdate = new Date($scope.prevDate);
 
-                var timestamp = new Date(selection).getTime() + 46800000;
+                var timestamp = new Date(selection);
                 var newDate = new Date(timestamp);
 
                 // $scope.stDate = prevdate;
-                $scope.selDate = newDate;
+                if (newDate < start || newDate > end)
+                {
 
+                    this.value = null;
+                }
+                else {
+                    $scope.selDate = newDate;
+                }
                 // if($scope.stDate.getMonth() == $scope.selDate.getMonth() && $scope.stDate.getDate() == $scope.selDate.getDate()){
                 //     //EMPTY BECAUSE
                 // }

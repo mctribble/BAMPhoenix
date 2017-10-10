@@ -152,12 +152,12 @@
                 var extraSignature = extraEventSignature({
                     event : e
                 }) || '';
-                var start = moment.isMoment(e.start) ? e.start.unix() : (e.start ? moment(e.start).unix() : '');
-                var end = moment.isMoment(e.end) ? e.end.unix() : (e.end ? moment(e.end).unix() : '');
+                // var start = moment.isMoment(e.start) ? e.start.unix() : (e.start ? moment(e.start).unix() : '');
+                // var end = moment.isMoment(e.end) ? e.end.unix() : (e.end ? moment(e.end).unix() : '');
 
                 // This extracts all the information we need from the event.
 				// http://jsperf.com/angular-calendar-events-fingerprint/3
-                return [e._id, e.id || '', e.title || '', e.url || '', start, end, e.allDay || '', e.className || '', extraSignature].join('');
+                return [e._id, e.id || '', e.title || '', e.url || '', e.start, e.end, e.allDay || '', e.className || '', extraSignature].join('');
             };
 
             var sourceSerialId = 1;
@@ -568,13 +568,23 @@
             }
             /* alert on Drop */
              $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
-            	 var eventDate= new Date(event.start);
-             
+            	 var eventDate= new Date(event.start).getTime() + 46800000;
+
+                eventDate = new Date(new Date(eventDate).setHours(0,0,0,0));
+                 var end = new Date($scope.batchInfo.endDate);
+                 var start = new Date($scope.batchInfo.startDate);
+                 if (eventDate < start || eventDate > end)
+                 {
+                     console.log(eventDate);
+                     console.log(start);
+                     return revertFunc();
+                 }
+
             	if(event.className == '' && event.start < new Date().setHours(0, 0, 0, 0) && ! (  new Date().getDate() == (eventDate.getDate() ) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() ) )
             	{
-            		
+
                 		event.className= 'topiccoloryellow';
-            
+
                         uiCalendarConfig.calendars['myCalendar'].fullCalendar( 'updateEvent', event);
                 		  // http for blue to green
                       $http({
@@ -582,7 +592,7 @@
                    		url : "rest/api/v1/Calendar/StatusUpdate?batchId="+thisBatchId+"&subtopicId="+event.id+"&status=Missed"
                    	 }).then(function successCallback(response) {
                    	 });
-            	}	
+            	}
               	if((event.className == 'topiccoloryellow' && event.start > new Date().setHours(0, 0, 0, 0) ) || ( event.className == 'topiccoloryellow' && new Date().getDate() == (eventDate.getDate() + 1) &&  new Date().getMonth() == eventDate.getMonth() && new Date().getFullYear() == eventDate.getFullYear() ) )
             	{
                 		event.className= '';
