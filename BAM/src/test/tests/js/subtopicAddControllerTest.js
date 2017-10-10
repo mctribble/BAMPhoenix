@@ -40,28 +40,12 @@ describe('Subtopic Add Controller', function(){
          var controller = subtopicAdd('subTopicController', {$scope:$scope});
          $scope.getSubtopicPool();
          $httpBackend
-            .whenGET('rest/api/v1/Curriculum/SubtopicPool')
-            respond(function(){
-                return [200,[{subtopicId: '5'}, {subtopicName: [{name:''}, {topic: {name: ''}}]}, {subtopicDate: '28-SEP-17 12.00.00.000000000 AM'}]];
+            .expectGET('rest/api/v1/Curriculum/TopicPool')
+            .respond(function(){
+                return [200, [{subtopicId: '5'}, {subtopicName: [{name:'test'}, {topic: [{id: '1'},{name: 'test topic'}]}]}, {subtopicDate: '28-SEP-17 12.00.00.000000000 AM'}]];
             });
          $httpBackend.flush();
-         expect($scope.message).toBe(true);
+         expect($scope.topic_id).toBe('1');
      }));
 
-
-//     describe('getSubtopicPool:', function(){
-//        it('Current Batch should respond to 200 response', inject(function($httpBackend){
-//            var $scope = {};
-//            var controller = dashboard('subtopicAddController', {$scope:$scope});
-//            $scope.getSubtopicPool();
-//            $httpBackend
-//                .whenGET('rest/api/v1/Curriculum/SubtopicPool')
-//                .respond(function(){
-//                    return [200,[{id: '23298'}, {name: '1611 Sep28 SDET'}, {startDate: '28-SEP-17 12.00.00.000000000 AM'},
-//                         {endDate: '28-SEP-17 12.00.00.000000000 AM'}, {trainer: {userId: '11'}}, {type: '1'}]];
-//                });
-//            $httpBackend.flush();
-//            expect($scope.batchCount).not.toBeCalled(0);
-//        }));
-//     });
 });
