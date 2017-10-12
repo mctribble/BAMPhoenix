@@ -20,6 +20,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,10 +59,12 @@ public class SubtopicAddControllerTest {
      */
     @Test
     public void addSubtopicTest() throws Exception {
-        mockMvc.perform(post("/rest/api/v1/Subtopic/addSubtopic")
-                .content(asJsonString(new Subtopic(1, new SubtopicName(), new Batch(),
+        mockMvc.perform(get("/rest/api/v1/Subtopic/addSubtopic")
+                .param("json", asJsonString(new Subtopic(1, new SubtopicName(), new Batch(),
                         new SubtopicStatus(), timestamp)))
-        .contentType("application/json;charset=UTF-8")).andExpect(status().isOk());
+                .contentType("application/json;charset=UTF-8"))
+                .andExpect(status()
+                .isOk());
     }
 
     /**
