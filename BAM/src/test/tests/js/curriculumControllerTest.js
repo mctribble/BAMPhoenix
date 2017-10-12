@@ -3,14 +3,14 @@
 describe('curriculumController', function () {
     beforeEach(module('bam'));
     var $controller;
-    
+
     var mockSession = {
         trainerBatch:{
             name:"test batch",
             id:1
         }
     }
-    
+
     beforeEach(angular.mock.module({
         'SessionService' : {
             set : function(key, value) {
@@ -21,7 +21,7 @@ describe('curriculumController', function () {
             }
         }
     }));
-    
+
     beforeEach(inject(function(_$controller_){
         $controller = _$controller_;
         spyOn(window, 'confirm').and.returnValue(true);
@@ -64,8 +64,8 @@ describe('curriculumController', function () {
 
 
     })
-    
-    
+
+
     describe('get topic color', function () {
         it ('it should return the topic color', function(){
             var $scope = {};
@@ -77,7 +77,7 @@ describe('curriculumController', function () {
             var controller = $controller('curriculumController', {$scope: $scope });
             $scope.setTopicColors(topics);
             var color = $scope.getTopicColor("Java");
-            
+
             expect(color).not.toBeNull();
 // this test will always fail because it gives a random color
         });
@@ -90,28 +90,28 @@ describe('curriculumController', function () {
                 var controller = $controller('curriculumController', {$scope: $scope });
                 $scope.displayedCurriculum.meta.curriculumNumberOfWeeks = 0;
                 $scope.addWeek();
-                
+
                 expect($scope.displayedCurriculum.meta.curriculumNumberOfWeeks).toBe(1);
-            });   
+            });
         })
-        
+
 
         describe('delete a week', function () {
             it ('checks if the curriculumNumber is updated', function(){
                 var $scope = {};
                 var controller = $controller('curriculumController', {$scope: $scope});
                 $scope.displayedCurriculum.meta.curriculumNumberOfWeeks = 1;
-                
+
                 $scope.deleteWeek(1);
-                
+
                 expect($scope.displayedCurriculum.meta.curriculumNumberOfWeeks).toBe(0);
-            });   
+            });
         })
 
-        
-        
-        
-        
+
+
+
+
      describe('set master', function () {
         it ('checks if the currriculum master has been updated', inject(function($httpBackend) {
             var $scope = {};
@@ -128,7 +128,7 @@ describe('curriculumController', function () {
             $httpBackend
                 .expectPOST('rest/api/v1/Curriculum/MakeMaster?curriculumId=1');
                 expect(curriculum.meta.isMaster).toBe(true);
-        }));   
+        }));
     })
 
 });
