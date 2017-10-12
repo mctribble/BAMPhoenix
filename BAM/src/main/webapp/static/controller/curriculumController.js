@@ -764,7 +764,10 @@ app.controller("curriculumController",
             $scope.getCurricula()
             //then load the versions of each curriculum type
                 .then(function () {
-                    $scope.requestCurriculums($scope.curricula);
+
+                    // Method added to grab all curriculum on page load - not used to be safe.
+                    // $scope.requestCurriculums($scope.curricula);
+
                     for (i in $scope.curricula) {
                         var curriculumType = $scope.curricula[i];
                         var masterVersion = {};
@@ -781,18 +784,22 @@ app.controller("curriculumController",
                                                 if (newCurriculum.meta.curriculumName == $scope.DEFAULT_TYPE && newCurriculum.meta.isMaster) {
                                                     $scope.displayedCurriculum = newCurriculum;
                                                     $scope.setWeekProgressBars();
+                                                    break;
                                                 }
+
                                             }
 
                                         }
 
 
                                     });
+                                break;
                             }
                         }
 
 
                     }
+
 
                 });
 
