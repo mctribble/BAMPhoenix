@@ -17,7 +17,6 @@ app.controller("curriculumController",
 
     function ($scope, $http, $q, SessionService) {
         /* BEGIN OBJECT SCOPE BOUND VARIABLE DEFINITIONS */
-
         $scope.showBtn = false;
 
         //constant array defining valid days of the week
@@ -78,14 +77,15 @@ app.controller("curriculumController",
         /*
             Grab the Revature logo to be loaded onto PDF
         */
-        var logo = new Image();
-        logo.src = 'static/img/revature_logo.png'
 
+        var logo = new Image();
+        logo.src = 'static/img/revature_logo.png';
         /**
-        *   Function to generate PDF file that displays the templated curriculum
-        *   that is currently being viewed using jsPDF library
-        */
-        $scope.downloadPDF = function() {
+         *   Function to generate PDF file that displays the templated curriculum
+         *   that is currently being viewed using jsPDF library
+         */
+        $scope.downloadPDF = function () {
+
             //create new jsPDF instance
             var pdf = new jsPDF()
             var WORKDAYS = 5;
@@ -93,39 +93,39 @@ app.controller("curriculumController",
             var pageHeight = pdf.internal.pageSize.height - 20
 
             //Add Revature logo in top right corner
-            pdf.addImage(logo,'PNG',110,10,90,30,'logo')
+            pdf.addImage(logo, 'PNG', 110, 10, 90, 30, 'logo')
             pdf.setFontSize(25)
-            pdf.text($scope.displayedCurriculum.meta.curriculumName + " Curriculum",10,37)
+            pdf.text($scope.displayedCurriculum.meta.curriculumName + " Curriculum", 10, 37)
 
             //Iterate over the curriculum data and load it onto the created pdf
-            for(var i = 0; i < $scope.displayedCurriculum.weeks.length; i++){
+            for (var i = 0; i < $scope.displayedCurriculum.weeks.length; i++) {
 
-                if(newLine >= pageHeight){
+                if (newLine >= pageHeight) {
                     pdf.addPage()
                     newLine = 20
                 }
                 pdf.setFontSize(20)
-                pdf.text('Week '+ (i + 1) ,10,newLine)
-                newLine+=10
+                pdf.text('Week ' + (i + 1), 10, newLine)
+                newLine += 10
 
-                for(var j = 0; j < WORKDAYS; j++){
-                    if(newLine >= pageHeight){
+                for (var j = 0; j < WORKDAYS; j++) {
+                    if (newLine >= pageHeight) {
                         pdf.addPage()
                         newLine = 20
                     }
                     pdf.setFontSize(15)
-                    pdf.text($scope.weekdays[j],20,newLine)
+                    pdf.text($scope.weekdays[j], 20, newLine)
                     newLine += 10
 
-                    for(var k = 0; k < $scope.displayedCurriculum.weeks[i].days[j].subtopics.length; k++){
-                        if(newLine >= pageHeight){
+                    for (var k = 0; k < $scope.displayedCurriculum.weeks[i].days[j].subtopics.length; k++) {
+                        if (newLine >= pageHeight) {
                             pdf.addPage()
                             newLine = 20
                         }
                         pdf.setFontSize(10)
                         var subtopic = $scope.displayedCurriculum.weeks[i].days[j].subtopics[k];
 
-                        pdf.text(subtopic.topic.name + ": " + subtopic.name,30,newLine)
+                        pdf.text(subtopic.topic.name + ": " + subtopic.name, 30, newLine)
                         newLine += 10
                     }
                 }
@@ -134,7 +134,7 @@ app.controller("curriculumController",
 
             //Download the file
             pdf.save('Curriculum.pdf')
-        }
+        };
 
 
         /* END XLS FUNCTION */
@@ -168,23 +168,34 @@ app.controller("curriculumController",
             return mm + '/' + dd + '/' + yyyy;
         };
 
-        $scope.getTopicColor = function (topicName) {
-            for (i in $scope.topicColors) {
-                var topic = $scope.topicColors[i];
-                if (topic.type == topicName) {
-                    return topic.color;
-                }
-            }
-        };
+
 
         $scope.setTopicColors = function (topics) {
+            var it = 0;
             for (i in topics) {
                 var topic = topics[i];
 
                 //generate random color (hex)
                 var color = '#' + Math.floor(Math.random() * 16777215).toString(16);
-                $scope.topicColors.push({'type': topic.name, 'color': color});
 
+
+
+                    $scope.topicColors.push({'type': topic.topic.name, 'color': color});
+                    console.log(topic);
+
+
+
+
+            }
+        };
+
+        $scope.getTopicColor = function (topicName) {
+            for (i in $scope.topicColors) {
+                var topic = $scope.topicColors[i];
+                console.log(topic);
+                if (topic.type === topicName) {
+                    return topic.color;
+                }
             }
         };
 
@@ -192,7 +203,7 @@ app.controller("curriculumController",
 
             if ($scope.topicColors.length <= 0) {
 
-                return;
+                $scope.setTopicColors($scope.topics);
             }
             if ($scope.displayedCurriculum.meta.curriculumNumberOfWeeks) {
 
@@ -227,14 +238,16 @@ app.controller("curriculumController",
                     if (!total) {
 
                         $scope.weekBars[i].push({name: "No Topics", width: "100%", color: "red"});
-                    } else {
+                    } else {console.log( $scope.topicColors);
                         $scope.weekBars[i] = [];
-
                         for (m in topicCounts) {
 
                             var topic = topicCounts[m];
                             var percent = (topic.count / total) * 100;
                             var color = $scope.getTopicColor(topic.name);
+
+
+
                             $scope.weekBars[i].push({name: topic.name, width: "" + percent + "%", color: color});
 
 
@@ -273,6 +286,56 @@ app.controller("curriculumController",
                         newCurriculum.weeks[topic.curriculumSubtopicWeek - 1].days[topic.curriculumSubtopicDay - 1].subtopics.push(topic.curriculumSubtopicNameId);
                     }
                     return newCurriculum;
+                });
+
+
+        };
+
+        $scope.requestCurriculums = function (curriculi) {
+            //do request
+            return $http({
+                url: "rest/api/v1/Curriculum/Schedules",
+                method: "GET"
+
+            })
+                .then(function (response) {
+                    var data = response.data;
+                    for (j in curriculi) {
+                        for (l in curriculi[j].versions) {
+
+                            var newCurriculum = curriculi[j].versions[l];
+                            newCurriculum.weeks = [];
+                            //add the (empty) weeks:
+                            for (var m = 0; m < newCurriculum.meta.curriculumNumberOfWeeks; m++) {
+                                newCurriculum.weeks.push({
+                                    days: [
+                                        {subtopics: []},
+                                        {subtopics: []},
+                                        {subtopics: []},
+                                        {subtopics: []},
+                                        {subtopics: []}
+                                    ]
+                                });
+                            }
+                        }
+                    }
+                    for (i in data) {
+                        for (j in curriculi) {
+                            if (data[i].curriculumSubtopicCurriculumID.curriculumName == curriculi[j].type) {
+                                for (l in curriculi[j].versions) {
+                                    if (curriculi[j].versions[l].meta.curriculumId == data[i].curriculumSubtopicCurriculumID.curriculumId) {
+                                        var newCurriculum = curriculi[j].versions[l];
+
+                                        //loop through array of response objects adding subtopics to the correct week and day arrays.
+
+                                        newCurriculum.weeks[data[i].curriculumSubtopicWeek - 1].days[data[i].curriculumSubtopicDay - 1].subtopics.push(data[i].curriculumSubtopicNameId);
+                                        $scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
+
+                                    }
+                                }
+                            }
+                        }
+                    }
                 });
 
 
@@ -380,7 +443,6 @@ app.controller("curriculumController",
                     $scope.displayedCurriculum = $scope.template;
                     $scope.isEditable = false;
                     $scope.showBtn = true;
-
 
 
                 }).then(function () {
@@ -491,13 +553,13 @@ app.controller("curriculumController",
             };
             //persist to the DB
             $http({
-                method: 'POST',
+                method: 'GET',
                 url: 'rest/api/v1/Curriculum/AddCurriculum',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                data: curriculumDTO
+                params: {json: curriculumDTO}
             }).then(function () {
                 if (!typeExists) {
                     $scope.setMaster($scope.displayedCurriculum);
@@ -509,14 +571,18 @@ app.controller("curriculumController",
         };
 
         $scope.getCurricula = function () {
+            var value = SessionService.get("trainerBatch");
+            value = value ? SessionService.get("trainerBatch").id : null;
+
             return $http({
                 url: "rest/api/v1/Curriculum/All",
                 method: "GET",
                 params: {
-                    bid: SessionService.get("trainerBatch").id
+                    bid: value
                 }
 
             }).then(function (response) {
+
                     var curricula = response.data;
                     //parse the response into the local (front end) json object format
 
@@ -603,6 +669,7 @@ app.controller("curriculumController",
                 if (true) {
                     var topics = response.data;
                     $scope.setTopicColors(topics);
+
                     //parse the response into the local (front end) json object format
                     for (i in topics) {
 
@@ -648,7 +715,7 @@ app.controller("curriculumController",
                             topic: {id: $scope.topics[i].id, name: parentTopic},
                             type: {id: 1, name: "Lesson"}
                         }
-                        //addthe subtopic locally
+                        //add the subtopic locally
                         $scope.topics[i].subtopics.push(newTopic);
 
                         //generate random color (hex) for the new topic
@@ -657,7 +724,7 @@ app.controller("curriculumController",
 
                         //persist the subtopic to the db
                         $http({
-                            method: 'POST',
+                            method: 'GET',
                             url: 'rest/api/v1/Subtopic/Add',
                             params: {
                                 subtopicName: input,
@@ -675,7 +742,7 @@ app.controller("curriculumController",
                 }
                 $scope.topics.push(newTopic2);
                 $http({
-                    method: 'POST',
+                    method: 'GET',
                     url: 'rest/api/v1/Topic/Add',
                     params: {
                         name: newTopic2.name
@@ -687,54 +754,51 @@ app.controller("curriculumController",
         /* END  TOPIC POOL FUNCTION DEFINITIONS */
 
         /* BEGIN CONTROLLER BODY - EXECUTED ON PAGE LOAD */
-        $scope.run = true;
+
         //load the topic pool on page load
-        console.log($scope.topics);
-        if ($scope.run) {
-            $scope.run = false;
-            $scope.getTopicPool().then(function () {
+
+        $scope.getTopicPool().then(function () {
 
 
-                //get the curricula meta data on page load
-                $scope.getCurricula()
-                //then load the master versions of each curriculum type
-                    .then(function () {
-                        for (i in $scope.curricula) {
-                            var curriculumType = $scope.curricula[i];
-                            var masterVersion = {};
-                            var mv = {};
-                            for (j in curriculumType.versions) {
-                                $scope.requestCurriculum(curriculumType.versions[j]);
-                                if (curriculumType.versions[j].meta.isMaster) {
-                                    masterVersion = curriculumType.versions[j];
-                                    $scope.requestCurriculum(masterVersion)
-                                        .then(function (newCurriculum) {
-                                            //add newCurriculum as a version to the curricula type:
-                                            for (j in $scope.curricula) {
-                                                if ($scope.curricula[j].type == newCurriculum.meta.curriculumName) {
-                                                    $scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
-                                                    //load default master curriculum version on page load
-                                                    if (newCurriculum.meta.curriculumName == $scope.DEFAULT_TYPE && newCurriculum.meta.isMaster) {
-                                                        $scope.displayedCurriculum = newCurriculum;
-                                                        setTimeout($scope.setWeekProgressBars(), 5000);
-                                                    }
+            //get the curricula meta data on page load
+            $scope.getCurricula()
+            //then load the versions of each curriculum type
+                .then(function () {
+                    $scope.requestCurriculums($scope.curricula);
+                    for (i in $scope.curricula) {
+                        var curriculumType = $scope.curricula[i];
+                        var masterVersion = {};
+                        for (j in curriculumType.versions) {
+                            if (curriculumType.versions[j].meta.isMaster) {
+                                masterVersion = curriculumType.versions[j];
+                                $scope.requestCurriculum(masterVersion)
+                                    .then(function (newCurriculum) {
+                                        //add newCurriculum as a version to the curricula type:
+                                        for (j in $scope.curricula) {
+                                            if ($scope.curricula[j].type == newCurriculum.meta.curriculumName) {
+                                                $scope.curricula[j].versions[newCurriculum.meta.curriculumVersion - 1] = newCurriculum;
+                                                //load default master curriculum version on page load
+                                                if (newCurriculum.meta.curriculumName == $scope.DEFAULT_TYPE && newCurriculum.meta.isMaster) {
+                                                    $scope.displayedCurriculum = newCurriculum;
+                                                    $scope.setWeekProgressBars();
                                                 }
-
                                             }
 
+                                        }
 
-                                        });
-                                }
+
+                                    });
                             }
-
-
-
                         }
 
-                    });
-            })
-        }
-        ;
+
+                    }
+
+                });
+
+
+        });
+
 
         /* END CONTROLLER BODY - EXECUTED ON PAGE LOAD */
     }

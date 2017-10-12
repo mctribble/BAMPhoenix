@@ -8,7 +8,7 @@ app.config(function($routeProvider, $locationProvider){
 		templateUrl:"static/pages/myBatches.html",
 		controller: "myBatchesController"
 	}).when("/calendar",{
-		templateUrl: "static/pages/calendar.html",
+		templateUrl: "static/pages/calendar.html/",
 		controller: "calendarController"
 	}).when("/associates",{
 		templateUrl: "static/pages/ViewAssociates.html",
@@ -30,15 +30,15 @@ app.config(function($routeProvider, $locationProvider){
 		controller: "batchEditController"
 	}).when("/addSubtopic", {
 		templateUrl: "static/pages/addSubtopic.html",
-//		controller: "addSubtopicController"
+		// controller: "addSubtopicController"
 	}).when("/noBatch",{
 		templateUrl: "static/pages/NoBatch.html",
 		controller: "noBatchController"
 	}).when("/curriculum",{
-		templateUrl: "static/pages/curriculum.html",
+		templateUrl: "static/pages/curriculum.html/",
 		controller: "curriculumController"
 	}).when("/", {
-	    templateUrl: "static/pages/dashboard.html", 
+	    templateUrl: "static/pages/dashboard.html",
 	    controller: 'dashboardController'
 	}).when("/documentation", {
 	    templateUrl: "static/pages/swagger-ui.html"

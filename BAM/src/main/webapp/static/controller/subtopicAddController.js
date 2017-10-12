@@ -181,8 +181,8 @@ app.controller("subTopicController", function ($scope, SessionService, $location
 
         $http({
             url: "rest/api/v1/Subtopic/addSubtopic",
-            method: 'POST',
-            data: subtopic
+            method: 'GET',
+            params: {json:subtopic}
 
         }).then(function success(response) {
             $scope.message = true;
