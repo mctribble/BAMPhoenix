@@ -20,7 +20,7 @@ public class TopicController {
   @Autowired
   TopicService topicService;
 
-  @RequestMapping(value = "Add", method = RequestMethod.POST)
+  @RequestMapping(value = "Add", method = RequestMethod.GET)
   @ApiOperation(value = "Add a new topic to the system")
   public ResponseEntity addTopicName(HttpServletRequest request) {
     if(validTopicName(request.getParameter("name"))) {

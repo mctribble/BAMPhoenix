@@ -82,7 +82,6 @@ public class CurriculumSubtopic {
 		this.curriculumSubtopicNameId = curriculumSubtopicNameId;
 	}
 
-	@JsonIgnore
 	public Curriculum getCurriculumSubtopicCurriculumID() {
 		return curriculum;
 	}

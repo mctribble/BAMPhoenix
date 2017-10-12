@@ -1,9 +1,11 @@
 package com.bam.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -73,7 +75,7 @@ public class UserController {
 		return userService.findUsersInBatch(batchId);
 	}
 
-	@RequestMapping(value = "Drop", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "Drop", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	@ApiOperation("Delete user from their batch")
 	public List<BamUser> dropUserFromBatch(HttpServletRequest request) {
@@ -93,15 +95,22 @@ public class UserController {
 	}
 
 	
-	@RequestMapping(value="Update", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="Update", method=RequestMethod.GET, produces="application/json")
 	@ApiOperation(value="Update user password, password not hashed")
-	public void updateUser(@RequestBody BamUser currentUser) {
+	public void updateUser(HttpServletRequest req) throws CustomException {
+
+		BamUser currentUser = null;
+		try {
+			currentUser = new ObjectMapper().readValue(req.getParameter("json"), BamUser.class);
+		} catch (IOException e) {
+			throw new CustomException(e);
+		}
 		BamUser user = userService.findUserByEmail(currentUser.getEmail());
 		currentUser.setPwd(user.getPwd());
 		userService.addOrUpdateUser(currentUser);
 	}
 
-	@RequestMapping(value = "Remove", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "Remove", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	@ApiOperation(value = "Same as dropping user from batch")
 	public List<BamUser> removeUser(HttpServletRequest request) {
@@ -120,7 +129,7 @@ public class UserController {
 		return userService.findUsersInBatch(batchId);
 	}
 
-	@RequestMapping(value = "Add", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "Add", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	@ApiOperation(value="Add user to a batch")
 	public List<BamUser> addUserToBatch(HttpServletRequest request) {

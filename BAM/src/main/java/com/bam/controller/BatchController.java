@@ -6,6 +6,7 @@ import com.bam.service.BamUserService;
 import com.bam.service.BatchService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.http.protocol.HTTP;
 import org.apache.logging.log4j.LogManager;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,12 +114,12 @@ public class BatchController {
     return batchesInProgress;
   }
 
-  @RequestMapping(value = "Edit", method = RequestMethod.POST, produces = "application/json")
+  @RequestMapping(value = "Edit", method = RequestMethod.GET, produces = "application/json")
   @ApiOperation(value = "Updates a batch by mapping JSON to a batch object")
-  public void updateUser(@RequestBody String jsonObject) {
+  public void updateUser(HttpServletRequest req) {
     Batch currentBatch = null;
     try {
-      currentBatch = new ObjectMapper().readValue(jsonObject, Batch.class);
+      currentBatch = new ObjectMapper().readValue(req.getParameter("json"), Batch.class);
     } catch (IOException e) {
       LogManager.getRootLogger().error(e);
     }
@@ -133,9 +134,15 @@ public class BatchController {
     return batchService.getBatchById(Integer.parseInt(request.getParameter("batchId")));
   }
 
-  @RequestMapping(value = "UpdateBatch", method = RequestMethod.POST)
+  @RequestMapping(value = "UpdateBatch", method = RequestMethod.GET)
   @ApiOperation(value = "Updates a batch")
-  public void updateBatch(@RequestBody Batch batch) {
+  public void updateBatch(HttpServletRequest req) {
+    Batch batch = null;
+    try {
+      batch = new ObjectMapper().readValue(req.getParameter("json"), Batch.class);
+    } catch (IOException e) {
+      LogManager.getRootLogger().error(e);
+    }
     batchService.addOrUpdateBatch(batch);
   }
 

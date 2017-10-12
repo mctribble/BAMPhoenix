@@ -1,5 +1,5 @@
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded"
-	style="margin-bottom: 50px;" ng-controller="navController">
+	style="margin-bottom: 50px;" >
 	<button class="navbar-toggler navbar-toggler-right" type="button"
 		data-toggle="collapse" data-target="#navbarNavAltMarkup"
 		aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -17,7 +17,7 @@
 					<li class="dropdown-item"><a href="#/myBatches" class="nodec">My Batches</a></li>
 				</ul>
 			<a class="nav-item nav-link" href="#/calendar" analytics-on="click" analytics-event="Download" ng-init="refresh()" ng-show="user.role>=2 || user.batch">Last Viewed Calendar</a>
-			<a class="nav-item nav-link" href="#/curriculum" analytics-on="click" analytics-event="Download" ng-show="user.role>=2">Template Editor</a>
+			<a class="nav-item nav-link" href="#curriculum" analytics-on="click" analytics-event="Download" ng-show="user.role>=2">Template Editor</a>
 		</div>
 	</div>
 	<div class="nav justify-content-end">

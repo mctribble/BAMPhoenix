@@ -66,11 +66,21 @@ public class CurriculumController {
 
 		List<Curriculum> l = curriculumService.getAllCurriculum();
 
-		int bid = Integer.parseInt(request.getParameter("bid"));
+		String b = request.getParameter("bid");
+		Integer bid = null;
+		try {bid = Integer.parseInt(b);}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			bid = null;
+		}
+		if (bid == null)
+		{return l;}
 
 		for (Curriculum c : l)
 		{
 			Integer ver = bcmService.getMaster(bid, c.getCurriculumName());
+
 			if (ver != null) {
 				c.setIsMaster(ver == c.getCurriculumVersion() ? 1 : 0);
 			}
@@ -101,10 +111,17 @@ public class CurriculumController {
 	@RequestMapping(value = "Schedule", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	@ApiOperation(value = "Find all subtopics for a curriculum")
-	public List<CurriculumSubtopic> getAllCurriculumSchedules(HttpServletRequest request){
+	public List<CurriculumSubtopic> getAllCurriculumSchedule(HttpServletRequest request){
 		Curriculum c = new Curriculum();
 		c.setCurriculumId(Integer.parseInt(request.getParameter("curriculumId")));
 		return curriculumSubtopicService.getCurriculumSubtopicForCurriculum(c);
+	}
+
+	@RequestMapping(value = "Schedules", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	@ApiOperation(value = "Find all subtopics")
+	public List<CurriculumSubtopic> getAllCurriculumSchedules(){
+		return curriculumSubtopicService.getCurriculums();
 	}
 	
 	@RequestMapping(value = "TopicPool", method = RequestMethod.GET, produces = "application/json")
@@ -121,11 +138,11 @@ public class CurriculumController {
 		return subtopicService.getSubtopics();
 	}
 
-	@RequestMapping(value = "AddCurriculum", method = RequestMethod.POST)
+	@RequestMapping(value = "AddCurriculum", method = RequestMethod.GET)
 	@ApiOperation(value = "Add a new curriculum to the system")
-	public void addSchedule(@RequestBody String json) throws JsonMappingException, IOException{
+	public void addSchedule(HttpServletRequest req) throws JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
-		CurriculumSubtopicDTO c = mapper.readValue(json, CurriculumSubtopicDTO.class);
+		CurriculumSubtopicDTO c = mapper.readValue(req.getParameter("json"), CurriculumSubtopicDTO.class);
 		
 		//save curriculum object first
 
@@ -161,12 +178,16 @@ public class CurriculumController {
 	@ApiOperation("Updates a curriculum to be the master curriculum")
 	public void markCurriculumAsMaster(HttpServletRequest request){
 
+		String b = request.getParameter("bid");
 
-		Integer bid = Integer.parseInt(request.getParameter("bid"));
-		String cname = request.getParameter("cname");
-		Integer version = Integer.parseInt(request.getParameter("version"));
-		bcmService.setMaster(bid, cname, version);
-		//find the curriculum with same name and isMaster = 1; set to 0; save
+		if (b != null && b != "") {
+			Integer bid = Integer.parseInt(request.getParameter("bid"));
+
+			String cname = request.getParameter("cname");
+			Integer version = Integer.parseInt(request.getParameter("version"));
+			bcmService.setMaster(bid, cname, version);
+			//find the curriculum with same name and isMaster = 1; set to 0; save
+		}
 
 	}
 	

@@ -94,9 +94,7 @@ public class CalendarController {
 
   /**
    * Counts the number of Subtopics by matching their ids with the batchId.
-   * 
-   * @param HttpServletRequest
-   *          object
+   *
    * @return number(Long) of Subtopics
    * 
    * @author Michael Garza, Gary LaMountain
@@ -165,15 +163,15 @@ public class CalendarController {
     }
   }
 
-  @RequestMapping(value = "AddTopics", method = RequestMethod.POST, produces = "application/json")
+  @RequestMapping(value = "AddTopics", method = RequestMethod.GET, produces = "application/json")
   @ApiOperation(value = "Add new topics to the system")
-  public void addTopics(@RequestBody String jsonObject, HttpSession session) {
+  public void addTopics(HttpServletRequest req, HttpSession session) {
     List<TopicName> topicsFromStub = null;
 
     ObjectMapper mapper = new ObjectMapper();
     try {
 
-      topicsFromStub = mapper.readValue(jsonObject,
+      topicsFromStub = mapper.readValue(req.getParameter("json"),
           mapper.getTypeFactory().constructCollectionType(List.class, TopicName.class));
     } catch (IOException e) {
       LogManager.getRootLogger().error(e);

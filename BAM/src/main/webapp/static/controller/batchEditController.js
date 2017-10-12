@@ -60,12 +60,12 @@ app.controller("batchEditController",function($rootScope, $scope, SessionService
 	$scope.updateBatch = function(){
 		$http({
 			url: "rest/api/v1/Batches/UpdateBatch",
-			method: 'POST',
+			method: 'GET',
 			headers: {
 		        'Content-Type': 'application/json', 
 		        'Accept': 'application/json' 
 		    },
-			data: $scope.batch
+			params: {json:$scope.batch}
 		}).then (function success(response){
 			$scope.updateDisplay = true;
 			$scope.updateMsg = 'Update Successful';
@@ -120,7 +120,7 @@ app.controller("batchEditController",function($rootScope, $scope, SessionService
 		//tell the server
 		$http({
 			url: "rest/api/v1/Users/Add",
-			method: "POST",
+			method: "GET",
 			params: {
 				userId: id,
 				batchId: batchId
@@ -158,7 +158,7 @@ app.controller("batchEditController",function($rootScope, $scope, SessionService
 		//tell the server
 		$http({
 			url: "rest/api/v1/Users/Remove",
-			method: "POST",
+			method: "GET",
 			params: {
 				userId: id
 			}
@@ -193,7 +193,7 @@ app.controller("batchEditController",function($rootScope, $scope, SessionService
 		//tell the server
 		$http({
 			url: "rest/api/v1/Users/Drop",
-			method: "POST",
+			method: "GET",
 			params: {
 				userId: id
 			}

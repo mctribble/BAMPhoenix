@@ -10,7 +10,9 @@ app.controller('dashboardController', function($http, $scope, $analytics, Sessio
 	        window.location = window.location + '#loaded';
 	        window.location.reload();
 	    }
-	}
+	};
+
+	console.log("started");
 
 	/**
 	* function that grabs user information from Salesforce and retrieves batches from the
