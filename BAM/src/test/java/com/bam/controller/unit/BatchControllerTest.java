@@ -214,8 +214,10 @@ public class BatchControllerTest {
      */
     @Test
     public void updateUser() throws Exception {
-        mockMvc.perform(post("/rest/api/v1/Batches/Edit").content(asJsonString(new BamUser()))
-                .contentType("application/json;charset=utf8")).andExpect(status().isOk());
+        mockMvc.perform(get("/rest/api/v1/Batches/Edit")
+                .param("json", asJsonString(new BamUser()))
+                .contentType("application/json;charset=utf8"))
+                .andExpect(status().isOk());
     }
 
     /**
@@ -224,8 +226,10 @@ public class BatchControllerTest {
      */
     @Test
     public void updateBatchTest() throws Exception {
-        mockMvc.perform(post("/rest/api/v1/Batches/UpdateBatch").content(asJsonString(new Batch()))
-                .contentType("application/json;charset=utf8")).andExpect(status().isOk());
+        mockMvc.perform(get("/rest/api/v1/Batches/UpdateBatch")
+                .param("json", asJsonString(new Batch()))
+                .contentType("application/json;charset=utf8"))
+                .andExpect(status().isOk());
     }
 
     /**

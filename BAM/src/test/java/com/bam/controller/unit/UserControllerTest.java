@@ -140,7 +140,7 @@ public class UserControllerTest {
         when(mockBamUserService.findUserById(1)).thenReturn(testUser1);
         doNothing().when(mockBamUserService).addOrUpdateUser(testUser1);
         when(mockBamUserService.findUsersInBatch(1)).thenReturn(testList);
-        MvcResult result = mockMvc.perform(post("/rest/api/v1/Users/Drop").param("userId", "1"))
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Users/Drop").param("userId", "1"))
                 .andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
@@ -156,7 +156,7 @@ public class UserControllerTest {
     public void updateUserTest() throws Exception {
         when(mockBamUserService.findUserByEmail("test1@email.com")).thenReturn(testUser1);
         doNothing().when(mockBamUserService).addOrUpdateUser(testUser1);
-        mockMvc.perform(post("/rest/api/v1/Users/Update").content(asJsonString(testUser1))
+        mockMvc.perform(get("/rest/api/v1/Users/Update").param("json", asJsonString(testUser1))
                 .contentType("application/json;charset=utf8")).andExpect(status().isOk());
     }
 
@@ -171,7 +171,7 @@ public class UserControllerTest {
         when(mockBamUserService.findUserById(1)).thenReturn(testUser1);
         doNothing().when(mockBamUserService).addOrUpdateUser(testUser1);
         when(mockBamUserService.findUsersInBatch(1)).thenReturn(testList);
-        MvcResult result = mockMvc.perform(post("/rest/api/v1/Users/Remove").param("userId", "1"))
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Users/Remove").param("userId", "1"))
                 .andExpect(status().isOk()).andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();
         System.out.println(content);
@@ -189,7 +189,7 @@ public class UserControllerTest {
         when(mockBatchService.getBatchById(1)).thenReturn(testBatch);
         doNothing().when(mockBamUserService).addOrUpdateUser(testUser4);
         when(mockBamUserService.findUsersNotInBatch()).thenReturn(testList);
-        MvcResult result = mockMvc.perform(post("/rest/api/v1/Users/Add").param("userId", "4")
+        MvcResult result = mockMvc.perform(get("/rest/api/v1/Users/Add").param("userId", "4")
                 .param("batchId", "1")).andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=utf8")).andReturn();
         String content = result.getResponse().getContentAsString();

@@ -9,6 +9,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,7 +41,8 @@ public class TopicControllerTest {
      */
     @Test
     public void addTopicNameTest() throws Exception {
-        mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", "test"))
+        mockMvc.perform(get("/rest/api/v1/Topic/Add")
+                .param("name", "test"))
                 .andExpect(status().isOk());
     }
 
@@ -49,7 +52,8 @@ public class TopicControllerTest {
      */
     @Test
     public void addTopicNameBreakTest() throws Exception {
-        mockMvc.perform(post("/rest/api/v1/Topic/Add").param("name", ""))
+        mockMvc.perform(get("/rest/api/v1/Topic/Add")
+                .param("name", ""))
                 .andExpect(status().is4xxClientError());
     }
 
