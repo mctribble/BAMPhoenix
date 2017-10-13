@@ -181,7 +181,7 @@ app.controller("curriculumController",
 
 
                     $scope.topicColors.push({'type': topic.topic.name, 'color': color});
-                    console.log(topic);
+
 
 
 
@@ -192,7 +192,7 @@ app.controller("curriculumController",
         $scope.getTopicColor = function (topicName) {
             for (i in $scope.topicColors) {
                 var topic = $scope.topicColors[i];
-                console.log(topic);
+
                 if (topic.type === topicName) {
                     return topic.color;
                 }
@@ -238,7 +238,7 @@ app.controller("curriculumController",
                     if (!total) {
 
                         $scope.weekBars[i].push({name: "No Topics", width: "100%", color: "red"});
-                    } else {console.log( $scope.topicColors);
+                    } else {
                         $scope.weekBars[i] = [];
                         for (m in topicCounts) {
 
