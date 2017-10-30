@@ -7,13 +7,13 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.paths.RelativePathProvider;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
     @Bean
     public Docket api() {
@@ -21,15 +21,16 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.bam.controller"))
                 .paths(regex("/rest.*"))
-                .build();
+                .build()
+                .apiInfo(metaData());
     }
     public ApiInfo metaData() {
         ApiInfo info = new ApiInfo(
                 "Bam API", //title
-                "Bam Api for Curriculum Services", //desc
+                "Everything you need to know about BAM", //desc
                 "1.0.0", //version
                 "Terms of Service", //terms of service url
-                new Contact("john doe", "http://google.com", "johndoe@email.com"),
+                new Contact("Theara Ya", "https://swagger.io/", "theara_ya@my.uri.edu"),
                 "Apache License Version 2.0", //license info
                 "https://apache.org/licenses/LICENSE-2.0");
         return info;
